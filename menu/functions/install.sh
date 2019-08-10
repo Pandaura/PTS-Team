@@ -36,8 +36,9 @@ updateprime() {
   file="${abc}/new.install"
   if [ ! -e "$file" ]; then newinstall; fi
 
-  ospgversion=$(cat /etc/*-release | grep Debian | grep 9)
-  if [ "$ospgversion" != "" ]; then
+  ospgdistro=$(lsb_release -is)
+  ospgrelease=$(lsb_release -rs)
+  if [ "$ospgdistro" = "debian" ] && [ "$ospgrelease" = "9" ] || [ "$ospgrelease" = "10" ]; then
     echo "debian" >${abc}/os.version
   else echo "ubuntu" >${abc}/os.version; fi
 
@@ -166,7 +167,7 @@ emergency() {
       tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  Emergency & Warning Log Generator | Visit - http://emlog.pgblitz.com
+⛔️  Emergency & Warning Log Generator 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 NOTE: This can be turned [On] or Off in Settings!
 
@@ -218,6 +219,7 @@ mergerinstall() {
   ub16check=$(cat /etc/*-release | grep xenial)
   ub18check=$(cat /etc/*-release | grep bionic)
   deb9check=$(cat /etc/*-release | grep stretch)
+  deb10check=$(cat /etc/*-release | grep buster)
   activated=false
 
   apt --fix-broken install -y
@@ -238,6 +240,11 @@ mergerinstall() {
     activated=true
     echo "deb9" >/var/plexguide/mergerfs.version
     wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.debian-stretch_amd64.deb"
+  
+  elif [ "$deb10check" != "" ]; then
+    activated=true
+    echo "deb10" >/var/plexguide/mergerfs.version
+    wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.debian-buster_amd64.deb"    
 
   elif [ "$activated" != "true" ]; then
     activated=true && echo "ub18 - but didn't detect correctly" >/var/plexguide/mergerfs.version
@@ -296,10 +303,10 @@ localspace() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  PG User Interface (PGUI) Installed / Updated
+↘️  User Interface Installed / Updated
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-INFORMATION:  PGUI is a simple interface that provides information,
+INFORMATION: UI is a simple interface that provides information,
 warnings, and stats that will assist both yourself and tech support!
 To turn this off, goto settings and turn off/on the PG User Interface!
 
@@ -495,7 +502,7 @@ watchtower() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📂  PG WatchTower Edition          📓 Reference: watchtower.pgblitz.com
+📂  WatchTower Edition        
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 💬  WatchTower updates your containers soon as possible!
