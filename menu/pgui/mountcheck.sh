@@ -36,7 +36,7 @@ while true; do
 
   if [[ "$tcryptcheck" != "active" ]]; then
     echo "🔴 Not Operational " >/var/plexguide/pg.crypt
-  else echo "✅ Operational" >/var/plexguide/pg.crypt; fi
+  else echo "✅ Operational" >/var/plexguide/pg.tcrypt; fi
 
   if [[ "$pgunioncheck" != "active" ]]; then
     echo "🔴 Not Operational " >/var/plexguide/pg.union
