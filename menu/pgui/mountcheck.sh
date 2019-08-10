@@ -26,25 +26,25 @@ while true; do
     echo "🔴 Not Operational" >/var/plexguide/pg.gdrive
   else echo "✅ Operational" >/var/plexguide/pg.gdrive; fi
 
-  if [[ "$gdrivecheck" != "active" ]]; then
-    echo "🔴 Not Operational" >/var/plexguide/pg.gmount
-  else echo "✅ Operational" >/var/plexguide/pg.gmount; fi
+  if [[ "$gcryptcheck" != "active" ]]; then
+    echo "🔴 Not Operational" >/var/plexguide/pg.gcrypt
+  else echo "✅ Operational" >/var/plexguide/pg.gcrypt; fi
 
   if [[ "$tdrivecheck" != "active" ]]; then
     echo "🔴 Not Operational " >/var/plexguide/pg.tdrive
   else echo "✅ Operational" >/var/plexguide/pg.tdrive; fi
 
-  if [[ "$tdrivecheck" != "active" ]]; then
-    echo "🔴 Not Operational " >/var/plexguide/pg.tmount
-  else echo "✅ Operational" >/var/plexguide/pg.tmount; fi
+  if [[ "$tcryptcheck" != "active" ]]; then
+    echo "🔴 Not Operational " >/var/plexguide/pg.crypt
+  else echo "✅ Operational" >/var/plexguide/pg.crypt; fi
 
   if [[ "$pgunioncheck" != "active" ]]; then
     echo "🔴 Not Operational " >/var/plexguide/pg.union
   else echo "✅ Operational " >/var/plexguide/pg.union; fi
 
-  if [[ "$pgunioncheck" != "active" ]]; then
-    echo "🔴 Not Operational " >/var/plexguide/pg.umount
-  else echo "✅ Operational " >/var/plexguide/pg.umount; fi
+  if [[ "$pgblitzcheck" != "active" ]]; then
+    echo "🔴 Not Operational " >/var/plexguide/pg.blitz
+  else echo "✅ Operational " >/var/plexguide/pg.blitz; fi
 
   # Disk Calculations - 5000000 = 5GB
 
