@@ -2,6 +2,15 @@
 - hosts: localhost
   gather_facts: false
   tasks:
+    - name: Check if Image Variable Exists
+      stat:
+        path: '/opt/coreapps'
+      register: pathcheck
+
+    - name: 'Transfer Image Variable'
+      shell: 'rm -rf /opt/coreapps'
+      when: pathcheck.stat.exists
+  
     - name: Register User
       shell: 'cat /var/plexguide/boxcore.user'
       register: boxuser
@@ -14,9 +23,10 @@
       shell: 'cat /var/plexguide/boxcore.branch'
       register: boxbranch
 
-    - name: 'Cloning {{boxuser.stdout}} Core Apps'
+    - name: 'Cloning {{boxuser.stdout}} Apps'
       git:
-        repo: 'https://github.com/{{boxuser.stdout}}/{{boxrepo.repo}}'
+        repo: 'https://github.com/{{boxuser.stdout}}/{{boxrepo.stdout}}'
         dest: '/opt/coreapps'
+        clone: yes
         version: '{{boxbranch.stdout}}'
         force: yes

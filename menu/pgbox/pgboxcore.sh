@@ -245,7 +245,7 @@ EOF
 pinterface() {
 
   boxuser=$(cat /var/plexguide/boxcore.user)
-  boxbrepo=$(cat /var/plexguide/boxrepo.repo)
+  boxrepo=$(cat /var/plexguide/boxrepo.repo)
   boxbranch=$(cat /var/plexguide/boxcore.branch)
  
 
@@ -255,9 +255,10 @@ pinterface() {
 🚀 PG Core Box Edition!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💬	User:	$boxuser 
-	Repo:	$boxrepo
-	Branch: $boxbranch
+💬	
+User:	$boxuser 
+Repo:	$boxrepo
+Branch: $boxbranch
 
 [1] Change User Name & Branch
 [2] Deploy Core Box - Personal (Forked)
@@ -347,7 +348,7 @@ EOF
     ;;
   2)
     variable /var/plexguide/boxcore.user "NOT-SET"
-    variable >/var/plexguide/boxrepo.repo "NOT-SET"
+    variable /var/plexguide/boxrepo.repo "NOT-SET"
     variable /var/plexguide/boxcore.branch "NOT-SET"
     pinterface
     ;;
