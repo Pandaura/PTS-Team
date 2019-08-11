@@ -7,17 +7,18 @@
 # GNU:        General Public License v3.0
 ################################################################################
 [Unit]
-Description='PGui Used space | localspace '
+Description=Used space | localspace 
 After=multi-user.target
 
 [Service]
+Type=simple
 User=0
 Group=0
-Type=simple
 ExecStart=/bin/bash /opt/plexguide/menu/pgui/localspace.sh
+TimeoutStopSec=20
 KillMode=process
-RemainAfterExit=20sec
-TimeoutStopSec=20sec
+RemainAfterExit=yes
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

@@ -6,13 +6,17 @@
       shell: 'cat /var/plexguide/boxcore.user'
       register: boxuser
 
+    - name: Register Repo
+      shell: 'cat /var/plexguide/boxrepo.repo'
+      register: boxrepo
+
     - name: Register Branch
       shell: 'cat /var/plexguide/boxcore.branch'
       register: boxbranch
 
     - name: 'Cloning {{boxuser.stdout}} Core Apps'
       git:
-        repo: 'https://github.com/{{boxuser.stdout}}/Apps-Core'
+        repo: 'https://github.com/{{boxuser.stdout}}/{{boxrepo.repo}}'
         dest: '/opt/coreapps'
         version: '{{boxbranch.stdout}}'
         force: yes

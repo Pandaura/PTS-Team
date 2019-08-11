@@ -123,7 +123,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PGBox ~ Multi-App Installer           📓 Reference: pgbox.pgblitz.com
+🚀 PGBox ~ Multi-App Installer 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📂 Potential Apps to Install
@@ -245,15 +245,19 @@ EOF
 pinterface() {
 
   boxuser=$(cat /var/plexguide/boxcore.user)
+  boxbrepo=$(cat /var/plexguide/boxrepo.repo)
   boxbranch=$(cat /var/plexguide/boxcore.branch)
+ 
 
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PG Core Box Edition!                   📓 Reference: core.pgblitz.com
+🚀 PG Core Box Edition!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💬 User: $boxuser | Branch: $boxbranch
+💬	User:	$boxuser 
+	Repo:	$boxrepo
+	Branch: $boxbranch
 
 [1] Change User Name & Branch
 [2] Deploy Core Box - Personal (Forked)
@@ -280,13 +284,15 @@ Username & Branch are both case sensitive!
 
 EOF
     read -p 'Username | Press [ENTER]: ' boxuser </dev/tty
+	read -p 'REPO     | Press [ENTER]: ' boxrepo </dev/tty
     read -p 'Branch   | Press [ENTER]: ' boxbranch </dev/tty
     echo "$boxuser" >/var/plexguide/boxcore.user
+    echo "$boxrepo" >/var/plexguide/boxrepo.repo
     echo "$boxbranch" >/var/plexguide/boxcore.branch
     pinterface
     ;;
   2)
-    existcheck=$(git ls-remote --exit-code -h "https://github.com/$boxuser/Apps-Core" | grep "$boxbranch")
+    existcheck=$(git ls-remote --exit-code -h "https://github.com/$boxuser/$boxrepo" | grep "$boxbranch")
     if [ "$existcheck" == "" ]; then
       echo
       read -p '💬 Exiting! Forked Version Does Not Exist! | Press [ENTER]: ' typed </dev/tty
@@ -313,11 +319,11 @@ mainbanner() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PG Core Box Edition!                   📓 Reference: core.pgblitz.com
+🚀 PG Core Box Edition! 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💬 Core Box apps simplify their usage within PGBlitz! PG provides more
-focused support and development based on core usage.
+💬 ´Core Box apps simplify their usage within PGBlitz! 
+PG provides more focused support and development based on core usage.
 
 💬 The Personal Forked option will install your version of Core Box. Good
 for testing or for personal mods! Ensure that it exist prior to use!
@@ -341,6 +347,7 @@ EOF
     ;;
   2)
     variable /var/plexguide/boxcore.user "NOT-SET"
+    variable >/var/plexguide/boxrepo.repo "NOT-SET"
     variable /var/plexguide/boxcore.branch "NOT-SET"
     pinterface
     ;;

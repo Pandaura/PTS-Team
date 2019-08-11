@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-# Title:      PGBlitz (Reference Title File)
+# Title:      mountcheck
+# Moded :	  MrDoob | ptSComm
 # Author(s):  Admin9705 - Deiteq
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
@@ -13,13 +14,42 @@ diskspace27=0
 
 while true; do
 
-  gdrivecheck=$(systemctl is-active gdrive)
-  gcryptcheck=$(systemctl is-active gcrypt)
-  tdrivecheck=$(systemctl is-active tdrive)
-  tcryptcheck=$(systemctl is-active tcrypt)
-  pgunioncheck=$(systemctl is-active pgunion)
-  pgblitzcheck=$(systemctl is-active pgblitz)
+	gdrivecheck=$(systemctl is-active gdrive)
+	gcryptcheck=$(systemctl is-active gcrypt)
+	tdrivecheck=$(systemctl is-active tdrive)
+	tcryptcheck=$(systemctl is-active tcrypt)
+	pgunioncheck=$(systemctl is-active pgunion)
+	
+        pgblitzcheck=$(systemctl is-active pgblitz)
+        pgbmovecheck=$(systemctl is-active pgmove)
 
+        pgblitz=$(sudo systemctl list-unit-files | grep pgblitz.service | awk '{ print $2 }')
+        pgmove=$(sudo systemctl list-unit-files | grep pgmove.service | awk '{ print $2 }')
+
+        touch /var/plexguide/status.mounts
+        rm -rf "$status"
+        status=$(tail -n1 /var/plexguide/status.mounts)
+
+        if [[ "$pgmove" == "enabled" ]]; then
+                echo "1" >> /var/plexguide/status.mounts
+        else [[ "pgblitz" == "enabled" ]]
+                echo "2" >> /var/plexguide/status.mounts
+        fi
+
+        if [[ $status == "1" ]] ; then
+                if [[ "$pgmovecheck" != "active" ]]; then
+                        echo "🔴 Not Operational" >/var/plexguide/pg.blitz;
+                else  [[ "$pgmovecheck" != "active" ]]
+                        echo "✅ Operational" >/var/plexguide/pg.blitz;
+                fi
+        fi
+        if [[ $status == "2" ]] ; then
+                if [[ "$pgblitzcheck" != "active" ]]; then
+                        echo "🔴 Not Operational" >/var/plexguide/pg.blitz;
+                else [[ "$pgblitzcheck" != "active" ]];
+                        echo "✅ Operational" >/var/plexguide/pg.blitz;
+                fi
+        fi
   # Todo remove the dupes or change to crypt once PGUI is updated
 
   if [[ "$gdrivecheck" != "active" ]]; then
@@ -42,9 +72,6 @@ while true; do
     echo "🔴 Not Operational " >/var/plexguide/pg.union
   else echo "✅ Operational " >/var/plexguide/pg.union; fi
 
-  if [[ "$pgblitzcheck" != "active" ]]; then
-    echo "🔴 Not Operational " >/var/plexguide/pg.blitz
-  else echo "✅ Operational " >/var/plexguide/pg.blitz; fi
 
   # Disk Calculations - 5000000 = 5GB
 

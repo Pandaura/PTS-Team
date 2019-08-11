@@ -37,10 +37,10 @@ updateprime() {
   if [ ! -e "$file" ]; then newinstall; fi
 
   ospgdistro=$(lsb_release -is)
-  ospgrelease=$(lsb_release -rs)
-  if [ "$ospgdistro" = "debian" ] && [ "$ospgrelease" = "9" ] || [ "$ospgrelease" = "10" ]; then
-    echo "debian" >${abc}/os.version
-  else echo "ubuntu" >${abc}/os.version; fi
+  ospgrelease=$(lsb_release -sr | cut -d. -f1)
+  if [[ "$ospgdistro" = "Debian" ]] && [[ "$ospgrelease" = "9" ]] || [[ "$ospgrelease" = "10" ]]; then
+    echo "Debian" >${abc}/os.version
+  else echo "Ubuntu" >${abc}/os.version; fi
 
   echo "3" >${abc}/pg.mergerinstall
   echo "52" >${abc}/pg.pythonstart
@@ -167,7 +167,7 @@ emergency() {
       tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  Emergency & Warning Log Generator 
+⛔️  Emergency & Warning Log Generator
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 NOTE: This can be turned [On] or Off in Settings!
 
@@ -303,10 +303,10 @@ localspace() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  User Interface Installed / Updated
+↘️ User Interface Installed / Updated
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-INFORMATION: UI is a simple interface that provides information,
+INFORMATION:  PGUI is a simple interface that provides information,
 warnings, and stats that will assist both yourself and tech support!
 To turn this off, goto settings and turn off/on the PG User Interface!
 
@@ -462,7 +462,7 @@ serverid() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️   Establishing Server ID               💬  Use One Word & Keep it Simple
+↘️   Establishing Server ID      💬  Use One Word & Keep it Simple
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   read -p '🌏  TYPE Server ID | Press [ENTER]: ' typed </dev/tty
@@ -502,7 +502,7 @@ watchtower() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📂  WatchTower Edition        
+📂  PG WatchTower Edition
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 💬  WatchTower updates your containers soon as possible!
