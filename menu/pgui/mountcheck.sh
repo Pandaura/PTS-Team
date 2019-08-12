@@ -11,7 +11,7 @@ mkdir -p /opt/appdata/plexguide
 rm -rf /opt/appdata/plexguide/emergency/*
 sleep 15
 diskspace27=0
-
+rm -rf /var/plexguide/status.mounts
 while true; do
 
 	gdrivecheck=$(systemctl is-active gdrive)
@@ -19,16 +19,15 @@ while true; do
 	tdrivecheck=$(systemctl is-active tdrive)
 	tcryptcheck=$(systemctl is-active tcrypt)
 	pgunioncheck=$(systemctl is-active pgunion)
-	
-        pgblitzcheck=$(systemctl is-active pgblitz)
-        pgbmovecheck=$(systemctl is-active pgmove)
 
-        pgblitz=$(sudo systemctl list-unit-files | grep pgblitz.service | awk '{ print $2 }')
-        pgmove=$(sudo systemctl list-unit-files | grep pgmove.service | awk '{ print $2 }')
+        pgblitzcheck=$(systemctl is-active pgblitz)
+        pgmovecheck=$(systemctl is-active pgmove)
+
+        pgblitz=$(systemctl list-unit-files | grep pgblitz.service | awk '{ print $2 }')
+        pgmove=$(systemctl list-unit-files | grep pgmove.service | awk '{ print $2 }')
 
         touch /var/plexguide/status.mounts
-        rm -rf "$status"
-        status=$(tail -n1 /var/plexguide/status.mounts)
+        status=$(tail -n 1 /var/plexguide/status.mounts)
 
         if [[ "$pgmove" == "enabled" ]]; then
                 echo "1" >> /var/plexguide/status.mounts
@@ -38,18 +37,19 @@ while true; do
 
         if [[ $status == "1" ]] ; then
                 if [[ "$pgmovecheck" != "active" ]]; then
-                        echo "🔴 Not Operational" >/var/plexguide/pg.blitz;
-                else  [[ "$pgmovecheck" != "active" ]]
-                        echo "✅ Operational" >/var/plexguide/pg.blitz;
+                        echo "🔴 Not Operational MOVE" >>/var/plexguide/pg.blitz
+                else
+                        echo "✅ Operational MOVE" >>/var/plexguide/pg.blitz
                 fi
         fi
         if [[ $status == "2" ]] ; then
                 if [[ "$pgblitzcheck" != "active" ]]; then
-                        echo "🔴 Not Operational" >/var/plexguide/pg.blitz;
-                else [[ "$pgblitzcheck" != "active" ]];
-                        echo "✅ Operational" >/var/plexguide/pg.blitz;
+                        echo "🔴 Not Operational BLITZ" >>/var/plexguide/pg.blitz
+                else
+                        echo "✅ Operational BLITZ" >>/var/plexguide/pg.blitz
                 fi
         fi
+
   # Todo remove the dupes or change to crypt once PGUI is updated
 
   if [[ "$gdrivecheck" != "active" ]]; then

@@ -9,6 +9,7 @@ pgrole=$(cat /tmp/program_var)
 path=$(cat /var/plexguide/server.hd.path)
 tarlocation=$(cat /var/plexguide/data.location)
 serverid=$(cat /var/plexguide/pg.serverid)
+useragent=$(cat /var/plexguide/uagent)
 
 doc=no
 rolecheck=$(docker ps | grep -c "\<$pgrole\>")
@@ -23,7 +24,7 @@ tar \
 if [ $doc == yes ]; then docker restart $pgrole; fi
 
 chown -R 1000:1000 $tarlocation
-rclone --config /opt/appdata/plexguide/rclone.conf copy $tarlocation/$pgrole.tar gdrive:/plexguide/backup/$serverid -v --checksum --drive-chunk-size=64M
+rclone --config /opt/appdata/plexguide/rclone.conf copy $tarlocation/$pgrole.tar gdrive:/plexguide/backup/$serverid -v --checksum --drive-chunk-size=64M --user-agent="$useragent" 
 
 du -sh --apparent-size /opt/appdata/$pgrole | awk '{print $1}'
 rm -rf '$tarlocation/$pgrole.tar'
