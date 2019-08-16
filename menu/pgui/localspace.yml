@@ -13,14 +13,16 @@
       stat:
         path: '/etc/systemd/systemd/localspace.service'
       register: pgp
+
     - name: Stop service
       service:
         name: localspace
         state: stopped
       when: pgp.stat.exists
+
     - name: localspace Service
       template:
-        src: /opt/plexguide/menu/pgui/localspace.service
+        src: /opt/coreapps/apps/templates/pgui/localspace.service
         dest: /etc/systemd/system/localspace.service
         force: yes
 
