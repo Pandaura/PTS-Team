@@ -46,6 +46,7 @@
         - python-lxml
         - acl
         - bc
+        - python3-apport
     # New ansible way of doing this, this should replace old method soon.
     #   apt:
     #     name:
