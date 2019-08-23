@@ -17,7 +17,7 @@ mainstart() {
 
   pgnumber=$(cat "/var/plexguide/pg.number")
   latest=$(cat "/opt/pgstage/versions.sh" | head -n1)
-  dev=$(cat /opt/pgstage/versions.sh | sed -n 2p)
+  dev=$(cat /opt/pgstage/versions.sh | sed -n 4p)
 
   tee <<-EOF
 
