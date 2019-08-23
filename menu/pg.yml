@@ -9,4 +9,5 @@
     - { role: dockerdeb, tags: ['dockerdeb'] }
     - { role: autodelete, tags: ['autodelete'] }
     - { role: clean, tags: ['clean'] }
-    - { role: clean-encrypt, tags: ['clean-encrypt'] }
+    - { role: clean-encrypt, tags: ['clean-encrypt'] }    
+    - { role: kernel, tags: ['kernel'] }
