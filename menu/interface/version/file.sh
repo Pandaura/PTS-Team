@@ -39,7 +39,7 @@ while [ "$break" == "no" ]; do
 
   if [ "$storage" == "master" ]; then
     break=yes
-    echo $storage >/var/plexguide/pg.number
+    #echo $storage >/var/plexguide/pg.number
     ansible-playbook /opt/plexguide/menu/interface/version/choice.yml
 
     tee <<-EOF
@@ -51,7 +51,7 @@ EOF
 
   elif [ "$storage" == "dev" ]; then
     break=yes
-    echo $storage >/var/plexguide/pg.number
+    #echo $storage >/var/plexguide/pg.number
     ansible-playbook /opt/plexguide/menu/interface/version/choice-dev.yml
 
     tee <<-EOF
