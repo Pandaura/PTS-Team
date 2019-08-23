@@ -46,6 +46,44 @@
         - python-lxml
         - acl
         - bc
+    # New ansible way of doing this, this should replace old method soon.
+    #   apt:
+    #     name:
+    #       - fuse
+    #       - nano
+    #       - fail2ban
+    #       - wget
+    #       - lsb-release
+    #       - figlet
+    #       - software-properties-common
+    #       - unrar
+    #       - unzip
+    #       - glances
+    #       - python-pip
+    #       - python3-pip
+    #       - python-passlib
+    #       - zip
+    #       - curl
+    #       - man-db
+    #       - htop
+    #       - openssh-server
+    #       - dirmngr
+    #       - zip
+    #       - apt-transport-https
+    #       - ca-certificates
+    #       - tree
+    #       - ncdu
+    #       - ctop
+    #       - dialog
+    #       - dnsutils
+    #       - mc
+    #       - apache2-utils
+    #       - lsof
+    #       - pwgen
+    #       - gawk
+    #       - python-lxml
+    #       - acl
+    #       - bc
 
     - name: Update pip packages for python3
       pip:

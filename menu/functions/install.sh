@@ -36,11 +36,10 @@ updateprime() {
   file="${abc}/new.install"
   if [ ! -e "$file" ]; then newinstall; fi
 
-  ospgdistro=$(lsb_release -is)
-  ospgrelease=$(lsb_release -sr | cut -d. -f1)
-  if [[ "$ospgdistro" = "Debian" ]] && [[ "$ospgrelease" = "9" ]] || [[ "$ospgrelease" = "10" ]]; then
-    echo "Debian" >${abc}/os.version
-  else echo "Ubuntu" >${abc}/os.version; fi
+  ospgversion=$(cat /etc/*-release | grep Debian | grep 9)
+  if [ "$ospgversion" != "" ]; then
+    echo "debian" >${abc}/os.version
+  else echo "ubuntu" >${abc}/os.version; fi
 
   echo "3" >${abc}/pg.mergerinstall
   echo "52" >${abc}/pg.pythonstart
@@ -244,7 +243,7 @@ mergerinstall() {
   elif [ "$deb10check" != "" ]; then
     activated=true
     echo "deb10" >/var/plexguide/mergerfs.version
-    wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.debian-buster_amd64.deb"    
+    wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.debian-buster_amd64.deb"  
 
   elif [ "$activated" != "true" ]; then
     activated=true && echo "ub18 - but didn't detect correctly" >/var/plexguide/mergerfs.version
@@ -264,7 +263,7 @@ mergerinstall() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  MergerFS has been updated! Requires PG Clone redeployment.
+↘️  MergerFS has been updated! Requires Clone redeployment.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 INFORMATION:  MergerFS was updated on your system and brings performance improvements!
@@ -297,15 +296,17 @@ mountcheck() {
 }
 
 localspace() {
+  ansible-playbook /opt/pgui/pgui.yml
   ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
 }
 gtused() {
   ansible-playbook /opt/plexguide/menu/pgui/gtused.yml
+}
 
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️ User Interface Installed / Updated
+↘️  User Interface (PGUI) Installed / Updated
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 INFORMATION:  PGUI is a simple interface that provides information,
@@ -429,7 +430,7 @@ pythonstart() {
 
 dockerinstall() {
   ospgversion=$(cat /var/plexguide/os.version)
-  if [ "$ospgversion" == "Debian" ]; then
+  if [ "$ospgversion" == "debian" ]; then
     ansible-playbook /opt/plexguide/menu/pg.yml --tags dockerdeb
   else
     ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
@@ -464,7 +465,7 @@ serverid() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️   Establishing Server ID      💬  Use One Word & Keep it Simple
+↘️   Establishing Server ID        💬  Use One Word & Keep it Simple
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   read -p '🌏  TYPE Server ID | Press [ENTER]: ' typed </dev/tty
@@ -504,7 +505,7 @@ watchtower() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📂  PG WatchTower Edition
+📂 WatchTower Edition
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 💬  WatchTower updates your containers soon as possible!
