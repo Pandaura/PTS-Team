@@ -301,7 +301,7 @@ localspace() {
 }
 gtused() {
   ansible-playbook /opt/plexguide/menu/pgui/gtused.yml
-}
+
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
