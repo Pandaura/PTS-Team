@@ -429,7 +429,7 @@ pythonstart() {
 
 dockerinstall() {
   ospgversion=$(cat /var/plexguide/os.version)
-  if [ "$ospgversion" == "debian" ]; then
+  if [ "$ospgversion" == "Debian" ]; then
     ansible-playbook /opt/plexguide/menu/pg.yml --tags dockerdeb
   else
     ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
