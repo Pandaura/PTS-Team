@@ -10,43 +10,43 @@
   gather_facts: True
   tasks:
     - name: Install Common Packages (Takes Awhile)
-      apt: 'name={{item}} state=present'
+      apt: 'name={{item.package}} state=present'
       with_items:
-        - fuse
-        - nano
-        - fail2ban
-        - wget
-        - lsb-release
-        - figlet
-        - software-properties-common
-        - unzip
-        - glances
-        - python-pip
-        - python3-pip
-        - python-passlib
-        - zip
-        - curl
-        - man-db
-        - htop
-        - openssh-server
-        - dirmngr
-        - zip
-        - apt-transport-https
-        - ca-certificates
-        - tree
-        - ncdu
-        - ctop
-        - dialog
-        - dnsutils
-        - mc
-        - apache2-utils
-        - lsof
-        - pwgen
-        - gawk
-        - python-lxml
-        - acl
-        - bc
-        - python3-apport
+        - { package: 'fuse' }
+        - { package: 'nano' }
+        - { package: 'fail2ban' }
+        - { package: 'wget' }
+        - { package: 'lsb-release' }
+        - { package: 'figlet' }
+        - { package: 'software-properties-common' }
+        - { package: 'unzip' }
+        - { package: 'glances' }
+        - { package: 'python-pip' }
+        - { package: 'python3-pip' }
+        - { package: 'python-passlib' }
+        - { package: 'zip' }
+        - { package: 'curl' }
+        - { package: 'man-db' }
+        - { package: 'htop' }
+        - { package: 'openssh-server' }
+        - { package: 'dirmngr' }
+        - { package: 'zip' }
+        - { package: 'apt-transport-https' }
+        - { package: 'ca-certificates' }
+        - { package: 'tree' }
+        - { package: 'ncdu' }
+        - { package: 'ctop' }
+        - { package: 'dialog' }
+        - { package: 'dnsutils' }
+        - { package: 'mc' }
+        - { package: 'apache2-utils' }
+        - { package: 'lsof' }
+        - { package: 'pwgen' }
+        - { package: 'gawk' }
+        - { package: 'python-lxml' }
+        - { package: 'acl' }
+        - { package: 'bc' }
+        - { package: 'python-docker' }
     # New ansible way of doing this, this should replace old method soon.
     #   apt:
     #     name:
@@ -95,7 +95,6 @@
           - requests
           - netaddr
           - lxml
-          - docker
         state: latest
         executable: pip3
 
@@ -108,6 +107,5 @@
           - requests
           - netaddr
           - lxml
-          - docker
         state: latest
         executable: pip2
