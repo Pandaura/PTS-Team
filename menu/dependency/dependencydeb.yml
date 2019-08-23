@@ -58,6 +58,7 @@
           - requests
           - netaddr
           - lxml
+          - docker-py
         state: latest
         executable: pip3
 
@@ -70,5 +71,7 @@
           - requests
           - netaddr
           - lxml
+          - docker-py
+
         state: latest
         executable: pip2
