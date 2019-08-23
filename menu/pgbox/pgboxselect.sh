@@ -13,11 +13,11 @@ mainstart() {
 🚀 Box Apps Interface Selection    
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💬  PG Box installs a series of Core and Community applications!
+💬  PTS Box installs a series of Core and Community applications!
 
-[1] PTS         : Core
-[2] PGBlitzs Box: Community
-[3] PG Box: Removal
+[1] PTS          : Core
+[2] PGBlitzs Box : Community [ be careful ]
+[3] Apps         : Removal
 [Z] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

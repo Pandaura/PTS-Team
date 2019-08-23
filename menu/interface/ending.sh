@@ -16,8 +16,8 @@ echo ""
 │ ————————————————————————————————————│
 │ Restart PTS:              pts       │
 │ Update  PTS:              ptsupdate │
-│ View the PG Blitz Logs:   blitz     │
-│ Download Your PG Fork:    pgfork    │
+│ View the PTS Logs:        blitz     │
+│ Download Your PTS Fork:   pgfork    │
 │ ————————————————————————————————————│
 │ Thanks For Being Part of the Team   │
 └─────────────────────────────────────┘
