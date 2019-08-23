@@ -2,9 +2,8 @@
 - hosts: localhost
   gather_facts: false
   tasks:
-    - name: 'Cloning PGBlitz'
+    - name: 'Cloning PTS'
       git:
-        repo: 'https://github.com/PGBlitz/Install'
+        repo: 'https://github.com/MrDoobPG/Install'
         dest: '/opt/pgstage'
-        version: 'v8.5'
         force: yes
