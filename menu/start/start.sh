@@ -178,7 +178,7 @@ menuprime() {
 🌎 $transport | Version: $pgnumber | ID: $serverid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🌵 PG Disk Used Space: $used of $capacity | $percentage Used Capacity
+🌵  Disk Used Space: $used of $capacity | $percentage Used Capacity
 EOF
 
   # Displays Second Drive If GCE
@@ -212,16 +212,16 @@ EOF
 
   tee <<-EOF
 
-[1]  Traefik   : Reverse Proxy
-[2]  Port Guard: [$ports] Protects the Server Ports
-[3]  PG Shield : Enable Google's OAuthentication Protection
-[4]  PG Clone  : Mount Transport
-[5]  PG Box    : Apps ~ Core, Community & Removal
-[6]  PG Press  : Deploy WordPress Instances
-[7]  PG Vault  : Backup & Restore
-[8]  PG Cloud  : GCE & Virtual Instances
-[9]  PG Tools
-[10] PG Settings
+[1]  Traefik    : Reverse Proxy
+[2]  Port Guard : [$ports] Protects the Server Ports
+[3]  GOAuth     : Enable Google's OAuthentication Protection
+[4]  rClone     : Mount Transport
+[5]  APPBox     : Apps ~ Core, Community & Removal
+[6]  WordPress  : Deploy WordPress Instances
+[7]  Back&Rest  : Backup & Restore
+[8]  Cloud      : GCE & Virtual Instances
+[9]  Tools
+[10] Settings
 [Z]  Exit
 
 "$quote"

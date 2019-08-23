@@ -37,7 +37,7 @@
     - name: PGUpdate
       template:
         src: pgupdate
-        dest: /bin/pgupdate
+        dest: /bin/ptsupdate
         force: yes
         mode: 0775
 
@@ -123,12 +123,5 @@
       template:
         src: pgfork
         dest: /bin/pgfork
-        force: yes
-        mode: 0775
-
-    - name: Install Backup
-      template:
-        src: backup
-        dest: /bin/backup
         force: yes
         mode: 0775

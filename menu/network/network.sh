@@ -11,7 +11,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📂  PG System & Network Auditor
+📂  System & Network Auditor
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] System & Network Benchmark - Basic
@@ -34,7 +34,7 @@ EOF
     question1
   elif [ "$typed" == "2" ]; then
     echo ""
-    curl -LsO raw.githubusercontent.com/PGBlitz/Bench/master/bench.sh
+    curl -LsO raw.githubusercontent.com/MrDoobPG/Bench/master/bench.sh
     chmod +x bench.sh
     chmod +x bench.sh
     echo ""

@@ -15,16 +15,16 @@ setstart() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PG Settings Interface Menu
+🚀  Settings Interface Menu
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] Download Path    :  Change the Processing Location
 [2] MultiHD          :  Add Multiple HDs and/or Mount Points to MergerFS
-[3] Processor        :  Enhance the CPU Processing Power
-[4] WatchTower       :  Auto-Update Application Manager
-[5] Change Time      :  Change the Server Time
-[6] PG UI            :  $switchcheck | Port 8555 | pgui.domain.com
-[7] Emergency Display:  $emdisplay
+[3] Change Time      :  Change the Server Time
+
+[4] PG UI            :  $switchcheck | Port 8555 | pgui.domain.com
+
+[5] Emergency Display:  $emdisplay
 
 [Z] Exit
 
@@ -44,16 +44,9 @@ EOF
     bash /opt/plexguide/menu/pgcloner/multihd.sh
     ;;
   3)
-    bash /opt/plexguide/menu/processor/processor.sh
-    setstart
-    ;;
-  4)
-    watchtower
-    ;;
-  5)
     dpkg-reconfigure tzdata
     ;;
-  6)
+  4)
     echo
     echo "Standby ..."
     echo
@@ -72,7 +65,7 @@ EOF
     fi
     setstart
     ;;
-  7)
+  5)
     if [[ "$emdisplay" == "On" ]]; then
       echo "Off" >/var/plexguide/emergency.display
     else echo "On" >/var/plexguide/emergency.display; fi

@@ -32,13 +32,13 @@ echo "install complete"
 tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PG System Tweaker
+🚀 System Tweaker
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💬 PG System Tweaker
+💬 System Tweaker
 
 [1] Network Tweaker ( Debian 9 & Ubuntu 18 only )
 [2] Docker Swapness
-[3] PGBlitz logrotator
+[3] PTS logrotator
 [4] VnStat autoinstaller
 
 [Z] Exit
@@ -61,7 +61,7 @@ if [ "$typed" == "1" ]; then
         ethtool -K $network tso off tx off
         sed -i '$a\' /etc/crontab
         sed -i '$a\#################################' /etc/crontab
-        sed -i '$a\##	PG Network tweak	  ' /etc/crontab
+        sed -i '$a\##	PTS Network tweak	  ' /etc/crontab
         sed -i '$a\#################################' /etc/crontab
         sed -i '$a\@reboot ethtool -K '$network' tso off tx off\' /etc/crontab
         sleep 2

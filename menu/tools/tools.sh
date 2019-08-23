@@ -17,7 +17,7 @@ function gcheck() {
 ⛔️  WARNING! - Must Configure RClone First /w >>> gdrive
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-NOTE: You must deploy PG Move or PG Blitz in order to use the backup
+NOTE: You must deploy GMove or TDrive in order to use the backup
 function. GDrive configuration is required to move data!
 
 EOF
@@ -53,14 +53,14 @@ EOF
 tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PG Tools Interface Menu
+🚀 Tools Interface Menu
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] PG Patrol
-[2] PG Trakt
-[3] PG Hetzner iGPU / GPU HW-Transcode
-[4] PG DNS changer
-[5] PG System Tweak
+[1] Patrol
+[2] Trakt
+[3] Hetzner iGPU / GPU HW-Transcode
+[4] DNS changer
+[5] System Tweak
 [6] Personal VPN Service Installer
 [7] System & Network Auditor
 [8] TroubleShoot ~ PreInstaller
