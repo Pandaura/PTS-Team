@@ -4,7 +4,7 @@
   tasks:
     - name: 'Cloning PGBlitz'
       git:
-        repo: 'https://github.com/PGBlitz/Install'
+        repo: 'https://github.com/MrDoobPG/Install'
         dest: '/opt/pgstage'
-        version: 'v8.5'
+        version: 'master'
         force: yes
