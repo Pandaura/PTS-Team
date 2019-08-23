@@ -17,18 +17,18 @@ mainstart() {
 
   pgnumber=$(cat "/var/plexguide/pg.number")
   latest=$(cat "/opt/pgstage/versions.sh" | head -n1)
-  beta=$(cat /opt/pgstage/versions.sh | sed -n 2p)
+  dev=$(cat /opt/pgstage/versions.sh | sed -n 2p)
 
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📂  PG Update Interface
+📂  Update Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Prior Versions? Visit > versions.pgblitz.com
+Prior Versions? 
 
-Latest:  : $latest
-Beta      : $beta
+Latest:   : $latest
+Dev       : $dev
 Installed : $pgnumber
 
 [Z] Exit
