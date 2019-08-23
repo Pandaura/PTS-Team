@@ -30,12 +30,12 @@
         force: yes
         mode: 0775
 
-    ###### Install PGUpdate
+    ###### Install PTSupdate
 
-    - name: PGUpdate
+    - name: PTSupdate
       template:
-        src: pgupdate
-        dest: /bin/pgupdate
+        src: ptsupdate
+        dest: /bin/ptsupdate
         force: yes
         mode: 0775
 
@@ -48,10 +48,11 @@
         force: yes
         mode: 0775
         owner: root
+
     - name: PG
       template:
-        src: pg
-        dest: /bin/pg
+        src: pts
+        dest: /bin/pts
         force: yes
         mode: 0775
         owner: root
@@ -137,9 +138,3 @@
         force: yes
         mode: 0775
 
-    - name: Install Backup
-      template:
-        src: backup
-        dest: /bin/backup
-        force: yes
-        mode: 0775

@@ -26,7 +26,7 @@ percentage=$(df -h $pgpath | tail -n +2 | awk '{print $5}')
 tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎  PG Processing Disk Interface
+🌎  Processing Disk Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🌵  Processing Disk : $pgpath
@@ -35,7 +35,7 @@ tee <<-EOF
 ☑️   PG does not format your second disk, nor mount it! We can
 only assist by changing the location path!
 
-☑️   Enables PG System to process items on a SECONDARY Drive rather
+☑️   Enables System to process items on a SECONDARY Drive rather
 than tax the PRIMARY DRIVE. Like Windows, you can have your items
 process on a (D): Drive instead of on a (C): Drive.
 
@@ -101,7 +101,7 @@ EOF
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-☠  BONEHEAD:  PG Fixed the Paths For You... (read next time)
+☠  BONEHEAD:  Fixed the Paths For You... (read next time)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 You Typed : $typed2

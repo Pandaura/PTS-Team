@@ -10,13 +10,13 @@ mainstart() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PG Box Apps Interface Selection    
+🚀 Box Apps Interface Selection    
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 💬  PG Box installs a series of Core and Community applications!
 
-[1] PG Box: Core
-[2] PG Box: Community
+[1] PTS         : Core
+[2] PGBlitzs Box: Community
 [3] PG Box: Removal
 [Z] Exit
 

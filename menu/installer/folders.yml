@@ -54,8 +54,6 @@
         - /mnt/gcrypt/tv
         - /mnt/gcrypt/movies
         - /mnt/gcrypt/music
-        - /mnt/gcrypt/ebooks
-        - /mnt/gcrypt/abooks
       when: gcrypt.stat.exists == False
       ignore_errors: yes
     ############ TCrypt
@@ -70,8 +68,6 @@
         - /mnt/tcrypt/tv
         - /mnt/tcrypt/movies
         - /mnt/tcrypt/music
-        - /mnt/tcrypt/ebooks
-        - /mnt/tcrypt/abooks
       when: tcrypt.stat.exists == False
       ignore_errors: yes
 
@@ -127,8 +123,6 @@
         - /mnt/gdrive/tv
         - /mnt/gdrive/movies
         - /mnt/gdrive/music
-        - /mnt/gdrive/ebooks
-        - /mnt/gdrive/abooks
       when: gdrive.stat.exists == False
       ignore_errors: yes
     ############ TCrypt
@@ -139,8 +133,6 @@
         - /mnt/tcrypt/tv
         - /mnt/tcrypt/movies
         - /mnt/tcrypt/music
-        - /mnt/tcrypt/ebooks
-        - /mnt/tcrypt/abooks
       when: gdrive.stat.exists == False
       ignore_errors: yes
 
@@ -157,8 +149,6 @@
         - /mnt/tdrive/tv
         - /mnt/tdrive/movies
         - /mnt/tdrive/music
-        - /mnt/tdrive/ebooks
-        - /mnt/tdrive/abooks
       when: tdrive.stat.exists == False
       ignore_errors: yes
 
@@ -174,8 +164,6 @@
         - /mnt/encrypt/tv
         - /mnt/encrypt/movies
         - /mnt/encrypt/music
-        - /mnt/encrypt/ebooks
-        - /mnt/encrypt/abooks
       when: encrypt.stat.exists == False
       ignore_errors: yes
 

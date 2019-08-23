@@ -16,7 +16,7 @@ sed -i -e "/wp-*/d" /tmp/backup.list
 sed -i -e "/x2go*/d" /tmp/backup.list
 sed -i -e "/plexguide/d" /tmp/backup.list
 sed -i -e "/cloudplow/d" /tmp/backup.list
-sed -i -e "/phlex/d" /tmp/backup.list
+sed -i -e "/plex/d" /tmp/backup.list
 
 #### Commenting Out To Let User See
 num=0
