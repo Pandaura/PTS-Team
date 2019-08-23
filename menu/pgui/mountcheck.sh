@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# Title:      mountcheck
-# Moded :	  MrDoob | ptSComm
-# Author(s):  Admin9705 - Deiteq
-# URL:        https://pgblitz.com - http://github.pgblitz.com
+# Title:      PTS Community 
+# Author:     MrDoob
+# URL:        WTFH >-!-< why you need this ^^ 
 # GNU:        General Public License v3.0
+#
 ################################################################################
 mkdir -p /opt/appdata/plexguide/emergency
 mkdir -p /opt/appdata/plexguide
@@ -37,40 +37,40 @@ while true; do
 
         if [[ $status == "1" ]] ; then
                 if [[ "$pgmovecheck" != "active" ]]; then
-                        echo "🔴 Not Operational MOVE" >>/var/plexguide/pg.blitz
+                        echo " 🔴 Not Operational MOVE" >>/var/plexguide/pg.blitz
                 else
-                        echo "✅ Operational MOVE" >>/var/plexguide/pg.blitz
+                        echo " ✅ Operational MOVE" >>/var/plexguide/pg.blitz
                 fi
         fi
         if [[ $status == "2" ]] ; then
                 if [[ "$pgblitzcheck" != "active" ]]; then
-                        echo "🔴 Not Operational BLITZ" >>/var/plexguide/pg.blitz
+                        echo " 🔴 Not Operational BLITZ" >>/var/plexguide/pg.blitz
                 else
-                        echo "✅ Operational BLITZ" >>/var/plexguide/pg.blitz
+                        echo " ✅ Operational BLITZ" >>/var/plexguide/pg.blitz
                 fi
         fi
 
   # Todo remove the dupes or change to crypt once PGUI is updated
 
   if [[ "$gdrivecheck" != "active" ]]; then
-    echo "🔴 Not Operational" >/var/plexguide/pg.gdrive
-  else echo "✅ Operational" >/var/plexguide/pg.gdrive; fi
+    echo " 🔴 Not Operational" >/var/plexguide/pg.gdrive
+  else echo " ✅ Operational" >/var/plexguide/pg.gdrive; fi
 
   if [[ "$gcryptcheck" != "active" ]]; then
-    echo "🔴 Not Operational" >/var/plexguide/pg.gcrypt
-  else echo "✅ Operational" >/var/plexguide/pg.gcrypt; fi
+    echo " 🔴 Not Operational" >/var/plexguide/pg.gcrypt
+  else echo " ✅ Operational" >/var/plexguide/pg.gcrypt; fi
 
   if [[ "$tdrivecheck" != "active" ]]; then
-    echo "🔴 Not Operational " >/var/plexguide/pg.tdrive
-  else echo "✅ Operational" >/var/plexguide/pg.tdrive; fi
+    echo " 🔴 Not Operational " >/var/plexguide/pg.tdrive
+  else echo " ✅ Operational" >/var/plexguide/pg.tdrive; fi
 
   if [[ "$tcryptcheck" != "active" ]]; then
-    echo "🔴 Not Operational " >/var/plexguide/pg.crypt
-  else echo "✅ Operational" >/var/plexguide/pg.tcrypt; fi
+    echo " 🔴 Not Operational " >/var/plexguide/pg.crypt
+  else echo " ✅ Operational" >/var/plexguide/pg.tcrypt; fi
 
   if [[ "$pgunioncheck" != "active" ]]; then
-    echo "🔴 Not Operational " >/var/plexguide/pg.union
-  else echo "✅ Operational " >/var/plexguide/pg.union; fi
+    echo " 🔴 Not Operational " >/var/plexguide/pg.union
+  else echo " ✅ Operational " >/var/plexguide/pg.union; fi
 
 
   # Disk Calculations - 5000000 = 5GB

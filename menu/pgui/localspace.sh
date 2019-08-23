@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# Title:      PGBlitz (local used space)
-# Author(s):  Admin9705
-# Coder:      MrDoob
-# URL:        https://pgblitz.com - http://github.pgblitz.com
+# Title:      PTS Community 
+# Author:     MrDoob
+# URL:        WTFH >-!-< why you need this ^^ 
 # GNU:        General Public License v3.0
+#
 ################################################################################
 
 # Starting Actions

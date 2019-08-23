@@ -22,7 +22,7 @@
 
     - name: MountCheck Service
       template:
-        src: /opt/coreapps/core/pgui/template/mountcheck.service
+        src: /opt/plexguide/menu/pgui/mountcheck.service
         dest: /etc/systemd/system/mountcheck.service
         force: yes
 

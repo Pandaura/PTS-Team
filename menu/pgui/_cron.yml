@@ -1,10 +1,9 @@
 #!/bin/bash
 #
-# Title:      PTS Community 
-# Author:     MrDoob
-# URL:        WTFH >-!-< why you need this ^^ 
+# Title:      PGBlitz (Reference Title File)
+# Authors:    Admin9705, Deiteq, and many PGBlitz Contributors
+# URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
-#
 ################################################################################
 ---
 - cron:
@@ -13,15 +12,22 @@
     job: 'bash /opt/appdata/pgui/gtused.sh'
     state: absent
   ignore_errors: yes
+  
+- cron:
+    name: Daily G/TDrive used space check | file checker
+    special_time: 'daily'
+    job: 'bash /opt/appdata/pgui/ckeck.sh'
+    state: absent
+  ignore_errors: yes
 
 - cron:
     name: Daily check for mgerfs / rclone new version
     special_time: 'daily'
-    job: 'bash /opt/appdata/pgui/ckeck.sh'
+    job: 'bash /opt/appdata/pgui/ckeck.sh >/dev/null 2>&1'
     state: present
 
 - cron:
     name: Daily G/TDrive used space checker | file & folder
     special_time: 'daily'
-    job: 'bash /opt/appdata/pgui/gtused.sh'
+    job: 'bash /opt/appdata/pgui/gtused.sh >/dev/null 2>&1'
     state: present

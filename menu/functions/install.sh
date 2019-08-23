@@ -297,9 +297,11 @@ mountcheck() {
 }
 
 localspace() {
-  ansible-playbook /opt/pgui/pgui.yml
   ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
-
+}
+gtused() {
+  ansible-playbook /opt/plexguide/menu/pgui/gtused.yml
+}
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
