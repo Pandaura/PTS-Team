@@ -302,6 +302,11 @@ localspace() {
 gtused() {
   ansible-playbook /opt/plexguide/menu/pgui/gtused.yml
 }
+check() {
+  ansible-playbook /opt/plexguide/menu/pgui/_cron.yml
+}
+check() {
+  ansible-playbook /opt/plexguide/menu/pgui/dynamic.yml
 
   tee <<-EOF
 
