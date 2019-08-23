@@ -99,7 +99,6 @@ pginstall() {
   core gcloud
   core cleaner &>/dev/null &
   core serverid
-  core watchtower
   core prune
   customcontainers &>/dev/null &
   pgedition
@@ -190,6 +189,10 @@ EOF
 
 folders() {
   ansible-playbook /opt/plexguide/menu/installer/folders.yml
+}
+
+network() {
+  ansible-playbook /opt/plexguide/menu/network/network.yml
 }
 
 prune() {
