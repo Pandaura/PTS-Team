@@ -9,15 +9,10 @@
 - hosts: localhost
   gather_facts: false
   tasks:
-    - name: Register Project
-      shell: 'cat /var/plexguide/pg.number'
-      register: serverid
-
     - name: Installing Version master
       git:
         repo: 'https://github.com/MrDoobPG/PGBlitz.com'
         dest: '/opt/plexguide'
-        version: dev
         force: yes
 
     - name: 'Stops First Time Run'
