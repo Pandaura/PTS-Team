@@ -299,12 +299,15 @@ localspace() {
   ansible-playbook /opt/pgui/pgui.yml
   ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
 }
+
 gtused() {
   ansible-playbook /opt/plexguide/menu/pgui/gtused.yml
 }
+
 check() {
   ansible-playbook /opt/plexguide/menu/pgui/_cron.yml
 }
+
 check() {
   ansible-playbook /opt/plexguide/menu/pgui/dynamic.yml
 
