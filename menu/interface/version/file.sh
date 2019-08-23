@@ -28,7 +28,7 @@ echo "[Z] Exit"
 echo ""
 break=no
 while [ "$break" == "no" ]; do
-  read -p '↘️  Type [PG Version] | PRESS ENTER: ' typed
+  read -p '↘️  Type [Version] | PRESS ENTER: ' typed
   storage=$(grep $typed /var/plexguide/ver.temp)
 
   if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
@@ -37,7 +37,7 @@ while [ "$break" == "no" ]; do
     exit
   fi
 
-  if [ "$storage" != "" ]; then
+  if [ "$storage" == "master" ]; then
     break=yes
     echo $storage >/var/plexguide/pg.number
     ansible-playbook /opt/plexguide/menu/interface/version/choice.yml
@@ -46,6 +46,19 @@ while [ "$break" == "no" ]; do
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅️  SYSTEM MESSAGE: Installed Verison - $storage - Standby!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+
+  elif [ "$storage" == "dev" ]; then
+    break=yes
+    echo $storage >/var/plexguide/pg.number
+    ansible-playbook /opt/plexguide/menu/interface/version/choice-dev.yml
+
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅️  SYSTEM MESSAGE: Installed Verison - $storage - Standby!
+✅️  THATS an dev Branche 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
     sleep 4
