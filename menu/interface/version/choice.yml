@@ -25,7 +25,7 @@
       git:
         repo: 'https://github.com/MrDoobPG/PGBlitz.com'
         dest: '/opt/plexguide'
-        version: '{{serverid.stdout}}'
+        #version: '{{serverid.stdout}}'
         force: yes
       when: not serverid.stdout == "edge"
       ignore_errors: True
