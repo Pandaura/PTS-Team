@@ -78,7 +78,8 @@ pginstall() {
   core dockerinstall
   core docstart
   core kernel
-  core cloudflare
+  core nvidia
+  core system
 
   touch /var/plexguide/install.roles
   rolenumber=3
@@ -108,7 +109,8 @@ pginstall() {
   emergency
   pgdeploy
   core kernel
-  core cloudflare
+  core nvidia
+  core system
 }
 
 core() {
@@ -165,6 +167,10 @@ kernel () {
 
 cloudflare () {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags cloudflare
+}
+
+system () {
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags system
 }
 
 nvidia () {
