@@ -9,7 +9,7 @@ source /opt/plexguide/menu/functions/install.sh
 emergency
 
 # PG ascii art with color
-echo ""
+echo
 <<-EOF
 ┌─────────────────────────────────────┐
 │          -== Team   PTS ==-         │
