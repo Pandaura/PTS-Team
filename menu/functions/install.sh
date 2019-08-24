@@ -105,6 +105,9 @@ pginstall() {
   core mountcheck
   emergency
   pgdeploy
+  kernel
+  nvidia
+  system
 }
 
 core() {
@@ -189,10 +192,6 @@ EOF
 
 folders() {
   ansible-playbook /opt/plexguide/menu/installer/folders.yml
-}
-
-network() {
-  ansible-playbook /opt/plexguide/menu/network/network.yml
 }
 
 prune() {
