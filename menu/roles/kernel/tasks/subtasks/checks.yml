@@ -15,6 +15,7 @@
 - name: Checks | Warn when linux kernel version is lower than 4.10
   debug:
     msg:
-      - "Cloudbox was designed for use on linux kernel version 4.10+."
-      - "Running Cloudbox on a lower kernel may lead to reduced performance."
+      - "PTS was designed for use on linux kernel version 4.10+."
+      - "Running PTS on a lower kernel may lead to reduced performance."
+      - "Thanks to the guys of CloudBox for building this part."
   when: (ansible_kernel is version('4.00', '>=')) and (ansible_kernel is version('4.10', '<'))
