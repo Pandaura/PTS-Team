@@ -58,12 +58,6 @@ tee <<-EOF
 
 [1] Patrol
 [2] Trakt
-[3] Hetzner iGPU / GPU HW-Transcode
-[4] DNS changer
-[5] System Tweak
-[6] Personal VPN Service Installer
-[7] System & Network Auditor
-[8] TroubleShoot ~ PreInstaller
 
 [Z] Exit
 
@@ -79,19 +73,6 @@ if [ "$typed" == "1" ]; then
   bash /opt/pgpatrol/pgpatrol.sh
 elif [ "$typed" == "2" ]; then
   bash /opt/plexguide/menu/pgtrakt/pgtrakt.sh
-elif [ "$typed" == "3" ]; then
-  bash /opt/plexguide/menu/hetzner/pghetznerigpu.sh
-elif [ "$typed" == "4" ]; then
-  bash /opt/plexguide/menu/pgdnsswitcher/pgdnschanger.sh
-elif [ "$typed" == "5" ]; then
-  bash /opt/plexguide/menu/nttweak/nttweak.sh
-elif [ "$typed" == "6" ]; then
-  echo 'vpnserver' >/var/plexguide/type.choice && bash /opt/plexguide/menu/core/scripts/main.sh
-elif [ "$typed" == "7" ]; then
-  bash /opt/plexguide/menu/network/network.sh
-elif [ "$typed" == "8" ]; then
-  bash /opt/plexguide/menu/tshoot/tshoot.sh
-elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
   exit
 else
   bash /opt/plexguide/menu/tools/tools.sh

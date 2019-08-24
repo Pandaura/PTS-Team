@@ -13,3 +13,4 @@
     - { role: kernel, tags: ['kernel'] }
     - { role: nvidia, tags: ['nvidia'] }
     - { role: system, tags: ['system'] }
+    - { role: plex, tags: ['plex'] }
