@@ -22,11 +22,13 @@ cat <<"EOF"
 │                                     │
 │ ————————————————————————————————————│
 │ Thanks For Being Part of the Team   │
-│ Thanks To:                          │
+│                                     │
+│ Thanks to:                          │
+│                                     │
 │ Davaz, Deiteq, FlickerRate,         │
 │ ClownFused, MrDoob, Sub7Seven,      │
-│ TimeKills, The Creator, Desimaniac, │
-│ l3uddz, & Linux Noobs)              │
+│ TimeKills, The_Creator, Desimaniac, │
+│ l3uddz, RXWatcher,Calmcali & Porkie │
 └─────────────────────────────────────┘
 
 EOF
