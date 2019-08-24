@@ -57,7 +57,7 @@ tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] Patrol
-[2] Trakt
+[2] Traktarr [ Traktarr Cloudbox ]
 
 [Z] Exit
 
@@ -72,7 +72,13 @@ if [ "$typed" == "1" ]; then
   bash /opt/plexguide/menu/pgcloner/pgpatrol.sh
   bash /opt/pgpatrol/pgpatrol.sh
 elif [ "$typed" == "2" ]; then
-  bash /opt/plexguide/menu/pgtrakt/pgtrakt.sh
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags traktarr
+  exit
+elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
+  exit
+else
+  bash /opt/plexguide/menu/tools/tools.sh
+elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
   exit
 else
   bash /opt/plexguide/menu/tools/tools.sh
