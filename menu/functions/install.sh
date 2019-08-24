@@ -77,9 +77,9 @@ pginstall() {
   core mergerinstall
   core dockerinstall
   core docstart
-  core kernel
-  core nvidia
-  core system
+  kernel
+  nvidia
+  system
 
   touch /var/plexguide/install.roles
   rolenumber=3
@@ -108,7 +108,9 @@ pginstall() {
   core mountcheck
   emergency
   pgdeploy
-
+  kernel
+  nvidia
+  system
 }
 
 core() {
