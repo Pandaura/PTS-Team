@@ -80,7 +80,7 @@ pginstall() {
   kernel
   nvidia
   system
-´
+
   touch /var/plexguide/install.roles
   rolenumber=3
   # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
