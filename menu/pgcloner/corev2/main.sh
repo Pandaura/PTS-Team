@@ -55,7 +55,7 @@ mainbanner() {
 
 $clonerinfo
 
-[1] Utilize $roleproper - PGBlitz's
+[1] Utilize $roleproper
 [2] Utilize $roleproper - Personal (Forked)
 
 [Z] Exit
