@@ -77,9 +77,6 @@ pginstall() {
   core mergerinstall
   core dockerinstall
   core docstart
-  kernel
-  nvidia
-  system
 
   touch /var/plexguide/install.roles
   rolenumber=3
@@ -108,9 +105,6 @@ pginstall() {
   core mountcheck
   emergency
   pgdeploy
-  kernel
-  nvidia
-  system
 }
 
 core() {
@@ -159,22 +153,6 @@ dependency() {
 
 docstart() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags docstart
-}
-
-kernel () {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags kernel
-}
-
-cloudflare () {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags cloudflare
-}
-
-system () {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags system
-}
-
-nvidia () {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags nvidia
 }
 
 emergency() {
