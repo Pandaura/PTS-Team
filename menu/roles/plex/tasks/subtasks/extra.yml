@@ -15,19 +15,3 @@
 - name: "Forced Automatic Quality Settings"
   import_tasks: "subtasks/settings/forced_quality.yml"
   tags: plex_forced_quality
-
-
-# - name: Wait for 'Preferences.xml' to be created by Plex
-  # wait_for:
-    # path: "/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Preferences.xml"
-    # state: present
-
-# - name: Wait for Plex DB to be created
-  # wait_for:
-    # path: "/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db"
-    # state: present
-
-# - name: Stop Plex Container
-  # docker_container:
-    # name: plex
-    # state: stopped
