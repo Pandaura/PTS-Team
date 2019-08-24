@@ -108,9 +108,7 @@ pginstall() {
   core mountcheck
   emergency
   pgdeploy
-  core kernel
-  core nvidia
-  core system
+
 }
 
 core() {
