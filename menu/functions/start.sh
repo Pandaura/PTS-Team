@@ -20,7 +20,6 @@ EOF
     exit 1
   fi
 }
-
 downloadpg() {
   rm -rf /opt/plexguide
   git clone https://github.com/MrDoobPG/PGBlitz.com.git /opt/plexguide && cp /opt/plexguide/menu/interface/alias/templates/pts /bin/
@@ -58,7 +57,10 @@ EOF
     sleep 2
   fi
 }
-
+owned() {
+  chown -cR 1000:1000 /opt/plexguide/ 1>/dev/null 2>&1
+  chmod -R 775 /opt/plexguide 1>/dev/null 2>&1
+}
 exitcheck() {
   bash /opt/plexguide/menu/version/file.sh
   file="/var/plexguide/exited.upgrade"
