@@ -27,7 +27,7 @@ mainstart() {
 
 Prior Versions? 
 
-Latest:   : $latest
+Stable:   : $latest
 Dev       : $dev
 Installed : $pgnumber
 
