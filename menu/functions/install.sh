@@ -80,7 +80,7 @@ pginstall() {
   kernel
   nvidia
   system
-  
+´
   touch /var/plexguide/install.roles
   rolenumber=3
   # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
@@ -152,6 +152,18 @@ dependency() {
   else
     ansible-playbook /opt/plexguide/menu/dependency/dependency.yml
   fi
+}
+
+kernel() {
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags kernel 
+}
+
+nvidia() {
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags nvidia
+}
+
+system() {
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags system
 }
 
 docstart() {
