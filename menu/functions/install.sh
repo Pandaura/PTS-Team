@@ -154,6 +154,18 @@ dependency() {
   fi
 }
 
+kernel() {
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags kernel
+}
+
+nvidia() {
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags nvidia
+}
+
+system() {
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags system
+}
+
 docstart() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags docstart
 }
