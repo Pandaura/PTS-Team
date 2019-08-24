@@ -138,3 +138,10 @@
         force: yes
         mode: 0775
 
+    - name: Install Status UFSMonitor
+      template:
+        src: sufs
+        dest: /bin/ptsadd
+        force: yes
+        mode: 0775
+
