@@ -9,8 +9,9 @@ source /opt/plexguide/menu/functions/install.sh
 emergency
 
 # PG ascii art with color
-echo
-<<-EOF
+echo ""
+
+cat <<"EOF"
 ┌─────────────────────────────────────┐
 │          -== Team   PTS ==-         │
 │ ————————————————————————————————————│
@@ -18,8 +19,14 @@ echo
 │ Update  PTS:              ptsupdate │
 │ View the PTS Logs:        blitz     │
 │ Download Your PTS Fork:   pgfork    │
+│                                     │
 │ ————————————————————————————————————│
 │ Thanks For Being Part of the Team   │
+│ Thanks To:                          │
+│ Davaz, Deiteq, FlickerRate,         │
+│ ClownFused, MrDoob, Sub7Seven,      │
+│ TimeKills, The Creator, Desimaniac, │
+│ l3uddz, & Linux Noobs)              │
 └─────────────────────────────────────┘
 
 EOF

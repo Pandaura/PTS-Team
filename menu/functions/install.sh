@@ -63,6 +63,7 @@ updateprime() {
   echo "1" >${abc}/pg.installer
   echo "7" >${abc}/pg.prune
   echo "21" >${abc}/pg.mountcheck
+  echo "4" >${abc}kcgpnv.numbers
 
 }
 
@@ -77,9 +78,6 @@ pginstall() {
   core mergerinstall
   core dockerinstall
   core docstart
-  kernel
-  nvidia
-  system
 
   touch /var/plexguide/install.roles
   rolenumber=3
@@ -152,18 +150,6 @@ dependency() {
   else
     ansible-playbook /opt/plexguide/menu/dependency/dependency.yml
   fi
-}
-
-kernel() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags kernel 
-}
-
-nvidia() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags nvidia
-}
-
-system() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags system
 }
 
 docstart() {
@@ -343,6 +329,15 @@ EOF
   read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
 
 }
+
+newinstall="$(tail -n 1 /var/plexguide/kcgpnv.numbers)"
+
+if [ "$newinstall" == "4" ]; then
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags kernel
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags nvidia
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags system
+  echo "8" >/var/plexguide/kcgpnv.numbers
+fi
 
 newinstall() {
   rm -rf /var/plexguide/pg.exit 1>/dev/null 2>&1
