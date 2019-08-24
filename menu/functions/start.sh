@@ -24,7 +24,7 @@ downloadpg() {
   rm -rf /opt/plexguide
   git clone https://github.com/MrDoobPG/PGBlitz.com.git /opt/plexguide && cp /opt/plexguide/menu/interface/alias/templates/pts /bin/
   cp /opt/plexguide/menu/interface/alias/templates/pts /bin/pts
-  chown -cR 1000:1000 /opt/plexguide/ 1>/dev/null 2>&1
+  chown -cR 1000:1000 /opt/plexguide 1>/dev/null 2>&1
   chmod -R 775 /opt/plexguide 1>/dev/null 2>&1
 }
 
@@ -58,7 +58,7 @@ EOF
   fi
 }
 owned() {
-  chown -cR 1000:1000 /opt/plexguide/ 1>/dev/null 2>&1
+  chown -cR 1000:1000 /opt/plexguide 1>/dev/null 2>&1
   chmod -R 775 /opt/plexguide 1>/dev/null 2>&1
 }
 exitcheck() {
