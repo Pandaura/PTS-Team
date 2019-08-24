@@ -13,7 +13,7 @@ echo ""
 
 cat <<"EOF"
 ┌─────────────────────────────────────┐
-│          -== Team   PTS ==-         │
+│         -==   Team PTS  ==-         │
 │ ————————————————————————————————————│
 │ Restart PTS:              pts       │
 │ Update  PTS:              ptsupdate │
@@ -28,7 +28,7 @@ cat <<"EOF"
 │ Davaz, Deiteq, FlickerRate,         │
 │ ClownFused, MrDoob, Sub7Seven,      │
 │ TimeKills, The_Creator, Desimaniac, │
-│ l3uddz, RXWatcher,Calmcali & Porkie │
+│ l3uddz, RXWatcher,Calmcacli, Porkie │
 └─────────────────────────────────────┘
 
 EOF

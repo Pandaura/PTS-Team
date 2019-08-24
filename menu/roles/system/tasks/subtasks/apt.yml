@@ -33,18 +33,18 @@
       - apt-utils
       - byobu
 
-- name: APT update
-  apt:
-    update_cache: yes
-  ignore_errors: yes
+            # - name: APT update
+              # apt:
+                # update_cache: yes
+              # ignore_errors: yes
 
-- name: APT upgrade
+- name: Upgrading the system
   shell: apt-get upgrade --quiet --yes --allow-unauthenticated -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
   environment: "{{ env_vars }}"
   when: not continuous_integration
   ignore_errors: yes
 
-- name: APT dist-upgrade
+- name: Upgrading part 2
   shell: apt-get dist-upgrade --quiet --yes --allow-unauthenticated -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
   environment: "{{ env_vars }}"
   when: not continuous_integration
