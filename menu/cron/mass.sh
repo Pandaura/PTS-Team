@@ -47,9 +47,9 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⌛ PG Cron - Schedule Cron Jobs (Backups) | Mass Program Interface
+⌛ Cron - Schedule Cron Jobs (Backups) | Mass Program Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚡ Reference: http://cron.pgblitz.com
+
 
 [1] No  [Skip   - All Cron Jobs]
 [2] Yes [Manual - Select for Each App]
