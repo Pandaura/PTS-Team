@@ -17,3 +17,4 @@
     - { role: traktarr, tags: ['traktarr'] }
     - { role: sub-zero-plugin, tags: ['sub-zero-plugin'] }
     - { role: trakttv-plugin, tags: ['trakttv-plugin'] }
+    - { role: common, tags: ['common'] }
