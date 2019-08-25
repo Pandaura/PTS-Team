@@ -29,6 +29,12 @@
       regexp: '(^blacklist\si915.*)'
       replace: '#\1'
 
+  - name: Hetzner | Comment out GRUB_CMDLINE_LINUX_DEFAULT in 'blacklist-hetzner.conf'
+    replace:
+      path: "/etc/modprobe.d/blacklist-hetzner.conf"
+      regexp: '(^GRUB_CMDLINE_LINUX_DEFAULT.*)'
+      replace: '#\1'
+
   - name: Hetzner | Hetzner GRUB files
     set_fact:
       hetzner_grub_files:
