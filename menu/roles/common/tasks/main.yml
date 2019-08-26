@@ -90,9 +90,9 @@
       - "run-one"
   ignore_errors: yes
 
-- name: Install 'intel-gpu-tools'
-  apt: "name=intel-gpu-tools state=present"
-  when: ('i915' not in lscpi_resp.stdout)
+# - name: Install 'intel-gpu-tools'
+  # apt: "name=intel-gpu-tools state=present"
+  # when: ('i915' not in lscpi_resp.stdout)
 
 - name: Install unrar
   apt:
