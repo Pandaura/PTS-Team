@@ -114,8 +114,8 @@
 
 - name: Import pip.conf into /home/{{ user.name }}/.config/pip/pip.conf
   copy:
-    src: "pip.conf"
-    dest: "/home/"{{ user.name }}"/.config/pip/pip.conf"
+    src: 'pip.conf'
+    dest: /home/"{{ user.name }}"/.config/pip/pip.conf
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: 0775
