@@ -73,11 +73,6 @@ if [ "$typed" == "1" ]; then
   bash /opt/pgpatrol/pgpatrol.sh
 elif [ "$typed" == "2" ]; then
   ansible-playbook /opt/plexguide/menu/pg.yml --tags traktarr
-  exit
-elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
-  exit
-else
-  bash /opt/plexguide/menu/tools/tools.sh
 elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
   exit
 else
