@@ -258,7 +258,7 @@ EOF
     primestart
     ;;
   7)
-    bash /opt/plexguide/menu/pgcloner/pgvault.sh
+    bash /opt/plexguide/menu/pgcloner/pgvaultchoise.sh
     primestart
     ;;
   8)
