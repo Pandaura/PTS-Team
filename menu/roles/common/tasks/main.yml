@@ -112,14 +112,14 @@
   ignore_errors: yes
   when: (not unrar_binary.stat.exists)
 
-- name: Import pip.conf into /home/{{ user.name }}/.config/pip/pip.conf
-  copy:
-    src: 'pip.conf'
-    dest: /home/root/.config/pip/pip.conf
-    owner: root
-    group: root
-    mode: 0775
-    force: yes
+# - name: Import pip.conf into /home/{{ user.name }}/.config/pip/pip.conf
+  # copy:
+    # src: 'pip.conf'
+    # dest: /home/root/.config/pip/pip.conf
+    # owner: root
+    # group: root
+    # mode: 0775
+    # force: yes
 
 - name: Install common pip modules
   pip:
