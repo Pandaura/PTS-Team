@@ -20,25 +20,23 @@
 - name: Create traktarr directories
   file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000 recurse=yes'
   with_items:
-    - /opt/appdata/traktarr
+    - /opt/traktarr
 
 - name: Clone traktarr
   git:
     repo: https://github.com/l3uddz/traktarr.git
-    dest: /opt/appdata/traktarr
+    dest: /opt/traktarr
     version: HEAD
     force: yes
-  become: yes
-  become_user: '1000'
 
 - name: Install pip requirements
   pip:
-    requirements: /opt/appdata/traktarr/requirements.txt
+    requirements: /opt/traktarr/requirements.txt
     executable: pip3
 
 - name: Check if traktarr config exists
   stat:
-    path: "/opt/appdata/traktarr/config.json"
+    path: "/opt/traktarr/config.json"
   register: traktarr_config
 
 - name: "Check if sonarr exists"
@@ -88,7 +86,7 @@
 - name: Import default config
   template:
     src: config.json.j2
-    dest: /opt/appdata/traktarr/config.json
+    dest: /opt/traktarr/config.json
     owner: '1000'
     group: '1000'
     mode: 0775
@@ -97,17 +95,17 @@
 
 - name: Set traktarr.py as executable
   file:
-    path: /opt/appdata/traktarr/traktarr.py
+    path: /opt/traktarr/traktarr.py
     owner: '1000'
     group: '1000'
     mode: a+x
 
 - name: Set directory permissions
-  file: "path=/opt/appdata/traktarr state=directory owner={{ user.name }} group={{ user.name }} recurse=yes"
+  file: "path=/opt/traktarr state=directory mode=0775 owner=1000 group=1000 recurse=yes"
 
 - name: "Create /usr/local/bin symlink"
   file:
-    src: "/opt/appdata/traktarr/traktarr.py"
+    src: "/opt/traktarr/traktarr.py"
     dest: "/usr/local/bin/traktarr"
     state: link
 
