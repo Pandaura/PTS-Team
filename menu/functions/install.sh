@@ -63,7 +63,7 @@ updateprime() {
   echo "1" >${abc}/pg.installer
   echo "7" >${abc}/pg.prune
   echo "21" >${abc}/pg.mountcheck
-  echo "4" >${abc}kcgpnv.numbers
+  echo "4" >${abc}/kcgpnv.numbers
 
 }
 
