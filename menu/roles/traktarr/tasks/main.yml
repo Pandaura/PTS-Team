@@ -18,7 +18,7 @@
   when: traktarr_service.stat.exists
 
 - name: Create traktarr directories
-  file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000 recurse=yes'
+  file: "path={{ item }} state=directory mode=0775 owner={{ user.name }} group={{ user.name }} recurse=yes"
   with_items:
     - /opt/traktarr
 
@@ -28,6 +28,8 @@
     dest: /opt/traktarr
     version: HEAD
     force: yes
+  become: yes
+  become_user: "{{ user.name }}"
 
 - name: Install pip requirements
   pip:
@@ -41,7 +43,7 @@
 
 - name: "Check if sonarr exists"
   stat:
-    path: "/opt/appdata/sonarr/app/config.xml"
+    path: "/opt/sonarr/app/config.xml"
   register: sonarr_config
   when: not traktarr_config.stat.exists
 
@@ -50,7 +52,7 @@
 
   - name: Pull sonarr api key
     xml:
-      path: "/opt/appdata/sonarr/app/config.xml"
+      path: "/opt/sonarr/app/config.xml"
       xpath: /Config/ApiKey
       content: text
     register: xmlresp
@@ -63,7 +65,7 @@
 
 - name: "Check if radarr exists"
   stat:
-    path: "/opt/appdata/radarr/app/config.xml"
+    path: "/opt/radarr/app/config.xml"
   register: radarr_config
   when: not traktarr_config.stat.exists
 
@@ -72,7 +74,7 @@
 
   - name: Pull radarr api key
     xml:
-      path: "/opt/appdata/radarr/app/config.xml"
+      path: "/opt/radarr/app/config.xml"
       xpath: /Config/ApiKey
       content: text
     register: xmlresp
@@ -87,7 +89,8 @@
   template:
     src: config.json.j2
     dest: /opt/traktarr/config.json
-    user: 1000:1000
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
     mode: 0775
     force: yes
   when: not traktarr_config.stat.exists
@@ -95,12 +98,12 @@
 - name: Set traktarr.py as executable
   file:
     path: /opt/traktarr/traktarr.py
-    owner: '1000'
-    group: '1000'
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
     mode: a+x
 
 - name: Set directory permissions
-  file: "path=/opt/traktarr state=directory mode=0775 owner=1000 group=1000 recurse=yes"
+  file: "path=/opt/traktarr state=directory owner={{ user.name }} group={{ user.name }} recurse=yes"
 
 - name: "Create /usr/local/bin symlink"
   file:
