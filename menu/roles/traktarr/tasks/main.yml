@@ -18,7 +18,7 @@
   when: traktarr_service.stat.exists
 
 - name: Create traktarr directories
-  file: "path={{ item }} state=directory mode=0775 owner={{ user.name }} group={{ user.name }} recurse=yes"
+  file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000' recurse=yes'
   with_items:
     - /opt/appdata/traktarr
 
@@ -29,7 +29,7 @@
     version: HEAD
     force: yes
   become: yes
-  become_user: "{{ user.name }}"
+  become_user: '1000'
 
 - name: Install pip requirements
   pip:
@@ -89,8 +89,8 @@
   template:
     src: config.json.j2
     dest: /opt/appdata/traktarr/config.json
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
+    owner: '1000'
+    group: '1000'
     mode: 0775
     force: yes
   when: not traktarr_config.stat.exists
@@ -98,8 +98,8 @@
 - name: Set traktarr.py as executable
   file:
     path: /opt/appdata/traktarr/traktarr.py
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
+    owner: '1000'
+    group: '1000'
     mode: a+x
 
 - name: Set directory permissions
