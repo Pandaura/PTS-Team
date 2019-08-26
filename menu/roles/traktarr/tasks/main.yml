@@ -87,8 +87,7 @@
   template:
     src: config.json.j2
     dest: /opt/traktarr/config.json
-    owner: '1000'
-    group: '1000'
+    user: 1000:1000
     mode: 0775
     force: yes
   when: not traktarr_config.stat.exists
