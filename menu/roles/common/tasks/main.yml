@@ -81,36 +81,37 @@
       - "apache2-utils"
       - "jq"
       - "lib32z1"
+      - "unrar"
   ignore_errors: yes
 
-- name: Install extra packages
-  apt:
-    state: present
-    name:
-      - "run-one"
-  ignore_errors: yes
+# - name: Install extra packages
+  # apt:
+    # state: present
+    # name:
+      # - "run-one"
+  # ignore_errors: yes
 
 # - name: Install 'intel-gpu-tools'
   # apt: "name=intel-gpu-tools state=present"
   # when: ('i915' not in lscpi_resp.stdout)
 
-- name: Install unrar
-  apt:
-    name: unrar
-    state: present
-  ignore_errors: yes
+# - name: Install unrar
+  # apt:
+    # name: unrar
+    # state: present
+  # ignore_errors: yes
 
-- name: Check to see if unrar installed
-  stat:
-    path: "/usr/bin/unrar"
-  register: unrar_binary
+# - name: Check to see if unrar installed
+  # stat:
+    # path: "/usr/bin/unrar"
+  # register: unrar_binary
 
-- name: Install unrar-free if unrar was not installed
-  apt:
-    name: unrar-free
-    state: present
-  ignore_errors: yes
-  when: (not unrar_binary.stat.exists)
+# - name: Install unrar-free if unrar was not installed
+  # apt:
+    # name: unrar-free
+    # state: present
+  # ignore_errors: yes
+  # when: (not unrar_binary.stat.exists)
 
 # - name: Import pip.conf into /home/{{ user.name }}/.config/pip/pip.conf
   # copy:
