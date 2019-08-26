@@ -8,7 +8,8 @@
 source /opt/plexguide/menu/functions/install.sh
 emergency
 
-# PG ascii art with color
+#
+clear 
 echo ""
 
 cat <<"EOF"
@@ -28,7 +29,7 @@ cat <<"EOF"
 │ Davaz, Deiteq, FlickerRate,         │
 │ ClownFused, MrDoob, Sub7Seven,      │
 │ TimeKills, The_Creator, Desimaniac, │
-│ l3uddz, RXWatcher,Calmcacli, Porkie │
+│ l3uddz, RXWatcher,Calmcacil, Porkie │
 └─────────────────────────────────────┘
 
 EOF
