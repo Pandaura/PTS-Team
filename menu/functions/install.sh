@@ -143,6 +143,19 @@ cleaner() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags clean-encrypt &>/dev/null &
 }
 
+#- name: gather os specific variables
+#  include_vars: "{{ item }}"
+#  with_first_found:
+#    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version}}.yml"
+#    - "{{ ansible_distribution }}.yml"
+#  tags: vars
+#OR
+# Include OS specific tasks
+#- include: CentOS.yml
+#  when: ansible_distribution == "CentOS"
+#- include: Ubuntu.yml
+#  when: ansible_distribution == "Ubuntu"
+
 dependency() {
   ospgversion=$(cat /var/plexguide/os.version)
   if [ "$ospgversion" == "debian" ]; then
@@ -187,15 +200,15 @@ EOF
   fi
 
 }
-
+#move to roles 
 folders() {
   ansible-playbook /opt/plexguide/menu/installer/folders.yml
 }
-
+#move to roles
 prune() {
   ansible-playbook /opt/plexguide/menu/prune/main.yml
 }
-
+#move to roles 
 hetzner() {
   if [ -e "$file" ]; then rm -rf /bin/hcloud; fi
   version="v1.10.0"
@@ -205,14 +218,14 @@ hetzner() {
   rm -rf /opt/appdata/plexguide/hcloud-linux-amd64-$version.tar.gz
   rm -rf /opt/appdata/plexguide/hcloud-linux-amd64-$version
 }
-
+#move to roles
 gcloud() {
   export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
   echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
   curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
   sudo apt-get update && sudo apt-get install google-cloud-sdk -y
 }
-
+#move to roles 
 mergerinstall() {
 
   ub16check=$(cat /etc/*-release | grep xenial)
@@ -304,7 +317,7 @@ gtused() {
   ansible-playbook /opt/plexguide/menu/pgui/gtused.yml
 }
 
-check() {
+crons() {
   ansible-playbook /opt/plexguide/menu/pgui/_cron.yml
 }
 
@@ -330,15 +343,15 @@ EOF
 
 }
 
-newinstall="$(tail -n 1 /var/plexguide/kcgpnv.numbers)"
+#newinstall="$(tail -n 1 /var/plexguide/kcgpnv.numbers)"
 
-if [ "$newinstall" == "4" ]; then
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags kernel
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags nvidia
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags system
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags common
-  echo "8" >/var/plexguide/kcgpnv.numbers
-fi
+#if [ "$newinstall" == "4" ]; then
+#  ansible-playbook /opt/plexguide/menu/pg.yml --tags kernel
+#  ansible-playbook /opt/plexguide/menu/pg.yml --tags nvidia
+#  ansible-playbook /opt/plexguide/menu/pg.yml --tags system
+#  ansible-playbook /opt/plexguide/menu/pg.yml --tags common
+#  echo "8" >/var/plexguide/kcgpnv.numbers
+#fi
 
 newinstall() {
   rm -rf /var/plexguide/pg.exit 1>/dev/null 2>&1
@@ -367,7 +380,7 @@ pgedition() {
   file="${abc}/server.id"
   if [ ! -e "$file" ]; then echo "[NOT-SET]" -rf >${abc}/rm; fi
 }
-
+#need edits
 portainer() {
   dstatus=$(docker ps --format '{{.Names}}' | grep "portainer")
   if [ "$dstatus" != "portainer" ]; then
@@ -445,7 +458,7 @@ pythonstart() {
   # Variables Need to Line Up with pg.sh (start)
   touch /var/plexguide/background.1
 }
-
+##need fixxes ! For Debian 9/10 && ubu 18.10
 dockerinstall() {
   ospgversion=$(cat /var/plexguide/os.version)
   if [ "$ospgversion" == "debian" ]; then
