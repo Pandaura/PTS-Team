@@ -16,4 +16,3 @@
     - { role: plex, tags: ['plex'] }
     - { role: sub-zero-plugin, tags: ['sub-zero-plugin'] }
     - { role: common, tags: ['common'] }
-    - { role: python, tags: [ python '] }
