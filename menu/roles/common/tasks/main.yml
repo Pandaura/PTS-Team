@@ -84,20 +84,20 @@
       - "unrar"
   ignore_errors: yes
 
-- name: Install common pip modules
-  pip:
-    state: present
-    name:
-      - passlib
-      - certbot
-      - ansible-toolbox
-      - ndg-httpsclient
-      - dnspython
-      - yq
-      - lxml
-      - apprise
-      - jmespath
-  ignore_errors: yes
+# - name: Install common pip modules
+  # pip:
+    # state: present
+    # name:
+      # - passlib
+      # - certbot
+      # - ansible-toolbox
+      # - ndg-httpsclient
+      # - dnspython
+      # - yq
+      # - lxml
+      # - apprise
+      # - jmespath
+  # ignore_errors: yes
 
 - name: Uninstall apt glances
   apt:
