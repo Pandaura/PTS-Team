@@ -78,7 +78,6 @@ pginstall() {
   core alias &>/dev/null &
   core folders
   core mergerinstall
-  emergency
   # core dockerinstall
   core docstart
 
