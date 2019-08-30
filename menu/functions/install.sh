@@ -250,7 +250,7 @@ mergerinstall() {
 
   apt install -y ./mergerfs*_amd64.deb
   rm mergerfs*_amd64.deb
-}
+
   # tee <<-EOF
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -274,7 +274,7 @@ mergerinstall() {
 # EOF
   # read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
 
-
+}
 
 motd() {
   ansible-playbook /opt/plexguide/menu/motd/motd.yml
@@ -348,9 +348,9 @@ pgui() {
   fi
 }
 
- # pythonstart() {
-   # ansible-playbook /opt/plexguide/menu/pg.yml --tags python
-# }
+ pythonstart() {
+   ansible-playbook /opt/plexguide/roles/pg.yml --tags python
+}
 
 ##need fixxes ! For Debian 9/10 && ubu 18.10
 dockerinstall() {
