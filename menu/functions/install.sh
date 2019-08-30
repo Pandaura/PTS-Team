@@ -6,11 +6,6 @@
 # GNU:        General Public License v3.0
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
-fullrel=$(lsb_release -sd)
-osname=$(lsb_release -si)
-relno=$(lsb_release -sr)
-relno=$(printf "%.0f\n" "$relno")
-hostname=$(hostname -I | awk '{print $1}')
 
 updateprime() {
   abc="/var/plexguide"
@@ -41,9 +36,10 @@ updateprime() {
   file="${abc}/new.install"
   if [ ! -e "$file" ]; then newinstall; fi
 
-  if [ "$osname" != "" ]; then
-    echo "Debian" >${abc}/os.version
-  else echo "Ubuntu" >${abc}/os.version; fi
+  ospgversion=$(cat /etc/*-release | grep Debian | grep 9)
+  if [ "$ospgversion" != "" ]; then
+    echo "debian" >${abc}/os.version
+  else echo "ubuntu" >${abc}/os.version; fi
 
   echo "3" >${abc}/pg.mergerinstall
   echo "52" >${abc}/pg.pythonstart
@@ -75,10 +71,12 @@ pginstall() {
   updateprime
   bash /opt/plexguide/menu/pggce/gcechecker.sh
   core pythonstart
+  core aptupdate
   core alias &>/dev/null &
   core folders
+  core dependency
   core mergerinstall
-  # core dockerinstall
+  core dockerinstall
   core docstart
 
   touch /var/plexguide/install.roles
@@ -96,7 +94,7 @@ pginstall() {
   fi
 
   portainer
-  # pgui
+  pgui
   core motd &>/dev/null &
   core hetzner &>/dev/null &
   core gcloud
@@ -121,7 +119,6 @@ core() {
 }
 
 ############################################################ INSTALLER FUNCTIONS
-
 alias() {
   ansible-playbook /opt/plexguide/menu/alias/alias.yml
 }
@@ -133,10 +130,26 @@ aptupdate() {
   sed -i 's/false/true/g' /etc/default/sysstat
 }
 
+customcontainers() {
+  mkdir -p /opt/mycontainers
+  touch /opt/appdata/plexguide/rclone.conf
+  mkdir -p /opt/communityapps/apps
+  rclone --config /opt/appdata/plexguide/rclone.conf copy /opt/mycontainers/ /opt/communityapps/apps
+}
+
 cleaner() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete &>/dev/null &
   ansible-playbook /opt/plexguide/menu/pg.yml --tags clean &>/dev/null &
   ansible-playbook /opt/plexguide/menu/pg.yml --tags clean-encrypt &>/dev/null &
+}
+
+dependency() {
+  ospgversion=$(cat /var/plexguide/os.version)
+  if [ "$ospgversion" == "debian" ]; then
+    ansible-playbook /opt/plexguide/menu/dependency/dependencydeb.yml
+  else
+    ansible-playbook /opt/plexguide/menu/dependency/dependency.yml
+  fi
 }
 
 docstart() {
@@ -174,17 +187,15 @@ EOF
   fi
 
 }
-#move to roles 
+
 folders() {
   ansible-playbook /opt/plexguide/menu/installer/folders.yml
 }
 
-#move to roles
 prune() {
   ansible-playbook /opt/plexguide/menu/prune/main.yml
 }
 
-#move to roles 
 hetzner() {
   if [ -e "$file" ]; then rm -rf /bin/hcloud; fi
   version="v1.10.0"
@@ -195,7 +206,6 @@ hetzner() {
   rm -rf /opt/appdata/plexguide/hcloud-linux-amd64-$version
 }
 
-#move to roles
 gcloud() {
   export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
   echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
@@ -203,7 +213,6 @@ gcloud() {
   sudo apt-get update && sudo apt-get install google-cloud-sdk -y
 }
 
-#move to roles 
 mergerinstall() {
 
   ub16check=$(cat /etc/*-release | grep xenial)
@@ -216,7 +225,7 @@ mergerinstall() {
   apt-get remove mergerfs -y
   mkdir -p /var/plexguide
 
-   if [ "$ub16check" != "" ]; then
+  if [ "$ub16check" != "" ]; then
     activated=true
     echo "ub16" >/var/plexguide/mergerfs.version
     wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.ubuntu-xenial_amd64.deb"
@@ -251,28 +260,28 @@ mergerinstall() {
   apt install -y ./mergerfs*_amd64.deb
   rm mergerfs*_amd64.deb
 
-  # tee <<-EOF
+  tee <<-EOF
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# ↘️  MergerFS has been updated! Requires Clone redeployment.
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+↘️  MergerFS has been updated! Requires Clone redeployment.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# INFORMATION:  MergerFS was updated on your system and brings performance improvements!
-# Users have reported faster plex scanning and playback with the new mergerfs and pgclone configuration.
+INFORMATION:  MergerFS was updated on your system and brings performance improvements!
+Users have reported faster plex scanning and playback with the new mergerfs and pgclone configuration.
 
-# ATTENTION:
-# You are required to re-deploy your mounts in the PG Clone menu (option 4, option A).
-# It is advised to check the VFS mount settings in the options menu (C,2), as options have been updated.
+ATTENTION:
+You are required to re-deploy your mounts in the PG Clone menu (option 4, option A).
+It is advised to check the VFS mount settings in the options menu (C,2), as options have been updated.
 
-# WARNING: This is not optional, you must redeploy your mounts in the PG Clone menu.
-# Your mounts are currently down until you re-deploy pg clone as it requires configuration updates!
-# This is not done for you, you must go to the PG Clone Menu (option 4) and deploy (option A).
+WARNING: This is not optional, you must redeploy your mounts in the PG Clone menu.
+Your mounts are currently down until you re-deploy pg clone as it requires configuration updates!
+This is not done for you, you must go to the PG Clone Menu (option 4) and deploy (option A).
 
-# We apologize for this one-time inconvenience.
+We apologize for this one-time inconvenience.
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# EOF
-  # read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
 
 }
 
@@ -285,6 +294,51 @@ mountcheck() {
   ansible-playbook /opt/pgui/pgui.yml
   ansible-playbook /opt/plexguide/menu/pgui/mcdeploy.yml
 }
+
+localspace() {
+  ansible-playbook /opt/pgui/pgui.yml
+  ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
+}
+
+gtused() {
+  ansible-playbook /opt/plexguide/menu/pgui/gtused.yml
+}
+
+check() {
+  ansible-playbook /opt/plexguide/menu/pgui/_cron.yml
+}
+
+check() {
+  ansible-playbook /opt/plexguide/menu/pgui/dynamic.yml
+
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+↘️  User Interface (PGUI) Installed / Updated
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+INFORMATION:  PGUI is a simple interface that provides information,
+warnings, and stats that will assist both yourself and tech support!
+To turn this off, goto settings and turn off/on the PG User Interface!
+
+VISIT:
+https://pgui.yourdomain.com | http://pgui.domain.com:8555 | ipv4:8555
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
+
+}
+
+newinstall="$(tail -n 1 /var/plexguide/kcgpnv.numbers)"
+
+if [ "$newinstall" == "4" ]; then
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags kernel
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags nvidia
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags system
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags common
+  echo "8" >/var/plexguide/kcgpnv.numbers
+fi
 
 newinstall() {
   rm -rf /var/plexguide/pg.exit 1>/dev/null 2>&1
@@ -313,7 +367,7 @@ pgedition() {
   file="${abc}/server.id"
   if [ ! -e "$file" ]; then echo "[NOT-SET]" -rf >${abc}/rm; fi
 }
-#need edits
+
 portainer() {
   dstatus=$(docker ps --format '{{.Names}}' | grep "portainer")
   if [ "$dstatus" != "portainer" ]; then
@@ -348,13 +402,81 @@ pgui() {
   fi
 }
 
- pythonstart() {
-   ansible-playbook /opt/plexguide/roles/pg.yml --tags python
+pythonstart() {
+
+  ansible="2.8.2"
+  pip="19.1.1"
+
+  apt-get install -y --reinstall \
+    nano \
+    git \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    python3-dev \
+    python3-pip \
+    python-dev \
+    python-pip
+  python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
+  python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
+  python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall \
+    pyOpenSSL \
+    requests \
+    netaddr
+  python -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
+  python -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
+  python -m pip install --disable-pip-version-check --upgrade --force-reinstall ansible==${1-$ansible}
+
+  ## Copy pip to /usr/bin
+  cp /usr/local/bin/pip /usr/bin/pip
+  cp /usr/local/bin/pip3 /usr/bin/pip3
+
+  mkdir -p /etc/ansible/inventories/ 1>/dev/null 2>&1
+  echo "[local]" >/etc/ansible/inventories/local
+  echo "127.0.0.1 ansible_connection=local" >>/etc/ansible/inventories/local
+
+  ### Reference: https://docs.ansible.com/ansible/2.4/intro_configuration.html
+  echo "[defaults]" >/etc/ansible/ansible.cfg
+  echo "deprecation_warnings=False" >>/etc/ansible/ansible.cfg
+  echo "command_warnings = False" >>/etc/ansible/ansible.cfg
+  echo "callback_whitelist = profile_tasks" >>/etc/ansible/ansible.cfg
+  echo "inventory = /etc/ansible/inventories/local" >>/etc/ansible/ansible.cfg
+
+  # Variables Need to Line Up with pg.sh (start)
+  touch /var/plexguide/background.1
 }
 
-##need fixxes ! For Debian 9/10 && ubu 18.10
 dockerinstall() {
- ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
+  ospgversion=$(cat /var/plexguide/os.version)
+  if [ "$ospgversion" == "debian" ]; then
+    ansible-playbook /opt/plexguide/menu/pg.yml --tags dockerdeb
+  else
+    ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
+    # If Docker FAILED, Emergency Install
+    file="/usr/bin/docker"
+    if [ ! -e "$file" ]; then
+      clear
+      echo "Installing Docker the Old School Way - (Please Be Patient)"
+      sleep 2
+      clear
+      curl -fsSL get.docker.com -o get-docker.sh
+      sh get-docker.sh
+      echo ""
+      echo "Starting Docker (Please Be Patient)"
+      sleep 2
+      systemctl start docker
+      sleep 2
+    fi
+
+    ##### Checking Again, if fails again; warns user
+    file="/usr/bin/docker"
+    if [ -e "$file" ]; then
+      sleep 5
+    else
+      echo "INFO - FAILED: Docker Failed to Install! Exiting PGBlitz!"
+      exit
+    fi
+  fi
 }
 
 serverid() {

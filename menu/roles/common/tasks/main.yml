@@ -84,20 +84,58 @@
       - "unrar"
   ignore_errors: yes
 
-# - name: Install common pip modules
-  # pip:
+# - name: Install extra packages
+  # apt:
     # state: present
     # name:
-      # - passlib
-      # - certbot
-      # - ansible-toolbox
-      # - ndg-httpsclient
-      # - dnspython
-      # - yq
-      # - lxml
-      # - apprise
-      # - jmespath
+      # - "run-one"
   # ignore_errors: yes
+
+# - name: Install 'intel-gpu-tools'
+  # apt: "name=intel-gpu-tools state=present"
+  # when: ('i915' not in lscpi_resp.stdout)
+
+# - name: Install unrar
+  # apt:
+    # name: unrar
+    # state: present
+  # ignore_errors: yes
+
+# - name: Check to see if unrar installed
+  # stat:
+    # path: "/usr/bin/unrar"
+  # register: unrar_binary
+
+# - name: Install unrar-free if unrar was not installed
+  # apt:
+    # name: unrar-free
+    # state: present
+  # ignore_errors: yes
+  # when: (not unrar_binary.stat.exists)
+
+# - name: Import pip.conf into /home/{{ user.name }}/.config/pip/pip.conf
+  # copy:
+    # src: 'pip.conf'
+    # dest: /home/root/.config/pip/pip.conf
+    # owner: root
+    # group: root
+    # mode: 0775
+    # force: yes
+
+- name: Install common pip modules
+  pip:
+    state: present
+    name:
+      - passlib
+      - certbot
+      - ansible-toolbox
+      - ndg-httpsclient
+      - dnspython
+      - yq
+      - lxml
+      - apprise
+      - jmespath
+  ignore_errors: yes
 
 - name: Uninstall apt glances
   apt:
