@@ -23,11 +23,6 @@
     when: (s.changed)
     ignore_errors: yes
 
-  - name: Header | Set 'reboot_is_necessary' variable
-    set_fact:
-      reboot_is_necessary: true
-    when: (s.changed)
-
   - name: Header | Kernel headers were updated
     debug:
       msg: "Kernel headers were updated."
