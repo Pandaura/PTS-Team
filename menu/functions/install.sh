@@ -36,10 +36,10 @@ updateprime() {
   file="${abc}/new.install"
   if [ ! -e "$file" ]; then newinstall; fi
 
-  ospgversion=$(cat /etc/*-release | grep Debian | grep 9)
+    ospgversion=$(lsb_release -si)
   if [ "$ospgversion" != "" ]; then
-    echo "debian" >${abc}/os.version
-  else echo "ubuntu" >${abc}/os.version; fi
+    echo "Debian" >${abc}/os.version
+  else echo "Ubuntu" >${abc}/os.version; fi
 
   echo "3" >${abc}/pg.mergerinstall
   echo "52" >${abc}/pg.pythonstart
@@ -142,8 +142,8 @@ cleaner() {
 }
 
 dependency() {
-  ospgversion=$(cat /var/plexguide/os.version)
-  if [ "$ospgversion" == "debian" ]; then
+  ospgversion=$(lsb_release -si)
+  if [ "$ospgversion" == "Debian" ]; then
     ansible-playbook /opt/plexguide/menu/dependency/dependencydeb.yml
   else
     ansible-playbook /opt/plexguide/menu/dependency/dependency.yml
