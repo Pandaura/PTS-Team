@@ -78,7 +78,7 @@ pginstall() {
   core alias &>/dev/null &
   core folders
   core mergerinstall
-  core dockerinstall
+  # core dockerinstall
   core docstart
 
   touch /var/plexguide/install.roles
