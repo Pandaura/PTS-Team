@@ -1,169 +1,169 @@
-#########################################################################
-# Title:         Cloudbox: Docker Role                                  #
-# Author(s):     l3uddz, desimaniac, EnorMOZ                            #
-# URL:           https://github.com/cloudbox/cloudbox                   #
-# --                                                                    #
-#         Part of the Cloudbox project: https://cloudbox.works          #
-#########################################################################
-#                   GNU General Public License v3.0                     #
-#########################################################################
+#!/bin/bash
+#
+# Title:      PGBlitz (Reference Title File)
+# Author(s):  Admin9705 - Deiteq
+# URL:        https://pgblitz.com - http://github.pgblitz.com
+# GNU:        General Public License v3.0
+################################################################################
 ---
-- name: "Display System Info"
-  debug:
-    msg: "System is running {{ ansible_lsb.description if ansible_lsb is defined else (ansible_distribution + ' ' + ansible_distribution_version) }}."
-
-- name: Check filesystem of '/var/lib/' path
-  shell: stat -f -c %T /var/lib/
-  register: var_lib_file_system
-
-- name: Check to see if docker is installed
-  stat:
-    path: "/usr/bin/docker"
-  register: docker_binary
-
-- name: Populate Service Facts
-  service_facts:
-  when: docker_binary.stat.exists
-
-- name: Get Docker service state
+- name: 'Establish Facts'
   set_fact:
-    docker_service_running: "{{ (services['docker.service'] is defined) and (services['docker.service']['state'] == 'running') }}"
-  when: docker_binary.stat.exists
+    switch: 'on'
+    updatecheck: 'default'
 
-- name: Tasks for when Docker exists and is running
-  block:
+- name: 'Docker Check'
+  stat:
+    path: '/usr/bin/docker'
+  register: check
 
-  - name: Gather list of running Docker containers
-    shell: "docker ps --format '{{ '{{' }} .Names{{ '}}' }}' | xargs echo -n"
-    register: docker_running_containers
-    ignore_errors: yes
+- name: 'Docker Version Check - True'
+  shell: "docker --version | awk '{print $3}'"
+  register: updatecheck
 
-  - name: Stop all running Docker containers
-    shell: "docker stop {{ docker_running_containers.stdout }} &> /dev/null || true"
-    ignore_errors: yes
-    when: (docker_running_containers.stdout | trim | length > 0)
+- name: 'Switch - On'
+  set_fact:
+    switch: 'off'
+  when: updatecheck.stdout == "18.09.8,"
 
-  - name: Btrfs Tasks
-    include_tasks: "subtasks/btrfs/cleanup.yml"
-    when: ('btrfs' in var_lib_file_system.stdout)
-
-  - name: Stop docker service
-    systemd:
-      name: docker
-      state: stopped
-
-  when: (docker_binary.stat.exists) and (docker_service_running)
+- name: Install required packages
+  apt:
+    name: '{{ packages }}'
+  vars:
+    packages:
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
+  when: switch == "on"
 
 - name: Add official gpg signing key
   apt_key:
     id: 0EBFCD88
     url: https://download.docker.com/linux/ubuntu/gpg
+  when: switch == "on"
 
-- name: Add official repository
+- name: 'Stop All Containers'
+  shell: 'docker stop $(docker ps -a -q)'
+  ignore_errors: yes
+  when:
+    - check.stat.exists == True
+    - switch == "on"
+
+- name: Official Repo
   apt_repository:
-    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} edge"
-    filename: docker
+    repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} edge'
   register: apt_docker_repositories
+  when: switch == "on"
 
 - name: Update APT packages list
   apt:
     update_cache: yes
-  when: apt_docker_repositories.changed
+  when: apt_docker_repositories.changed and switch == "on"
 
-- name: Release 'docker-ce' from hold
+- name: Release docker-ce from hold
   dpkg_selections:
     name: docker-ce
     selection: install
+  when: switch == "on"
 
-- name: Install 'docker-ce'
+- name: Install docker-ce
   apt:
-    name: "docker-ce=*18.09.2~3-0~{{ ansible_distribution | lower }}-{{ ansible_distribution_release | lower }}"
-    state: present
+    name: docker-ce
+    state: latest
     update_cache: yes
-    force: yes
+  when: switch == "on"
 
-- name: Put 'docker-ce' into hold
+- name: Put docker-ce into hold
   dpkg_selections:
     name: docker-ce
     selection: hold
+  when: switch == "on"
 
-- name: Get 'docker-ce' version
-  shell: "/usr/bin/dockerd-ce --version | head -n 1 | awk '{ print $3 }' | sed 's/,$//'"
-  register: docker_ce_version
-  ignore_errors: yes
-
-- name: Display 'docker-ce' version
-  debug:
-    msg: "Docker CE version {{ docker_ce_version.stdout }} installed."
-  when: docker_ce_version is defined
-
-- name: Release 'docker-ce-cli' from hold
-  dpkg_selections:
-    name: docker-ce-cli
-    selection: install
-
-- name: Install 'docker-ce-cli'
-  apt:
-    name: "docker-ce-cli=*18.09.2~3-0~{{ ansible_distribution | lower }}-{{ ansible_distribution_release | lower }}"
-    state: present
-    update_cache: yes
-    force: yes
-
-- name: Put 'docker-ce-cli' into hold
-  dpkg_selections:
-    name: docker-ce-cli
-    selection: hold
-
-- name: Get 'docker-ce-cli' version
-  shell: "/usr/bin/docker --version | head -n 1 | awk '{ print $3 }' | sed 's/,$//'"
-  register: docker_ce_cli_version
-  ignore_errors: yes
-
-- name: Display 'docker-ce-cli' version
-  debug:
-    msg: "Docker CE CLI version {{ docker_ce_cli_version.stdout }} installed."
-  when: docker_ce_cli_version is defined
-
-- name: Uninstall 'docker-py' pip module
+- name: Uninstall docker-py pip module
   pip:
     name: docker-py
     state: absent
   ignore_errors: yes
+  when: switch == "on"
 
-- name: Install 'docker' pip module
+- name: Install docker pip module
   pip:
     name: docker
     state: latest
   ignore_errors: yes
+  when: switch == "on"
 
-- name: Import 'daemon.json'
-  template:
-    src: daemon.json.j2
-    dest: /etc/docker/daemon.json
-    mode: 0775
-    force: yes
+- name: Check docker daemon.json exists
+  stat:
+    path: /etc/docker/daemon.json
+  register: docker_daemon
 
-- name: Start docker service
+- name: Stop docker to enable overlay2
   systemd:
+    state: stopped
     name: docker
-    state: started
     enabled: yes
-    daemon_reload: yes
+  when:
+    - docker_daemon.stat.exists == False
+    - switch == "on"
 
-- name: Wait for 30 seconds before commencing
+- name: Import daemon.json
+  copy:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+    force: yes
+    mode: 0775
+  when:
+    - docker_daemon.stat.exists == False
+    - switch == "on"
+
+- name: Start docker (Please Wait)
+  systemd:
+    state: started
+    name: docker
+    enabled: yes
+  when:
+    - docker_daemon.stat.exists == False
+    - switch == "on"
+
+- name: 'Wait for 20 seconds before commencing'
   wait_for:
-    timeout: 30
+    timeout: 20
+  when: switch == "on"
 
-- name: "Stop all Docker containers"
-  shell: docker stop $(docker ps -aq) &> /dev/null || true
+- name: Check override folder exists
+  stat:
+    path: /etc/systemd/system/docker.service.d
+  register: docker_override
 
-- name: "Import Docker Network tasks"
-  import_tasks: "subtasks/network.yml"
+- name: Create override folder
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    mode: 0775
+  when:
+    - docker_override.stat.exists == False
+    - switch == "on"
+  tags: docker_standard
 
-- name: "Import Docker Housekeeping tasks"
-  import_tasks: "subtasks/housekeeping.yml"
-  tags: docker-housekeeping
+- name: Import override file
+  copy:
+    src: override.conf
+    dest: /etc/systemd/system/docker.service.d/override.conf
+    force: yes
+    mode: 0775
+  tags: docker_standard
+  when: switch == "on"
 
-- name: "Re-start all previously running Docker containers"
-  shell: 'docker start {{ docker_running_containers.stdout }} &> /dev/null || true'
-  when: (docker_binary.stat.exists) and (docker_service_running) and (docker_running_containers.stdout | trim | length > 0)
+- name: create plexguide network
+  docker_network:
+    name: 'plexguide'
+    state: present
+  tags: docker_standard
+  when: switch == "on"
+
+- name: 'Start All Containers'
+  shell: 'docker start $(docker ps -a -q)'
+  ignore_errors: yes
+  when:
+    - switch == "on"
+    - check.stat.exists == True
