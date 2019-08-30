@@ -63,14 +63,12 @@ updateprime() {
   echo "1" >${abc}/pg.installer
   echo "7" >${abc}/pg.prune
   echo "21" >${abc}/pg.mountcheck
-  echo "4" >${abc}/kcgpnv.numbers
-
 }
 
 pginstall() {
   updateprime
   bash /opt/plexguide/menu/pggce/gcechecker.sh
-  core pythonstart
+  # core pythonstart
   core aptupdate
   core alias &>/dev/null &
   core folders
@@ -143,19 +141,6 @@ cleaner() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags clean-encrypt &>/dev/null &
 }
 
-#- name: gather os specific variables
-#  include_vars: "{{ item }}"
-#  with_first_found:
-#    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version}}.yml"
-#    - "{{ ansible_distribution }}.yml"
-#  tags: vars
-#OR
-# Include OS specific tasks
-#- include: CentOS.yml
-#  when: ansible_distribution == "CentOS"
-#- include: Ubuntu.yml
-#  when: ansible_distribution == "Ubuntu"
-
 dependency() {
   ospgversion=$(cat /var/plexguide/os.version)
   if [ "$ospgversion" == "debian" ]; then
@@ -200,15 +185,15 @@ EOF
   fi
 
 }
-#move to roles 
+
 folders() {
   ansible-playbook /opt/plexguide/menu/installer/folders.yml
 }
-#move to roles
+
 prune() {
   ansible-playbook /opt/plexguide/menu/prune/main.yml
 }
-#move to roles 
+
 hetzner() {
   if [ -e "$file" ]; then rm -rf /bin/hcloud; fi
   version="v1.10.0"
@@ -218,14 +203,14 @@ hetzner() {
   rm -rf /opt/appdata/plexguide/hcloud-linux-amd64-$version.tar.gz
   rm -rf /opt/appdata/plexguide/hcloud-linux-amd64-$version
 }
-#move to roles
+
 gcloud() {
   export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
   echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
   curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
   sudo apt-get update && sudo apt-get install google-cloud-sdk -y
 }
-#move to roles 
+
 mergerinstall() {
 
   ub16check=$(cat /etc/*-release | grep xenial)
@@ -311,18 +296,6 @@ mountcheck() {
 localspace() {
   ansible-playbook /opt/pgui/pgui.yml
   ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
-}
-
-gtused() {
-  ansible-playbook /opt/plexguide/menu/pgui/gtused.yml
-}
-
-crons() {
-  ansible-playbook /opt/plexguide/menu/pgui/_cron.yml
-}
-
-check() {
-  ansible-playbook /opt/plexguide/menu/pgui/dynamic.yml
 
   tee <<-EOF
 
@@ -342,16 +315,6 @@ EOF
   read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
 
 }
-
-#newinstall="$(tail -n 1 /var/plexguide/kcgpnv.numbers)"
-
-#if [ "$newinstall" == "4" ]; then
-#  ansible-playbook /opt/plexguide/menu/pg.yml --tags kernel
-#  ansible-playbook /opt/plexguide/menu/pg.yml --tags nvidia
-#  ansible-playbook /opt/plexguide/menu/pg.yml --tags system
-#  ansible-playbook /opt/plexguide/menu/pg.yml --tags common
-#  echo "8" >/var/plexguide/kcgpnv.numbers
-#fi
 
 newinstall() {
   rm -rf /var/plexguide/pg.exit 1>/dev/null 2>&1
@@ -380,7 +343,7 @@ pgedition() {
   file="${abc}/server.id"
   if [ ! -e "$file" ]; then echo "[NOT-SET]" -rf >${abc}/rm; fi
 }
-#need edits
+
 portainer() {
   dstatus=$(docker ps --format '{{.Names}}' | grep "portainer")
   if [ "$dstatus" != "portainer" ]; then
@@ -415,50 +378,50 @@ pgui() {
   fi
 }
 
-pythonstart() {
+# pythonstart() {
 
-  ansible="2.8.2"
-  pip="19.1.1"
+  # ansible="2.8.2"
+  # pip="19.1.1"
 
-  apt-get install -y --reinstall \
-    nano \
-    git \
-    build-essential \
-    libssl-dev \
-    libffi-dev \
-    python3-dev \
-    python3-pip \
-    python-dev \
-    python-pip
-  python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
-  python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
-  python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall \
-    pyOpenSSL \
-    requests \
-    netaddr
-  python -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
-  python -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
-  python -m pip install --disable-pip-version-check --upgrade --force-reinstall ansible==${1-$ansible}
+  # apt-get install -y --reinstall \
+    # nano \
+    # git \
+    # build-essential \
+    # libssl-dev \
+    # libffi-dev \
+    # python3-dev \
+    # python3-pip \
+    # python-dev \
+    # python-pip
+  # python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
+  # python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
+  # python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall \
+    # pyOpenSSL \
+    # requests \
+    # netaddr
+  # python -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
+  # python -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
+  # python -m pip install --disable-pip-version-check --upgrade --force-reinstall ansible==${1-$ansible}
 
-  ## Copy pip to /usr/bin
-  cp /usr/local/bin/pip /usr/bin/pip
-  cp /usr/local/bin/pip3 /usr/bin/pip3
+  # ## Copy pip to /usr/bin
+  # cp /usr/local/bin/pip /usr/bin/pip
+  # cp /usr/local/bin/pip3 /usr/bin/pip3
 
-  mkdir -p /etc/ansible/inventories/ 1>/dev/null 2>&1
-  echo "[local]" >/etc/ansible/inventories/local
-  echo "127.0.0.1 ansible_connection=local" >>/etc/ansible/inventories/local
+  # mkdir -p /etc/ansible/inventories/ 1>/dev/null 2>&1
+  # echo "[local]" >/etc/ansible/inventories/local
+  # echo "127.0.0.1 ansible_connection=local" >>/etc/ansible/inventories/local
 
-  ### Reference: https://docs.ansible.com/ansible/2.4/intro_configuration.html
-  echo "[defaults]" >/etc/ansible/ansible.cfg
-  echo "deprecation_warnings=False" >>/etc/ansible/ansible.cfg
-  echo "command_warnings = False" >>/etc/ansible/ansible.cfg
-  echo "callback_whitelist = profile_tasks" >>/etc/ansible/ansible.cfg
-  echo "inventory = /etc/ansible/inventories/local" >>/etc/ansible/ansible.cfg
+  # ### Reference: https://docs.ansible.com/ansible/2.4/intro_configuration.html
+  # echo "[defaults]" >/etc/ansible/ansible.cfg
+  # echo "deprecation_warnings=False" >>/etc/ansible/ansible.cfg
+  # echo "command_warnings = False" >>/etc/ansible/ansible.cfg
+  # echo "callback_whitelist = profile_tasks" >>/etc/ansible/ansible.cfg
+  # echo "inventory = /etc/ansible/inventories/local" >>/etc/ansible/ansible.cfg
 
-  # Variables Need to Line Up with pg.sh (start)
-  touch /var/plexguide/background.1
-}
-##need fixxes ! For Debian 9/10 && ubu 18.10
+  # # Variables Need to Line Up with pg.sh (start)
+  # touch /var/plexguide/background.1
+# }
+
 dockerinstall() {
   ospgversion=$(cat /var/plexguide/os.version)
   if [ "$ospgversion" == "debian" ]; then
