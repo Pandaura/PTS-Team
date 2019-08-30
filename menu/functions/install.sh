@@ -41,7 +41,7 @@ updateprime() {
 
   file="${abc}/new.install"
   if [ ! -e "$file" ]; then newinstall; fi
-nano
+
   if [ "$osname" != "" ]; then
     echo "Debian" >${abc}/os.version
   else echo "Ubuntu" >${abc}/os.version; fi
@@ -79,7 +79,7 @@ pginstall() {
   core aptupdate
   core alias &>/dev/null &
   core folders
-  core dependency
+  # core dependency
   core mergerinstall
   core dockerinstall
   core docstart
@@ -165,9 +165,9 @@ cleaner() {
 dependency() {
 osname=$(lsb_release -si)
   if echo $osname == "Debian" 2>&1 >> /dev/null; then
-ansible-playbook (opt/pgstage/roles/dependency/debian-9.yml
+ansible-playbook /opt/pgstage/roles/dependency/debian-9.yml
 elif echo $osname == "Ubuntu" 2>&1 >> /dev/null; then
-ansible-playbook (opt/pgstage/roles/dependency/ubtunu-18.04-lts.yml
+ansible-playbook /opt/pgstage/roles/dependency/ubtunu-18.04-lts.yml
 elif echo $osname == "Rasbian" || "Fedora" || "CentOS"; then
 
 tee <<-EOF
