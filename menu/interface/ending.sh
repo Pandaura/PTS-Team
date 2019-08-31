@@ -8,7 +8,6 @@
 source /opt/plexguide/menu/functions/install.sh
 emergency
 
-#
 clear 
 echo ""
 

@@ -12,8 +12,8 @@
     - name: Disable existing MOTD
       shell: chmod -x /etc/update-motd.d/*
 
-    - name: Enable update messages
-      shell: chmod +x /etc/update-motd.d/9*
+    # - name: Enable update messages
+      # shell: chmod +x /etc/update-motd.d/9*
 
     - name: Deploy Dynamic MOTD
       file:
