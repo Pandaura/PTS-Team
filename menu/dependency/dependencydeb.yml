@@ -47,7 +47,6 @@
         - { package: 'acl' }
         - { package: 'bc' }
         - { package: 'python-docker' }
-        - { package: 'gnupg2' }
 
     - name: Update pip packages for python3
       pip:

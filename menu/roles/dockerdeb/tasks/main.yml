@@ -28,9 +28,11 @@
 - name: Install required packages
   apt: 'name={{item}} state=present'
   with_items:
-    - apt-transport-https
-    - ca-certificates
-    - software-properties-common
+        - { package: 'apt-transport-https' }
+        - { package: 'ca-certificates' }
+        - { package: 'gnupg2' }
+        - { package: 'software-properties-common' }
+        - { package: 'curl' }
   when: switch == "on"
 
 - name: Add official gpg signing key
@@ -48,7 +50,7 @@
 
 - name: Official Repo
   apt_repository:
-    repo: 'deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} edge'
+    repo: 'deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable'
   register: apt_docker_repositories
   when: switch == "on"
 
@@ -57,25 +59,33 @@
     update_cache: yes
   when: apt_docker_repositories.changed and switch == "on"
 
-- name: Release docker-ce from hold
-  dpkg_selections:
-    name: docker-ce
-    selection: install
-  when: switch == "on"
+# - name: Release docker-ce from hold
+  # dpkg_selections:
+    # name: docker-ce
+    # selection: install
+  # when: switch == "on"
 
-- name: Install docker-ce
-  apt:
-    name: docker-ce
-    state: present
-    update_cache: yes
-  when: switch == "on"
+# - name: Install docker-ce
+  # apt:
+    # name: docker-ce
+    # state: present
+    # update_cache: yes
+  # when: switch == "on"
 
-- name: Put docker-ce into hold
-  dpkg_selections:
-    name: docker-ce
-    selection: hold
-  when: switch == "on"
+# - name: Put docker-ce into hold
+  # dpkg_selections:
+    # name: docker-ce
+    # selection: hold
+  # when: switch == "on"
 
+- name: Install Docker Parts
+  apt: 'name={{item}} state=present'
+  with_items:
+        - { package: 'docker-ce' }
+        - { package: 'docker-ce-cli' }
+        - { package: 'containerd.io' }
+  when: switch == "on"
+  
 - name: Uninstall docker-py pip module
   pip:
     name: docker-py

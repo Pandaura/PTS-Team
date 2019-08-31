@@ -423,36 +423,27 @@ pgui() {
 # }
 
 dockerinstall() {
-  ospgversion=$(cat /var/plexguide/os.version)
-  if [ "$ospgversion" == "debian" ]; then
+osname=$(lsb_release -si)
+  if [ $osname == "Debian" 2>&1 >> /dev/null ]; then
     ansible-playbook /opt/plexguide/menu/pg.yml --tags dockerdeb
-  else
+  elif [ $osname == "Ubuntu" 2>&1 >> /dev/null ]; then
     ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
-    # If Docker FAILED, Emergency Install
-    file="/usr/bin/docker"
-    if [ ! -e "$file" ]; then
-      clear
-      echo "Installing Docker the Old School Way - (Please Be Patient)"
-      sleep 2
-      clear
-      curl -fsSL get.docker.com -o get-docker.sh
-      sh get-docker.sh
-      echo ""
-      echo "Starting Docker (Please Be Patient)"
-      sleep 2
-      systemctl start docker
-      sleep 2
-    fi
+elif [ $osname  == "Rasbian" || "Fedora" || "CentOS" ]; then
 
-    ##### Checking Again, if fails again; warns user
-    file="/usr/bin/docker"
-    if [ -e "$file" ]; then
-      sleep 5
-    else
-      echo "INFO - FAILED: Docker Failed to Install! Exiting PGBlitz!"
-      exit
-    fi
-  fi
+tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⛔ Argggggg ......  System Warning! 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Supported: UBUNTU 16.xx - 18.10 ~ LTS/SERVER and Debian 9.* / 10
+
+This server may not be supported due to having the incorrect OS detected!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+  sleep 10
+fi
 }
 
 serverid() {
