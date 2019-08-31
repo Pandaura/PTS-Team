@@ -18,7 +18,7 @@
         image: 'mrdoob/dngele:latest'
 
     # CORE (MANDATORY) ############################################################
-    - name: 'Including core job'
+    - name: 'Including cron job'
       include_tasks: '/opt/coreapps/apps/_core.yml'
 
     - name: 'Including cron job'
