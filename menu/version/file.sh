@@ -25,10 +25,10 @@ mainstart() {
 📂  Update Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Prior Versions? 
+Stable:   : $latest
 
-Latest:   : $latest
-Dev       : $dev
+Dev       : $dev [ BE CAREFUL ]
+
 Installed : $pgnumber
 
 [Z] Exit
@@ -38,7 +38,7 @@ Installed : $pgnumber
 EOF
 
   break=no
-  read -p '🌍  TYPE a PG Version | PRESS ENTER: ' typed
+  read -p '🌍  TYPE master or dev | PRESS ENTER: ' typed
   storage=$(grep $typed /opt/pgstage/versions.sh)
 
   parttwo
