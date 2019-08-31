@@ -428,10 +428,17 @@ pythonstart() {
 }
 
 dockerinstall() {
-  ospgversion=$(cat /var/plexguide/os.version)
-  if [ "$ospgversion" == "debian" ]; then
+
+fullrel=$(lsb_release -sd)
+osname=$(lsb_release -si)
+relno=$(lsb_release -sr)
+relno=$(printf "%.0f\n" "$relno")
+hostname=$(hostname -I | awk '{print $1}')
+# add repo
+
+ if [ $osname == "Debian" 2>&1 >> /dev/null ] ; then
     ansible-playbook /opt/plexguide/menu/pg.yml --tags dockerdeb
-  else
+elif [ $osname == "Ubuntu" 2>&1 >> /dev/null ]; then
     ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
     # If Docker FAILED, Emergency Install
     file="/usr/bin/docker"
