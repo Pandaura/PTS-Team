@@ -1,9 +1,0 @@
----
-- hosts: localhost
-  gather_facts: false
-  tasks:
-    - name: 'Cloning PTS'
-      git:
-        repo: 'https://github.com/MrDoobPG/Install'
-        dest: '/opt/pgstage'
-        force: yes
