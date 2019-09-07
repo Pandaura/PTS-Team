@@ -10,7 +10,7 @@
 echo 'rclone' >/var/plexguide/pgcloner.rolename
 echo 'rClone' >/var/plexguide/pgcloner.roleproper
 echo 'rClone' >/var/plexguide/pgcloner.projectname
-echo 'master' >/var/plexguide/pgcloner.projectversion
+echo 'dev' >/var/plexguide/pgcloner.projectversion
 echo 'pgclone.sh' >/var/plexguide/pgcloner.startlink
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
