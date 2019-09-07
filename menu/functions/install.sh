@@ -374,7 +374,7 @@ fi; }
   # fi
 # }
 
-# pythonstart() {
+# # pythonstart() {
 
   # ansible="2.8.2"
   # pip="19.1.1"
@@ -416,7 +416,7 @@ fi; }
 
   # # Variables Need to Line Up with pg.sh (start)
   # touch /var/plexguide/background.1
-}
+# }
 
 dockerinstall() {
   ospgversion=$(cat /var/plexguide/os.version)
