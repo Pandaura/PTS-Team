@@ -37,7 +37,7 @@
   when: switch == "on"
 
 - name: Old way Docker install
-  shel: sudo bash /home/get-docker.sh
+  shell: sudo bash /home/get-docker.sh
   args:
     executable: /bin/bash
   when: switch == "on"
