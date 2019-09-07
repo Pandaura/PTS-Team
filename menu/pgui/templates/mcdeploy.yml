@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Title:      PGBlitz (local space used service)
+# Title:      PGBlitz (Reference Title File)
 # YML Author: Admin9705
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
@@ -11,22 +11,23 @@
   tasks:
     - name: Check Service's Existance
       stat:
-        path: '/etc/systemd/systemd/localspace.service'
+        path: '/etc/systemd/systemd/mountcheck.service'
       register: pgp
 
     - name: Stop service
       service:
-        name: localspace
+        name: mountcheck
         state: stopped
       when: pgp.stat.exists
 
-    - name: localspace Service
+    - name: MountCheck Service
       template:
-        src: /opt/coreapps/apps/templates/pgui/localspace.service
-        dest: /etc/systemd/system/localspace.service
+        src: /opt/plexguide/menu/pgui/mountcheck.service
+        dest: /etc/systemd/system/mountcheck.service
         force: yes
 
     - name: Daemon-Reload
-      systemd: state=stopped name=localspace daemon_reload=yes enabled=no
+      systemd: state=stopped name=mountcheck daemon_reload=yes enabled=no
+
     - name: Start pgscan
-      systemd: state=started name=localspace enabled=yes
+      systemd: state=started name=mountcheck enabled=yes
