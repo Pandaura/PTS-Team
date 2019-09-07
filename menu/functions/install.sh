@@ -126,8 +126,7 @@ alias() {
 }
 
 update() {
-ansible-playbook /opt/plexguide/menu/pg.yml --tags update &>/dev/null &
-}
+ansible-playbook /opt/plexguide/menu/pg.yml --tags update
 
 aptupdate() {
  ansible-playbook /opt/plexguide/menu/pg.yml --tags update
@@ -153,10 +152,6 @@ dependency() {
   ospgversion=$(cat /var/plexguide/os.version)
   if [ "$ospgversion" == "debian" ]; then
     ansible-playbook /opt/plexguide/menu/dependency/dependencydeb.yml
-        backports="deb http://ftp.debian.org/debian stretch-backports  main contrib non-free"
-        if ! grep -Fxq "$backports" /etc/apt/sources.list; then
-                (set -x; $sh_c "echo \"$backports\" >> /etc/apt/sources.list")
-        fi
   else
     ansible-playbook /opt/plexguide/menu/dependency/dependency.yml
   fi
