@@ -27,7 +27,7 @@
   when: switch == "on"
 
 - name: Docker install Debian
-  command: bash /opt/plexguide/menu/roles/dockerdeb/file/dockerdeb.sh
+  command: bash /opt/plexguide/menu/roles/dockerdeb/files/dockerdeb.sh
   when: switch == "on"
 
 # - name: Docker getcommands
