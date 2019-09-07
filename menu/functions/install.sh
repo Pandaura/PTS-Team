@@ -93,7 +93,7 @@ pginstall() {
   fi
 
   portainer
-  pgui
+  # pgui
   core motd &>/dev/null &
   core hetzner &>/dev/null &
   core gcloud
@@ -283,34 +283,34 @@ motd() {
   ansible-playbook /opt/plexguide/menu/motd/motd.yml
 }
 
-mountcheck() {
-  bash /opt/plexguide/menu/pgcloner/solo/pgui.sh
-  ansible-playbook /opt/pgui/pgui.yml
-  ansible-playbook /opt/plexguide/menu/pgui/mcdeploy.yml
-}
+# mountcheck() {
+  # bash /opt/plexguide/menu/pgcloner/solo/pgui.sh
+  # ansible-playbook /opt/pgui/pgui.yml
+  # ansible-playbook /opt/plexguide/menu/pgui/mcdeploy.yml
+# }
 
-localspace() {
-  ansible-playbook /opt/pgui/pgui.yml
-  ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
+# localspace() {
+  # ansible-playbook /opt/pgui/pgui.yml
+  # ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
 
-  tee <<-EOF
+  # tee <<-EOF
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  PG User Interface (PGUI) Installed / Updated
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ↘️  PG User Interface (PGUI) Installed / Updated
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-INFORMATION:  PGUI is a simple interface that provides information,
-warnings, and stats that will assist both yourself and tech support!
-To turn this off, goto settings and turn off/on the PG User Interface!
+# INFORMATION:  PGUI is a simple interface that provides information,
+# warnings, and stats that will assist both yourself and tech support!
+# To turn this off, goto settings and turn off/on the PG User Interface!
 
-VISIT:
-https://pgui.yourdomain.com | http://pgui.domain.com:8555 | ipv4:8555
+# VISIT:
+# https://pgui.yourdomain.com | http://pgui.domain.com:8555 | ipv4:8555
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-  read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# EOF
+  # read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
 
-}
+# }
 
 newinstall() {
   rm -rf /var/plexguide/pg.exit 1>/dev/null 2>&1
@@ -359,20 +359,20 @@ pgshield() { if [ ! -e "/opt/pgshield/place.holder" ]; then
   ansible-playbook "/opt/plexguide/menu/pgcloner/corev2/primary.yml"
 fi; }
 
-pgui() {
-  file="/var/plexguide/pgui.switch"
-  if [ ! -e "$file" ]; then echo "On" >/var/plexguide/pgui.switch; fi
+# pgui() {
+  # file="/var/plexguide/pgui.switch"
+  # if [ ! -e "$file" ]; then echo "On" >/var/plexguide/pgui.switch; fi
 
-  pguicheck=$(cat /var/plexguide/pgui.switch)
-  if [[ "$pguicheck" == "On" ]]; then
+  # pguicheck=$(cat /var/plexguide/pgui.switch)
+  # if [[ "$pguicheck" == "On" ]]; then
 
-    dstatus=$(docker ps --format '{{.Names}}' | grep "pgui")
-    if [ "$dstatus" != "pgui" ]; then
-      bash /opt/plexguide/menu/pgcloner/solo/pgui.sh
-      ansible-playbook /opt/pgui/pgui.yml
-    fi
-  fi
-}
+    # dstatus=$(docker ps --format '{{.Names}}' | grep "pgui")
+    # if [ "$dstatus" != "pgui" ]; then
+      # bash /opt/plexguide/menu/pgcloner/solo/pgui.sh
+      # ansible-playbook /opt/pgui/pgui.yml
+    # fi
+  # fi
+# }
 
 pythonstart() {
 
