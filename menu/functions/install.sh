@@ -153,6 +153,10 @@ dependency() {
   ospgversion=$(cat /var/plexguide/os.version)
   if [ "$ospgversion" == "debian" ]; then
     ansible-playbook /opt/plexguide/menu/dependency/dependencydeb.yml
+        backports="deb http://ftp.debian.org/debian $debian_version-backports main"
+        if ! grep -Fxq "$backports" /etc/apt/sources.list; then
+                (set -x; $sh_c "echo \"$backports\" >> /etc/apt/sources.list")
+        fi
   else
     ansible-playbook /opt/plexguide/menu/dependency/dependency.yml
   fi
@@ -353,6 +357,15 @@ portainer() {
   fi
 }
 
+add_debian_backport_repo() {
+        debian_version="$1"
+        backports="deb http://ftp.debian.org/debian $debian_version-backports main"
+        if ! grep -Fxq "$backports" /etc/apt/sources.list; then
+                (set -x; $sh_c "echo \"$backports\" >> /etc/apt/sources.list")
+        fi
+}
+
+
 # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
 pgcore() { if [ ! -e "/opt/coreapps/place.holder" ]; then ansible-playbook /opt/plexguide/menu/pgbox/pgboxcore.yml; fi; }
 pgcommunity() { if [ ! -e "/opt/communityapps/place.holder" ]; then ansible-playbook /opt/plexguide/menu/pgbox/pgboxcommunity.yml; fi; }
@@ -436,10 +449,10 @@ dockerinstall() {
       clear
       echo "Installing Docker the Old School Way - (Please Be Patient)"
       sleep 2
-      clear
-      curl -fsSL get.docker.com -o get-docker.sh
-      sh get-docker.sh
-      echo ""
+		clear
+			curl -fsSL https://get.docker.com -o get-docker.sh
+			sh get-docker.sh
+		echo ""
       echo "Starting Docker (Please Be Patient)"
       sleep 2
       systemctl start docker
