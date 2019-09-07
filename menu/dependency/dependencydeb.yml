@@ -46,6 +46,7 @@
         - python-lxml
         - acl
         - bc
+        - gnupg2
     # New ansible way of doing this, this should replace old method soon.
     #   apt:
     #     name:
@@ -98,15 +99,15 @@
         state: latest
         executable: pip3
 
-    - name: Update pip packages for python2
-      pip:
-        name:
-          - pip
-          - setuptools
-          - pyOpenSSL
-          - requests
-          - netaddr
-          - lxml
-          - docker
-        state: latest
-        executable: pip2
+    # - name: Update pip packages for python2
+      # pip:
+        # name:
+          # - pip
+          # - setuptools
+          # - pyOpenSSL
+          # - requests
+          # - netaddr
+          # - lxml
+          # - docker
+        # state: latest
+        # executable: pip2
