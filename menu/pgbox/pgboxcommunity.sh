@@ -123,7 +123,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PGBox ~ Multi-App Installer           📓 Reference: pgbox.pgblitz.com
+🚀 Multi-App Installer 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📂 Potential Apps to Install
@@ -251,7 +251,7 @@ pinterface() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PG Community Box Edition!         📓 Reference: community.pgblitz.com
+🚀 Community Box Edition!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 💬 User: $boxuser | Branch: $boxbranch
@@ -314,16 +314,17 @@ mainbanner() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PG Community Box Edition!         📓 Reference: community.pgblitz.com
+🚀 Community Box Edition! 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💬 Community Box apps simplify their usage within PGBlitz! PG provides more
+💬 Community Box apps simplify their usage within PGBlitz! 
+PG provides more
 focused support and development based on community usage.
 
 💬 The Personal Forked option will install your version of Community Box. Good
 for testing or for personal mods! Ensure that it exist prior to use!
 
-[1] Utilize Community Box - PGBlitz's
+[1] Utilize Community Box
 [2] Utilize Community Box - Personal (Forked)
 
 [Z] Exit
