@@ -17,7 +17,7 @@ done </opt/plexguide/menu/interface/version/version.sh
 tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📂  PG Update Interface Menu
+📂  Update Interface Menu
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -28,7 +28,7 @@ echo "[Z] Exit"
 echo ""
 break=no
 while [ "$break" == "no" ]; do
-  read -p '↘️  Type [PG Version] | PRESS ENTER: ' typed
+  read -p '↘️  Type | PRESS ENTER: ' typed
   storage=$(grep $typed /var/plexguide/ver.temp)
 
   if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
