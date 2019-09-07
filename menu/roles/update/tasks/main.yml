@@ -16,8 +16,6 @@
        - software-properties-common
        - sysstat 
        - nmon
-    register: apt_result
-    changed_when: "'packages will be installed' in apt_result.stdout"
 
   - name: Autoremove unused packages
     command: apt-get -y autoremove
