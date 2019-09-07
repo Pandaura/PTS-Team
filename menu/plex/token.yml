@@ -1,0 +1,46 @@
+#!/bin/bash
+#
+# Title:      PGBlitz (Reference Title File)
+# Author(s):  Admin9705 - Deiteq
+# URL:        https://pgblitz.com - http://github.pgblitz.com
+# GNU:        General Public License v3.0
+################################################################################
+---
+# Reference: https://github.com/Arcanemagus/plex-api/wiki/Plex.tv
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Recall User
+      shell: 'cat /var/plexguide/plex.user'
+      register: user
+
+    - name: Recall PW
+      shell: 'cat /var/plexguide/plex.pw'
+      register: pw
+
+    - name: Blank Out Token
+      shell: "echo '' > /var/plexguide/plex.token"
+      ignore_errors: yes
+
+    - name: Token Generation
+      uri:
+        url: https://plex.tv/users/sign_in.json
+        method: POST
+        status_code: 201
+        headers:
+          X-Plex-Product: 'plexguide'
+          X-Plex-Version: '1.0.0'
+          X-Plex-Client-Identifier: 'XXX'
+          Content-Type: 'application/x-www-form-urlencoded; charset=utf-8'
+        password: '{{pw.stdout}}'
+        user: '{{user.stdout}}'
+      register: plextoken
+
+    - name: Set Token
+      set_fact:
+        plexauth: "{{plextoken.json.user.authToken | regex_replace('\n', '') }}"
+
+    - name: Save Token
+      shell: 'echo {{plexauth}} > /var/plexguide/plex.token'
+      ignore_errors: yes
