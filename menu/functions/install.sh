@@ -123,9 +123,10 @@ alias() {
 }
 
 aptupdate() {
-  yes | apt-get update
-  yes | apt-get install software-properties-common
-  yes | apt-get install sysstat nmon
+  # yes | apt-get update
+  # yes | apt-get install software-properties-common
+  # yes | apt-get install sysstat nmon
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags update
   sed -i 's/false/true/g' /etc/default/sysstat
 }
 
@@ -165,7 +166,7 @@ emergency() {
       tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  Emergency & Warning Log Generator | Visit - http://emlog.pgblitz.com
+⛔️  Emergency & Warning Log Generator 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 NOTE: This can be turned [On] or Off in Settings!
 
@@ -260,32 +261,11 @@ motd() {
 }
 
 mountcheck() {
-  # bash /opt/plexguide/menu/pgcloner/solo/pgui.sh
-  # ansible-playbook /opt/pgui/pgui.yml
   ansible-playbook /opt/plexguide/menu/pgui/mcdeploy.yml
 }
 
 localspace() {
-  ansible-playbook /opt/pgui/pgui.yml
   ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
-
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  PG User Interface (PGUI) Installed / Updated
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-INFORMATION:  PGUI is a simple interface that provides information,
-warnings, and stats that will assist both yourself and tech support!
-To turn this off, goto settings and turn off/on the PG User Interface!
-
-VISIT:
-https://pgui.yourdomain.com | http://pgui.domain.com:8555 | ipv4:8555
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-  read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
-
 }
 
 newinstall() {
@@ -334,21 +314,6 @@ pgshield() { if [ ! -e "/opt/pgshield/place.holder" ]; then
   echo 'pgshield.sh' >/var/plexguide/pgcloner.startlink
   ansible-playbook "/opt/plexguide/menu/pgcloner/corev2/primary.yml"
 fi; }
-
-pgui() {
-  file="/var/plexguide/pgui.switch"
-  if [ ! -e "$file" ]; then echo "On" >/var/plexguide/pgui.switch; fi
-
-  pguicheck=$(cat /var/plexguide/pgui.switch)
-  if [[ "$pguicheck" == "On" ]]; then
-
-    dstatus=$(docker ps --format '{{.Names}}' | grep "pgui")
-    if [ "$dstatus" != "pgui" ]; then
-      bash /opt/plexguide/menu/pgcloner/solo/pgui.sh
-      ansible-playbook /opt/pgui/pgui.yml
-    fi
-  fi
-}
 
 pythonstart() {
 
