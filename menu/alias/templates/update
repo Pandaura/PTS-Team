@@ -5,4 +5,4 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-sudo apt update -y
+sudo ansible-playbook /opt/plexguide/menu/pg.yml --tags update

@@ -69,6 +69,7 @@ updateprime() {
 pginstall() {
   updateprime
   bash /opt/plexguide/menu/pggce/gcechecker.sh
+  update
   # core pythonstart
   core aptupdate
   core alias &>/dev/null &
@@ -121,6 +122,10 @@ core() {
 ############################################################ INSTALLER FUNCTIONS
 alias() {
   ansible-playbook /opt/plexguide/menu/alias/alias.yml
+}
+
+update() {
+ansible-playbook /opt/plexguide/menu/pg.yml --tags update &>/dev/null &
 }
 
 aptupdate() {

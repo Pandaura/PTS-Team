@@ -10,3 +10,4 @@
     - { role: autodelete, tags: ['autodelete'] }
     - { role: clean, tags: ['clean'] }
     - { role: clean-encrypt, tags: ['clean-encrypt'] }
+    - { role: update, tags: ['update'] }
