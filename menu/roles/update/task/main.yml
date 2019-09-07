@@ -7,7 +7,15 @@
     register: apt_result
 
   - name: Install a list of packages
-    command: apt-get install -y jq dnsutils ctop
+    apt:
+       name: "{{ packages }}"
+    vars:
+       packages:
+       - ctop
+       - dnsutils
+       - software-properties-common
+       - sysstat 
+       - nmon
     register: apt_result
     changed_when: "'packages will be installed' in apt_result.stdout"
 
