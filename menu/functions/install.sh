@@ -99,7 +99,7 @@ pginstall() {
   core gcloud
   core cleaner &>/dev/null &
   core serverid
-  core watchtower
+  # core watchtower
   core prune
   customcontainers &>/dev/null &
   pgedition
@@ -254,28 +254,28 @@ mergerinstall() {
   apt install -y ./mergerfs*_amd64.deb
   rm mergerfs*_amd64.deb
 
-  tee <<-EOF
+  # tee <<-EOF
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  MergerFS has been updated! Requires PG Clone redeployment.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ↘️  MergerFS has been updated! Requires PG Clone redeployment.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-INFORMATION:  MergerFS was updated on your system and brings performance improvements!
-Users have reported faster plex scanning and playback with the new mergerfs and pgclone configuration.
+# INFORMATION:  MergerFS was updated on your system and brings performance improvements!
+# Users have reported faster plex scanning and playback with the new mergerfs and pgclone configuration.
 
-ATTENTION:
-You are required to re-deploy your mounts in the PG Clone menu (option 4, option A).
-It is advised to check the VFS mount settings in the options menu (C,2), as options have been updated.
+# ATTENTION:
+# You are required to re-deploy your mounts in the PG Clone menu (option 4, option A).
+# It is advised to check the VFS mount settings in the options menu (C,2), as options have been updated.
 
-WARNING: This is not optional, you must redeploy your mounts in the PG Clone menu.
-Your mounts are currently down until you re-deploy pg clone as it requires configuration updates!
-This is not done for you, you must go to the PG Clone Menu (option 4) and deploy (option A).
+# WARNING: This is not optional, you must redeploy your mounts in the PG Clone menu.
+# Your mounts are currently down until you re-deploy pg clone as it requires configuration updates!
+# This is not done for you, you must go to the PG Clone Menu (option 4) and deploy (option A).
 
-We apologize for this one-time inconvenience.
+# We apologize for this one-time inconvenience.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-  read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# EOF
+  # read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
 
 }
 
@@ -374,48 +374,48 @@ fi; }
   # fi
 # }
 
-pythonstart() {
+# pythonstart() {
 
-  ansible="2.8.2"
-  pip="19.1.1"
+  # ansible="2.8.2"
+  # pip="19.1.1"
 
-  apt-get install -y --reinstall \
-    nano \
-    git \
-    build-essential \
-    libssl-dev \
-    libffi-dev \
-    python3-dev \
-    python3-pip \
-    python-dev \
-    python-pip
-  python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
-  python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
-  python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall \
-    pyOpenSSL \
-    requests \
-    netaddr
-  python -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
-  python -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
-  python -m pip install --disable-pip-version-check --upgrade --force-reinstall ansible==${1-$ansible}
+  # apt-get install -y --reinstall \
+    # nano \
+    # git \
+    # build-essential \
+    # libssl-dev \
+    # libffi-dev \
+    # python3-dev \
+    # python3-pip \
+    # python-dev \
+    # python-pip
+  # python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
+  # python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
+  # python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall \
+    # pyOpenSSL \
+    # requests \
+    # netaddr
+  # python -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
+  # python -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
+  # python -m pip install --disable-pip-version-check --upgrade --force-reinstall ansible==${1-$ansible}
 
-  ## Copy pip to /usr/bin
-  cp /usr/local/bin/pip /usr/bin/pip
-  cp /usr/local/bin/pip3 /usr/bin/pip3
+  # ## Copy pip to /usr/bin
+  # cp /usr/local/bin/pip /usr/bin/pip
+  # cp /usr/local/bin/pip3 /usr/bin/pip3
 
-  mkdir -p /etc/ansible/inventories/ 1>/dev/null 2>&1
-  echo "[local]" >/etc/ansible/inventories/local
-  echo "127.0.0.1 ansible_connection=local" >>/etc/ansible/inventories/local
+  # mkdir -p /etc/ansible/inventories/ 1>/dev/null 2>&1
+  # echo "[local]" >/etc/ansible/inventories/local
+  # echo "127.0.0.1 ansible_connection=local" >>/etc/ansible/inventories/local
 
-  ### Reference: https://docs.ansible.com/ansible/2.4/intro_configuration.html
-  echo "[defaults]" >/etc/ansible/ansible.cfg
-  echo "deprecation_warnings=False" >>/etc/ansible/ansible.cfg
-  echo "command_warnings = False" >>/etc/ansible/ansible.cfg
-  echo "callback_whitelist = profile_tasks" >>/etc/ansible/ansible.cfg
-  echo "inventory = /etc/ansible/inventories/local" >>/etc/ansible/ansible.cfg
+  # ### Reference: https://docs.ansible.com/ansible/2.4/intro_configuration.html
+  # echo "[defaults]" >/etc/ansible/ansible.cfg
+  # echo "deprecation_warnings=False" >>/etc/ansible/ansible.cfg
+  # echo "command_warnings = False" >>/etc/ansible/ansible.cfg
+  # echo "callback_whitelist = profile_tasks" >>/etc/ansible/ansible.cfg
+  # echo "inventory = /etc/ansible/inventories/local" >>/etc/ansible/ansible.cfg
 
-  # Variables Need to Line Up with pg.sh (start)
-  touch /var/plexguide/background.1
+  # # Variables Need to Line Up with pg.sh (start)
+  # touch /var/plexguide/background.1
 }
 
 dockerinstall() {
@@ -481,73 +481,73 @@ EOF
   fi
 }
 
-watchtower() {
+# watchtower() {
 
-  file="/var/plexguide/watchtower.wcheck"
-  if [ ! -e "$file" ]; then
-    echo "4" >/var/plexguide/watchtower.wcheck
-  fi
+  # file="/var/plexguide/watchtower.wcheck"
+  # if [ ! -e "$file" ]; then
+    # echo "4" >/var/plexguide/watchtower.wcheck
+  # fi
 
-  wcheck=$(cat "/var/plexguide/watchtower.wcheck")
-  if [[ "$wcheck" -ge "1" && "$wcheck" -le "3" ]]; then
-    wexit="1"
-  else wexit=0; fi
-  tee <<-EOF
+  # wcheck=$(cat "/var/plexguide/watchtower.wcheck")
+  # if [[ "$wcheck" -ge "1" && "$wcheck" -le "3" ]]; then
+    # wexit="1"
+  # else wexit=0; fi
+  # tee <<-EOF
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📂  PG WatchTower Edition 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 📂  PG WatchTower Edition 
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💬  WatchTower updates your containers soon as possible!
+# 💬  WatchTower updates your containers soon as possible!
 
-[1] Containers: Auto-Update All
-[2] Containers: Auto-Update All Except | Plex & Emby
-[3] Containers: Never Update
-Z - Exit
+# [1] Containers: Auto-Update All
+# [2] Containers: Auto-Update All Except | Plex & Emby
+# [3] Containers: Never Update
+# Z - Exit
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# EOF
 
-  # Standby
-  read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
-  if [ "$typed" == "1" ]; then
-    watchtowergen
-    ansible-playbook /opt/coreapps/apps/watchtower.yml
-    echo "1" >/var/plexguide/watchtower.wcheck
-  elif [ "$typed" == "2" ]; then
-    watchtowergen
-    sed -i -e "/plex/d" /tmp/watchtower.set 1>/dev/null 2>&1
-    sed -i -e "/emby/d" /tmp/watchtower.set 1>/dev/null 2>&1
-    sed -i -e "/jellyfin/d" /tmp/watchtower.set 1>/dev/null 2>&1
-    ansible-playbook /opt/coreapps/apps/watchtower.yml
-    echo "2" >/var/plexguide/watchtower.wcheck
-  elif [ "$typed" == "3" ]; then
-    echo null >/tmp/watchtower.set
-    ansible-playbook /opt/coreapps/apps/watchtower.yml
-    echo "3" >/var/plexguide/watchtower.wcheck
-  elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
-    if [ "$wexit" == "0" ]; then
-      tee <<-EOF
+  # # Standby
+  # read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
+  # if [ "$typed" == "1" ]; then
+    # watchtowergen
+    # ansible-playbook /opt/coreapps/apps/watchtower.yml
+    # echo "1" >/var/plexguide/watchtower.wcheck
+  # elif [ "$typed" == "2" ]; then
+    # watchtowergen
+    # sed -i -e "/plex/d" /tmp/watchtower.set 1>/dev/null 2>&1
+    # sed -i -e "/emby/d" /tmp/watchtower.set 1>/dev/null 2>&1
+    # sed -i -e "/jellyfin/d" /tmp/watchtower.set 1>/dev/null 2>&1
+    # ansible-playbook /opt/coreapps/apps/watchtower.yml
+    # echo "2" >/var/plexguide/watchtower.wcheck
+  # elif [ "$typed" == "3" ]; then
+    # echo null >/tmp/watchtower.set
+    # ansible-playbook /opt/coreapps/apps/watchtower.yml
+    # echo "3" >/var/plexguide/watchtower.wcheck
+  # elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
+    # if [ "$wexit" == "0" ]; then
+      # tee <<-EOF
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️   WatchTower Preference Must be Set Once!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-      sleep 3
-      watchtower
-    fi
-    exit
-  else
-    badinput
-    watchtower
-  fi
-}
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ⚠️   WatchTower Preference Must be Set Once!
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# EOF
+      # sleep 3
+      # watchtower
+    # fi
+    # exit
+  # else
+    # badinput
+    # watchtower
+  # fi
+# }
 
-watchtowergen() {
-  bash /opt/coreapps/apps/_appsgen.sh
-  bash /opt/communityapps/apps/_appsgen.sh
-  while read p; do
-    echo -n $p >>/tmp/watchtower.set
-    echo -n " " >>/tmp/watchtower.set
-  done </var/plexguide/app.list
-}
+# watchtowergen() {
+  # bash /opt/coreapps/apps/_appsgen.sh
+  # bash /opt/communityapps/apps/_appsgen.sh
+  # while read p; do
+    # echo -n $p >>/tmp/watchtower.set
+    # echo -n " " >>/tmp/watchtower.set
+  # done </var/plexguide/app.list
+# }
