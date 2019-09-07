@@ -107,6 +107,7 @@ pginstall() {
   core mountcheck
   emergency
   pgdeploy
+  localspace
 }
 
 core() {
@@ -129,10 +130,10 @@ ansible-playbook /opt/plexguide/menu/pg.yml --tags update &>/dev/null &
 }
 
 aptupdate() {
-  yes | apt-get update
-  yes | apt-get install software-properties-common
-  yes | apt-get install sysstat nmon
-  sed -i 's/false/true/g' /etc/default/sysstat
+ ansible-playbook /opt/plexguide/menu/pg.yml --tags update &>/dev/null &
+ apt-get install software-properties-common &>/dev/null &
+ apt-get install sysstat nmon &>/dev/null &
+ sed -i 's/false/true/g' /etc/default/sysstat
 }
 
 customcontainers() {
@@ -288,17 +289,18 @@ motd() {
   ansible-playbook /opt/plexguide/menu/motd/motd.yml
 }
 
-# mountcheck() {
-  # bash /opt/plexguide/menu/pgcloner/solo/pgui.sh
-  # ansible-playbook /opt/pgui/pgui.yml
-  # ansible-playbook /opt/plexguide/menu/pgui/mcdeploy.yml
-# }
+mountcheck() {
+   # bash /opt/plexguide/menu/pgcloner/solo/pgui.sh
+   # ansible-playbook /opt/pgui/pgui.yml
+   ansible-playbook /opt/plexguide/menu/pgui/mcdeploy.yml
+}
 
-# localspace() {
+localspace() {
   # ansible-playbook /opt/pgui/pgui.yml
-  # ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
-
-  # tee <<-EOF
+  ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
+ }
+ 
+# tee <<-EOF
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # ↘️  PG User Interface (PGUI) Installed / Updated
@@ -314,8 +316,7 @@ motd() {
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # EOF
   # read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
-
-# }
+#
 
 newinstall() {
   rm -rf /var/plexguide/pg.exit 1>/dev/null 2>&1
