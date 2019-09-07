@@ -6,10 +6,6 @@
 # GNU:        General Public License v3.0
 ################################################################################
 ---
-- hosts: localhost
-  gather_facts: true
-  tasks:
-
   - name: "Establish Facts"
     set_fact:
       switch: "on"

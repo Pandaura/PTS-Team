@@ -131,8 +131,8 @@ ansible-playbook /opt/plexguide/menu/pg.yml --tags update &>/dev/null &
 
 aptupdate() {
  ansible-playbook /opt/plexguide/menu/pg.yml --tags update &>/dev/null &
- apt-get install software-properties-common &>/dev/null &
- apt-get install sysstat nmon &>/dev/null &
+ apt-get install -yqq software-properties-common &>/dev/null &
+ apt-get install -yqq sysstat nmon &>/dev/null &
  sed -i 's/false/true/g' /etc/default/sysstat
 }
 
