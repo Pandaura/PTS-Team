@@ -1,10 +1,3 @@
-#!/bin/bash
-#
-# Title:      PGBlitz (Reference Title File)
-# Author(s):  Admin9705 - Deiteq
-# URL:        https://pgblitz.com - http://github.pgblitz.com
-# GNU:        General Public License v3.0
-################################################################################
 ---
   - name: "Establish Facts"
     set_fact:
@@ -25,14 +18,6 @@
       switch: "off"
     when: updatecheck.stdout == "18.09.2,"
 
-  - name: Install required packages
-    apt: "name={{item}} state=present"
-    with_items:
-      - apt-transport-https
-      - ca-certificates
-      - software-properties-common
-    when: switch == "on"
-
   - name: Add official gpg signing key
     apt_key:
       id: 0EBFCD88
@@ -52,42 +37,21 @@
     register: apt_docker_repositories
     when: switch == "on"
 
-  - name: Update APT packages list
-    apt:
-      update_cache: yes
+  - name: Update APT package cache
+    apt: update_cache=yes cache_valid_time=600
     when: apt_docker_repositories.changed and switch == "on"
 
-  - name: Release docker-ce from hold
-    dpkg_selections:
-      name: docker-ce
-      selection: install
-    when: switch == "on"
-
-  - name: Install docker-ce
+  - name: Install Docker
     apt:
-      name: docker-ce
-      state: present
-      update_cache: yes
-    when: switch == "on"
-
-  - name: Put docker-ce into hold
-    dpkg_selections:
-      name: docker-ce
-      selection: hold
-    when: switch == "on"
-
-  - name: Uninstall docker-py pip module
-    pip:
-      name: docker-py
-      state: absent
-    ignore_errors: yes
-    when: switch == "on"
-
-  - name: Install docker pip module
-    pip:
-      name: docker
-      state: latest
-    ignore_errors: yes
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
     when: switch == "on"
 
   - name: Check docker daemon.json exists
