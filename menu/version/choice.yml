@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Title:      PGBlitz (Reference Title File)
+# Author(s):  Admin9705 - Deiteq
+# URL:        https://pgblitz.com - http://github.pgblitz.com
+# GNU:        General Public License v3.0
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: 'Installing Version'
+      git:
+        repo: 'https://github.com/MrDoobPG/PGBlitz.com'
+        dest: '/opt/plexguide'
+        version: 'master'
+        force: yes
+
+    - name: 'Stops First Time Run'
+      shell: 'touch /var/plexguide/ask.yes'
+      register: program
