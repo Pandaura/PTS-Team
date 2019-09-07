@@ -26,17 +26,21 @@
     - software-properties-common
   when: switch == "on"
 
-- name: Docker install Debian
-  command: bash /opt/plexguide/menu/roles/dockerdeb/files/dockerdeb.sh
+# - name: Docker install Debian
+  # shell: bash /opt/plexguide/menu/roles/dockerdeb/files/dockerdeb.sh
+  # args:
+      # executable: /bin/bash
+  # when: switch == "on"
+
+- name: Docker getcommands
+  command: curl -fsSL https://get.docker.com -o /home/get-docker.sh
   when: switch == "on"
 
-# - name: Docker getcommands
-  # command: curl -fsSL https://get.docker.com -o /home/get-docker.sh
-  # when: switch == "on"
-
-# - name: Old way Docker install
-  # command: sudo bash /home/get-docker.sh
-  # when: switch == "on"
+- name: Old way Docker install
+  shel: sudo bash /home/get-docker.sh
+  args:
+    executable: /bin/bash
+  when: switch == "on"
 
 - name: Check docker daemon.json exists
   stat:
