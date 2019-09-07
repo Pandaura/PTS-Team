@@ -130,9 +130,9 @@ ansible-playbook /opt/plexguide/menu/pg.yml --tags update &>/dev/null &
 }
 
 aptupdate() {
- ansible-playbook /opt/plexguide/menu/pg.yml --tags update &>/dev/null &
- apt-get install -yqq software-properties-common &>/dev/null &
- apt-get install -yqq sysstat nmon &>/dev/null &
+ ansible-playbook /opt/plexguide/menu/pg.yml --tags update
+ # apt-get install -yqq software-properties-common
+ # apt-get install -yqq sysstat nmon
  sed -i 's/false/true/g' /etc/default/sysstat
 }
 
