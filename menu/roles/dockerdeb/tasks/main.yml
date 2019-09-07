@@ -48,7 +48,7 @@
 
 - name: Official Repo
   apt_repository:
-    repo: 'deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} edge'
+    repo: 'deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable edge'
   register: apt_docker_repositories
   when: switch == "on"
 
