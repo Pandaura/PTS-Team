@@ -26,20 +26,61 @@
     - software-properties-common
   when: switch == "on"
 
-# - name: Docker install Debian
-  # shell: bash /opt/plexguide/menu/roles/dockerdeb/files/dockerdeb.sh
-  # args:
-      # executable: /bin/bash
-  # when: switch == "on"
-
-- name: Docker getcommands
-  command: curl -fsSL https://get.docker.com -o /home/get-docker.sh
+- name: Add official gpg signing key
+  apt_key:
+    id: 0EBFCD88
+    url: https://download.docker.com/linux/debian/gpg
   when: switch == "on"
 
-- name: Old way Docker install
-  shell: sudo bash /home/get-docker.sh
-  args:
-    executable: /bin/bash
+- name: "Stop All Containers"
+  shell: "docker stop $(docker ps -a -q)"
+  ignore_errors: yes
+  when:
+    - check.stat.exists == True
+    - switch == "on"
+
+- name: Official Repo
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} edge"
+  register: apt_docker_repositories
+  when: switch == "on"
+
+- name: Update APT packages list
+  apt:
+    update_cache: yes
+  when: apt_docker_repositories.changed and switch == "on"
+
+- name: Release docker-ce from hold
+  dpkg_selections:
+    name: docker-ce
+    selection: install
+  when: switch == "on"
+
+- name: Install docker-ce
+  apt:
+    name: docker-ce
+    state: present
+    update_cache: yes
+  when: switch == "on"
+
+- name: Put docker-ce into hold
+  dpkg_selections:
+    name: docker-ce
+    selection: hold
+  when: switch == "on"
+
+- name: Uninstall docker-py pip module
+  pip:
+    name: docker-py
+    state: absent
+  ignore_errors: yes
+  when: switch == "on"
+
+- name: Install docker pip module
+  pip:
+    name: docker
+    state: latest
+  ignore_errors: yes
   when: switch == "on"
 
 - name: Check docker daemon.json exists
