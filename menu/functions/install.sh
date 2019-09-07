@@ -69,7 +69,7 @@ updateprime() {
 pginstall() {
   updateprime
   bash /opt/plexguide/menu/pggce/gcechecker.sh
-  core pythonstart
+  # core pythonstart
   core aptupdate
   core alias &>/dev/null &
   core folders
