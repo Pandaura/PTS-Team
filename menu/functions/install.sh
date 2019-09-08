@@ -123,7 +123,8 @@ alias() {
 }
 
 templatespart2() {
-  ansible-playbook /opt/plexguide/menu/alias/alias.yml
+  ansible-playbook /opt/plexguide/menu/alias/alias.yml >/dev/null 2>&1
+
 }
 
 aptupdate() {
