@@ -9,27 +9,6 @@
 - hosts: localhost
   gather_facts: false
   tasks:
-    - name: Install PGVPN
-      template:
-        src: pgvpn
-        dest: /bin/pgvpn
-        force: yes
-        mode: 0775
-
-    - name: Install Status UFSMonitor
-      template:
-        src: sufs
-        dest: /bin/sufs
-        force: yes
-        mode: 0775
-
-    - name: Nano UFSMonitor
-      template:
-        src: nufs
-        dest: /bin/nufs
-        force: yes
-        mode: 0775
-
     ###### Install PTSupdate
 
     - name: PTSupdate
@@ -138,7 +117,7 @@
         force: yes
         mode: 0775
 
-    - name: Install Status UFSMonitor
+    - name: Install PTS-User ADD
       template:
         src: sufs
         dest: /bin/ptsadd
@@ -152,4 +131,10 @@
         force: yes
         mode: 0775
 
+    - name: Install Backup & Restore
+      template:
+        src: rcupdate
+        dest: /bin/rcupdate
+        force: yes
+        mode: 0775
 
