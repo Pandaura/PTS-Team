@@ -145,3 +145,11 @@
         force: yes
         mode: 0775
 
+    - name: Install rclone updater
+      template:
+        src: rcupdate
+        dest: /bin/rcupdate
+        force: yes
+        mode: 0775
+
+
