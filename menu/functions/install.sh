@@ -446,7 +446,7 @@ watchtower() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📂  PG WatchTower Edition          📓 Reference: watchtower.pgblitz.com
+📂  WatchTower Edition
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 💬  WatchTower updates your containers soon as possible!
@@ -454,7 +454,8 @@ watchtower() {
 [1] Containers: Auto-Update All
 [2] Containers: Auto-Update All Except | Plex & Emby
 [3] Containers: Never Update
-Z - Exit
+
+[Z] - Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
