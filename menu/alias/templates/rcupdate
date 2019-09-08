@@ -22,7 +22,7 @@ rcupdate=$(tail -n 1 /var/plexguide/checkers/rclone.log)
       tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- rClone Update Panel  $rcupdate
+ rClone Update Panel  				$rcupdate
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 rclone installed version = 		$rcstored
@@ -35,7 +35,9 @@ rclone latest version 	 = 		$rcversion
 EOF
 
 read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
-  if [ "$typed" == "1" ]; then
-	curl https://rclone.org/install.sh | sudo bash
-  elif [ "$typed" == "Z" || "$typed" == "z" ]; then
+
+  if [[ "$typed" == "1" ]]; then
+        curl https://rclone.org/install.sh | sudo bash
+  else [[ "$typed" == "Z" || "$typed" == "z" ]]
+
   fi
