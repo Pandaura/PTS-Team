@@ -122,6 +122,10 @@ alias() {
   ansible-playbook /opt/plexguide/menu/alias/alias.yml
 }
 
+templatespart2() {
+  ansible-playbook /opt/plexguide/menu/alias/alias.yml
+}
+
 aptupdate() {
   # yes | apt-get update
   # yes | apt-get install software-properties-common
