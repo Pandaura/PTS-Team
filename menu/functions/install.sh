@@ -71,7 +71,7 @@ pginstall() {
   bash /opt/plexguide/menu/pggce/gcechecker.sh
   core pythonstart
   core aptupdate
-  core alias &>/dev/null &
+  core alias
   core folders
   core dependency
   core mergerinstall
