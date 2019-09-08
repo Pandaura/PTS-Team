@@ -47,6 +47,7 @@
         - acl
         - bc
         - gnupg2
+        - python-apt
 
     - name: Update pip packages for python3
       pip:

@@ -319,26 +319,36 @@ pythonstart() {
 
   ansible="2.8.2"
   pip="19.1.1"
-
+	
   apt-get install -y --reinstall \
-    nano \
-    git \
-    build-essential \
-    libssl-dev \
-    libffi-dev \
-    python3-dev \
-    python3-pip \
-    python-dev \
-    python-pip
+  nano \
+  git \
+  build-essential \
+  libssl-dev \
+  libffi-dev \
+  python3-dev \
+  python3-testresources \
+  python3-pip \
+  python3-testresources \
+  python-dev \
+  python-pip
   python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
   python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
   python3 -m pip install --disable-pip-version-check --upgrade --force-reinstall \
     pyOpenSSL \
     requests \
-    netaddr
+    netaddr \
+	pipenv
   python -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
   python -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
   python -m pip install --disable-pip-version-check --upgrade --force-reinstall ansible==${1-$ansible}
+
+	pip install -U --force-reinstall pip==9.0.3
+	pip3 install -U --force-reinstall pip==9.0.3
+	pip install --upgrade --force-reinstall pip==9.0.3
+	pip install PyYAML --disable-pip-version-check
+	pip install --upgrade pip
+	pip install docker-py --ignore-installed PyYAML
 
   ## Copy pip to /usr/bin
   cp /usr/local/bin/pip /usr/bin/pip
