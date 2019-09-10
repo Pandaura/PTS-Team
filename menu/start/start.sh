@@ -62,8 +62,8 @@ varstart() {
   file="/opt/appdata/plexguide"
   if [ ! -e "$file" ]; then
     mkdir -p /opt/appdata/plexguide 1>/dev/null 2>&1
-    chown 0775 /opt/appdata/plexguide 1>/dev/null 2>&1
-    chmod 1000:1000 /opt/appdata/plexguide 1>/dev/null 2>&1
+    chown -R 0775 /opt/appdata/plexguide 1>/dev/null 2>&1
+    chmod -R 1000:1000 /opt/appdata/plexguide 1>/dev/null 2>&1
   fi
 
   ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - START
@@ -116,7 +116,9 @@ varstart() {
 
   ansible --version | head -n +1 | awk '{print $2'} >/var/plexguide/pg.ansible
   docker --version | head -n +1 | awk '{print $3'} | sed 's/,$//' >/var/plexguide/pg.docker
-  cat /etc/os-release | head -n +5 | tail -n +5 | cut -d'"' -f2 >/var/plexguide/pg.os
+  lsb_release -si >/var/plexguide/pg.os
+  
+  ## stupid line cat /etc/os-release | head -n +5 | tail -n +5 | cut -d'"' -f2 >/var/plexguide/pg.os
 
   file="/var/plexguide/gce.false"
   if [ -e "$file" ]; then echo "No" >/var/plexguide/pg.gce; else echo "Yes" >/var/plexguide/pg.gce; fi
@@ -148,9 +150,9 @@ varstart() {
   if [ ! -e "$file" ]; then echo "/opt/appdata/plexguide" >/var/plexguide/data.location; fi
 
   space=$(cat /var/plexguide/data.location)
-  used=$(df -h /opt/appdata/plexguide | tail -n +2 | awk '{print $3}')
-  capacity=$(df -h /opt/appdata/plexguide | tail -n +2 | awk '{print $2}')
-  percentage=$(df -h /opt/appdata/plexguide | tail -n +2 | awk '{print $5}')
+  used=$(df -h /opt/ | tail -n +2 | awk '{print $3}')
+  capacity=$(df -h /opt/ | tail -n +2 | awk '{print $4}')
+  percentage=$(df -h /opt/ | tail -n +2 | awk '{print $5}')
 
   # For the PGBlitz UI
   echo "$used" >/var/plexguide/pg.used
@@ -167,26 +169,26 @@ menuprime() {
 🌎 $transport | Version: $pgnumber | ID: $serverid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🌵 PG Disk Used Space: $used of $capacity | $percentage Used Capacity
+🌵 Disk Used Space: $used of $capacity | $percentage Used Capacity
 EOF
 
   # Displays Second Drive If GCE
   edition=$(cat /var/plexguide/pg.server.deploy)
   if [ "$edition" == "feeder" ]; then
-    used_gce=$(df -h /mnt | tail -n +2 | awk '{print $3}')
-    capacity_gce=$(df -h /mnt | tail -n +2 | awk '{print $2}')
-    percentage_gce=$(df -h /mnt | tail -n +2 | awk '{print $5}')
-    echo "   GCE Disk Used Space: $used_gce of $capacity_gce | $percentage_gce Used Capacity"
+    used_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $3}')
+    capacity_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $2}')
+    percentage_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $5}')
+    echo " GCE Disk Used Space: $used_gce of $capacity_gce | $percentage_gce Used Capacity"
   fi
 
   disktwo=$(cat "/var/plexguide/server.hd.path")
   if [ "$edition" != "feeder" ]; then
-    used_gce2=$(df -h "$disktwo" | tail -n +2 | awk '{print $3}')
-    capacity_gce2=$(df -h "$disktwo" | tail -n +2 | awk '{print $2}')
-    percentage_gce2=$(df -h "$disktwo" | tail -n +2 | awk '{print $5}')
+    used_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $3}')
+    capacity_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $2}')
+    percentage_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $5}')
 
     if [[ "$disktwo" != "/mnt" ]]; then
-      echo "   2nd Disk Used Space: $used_gce2 of $capacity_gce2 | $percentage_gce2 Used Capacity"
+      echo " 2nd Disk Used Space: $used_gce2 of $capacity_gce2 | $percentage_gce2 Used Capacity"
     fi
   fi
 
