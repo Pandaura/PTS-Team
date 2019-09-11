@@ -29,9 +29,7 @@
     - check.stat.exists == True
     - switch == "on"
 
-#- include: "./roles/docker/vars/{{ansible_os_family}}.yml"
-
-##Debian
+#########update part
 - name: Update APT package cache
   apt: update_cache=yes cache_valid_time=600
 
@@ -49,12 +47,12 @@
   register: apt_result
   changed_when: "'packages will be REMOVED' in apt_result.stdout"
 
-- name: Install packages for apt add repository over HTTPS for {{ ansible_distribution }}
+###Debian part
+- name: "Install packages for apt add repository over HTTPS for {{ ansible_os_family }}"
   apt:
-    name: "{{ packages }}"
-    update_cache: yes
+    name: "{{ packagesdeb }}"
   vars:
-    packagesdep:
+    packagesdeb:
     - git
     - apt-transport-https
     - ca-certificates
@@ -62,56 +60,80 @@
     - software-properties-common
     - gnupg2
     - curl
+    - python3-pip
+    - virtualenv 
+    - python3-setuptools
   when: ansible_os_family == 'Debian'
-##Ubuntu
-- name: Install packages for apt add repository over HTTPS  for {{ ansible_distribution }}
+
+##Ubuntu part
+
+- name: "Install packages for apt add repository over HTTPS  for {{ ansible_os_family }}"
   apt:
-    name: "{{ packages }}"
-    update_cache: yes
+    name: "{{ packagesubu }}"
   vars:
-    packages:
+    packagesubu:
     - software-properties-common
     - apt-transport-https
     - ca-certificates
-    - curl 
+    - curl
     - gnupg-agent
     - software-properties-common
+    - python3-pip
+    - virtualenv
+    - python3-setuptools
   when: ansible_os_family == 'Ubuntu'
+
+##Ubuntu and Debian repo adds
 
 - name: Add Apt signing key from official docker repo
   apt_key:
-    url: https://download.docker.com/linux/ {{ ansible_distribution|lower }}/gpg
+    url: https://download.docker.com/linux/{{ ansible_distribution|lower }}/gpg
     state: present
 
 - name: add docker official repository for {{ ansible_distribution|lower }} - {{ ansible_distribution_release }}
   apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ {{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable
+    repo: deb [arch=amd64] https://download.docker.com/linux/{{ansible_distribution|lower}} {{ansible_distribution_release}} stable
     state: present
 
+#install part
+
 - name: Update APT package cache
-  apt: update_cache=yes cache_valid_time=600
+  apt: update_cache=yes cache_valid_time=3600
 
 - name: Upgrade APT to the latest packages
   apt: upgrade=dist
 
-- name: actually install docker
-  apt:
-    name: "docker-ce"
-    state: latest
+- name: Update apt and install docker-ce
+  apt: update_cache=yes name=docker-ce state=latest
 
-- name: Uninstall docker-py pip module
-  pip:
-    name: docker-py
-    state: absent
-  ignore_errors: yes
-  when: switch == "on"
+- name: Update apt and install docker-ce-cli
+  apt: update_cache=yes name=docker-ce-cli state=latest
 
-- name: Install docker pip module
+- name: Update apt and install containerd.io
+  apt: update_cache=yes name=containerd.io state=latest
+
+- name: Install Docker Module for Python
   pip:
     name: docker
-    state: latest
-  ignore_errors: yes
-  when: switch == "on"
+
+- name: Install Docker-compose
+  become: yes
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-{{ansible_system}}-{{ansible_architecture}}"
+    dest: /usr/local/bin/docker-compose
+    mode: +x
+
+- name: Debian install Fix
+  shell: systemctl disable docker
+  when: ansible_os_family == 'Debian'
+
+- debug:
+    msg: 
+    - "Docker install on Debian fails"
+    - "please reboot and install again"
+  when: ansible_os_family == 'Debian'
+
+##validat install
 
 - name: Check docker daemon.json exists
   stat:
