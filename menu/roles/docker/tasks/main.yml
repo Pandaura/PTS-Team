@@ -48,7 +48,7 @@
   changed_when: "'packages will be REMOVED' in apt_result.stdout"
 
 ###Debian part
-- name: "Install packages for apt add repository over HTTPS for {{ ansible_os_family }}"
+- name: "Install packages for apt add repository over HTTPS for Debian"
   apt:
     name: "{{ packagesdeb }}"
     state: latest
@@ -69,7 +69,7 @@
 
 ##Ubuntu part
 
-- name: "Install packages for apt add repository over HTTPS  for {{ ansible_os_family }}"
+- name: "Install packages for apt add repository over HTTPS  for Ubuntu"
   apt:
     name: "{{ packagesubu }}"
     state: latest
@@ -96,7 +96,7 @@
 
 - name: add docker official repository for {{ ansible_distribution|lower }} - {{ ansible_distribution_release }}
   apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/{{ansible_distribution|lower}} {{ansible_distribution_release}} stable
+    repo: deb [arch=amd64] https://download.docker.com/linux/{{ansible_distribution|lower}} {{ansible_distribution_release}} edge
     state: present
 
 #install part
@@ -121,11 +121,11 @@
     name: docker
 
 - name: Install Docker-compose
-  become: yes
   get_url:
     url: "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-{{ansible_system}}-{{ansible_architecture}}"
     dest: /usr/local/bin/docker-compose
-    mode: +x
+    force: yes
+    mode: 0775
 
 - name: Debian install Fix
   shell: systemctl disable docker
