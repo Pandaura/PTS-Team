@@ -29,6 +29,17 @@
     - check.stat.exists == True
     - switch == "on"
 
+- name: checking service status
+  command: systemctl status "{{ item }}"
+  with_items:
+    - docker
+  register: result
+  ignore_errors: yes
+
+- name: showing report
+  debug:
+    var: result
+
 #########update part
 - name: Update APT package cache
   apt: update_cache=yes cache_valid_time=600
@@ -131,18 +142,6 @@
   shell: systemctl disable docker
   when: ansible_os_family == 'Debian'
 
-- debug:
-    msg: 
-    - "Docker install on Debian fails"
-    - "please reboot and install again"
-  when: ansible_os_family == 'Debian'
-
-- pause:
-    minutes: 1
-    prompt: " - READ HEAD -"
-    echo: no
-  when: ansible_os_family == 'Debian'
-
 - name: Check docker daemon.json exists
   stat:
     path: /etc/docker/daemon.json
@@ -211,17 +210,6 @@
     state: present
   tags: docker_standard
   when: switch == "on"
-
-- name: checking service status
-  command: systemctl status "{{ item }}"
-  with_items:
-    - docker
-  register: result
-  ignore_errors: yes
-
-- name: showing report
-  debug:
-    var: result
 
 - name: 'Start All Containers'
   shell: 'docker start $(docker ps -a -q)'
