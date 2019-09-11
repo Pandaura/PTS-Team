@@ -29,19 +29,20 @@
     - check.stat.exists == True
     - switch == "on"
 
-- name: checking service status
-  command: systemctl status "{{ item }}"
+- name: "Check for working Docker Install"
+  command: "systemctl status "{{ item }}"
   with_items:
     - docker
-  register: result
-  ignore_errors: yes
+  register: status_docker
+  failed_when: >
+    status_docker.rc != 0 and ("could not be found" not in status_docker.stderr)
+  changed_when: false
 
-- name: showing report
-  debug:
-    var: result
-
-- pause:
-    minutes: 1
+- name: "Docker stopping"
+  service:
+  name: docker
+  state: stopped
+  when: "status_docker.rc == 0"
 #########update part
 - name: Update APT package cache
   apt: update_cache=yes cache_valid_time=600
