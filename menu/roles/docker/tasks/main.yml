@@ -193,6 +193,11 @@
   tags: docker_standard
   when: switch == "on"
 
+- name: systemctl deamon-reload
+  notify:
+    - systemd daemon-reload
+    - restart docker service
+
 - name: create plexguide network
   docker_network:
     name: 'plexguide'
@@ -219,5 +224,5 @@
 - name: Stop service Docker, if started
   service:
     name: docker
-    state: stopped
+    state: restart
   when: "status_docker.rc == 0"
