@@ -137,6 +137,10 @@
     - "please reboot and install again"
   when: ansible_os_family == 'Debian'
 
+- pause:
+    prompt: "reboot"
+    echo: no
+
 ##validat install
 
 - name: Check docker daemon.json exists
