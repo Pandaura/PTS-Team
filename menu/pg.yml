@@ -6,8 +6,9 @@
   roles:
     - { role: docker, tags: ['docker'] }
     - { role: docstart, tags: ['docstart'] }
-    - { role: dockerdeb, tags: ['dockerdeb'] }
     - { role: autodelete, tags: ['autodelete'] }
     - { role: clean, tags: ['clean'] }
     - { role: clean-encrypt, tags: ['clean-encrypt'] }
-    - { role: update, tags: ['update'] }
+    - { role: update, tags: ['update'] }    
+
+    #####- { role: dockerdeb, tags: ['dockerdeb'] }
