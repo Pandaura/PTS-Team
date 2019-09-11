@@ -29,8 +29,8 @@
     - check.stat.exists == True
     - switch == "on"
 
-- name: "Check for working Docker Install"
-  command: "systemctl status "{{ item }}"
+- name:"Check for working Docker Install
+  command: systemctl status "{{ item }}"
   with_items:
     - docker
   register: status_docker
@@ -38,7 +38,7 @@
     status_docker.rc != 0 and ("could not be found" not in status_docker.stderr)
   changed_when: false
 
-- name: "Docker stopping"
+- name: Docker stopping
   service:
   name: docker
   state: stopped
