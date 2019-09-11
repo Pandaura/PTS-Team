@@ -29,6 +29,8 @@
     - check.stat.exists == True
     - switch == "on"
 
+- pause:
+
 #########update part
 - name: Update APT package cache
   apt: update_cache=yes cache_valid_time=600
@@ -67,6 +69,8 @@
     - python3-setuptools
   when: ansible_os_family == 'Debian'
 
+- pause:
+
 ##Ubuntu part
 
 - name: "Install packages for apt add repository over HTTPS  for Ubuntu"
@@ -87,6 +91,8 @@
     - python3-setuptools
   when: ansible_os_family == 'Ubuntu'
 
+- pause:
+
 ##Ubuntu and Debian repo adds
 
 - name: Add Apt signing key from official docker repo
@@ -94,7 +100,7 @@
     url: https://download.docker.com/linux/{{ ansible_distribution|lower }}/gpg
     state: present
 
-- name: add docker official repository for {{ ansible_distribution|lower }} - {{ ansible_distribution_release }}
+- name: Add docker official repository for {{ ansible_distribution|lower }} - {{ ansible_distribution_release }}
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/{{ansible_distribution|lower}} {{ansible_distribution_release}} edge
     state: present
@@ -120,6 +126,8 @@
   pip:
     name: docker
 
+- pause:
+
 - name: Install Docker-compose
   get_url:
     url: "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-{{ansible_system}}-{{ansible_architecture}}"
@@ -138,10 +146,10 @@
   when: ansible_os_family == 'Debian'
 
 - pause:
-    prompt: "reboot"
+    minutes: 1
+    prompt: " - READ HEAD -"
     echo: no
-
-##validat install
+  when: ansible_os_family == 'Debian'
 
 - name: Check docker daemon.json exists
   stat:
@@ -166,6 +174,8 @@
   when:
     - docker_daemon.stat.exists == False
     - switch == "on"
+
+- pause:
 
 - name: Start docker (Please Wait)
   systemd:
@@ -204,6 +214,8 @@
     mode: 0775
   tags: docker_standard
   when: switch == "on"
+
+- pause:
 
 - name: create plexguide network
   docker_network:
