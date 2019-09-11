@@ -29,8 +29,6 @@
     - check.stat.exists == True
     - switch == "on"
 
-- pause:
-
 #########update part
 - name: Update APT package cache
   apt: update_cache=yes cache_valid_time=600
@@ -69,8 +67,6 @@
     - python3-setuptools
   when: ansible_os_family == 'Debian'
 
-- pause:
-
 ##Ubuntu part
 
 - name: "Install packages for apt add repository over HTTPS  for Ubuntu"
@@ -90,8 +86,6 @@
     - virtualenv
     - python3-setuptools
   when: ansible_os_family == 'Ubuntu'
-
-- pause:
 
 ##Ubuntu and Debian repo adds
 
@@ -125,8 +119,6 @@
 - name: Install Docker Module for Python
   pip:
     name: docker
-
-- pause:
 
 - name: Install Docker-compose
   get_url:
@@ -175,8 +167,6 @@
     - docker_daemon.stat.exists == False
     - switch == "on"
 
-- pause:
-
 - name: Start docker (Please Wait)
   systemd:
     state: started
@@ -215,14 +205,23 @@
   tags: docker_standard
   when: switch == "on"
 
-- pause:
-
 - name: create plexguide network
   docker_network:
     name: 'plexguide'
     state: present
   tags: docker_standard
   when: switch == "on"
+
+- name: checking service status
+    command: systemctl status "{{ item }}"
+    with_items:
+    - docker
+    register: result
+    ignore_errors: yes
+
+- name: showing report
+    debug:
+     var: result
 
 - name: 'Start All Containers'
   shell: 'docker start $(docker ps -a -q)'
