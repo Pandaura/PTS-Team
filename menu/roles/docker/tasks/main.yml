@@ -49,7 +49,7 @@
   register: apt_result
   changed_when: "'packages will be REMOVED' in apt_result.stdout"
 
-- name: Install packages for apt add repository over HTTPS for {{ ansible_distribution|lower }}
+- name: Install packages for apt add repository over HTTPS for {{ ansible_distribution }}
   apt:
     name: "{{ packages }}"
     update_cache: yes
@@ -64,7 +64,7 @@
     - curl
   when: ansible_os_family == 'Debian'
 ##Ubuntu
-- name: Install packages for apt add repository over HTTPS  for {{ ansible_distribution|lower }}
+- name: Install packages for apt add repository over HTTPS  for {{ ansible_distribution }}
   apt:
     name: "{{ packages }}"
     update_cache: yes
@@ -80,12 +80,12 @@
 
 - name: Add Apt signing key from official docker repo
   apt_key:
-    url: https://download.docker.com/linux/{{ ansible_distribution|lower }}/gpg
+    url: https://download.docker.com/linux/ {{ ansible_distribution|lower }}/gpg
     state: present
 
 - name: add docker official repository for {{ ansible_distribution|lower }} - {{ ansible_distribution_release }}
   apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable
+    repo: deb [arch=amd64] https://download.docker.com/linux/ {{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable
     state: present
 
 - name: Update APT package cache
