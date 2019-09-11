@@ -29,20 +29,6 @@
     - check.stat.exists == True
     - switch == "on"
 
-- name: Check for working Docker Install
-  command: systemctl status "{{ item }}"
-  with_items:
-    - docker
-  register: status_docker
-  failed_when: >
-    status_docker.rc != 0 and ("could not be found" not in status_docker.stderr)
-  changed_when: false
-
-- name: Stop service Docker, if started
-  service:
-    name: docker
-    state: stopped
-  when: "status_docker.rc == 0"
 #########update part
 - name: Update APT package cache
   apt: update_cache=yes cache_valid_time=600
@@ -220,3 +206,18 @@
   when:
     - switch == "on"
     - check.stat.exists == True
+
+- name: Check for working Docker Install
+  command: systemctl status "{{ item }}"
+  with_items:
+    - docker
+  register: status_docker
+  failed_when: >
+    status_docker.rc != 0 and ("could not be found" not in status_docker.stderr)
+  changed_when: false
+
+- name: Stop service Docker, if started
+  service:
+    name: docker
+    state: stopped
+  when: "status_docker.rc == 0"
