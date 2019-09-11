@@ -51,6 +51,8 @@
 - name: "Install packages for apt add repository over HTTPS for {{ ansible_os_family }}"
   apt:
     name: "{{ packagesdeb }}"
+    state: latest
+    update_cache: yes
   vars:
     packagesdeb:
     - git
@@ -70,6 +72,8 @@
 - name: "Install packages for apt add repository over HTTPS  for {{ ansible_os_family }}"
   apt:
     name: "{{ packagesubu }}"
+    state: latest
+    update_cache: yes
   vars:
     packagesubu:
     - software-properties-common
