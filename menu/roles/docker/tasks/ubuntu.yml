@@ -1,5 +1,4 @@
 - name: Update the apt package index
-  become: yes
   apt:
     name: "*"
     state: latest
@@ -7,7 +6,6 @@
     force_apt_get: yes
 
 - name: Install packages for apt add repository over HTTPS
-  become: yes
   apt:
     name: "{{ packagesdep }}"
     force_apt_get: yes
@@ -27,7 +25,7 @@
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
 
-- name: add docker official repository for Ubuntu 
+- name: add docker official repository for {{ ansible_distribution|lower }} - {{ ansible_distribution_release }}
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable
     state: present
@@ -41,6 +39,6 @@
     force_apt_get: yes
 
 - name: actually install docker
-    apt:
-      name: "docker-ce"
-      state: latest
+  apt:
+    name: "docker-ce"
+    state: latest
