@@ -29,7 +29,7 @@
     - check.stat.exists == True
     - switch == "on"
 
-- name:"Check for working Docker Install
+- name: Check for working Docker Install
   command: systemctl status "{{ item }}"
   with_items:
     - docker
