@@ -6,6 +6,12 @@
 # GNU:        General Public License v3.0
 ################################################################################
 ---
+- include_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: ubuntu.yml
+  when: ansible_os_family == 'Ubuntu'
+
 - name: 'Establish Facts'
   set_fact:
     switch: 'on'
@@ -47,36 +53,6 @@
   when:
     - check.stat.exists == True
     - switch == "on"
-
-- name: Official Repo
-  apt_repository:
-    repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} edge'
-  register: apt_docker_repositories
-  when: switch == "on"
-
-- name: Update APT packages list
-  apt:
-    update_cache: yes
-  when: apt_docker_repositories.changed and switch == "on"
-
-- name: Release docker-ce from hold
-  dpkg_selections:
-    name: docker-ce
-    selection: install
-  when: switch == "on"
-
-- name: Install docker-ce
-  apt:
-    name: docker-ce
-    state: latest
-    update_cache: yes
-  when: switch == "on"
-
-- name: Put docker-ce into hold
-  dpkg_selections:
-    name: docker-ce
-    selection: hold
-  when: switch == "on"
 
 - name: Uninstall docker-py pip module
   pip:
