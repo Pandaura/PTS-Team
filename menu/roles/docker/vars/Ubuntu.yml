@@ -16,7 +16,7 @@
     - software-properties-common
     - apt-transport-https
     - ca-certificates
-    - curl
+    - curl 
     - gnupg-agent
     - software-properties-common
 

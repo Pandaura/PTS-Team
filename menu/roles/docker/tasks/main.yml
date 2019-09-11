@@ -3,11 +3,7 @@
 # Title:      Docker Install
 ###############################################################
 ---
-- include_tasks: debian.yml
-  when: ansible_os_family == 'Debian'
-
-- include_tasks: ubuntu.yml
-  when: ansible_os_family == 'Ubuntu'
+- include: "install-{{ansible_os_family}}.yml
 
 - name: 'Establish Facts'
   set_fact:
@@ -28,21 +24,6 @@
     switch: 'off'
   when: updatecheck.stdout == "18.09.8,"
 
-- name: Install required packages
-  apt:
-    name: '{{ packages }}'
-  vars:
-    packages:
-      - apt-transport-https
-      - ca-certificates
-      - software-properties-common
-  when: switch == "on"
-
-- name: Add official gpg signing key
-  apt_key:
-    id: 0EBFCD88
-    url: https://download.docker.com/linux/ubuntu/gpg
-  when: switch == "on"
 
 - name: 'Stop All Containers'
   shell: 'docker stop $(docker ps -a -q)'
