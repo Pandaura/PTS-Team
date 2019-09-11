@@ -196,7 +196,6 @@
 - name: systemctl deamon-reload
   notify:
     - systemd daemon-reload
-    - restart docker service
 
 - name: create plexguide network
   docker_network:
