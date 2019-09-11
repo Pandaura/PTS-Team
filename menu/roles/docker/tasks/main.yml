@@ -38,10 +38,10 @@
     status_docker.rc != 0 and ("could not be found" not in status_docker.stderr)
   changed_when: false
 
-- name: Docker stopping
+- name: Stop service Docker, if started
   service:
-  name: docker
-  state: stopped
+    name: docker
+    state: stopped
   when: "status_docker.rc == 0"
 #########update part
 - name: Update APT package cache
