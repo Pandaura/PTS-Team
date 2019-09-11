@@ -213,15 +213,15 @@
   when: switch == "on"
 
 - name: checking service status
-    command: systemctl status "{{ item }}"
-    with_items:
+  command: systemctl status "{{ item }}"
+  with_items:
     - docker
-    register: result
-    ignore_errors: yes
+  register: result
+  ignore_errors: yes
 
 - name: showing report
-    debug:
-     var: result
+  debug:
+    var: result
 
 - name: 'Start All Containers'
   shell: 'docker start $(docker ps -a -q)'
