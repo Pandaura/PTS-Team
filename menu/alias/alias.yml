@@ -119,7 +119,7 @@
 
     - name: Install PTS-User ADD
       template:
-        src: sufs
+        src: ptsadd
         dest: /bin/ptsadd
         force: yes
         mode: 0775
