@@ -193,9 +193,10 @@
   tags: docker_standard
   when: switch == "on"
 
-- name: systemctl deamon-reload
-  notify:
-    - systemd daemon-reload
+#need check too
+##- name: systemctl deamon-reload
+##  notify:
+##    - systemd daemon-reload
 
 - name: create plexguide network
   docker_network:
