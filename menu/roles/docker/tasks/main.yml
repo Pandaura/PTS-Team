@@ -223,8 +223,8 @@
     status_docker.rc != 0 and ("could not be found" not in status_docker.stderr)
   changed_when: false
 
-#####- name: "Docker is installed and working"
-- debug:
+- name: docker valid
+  debug:
     msg:
     - " docker is running and works !"
     - " install docker is done"
