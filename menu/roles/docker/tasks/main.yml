@@ -225,7 +225,7 @@
 
 - name: Print docker check validated 
   vars:
-    msg: |:
+    msg: |
          docker is running and works !
          install docker is done....
   debug:
