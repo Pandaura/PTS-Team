@@ -223,8 +223,9 @@
     status_docker.rc != 0 and ("could not be found" not in status_docker.stderr)
   changed_when: false
 
-- name: Stop service Docker, if started
-  service:
-    name: docker
-    state: restarted
+- name: "Docker is installed and working"
+- debug:
+    msg:
+    - " docker is running and works !"
+    - " install docker is done"
   when: "status_docker.rc == 0"
