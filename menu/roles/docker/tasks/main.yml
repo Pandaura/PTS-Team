@@ -194,9 +194,11 @@
   when: switch == "on"
 
 #need check too
-##- name: systemctl deamon-reload
-##  notify:
-##    - systemd daemon-reload
+- name: systemctl deamon-reload
+  systemd:
+    daemon_reload: yes
+  notify:
+    - systemd daemon-reload
 
 - name: create plexguide network
   docker_network:
