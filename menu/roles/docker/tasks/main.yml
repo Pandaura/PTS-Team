@@ -214,20 +214,37 @@
     - switch == "on"
     - check.stat.exists == True
 
-- name: Check for working Docker Install
+#- name: Check for working Docker Install
+#  command: systemctl status "{{ item }}"
+#  with_items:
+#    - docker
+#  register: status_docker
+#  failed_when: >
+#    status_docker.rc != 0 and ("could not be found" not in status_docker.stderr)
+#  changed_when: false
+#
+#- name: Print docker check validated 
+#  vars:
+#    msg: |
+#         docker is running and works !
+#         install docker is done....
+#  debug:
+#    msg: "{{ msg.split('\n') }}"
+#  when: "status_docker.rc == 0"
+
+- name: Check if docker is running and works
   command: systemctl status "{{ item }}"
   with_items:
     - docker
-  register: status_docker
-  failed_when: >
-    status_docker.rc != 0 and ("could not be found" not in status_docker.stderr)
+  ignore_errors: yes
   changed_when: false
+  register: service_docker_status
 
-- name: Print docker check validated 
-  vars:
+- name: Report status of docker
+  fail:
     msg: |
-         docker is running and works !
-         install docker is done....
-  debug:
-    msg: "{{ msg.split('\n') }}"
-  when: "status_docker.rc == 0"
+      Service docker is not running.
+      Output of `systemctl status docker`:
+      {{ service_docker_status.stdout }}
+      {{ service_docker_status.stderr }}
+  when: service_docker_status | failed
