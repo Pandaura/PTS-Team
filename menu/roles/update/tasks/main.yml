@@ -9,6 +9,8 @@
   - name: Install a list of packages
     apt:
        name: "{{ packages }}"
+    state: latest
+    update_cache: yes
     vars:
        packages:
        - ctop
