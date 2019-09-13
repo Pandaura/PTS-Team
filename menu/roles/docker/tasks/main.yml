@@ -223,9 +223,11 @@
     status_docker.rc != 0 and ("could not be found" not in status_docker.stderr)
   changed_when: false
 
-- name: docker valid
+- name: Print docker check validated 
+  vars:
+    msg: |:
+         docker is running and works !
+         install docker is done....
   debug:
-    msg:
-    - " docker is running and works !"
-    - " install docker is done"
+    msg: "{{ msg.split('\n') }}"
   when: "status_docker.rc == 0"
