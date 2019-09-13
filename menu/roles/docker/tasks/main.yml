@@ -224,5 +224,5 @@
 - name: Stop service Docker, if started
   service:
     name: docker
-    state: restart
+    state: restarted
   when: "status_docker.rc == 0"
