@@ -235,18 +235,32 @@
 # - name: Rsync docker files to new path
   # shell: rsync -a /var/lib/docker/* /opt/docker
 
-- name: rSync docker-root dir to new path it prints FAILED when it fails
-  command: rsync -a /var/lib/docker/* /opt/docker
-  register: command_result
-  ignore_errors: True
+# - name: rSync docker-root dir to new path it prints FAILED when it fails
+  # command: rsync -v /var/lib/docker/* /opt/docker
+  # register: command_result
+  # ignore_errors: True
 
+# - name: fail the play if the previous command did not succeed
+  # fail:
+    # msg: |
+      
+      # rsync fails please try again
+      
+  # when: "'FAILED' in command_result.stderr"
+- name: rSync docker-root dir to new path it prints FAILED when it fails
+  synchronize:
+    src: /var/lib/docker/
+    dest: /opt/docker
+    recursive: yes
+   register: synchronize_result
+   
 - name: fail the play if the previous command did not succeed
   fail:
     msg: |
       
       rsync fails please try again
       
-  when: "'FAILED' in command_result.stderr"
+  when: "'FAILED' in synchronize_result.stderr
 
 - name: 'Wait for 20 seconds before commencing'
   wait_for:
@@ -254,17 +268,10 @@
   when: switch == "on"
 
 - name: Reload daemon for docker override.conf and docker.root.conf
-  systemd: daemon_reload=yes
-  notify:
-    - systemd daemon-reload
+  shell: systemctl daemon-reload && systemctl restart docker
 
-- name: Reload daemon for docker override.conf and docker.root.conf
-  systemd:
-    state: restarted
-    daemon_reload: yes
-    name: docker
-  notify:
-    - systemd daemon-reload
+# - name: Reload daemon for docker override.conf and docker.root.conf
+  # shell: systemctl restart docker
 
 - name: create plexguide network
   docker_network:
