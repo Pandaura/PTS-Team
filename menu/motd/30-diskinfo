@@ -37,6 +37,23 @@ for line in "${dfs[@]}"; do
 
     output+=$(echo " ${path} ${color}${used}${undim} used, ${color}${free}${undim} free, ${color}${total}${undim} total\n")
 
+#google hack for loginshell
+
+tdrive=$(tail -n 1 /var/plexguide/tduncrypt.log)
+gdrive=$(tail -n 1 /var/plexguide/gduncrypt.log)
+tcrypt=$(tail -n 1 /var/plexguide/tdcrypt.log)
+gcrypt=$(tail -n 1 /var/plexguide/gdcrypt.log)
+
 done
 printf "${output}" |
     awk '{printf "  %.15s %s\n", $1 "............:", $2 " " $3 " " $4 " " $5 " " $6 " " $7}'
+
+echo ""
+
+echo " Google Cloud Used Space:"
+   echo""
+   echo " GDrive  | uncrypted : " $gdrive
+   echo " TDrive  | uncrypted : " $tdrive
+   echo ""
+   echo " GDrive  | crypted   : " $gcrypt
+   echo " TDrive  | crypted   : " $tcrypt
