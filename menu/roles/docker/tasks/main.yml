@@ -247,6 +247,7 @@
       # rsync fails please try again
       
   # when: "'FAILED' in command_result.stderr"
+
 - name: "docker-root dir to new path it prints FAILED when it fails"
   synchronize:
     src: /var/lib/docker/
@@ -260,9 +261,6 @@
 
 - name: Reload daemon for docker override.conf and docker.root.conf
   shell: systemctl daemon-reload && systemctl restart docker
-
-# - name: Reload daemon for docker override.conf and docker.root.conf
-  # shell: systemctl restart docker
 
 - name: create plexguide network
   docker_network:
