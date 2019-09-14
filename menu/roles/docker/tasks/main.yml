@@ -247,20 +247,11 @@
       # rsync fails please try again
       
   # when: "'FAILED' in command_result.stderr"
-- name: rSync docker-root dir to new path it prints FAILED when it fails
+- name: "docker-root dir to new path it prints FAILED when it fails"
   synchronize:
     src: /var/lib/docker/
     dest: /opt/docker
     recursive: yes
-   register: synchronize_result
-   
-- name: fail the play if the previous command did not succeed
-  fail:
-    msg: |
-      
-      rsync fails please try again
-      
-  when: "'FAILED' in synchronize_result.stderr
 
 - name: 'Wait for 20 seconds before commencing'
   wait_for:
