@@ -29,6 +29,21 @@
     - check.stat.exists == True
     - switch == "on"
 
+- name: Check /opt/docker folder exists
+  stat:
+    path: /opt/docker
+  register: docker_opt
+
+- name: Create /opt/docker folder
+  file:
+    path: /opt/docker
+    state: directory
+    mode: 0775
+  when:
+    - docker_opt.stat.exists == False
+    - switch == "on"
+  tags: docker_standard
+
 #########update part
 - name: Update APT package cache
   apt: update_cache=yes cache_valid_time=600
@@ -193,10 +208,62 @@
   tags: docker_standard
   when: switch == "on"
 
-#need check too
-- name: systemctl deamon-reload
+- name: Check override folder exists
+  stat:
+    path: /etc/systemd/system/docker.service.d
+  register: docker_root
+
+- name: Create docker.root.conf folder
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    mode: 0775
+  when:
+    - docker_root.stat.exists == False
+    - switch == "on"
+  tags: docker_standard
+
+- name: Import docker.root.conf file
+  copy:
+    src: docker.root.conf
+    dest: /etc/systemd/system/docker.service.d/docker.root.conf
+    force: yes
+    mode: 0775
+  tags: docker_standard
+  when: switch == "on"
+
+# - name: Rsync docker files to new path
+  # shell: rsync -a /var/lib/docker/* /opt/docker
+
+- name: rSync docker-root dir to new path it prints FAILED when it fails
+  command: rsync -a /var/lib/docker/* /opt/docker
+  register: command_result
+  ignore_errors: True
+
+- name: fail the play if the previous command did not succeed
+  fail:
+    msg: |
+      
+      rsync fails please try again
+      
+  when: "'FAILED' in command_result.stderr"
+
+- name: 'Wait for 20 seconds before commencing'
+  wait_for:
+    timeout: 20
+  when: switch == "on"
+
+- name: Reload daemon for docker override.conf and docker.root.conf
   systemd:
     daemon_reload: yes
+  notify:
+    - systemd daemon-reload
+
+- name: Reload daemon for docker override.conf and docker.root.conf
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: docker
   notify:
     - systemd daemon-reload
 
@@ -213,24 +280,6 @@
   when:
     - switch == "on"
     - check.stat.exists == True
-
-#- name: Check for working Docker Install
-#  command: systemctl status "{{ item }}"
-#  with_items:
-#    - docker
-#  register: status_docker
-#  failed_when: >
-#    status_docker.rc != 0 and ("could not be found" not in status_docker.stderr)
-#  changed_when: false
-#
-#- name: Print docker check validated 
-#  vars:
-#    msg: |
-#         docker is running and works !
-#         install docker is done....
-#  debug:
-#    msg: "{{ msg.split('\n') }}"
-#  when: "status_docker.rc == 0"
 
 - name: Check if docker is running and works
   command: systemctl status "{{ item }}"
