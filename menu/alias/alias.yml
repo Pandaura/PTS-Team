@@ -138,3 +138,9 @@
         force: yes
         mode: 0775
 
+    - name: GCE 
+      template:
+        src: gce
+        dest: /bin/gce
+        force: yes
+        mode: 0775
