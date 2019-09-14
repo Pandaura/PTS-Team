@@ -254,8 +254,7 @@
   when: switch == "on"
 
 - name: Reload daemon for docker override.conf and docker.root.conf
-  systemd:
-    daemon_reload: yes
+  systemd: daemon_reload=yes
   notify:
     - systemd daemon-reload
 
