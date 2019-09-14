@@ -133,8 +133,8 @@
 
     - name: Install Backup & Restore
       template:
-        src: rcupdate
-        dest: /bin/rcupdate
+        src: backup
+        dest: /bin/backup
         force: yes
         mode: 0775
 
