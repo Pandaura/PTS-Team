@@ -50,10 +50,10 @@ printf "${output}" |
 
 echo ""
 
-echo " Google Cloud Used Space:"
+echo "Google Cloud Used Space:"
    echo""
-   echo " GDrive  | uncrypted : " $gdrive
-   echo " TDrive  | uncrypted : " $tdrive
+   echo "  GDrive  | uncrypted : " $gdrive
+   echo "  TDrive  | uncrypted : " $tdrive
    echo ""
-   echo " GDrive  | crypted   : " $gcrypt
-   echo " TDrive  | crypted   : " $tcrypt
+   echo "  GDrive  | crypted   : " $gcrypt
+   echo "  TDrive  | crypted   : " $tcrypt
