@@ -207,7 +207,6 @@ gcloud() {
 
 mergerinstall() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfs
-  # ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
 }
 
 rcloneinstall() {
