@@ -13,7 +13,6 @@ if [ "$test" == "" ]; then
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⛔️  WARNING! - You Must Input an API Token from Hetzner First!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚡ Reference: http://hcloud.pgblitz.com
 
 * Activate a Hetzner Cloud Account and Create a Project
 * Click Access (left hand side) and then click API Tokens
@@ -35,9 +34,8 @@ fi
 tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎 PG - Hetzner's Cloud Generator
+ Hetzner's Cloud Generator
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚡ Reference: http://hcloud.pgblitz.com
 
 [1] Deploy a New Server
 [2] Destory a Server
@@ -56,7 +54,7 @@ if [ "$typed" == "1" ]; then
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  PG - Create a Server Name
+↘️  Create a Server Name
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -64,7 +62,7 @@ EOF
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  PG - Hetzner's Cloud OS Selector
+↘️  Hetzner's Cloud OS Selector
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] Ubuntu 18.04 (PGBlitz Works)
@@ -152,7 +150,7 @@ EOF
   chmod 777 /bin/pg-$name
   chown 1000:1000 /bin/pg-$name
 
-  bash /opt/hcloud/hcloud.sh
+  bash /opt/plexguide/menu/hcloud/hcloud.sh
   exit
 
 elif [ "$typed" == "A" ] || [ "$typed" == "a" ]; then
@@ -170,14 +168,14 @@ EOF
   echo
   read -p 'Press [ENTER] to Continue! ' typed </dev/tty
 
-  bash /opt/hcloud/hcloud.sh
+  bash /opt/plexguide/menu/hcloud/hcloud.sh
   exit
 
 elif [ "$typed" == "2" ]; then
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  PG - Destory a Hetzner Cloud Server!
+↘️  Destory a Hetzner Cloud Server!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Server Name
@@ -189,7 +187,7 @@ EOF
   echo "[Z] Exit"
   read -p 'Type a Server to Destroy | Press [ENTER]: ' destroy </dev/tty
   if [[ "$destroy" == "exit" || "$destroy" == "Exit" || "$destroy" == "EXIT" || "$destroy" == "z" || "$destroy" == "Z" ]]; then
-    bash /opt/hcloud/hcloud.sh
+    bash /opt/plexguide/menu/hcloud/hcloud.sh
     exit
   else
     check=$(hcloud server list | tail -n +2 | cut -d " " -f2- | cut -d " " -f2- | cut -d " " -f2-)
@@ -198,12 +196,12 @@ EOF
       tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  PG - Server: $destroy - Does Not Exist!
+⛔️  Server: $destroy - Does Not Exist!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
       read -p 'Press [ENTER] to Continue! ' typed </dev/tty
-      bash /opt/hcloud/hcloud.sh
+      bash /opt/plexguide/menu/hcloud/hcloud.sh
       exit
     fi
     echo
@@ -211,13 +209,13 @@ EOF
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  PG - Server: $destroy - Destroyed!
+↘️  Server: $destroy - Destroyed!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
     read -p 'Press [ENTER] to Continue! ' typed </dev/tty
     rm -rf /bin/pg-$destroy
-    bash /opt/hcloud/hcloud.sh
+    bash /opt/plexguide/menu/hcloud/hcloud.sh
     exit
   fi
 
@@ -225,7 +223,7 @@ elif [ "$typed" == "B" ] || [ "$typed" == "b" ]; then
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  PG - Inital Server Passwords
+↘️  Inital Server Passwords
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ⚠️  Useful if NEVER logged in! List created by this Server (new > old)
@@ -239,12 +237,12 @@ EOF
   echo ""
   read -p 'Press [ENTER] to Continue! ' corn </dev/tty
 
-  bash /opt/hcloud/hcloud.sh
+  bash /opt/plexguide/menu/hcloud/hcloud.sh
   exit
 
 elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
   exit
 else
-  bash /opt/hcloud/hcloud.sh
+  bash /opt/plexguide/menu/hcloud/hcloud.sh
   exit
 fi

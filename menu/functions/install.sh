@@ -13,19 +13,19 @@ updateprime() {
   chmod 0775 ${abc}
   chown 1000:1000 ${abc}
 
-  variable /var/plexguide/pgfork.project "UPDATE ME"
-  variable /var/plexguide/pgfork.version "changeme"
-  variable /var/plexguide/tld.program "portainer"
+  variable ${abc}/pgfork.project "UPDATE ME"
+  variable ${abc}/pgfork.version "changeme"
+  variable ${abc}/tld.program "portainer"
   variable /opt/appdata/plexguide/plextoken ""
-  variable /var/plexguide/server.ht ""
-  variable /var/plexguide/server.email "NOT-SET"
-  variable /var/plexguide/server.domain "NOT-SET"
-  variable /var/plexguide/pg.number "New-Install"
-  variable /var/plexguide/emergency.log ""
-  variable /var/plexguide/pgbox.running ""
+  variable ${abc}/server.ht ""
+  variable ${abc}/server.email "NOT-SET"
+  variable ${abc}/server.domain "NOT-SET"
+  variable ${abc}/pg.number "New-Install"
+  variable ${abc}/emergency.log ""
+  variable ${abc}/pgbox.running ""
   pgnumber=$(cat /var/plexguide/pg.number)
 
-  hostname -I | awk '{print $1}' >/var/plexguide/server.ip
+  hostname -I | awk '{print $1}' >${abc}/server.ip
   file="${abc}/server.hd.path"
   if [ ! -e "$file" ]; then echo "/mnt" >${abc}/server.hd.path; fi
 
@@ -74,7 +74,7 @@ pginstall() {
   core dockerinstall
   core docstart
 
-  touch /var/plexguide/install.roles
+  touch ${abc}/install.roles
   rolenumber=3
   # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
   if [[ $(cat /var/plexguide/install.roles) != "$rolenumber" ]]; then
@@ -85,7 +85,7 @@ pginstall() {
     pgcore
     pgcommunity
     pgshield
-    echo "$rolenumber" >/var/plexguide/install.roles
+    echo "$rolenumber" >${abc}/install.roles
   fi
 
   portainer
@@ -104,12 +104,12 @@ pginstall() {
 }
 
 core() {
-  touch /var/plexguide/pg."${1}".stored
+  touch ${abc}/pg."${1}".stored
   start=$(cat /var/plexguide/pg."${1}")
   stored=$(cat /var/plexguide/pg."${1}".stored)
   if [ "$start" != "$stored" ]; then
     $1
-    cat /var/plexguide/pg."${1}" >/var/plexguide/pg."${1}".stored
+    cat ${abc}/pg."${1}" >${abc}/pg."${1}".stored
   fi
 }
 
@@ -154,7 +154,7 @@ docstart() {
 }
 
 emergency() {
-  variable /var/plexguide/emergency.display "On"
+  variable ${abc}/emergency.display "On"
   if [[ $(ls /opt/appdata/plexguide/emergency) != "" ]]; then
 
     # If not on, do not display emergency logs
@@ -179,7 +179,7 @@ EOF
       read -n 1 -s -r -p "Acknowledge Info | Press [ENTER]"
       echo
     else
-      touch /var/plexguide/emergency.log
+      touch ${abc}/emergency.log
     fi
   fi
 
@@ -227,7 +227,7 @@ localspace() {
 }
 
 newinstall() {
-  rm -rf /var/plexguide/pg.exit 1>/dev/null 2>&1
+  rm -rf ${abc}/pg.exit 1>/dev/null 2>&1
   file="${abc}/new.install"
   if [ ! -e "$file" ]; then
     touch ${abc}/pg.number && echo off >/tmp/program_source
@@ -238,7 +238,7 @@ newinstall() {
 }
 
 pgdeploy() {
-  touch /var/plexguide/pg.edition
+  touch ${abc}/pg.edition
   bash /opt/plexguide/menu/start/start.sh
 }
 
@@ -265,11 +265,11 @@ portainer() {
 pgcore() { if [ ! -e "/opt/coreapps/place.holder" ]; then ansible-playbook /opt/plexguide/menu/pgbox/pgboxcore.yml; fi; }
 pgcommunity() { if [ ! -e "/opt/communityapps/place.holder" ]; then ansible-playbook /opt/plexguide/menu/pgbox/pgboxcommunity.yml; fi; }
 pgshield() { if [ ! -e "/opt/pgshield/place.holder" ]; then
-  echo 'pgshield' >/var/plexguide/pgcloner.rolename
-  echo 'PGShield' >/var/plexguide/pgcloner.roleproper
-  echo 'PGShield' >/var/plexguide/pgcloner.projectname
-  echo 'v8.6' >/var/plexguide/pgcloner.projectversion
-  echo 'pgshield.sh' >/var/plexguide/pgcloner.startlink
+  echo 'pgshield' >${abc}/pgcloner.rolename
+  echo 'PGShield' >${abc}/pgcloner.roleproper
+  echo 'PGShield' >${abc}/pgcloner.projectname
+  echo 'v8.6' >${abc}/pgcloner.projectversion
+  echo 'pgshield.sh' >${abc}/pgcloner.startlink
   ansible-playbook "/opt/plexguide/menu/pgcloner/corev2/primary.yml"
 fi; }
 
@@ -306,7 +306,7 @@ EOF
 ✅️  PASS: Server ID $typed Established
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    echo "$typed" >/var/plexguide/server.id
+    echo "$typed" >${abc}/server.id
     sleep 1
   fi
 }
@@ -315,10 +315,10 @@ watchtower() {
 
   file="/var/plexguide/watchtower.wcheck"
   if [ ! -e "$file" ]; then
-    echo "4" >/var/plexguide/watchtower.wcheck
+    echo "4" >${abc}/watchtower.wcheck
   fi
 
-  wcheck=$(cat "/var/plexguide/watchtower.wcheck")
+  wcheck=$(cat "${abc}/watchtower.wcheck")
   if [[ "$wcheck" -ge "1" && "$wcheck" -le "3" ]]; then
     wexit="1"
   else wexit=0; fi
@@ -344,18 +344,18 @@ EOF
   if [ "$typed" == "1" ]; then
     watchtowergen
     ansible-playbook /opt/coreapps/apps/watchtower.yml
-    echo "1" >/var/plexguide/watchtower.wcheck
+    echo "1" >${abc}/watchtower.wcheck
   elif [ "$typed" == "2" ]; then
     watchtowergen
     sed -i -e "/plex/d" /tmp/watchtower.set 1>/dev/null 2>&1
     sed -i -e "/emby/d" /tmp/watchtower.set 1>/dev/null 2>&1
     sed -i -e "/jellyfin/d" /tmp/watchtower.set 1>/dev/null 2>&1
     ansible-playbook /opt/coreapps/apps/watchtower.yml
-    echo "2" >/var/plexguide/watchtower.wcheck
+    echo "2" >${abc}/watchtower.wcheck
   elif [ "$typed" == "3" ]; then
     echo null >/tmp/watchtower.set
     ansible-playbook /opt/coreapps/apps/watchtower.yml
-    echo "3" >/var/plexguide/watchtower.wcheck
+    echo "3" >${abc}/watchtower.wcheck
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     if [ "$wexit" == "0" ]; then
       tee <<-EOF
@@ -380,5 +380,5 @@ watchtowergen() {
   while read p; do
     echo -n $p >>/tmp/watchtower.set
     echo -n " " >>/tmp/watchtower.set
-  done </var/plexguide/app.list
+  done <${abc}/app.list
 }
