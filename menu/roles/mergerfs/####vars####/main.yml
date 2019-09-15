@@ -1,4 +1,0 @@
----
-mergerfs_version: "$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
-mergerfs_base_url: "https://github.com/trapexit/mergerfs/releases/download"
-mergerfs_package_url: "{{ mergerfs_base_url }}/{{ mergerfs_version }}/{{ mergerfs_package_name }}"
