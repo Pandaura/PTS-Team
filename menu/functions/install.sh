@@ -13,9 +13,9 @@ updateprime() {
   chmod 0775 ${abc}
   chown 1000:1000 ${abc}
 
-  mkdir -p /opt/appdata/plexguide
-  chmod 0775 /opt/appdata/plexguide
-  chown 1000:1000 /opt/appdata/plexguide
+  # mkdir -p /opt/appdata/plexguide
+  # chmod 0775 /opt/appdata/plexguide
+  # chown 1000:1000 /opt/appdata/plexguide
 
   variable /var/plexguide/pgfork.project "UPDATE ME"
   variable /var/plexguide/pgfork.version "changeme"
@@ -203,62 +203,62 @@ prune() {
 hetzner() {
   if [ -e "$file" ]; then rm -rf /bin/hcloud; fi
   version="v1.10.0"
-  wget -P /opt/appdata/plexguide "https://github.com/hetznercloud/cli/releases/download/$version/hcloud-linux-amd64-$version.tar.gz"
-  tar -xvf "/opt/appdata/plexguide/hcloud-linux-amd64-$version.tar.gz" -C /opt/appdata/plexguide
-  mv "/opt/appdata/plexguide/hcloud-linux-amd64-$version/bin/hcloud" /bin/
-  rm -rf /opt/appdata/plexguide/hcloud-linux-amd64-$version.tar.gz
-  rm -rf /opt/appdata/plexguide/hcloud-linux-amd64-$version
+  wget -P /tmp "https://github.com/hetznercloud/cli/releases/download/$version/hcloud-linux-amd64-$version.tar.gz"
+  tar -xvf "/tmp/hcloud-linux-amd64-$version.tar.gz" -C /tmp
+  mv "/tmp/plexguide/hcloud-linux-amd64-$version/bin/hcloud" /bin/
+  rm -rf /tmp/hcloud-linux-amd64-$version.tar.gz
+  rm -rf /tmp/hcloud-linux-amd64-$version
 }
 
 gcloud() {
   export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
   echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
   curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
-  sudo apt-get update && sudo apt-get install google-cloud-sdk -y
+  sudo apt-get update -yqq && sudo apt-get install google-cloud-sdk -yqq
 }
 
 mergerinstall() {
-
-  ub16check=$(cat /etc/*-release | grep xenial)
-  ub18check=$(cat /etc/*-release | grep bionic)
-  deb9check=$(cat /etc/*-release | grep stretch)
-  activated=false
-
-  apt --fix-broken install -y
-  apt-get remove mergerfs -y
-  mkdir -p /var/plexguide
-
-  if [ "$ub16check" != "" ]; then
-    activated=true
-    echo "ub16" >/var/plexguide/mergerfs.version
-    wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.ubuntu-xenial_amd64.deb"
-
-  elif [ "$ub18check" != "" ]; then
-    activated=true
-    echo "ub18" >/var/plexguide/mergerfs.version
-    wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.ubuntu-bionic_amd64.deb"
-
-  elif [ "$deb9check" != "" ]; then
-    activated=true
-    echo "deb9" >/var/plexguide/mergerfs.version
-    wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.debian-stretch_amd64.deb"
-
-  elif [ "$activated" != "true" ]; then
-    activated=true && echo "ub18 - but didn't detect correctly" >/var/plexguide/mergerfs.version
-    wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.ubuntu-bionic_amd64.deb"
-  else
-    apt-get install g++ pkg-config git git-buildpackage pandoc debhelper libfuse-dev libattr1-dev -y
-    git clone https://github.com/trapexit/mergerfs.git
-    cd mergerfs
-    make clean
-    make deb
-    cd ..
-  fi
-
-  apt install -y ./mergerfs*_amd64.deb
-  rm mergerfs*_amd64.deb
-
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfs
 }
+##old way - all ovver cmline
+  # ub16check=$(cat /etc/*-release | grep xenial)
+  # ub18check=$(cat /etc/*-release | grep bionic)
+  # deb9check=$(cat /etc/*-release | grep stretch)
+  # activated=false
+
+  # apt --fix-broken install -y
+  # apt-get remove mergerfs -y
+  # mkdir -p /var/plexguide
+
+  # if [ "$ub16check" != "" ]; then
+    # activated=true
+    # echo "ub16" >/var/plexguide/mergerfs.version
+    # wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.ubuntu-xenial_amd64.deb"
+
+  # elif [ "$ub18check" != "" ]; then
+    # activated=true
+    # echo "ub18" >/var/plexguide/mergerfs.version
+    # wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.ubuntu-bionic_amd64.deb"
+
+  # elif [ "$deb9check" != "" ]; then
+    # activated=true
+    # echo "deb9" >/var/plexguide/mergerfs.version
+    # wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.debian-stretch_amd64.deb"
+
+  # elif [ "$activated" != "true" ]; then
+    # activated=true && echo "ub18 - but didn't detect correctly" >/var/plexguide/mergerfs.version
+    # wget "https://github.com/trapexit/mergerfs/releases/download/2.28.1/mergerfs_2.28.1.ubuntu-bionic_amd64.deb"
+  # else
+    # apt-get install g++ pkg-config git git-buildpackage pandoc debhelper libfuse-dev libattr1-dev -y
+    # git clone https://github.com/trapexit/mergerfs.git
+    # cd mergerfs
+    # make clean
+    # make deb
+    # cd ..
+  # fi
+
+  # apt install -y ./mergerfs*_amd64.deb
+  # rm mergerfs*_amd64.deb
 
 motd() {
   ansible-playbook /opt/plexguide/menu/motd/motd.yml
