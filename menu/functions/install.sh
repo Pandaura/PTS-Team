@@ -59,6 +59,7 @@ updateprime() {
   echo "1" >${abc}/pg.installer
   echo "7" >${abc}/pg.prune
   echo "21" >${abc}/pg.mountcheck
+  echo "99" >${abc}/rcloneinstall
 }
 
 pginstall() {
@@ -72,6 +73,7 @@ pginstall() {
   core mergerinstall
   core dockerinstall
   core docstart
+  core rcloneinstall
 
   touch ${abc}/install.roles
   rolenumber=3
