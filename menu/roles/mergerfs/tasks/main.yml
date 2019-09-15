@@ -1,4 +1,21 @@
+######################################################################
+##
+## some of this parts are cloned from Cloudbox 
+## many thanks to all the devs from Cloudbox
+##
+## # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+##
+## Credits fly to l3uddz and the CBox Boys "!"
+## Mod from MrDoob ( main dev of PTS )
+## based of PGblitz v8.7.5
+#######################################################################
+
 ---
+- name: Credits
+    msg: |
+      some of this parts are cloned from Cloudbox
+      many thanks to all the devs from Cloudbox
+
 - name: "MergerFS | Get URL for latest mergerfs release"
   shell: |
     curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest \
@@ -19,6 +36,9 @@
   apt:
     deb: "{{ mergerfs_download_url.stdout | default('{{ mergerfs_download_url_backup }}') }}"
     state: present
+
+
+
 
 - name: Check if pgunion is running and works
   command: systemctl status "{{ item }}"

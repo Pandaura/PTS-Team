@@ -214,7 +214,6 @@
     - switch == "on"
     - check.stat.exists == True
 
-
 - name: Check if docker is running and works
   command: systemctl status "{{ item }}"
   with_items:
