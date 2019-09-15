@@ -11,11 +11,6 @@
 #######################################################################
 
 ---
-- name: Credits
-    msg: |
-      some of this parts are cloned from Cloudbox
-      many thanks to all the devs from Cloudbox
-
 - name: "MergerFS | Get URL for latest mergerfs release"
   shell: |
     curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest \
@@ -37,9 +32,6 @@
     deb: "{{ mergerfs_download_url.stdout | default('{{ mergerfs_download_url_backup }}') }}"
     state: present
 
-
-
-
 - name: Check if pgunion is running and works
   command: systemctl status "{{ item }}"
   with_items:
@@ -56,3 +48,30 @@
       {{ service_pgunion_status.stdout }}
       {{ service_pgunion_status.stderr }}
   when: service_pgunion_status | failed
+
+- name: "PGunion restart"
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: pgunion
+
+- name: 'Restart Containers '
+  shell: 'docker restart $(docker ps -a -q)'
+  ignore_errors: yes
+
+- name: Check if docker is running and works
+  command: systemctl status "{{ item }}"
+  with_items:
+    - docker
+  ignore_errors: yes
+  changed_when: false
+  register: service_docker_status
+
+- name: Report status of docker
+  fail:
+    msg: |
+      Service docker is not running.
+      Output of `systemctl status docker`:
+      {{ service_docker_status.stdout }}
+      {{ service_docker_status.stderr }}
+  when: service_docker_status | failed
