@@ -70,7 +70,6 @@ pginstall() {
   core folders
   core dependency
   core mergerinstall
-  rcloneinstall
   core dockerinstall
   core docstart
 
@@ -87,7 +86,7 @@ pginstall() {
     pgshield
     echo "$rolenumber" >${abc}/install.roles
   fi
-
+  rcloneinstall
   portainer
   core motd &>/dev/null &
   core hetzner &>/dev/null &
