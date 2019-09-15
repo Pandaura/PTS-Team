@@ -59,7 +59,6 @@ updateprime() {
   echo "1" >${abc}/pg.installer
   echo "7" >${abc}/pg.prune
   echo "21" >${abc}/pg.mountcheck
-  echo "99" >${abc}/rcloneinstall
 }
 
 pginstall() {
@@ -73,7 +72,6 @@ pginstall() {
   core mergerinstall
   core dockerinstall
   core docstart
-  core rcloneinstall
 
   touch ${abc}/install.roles
   rolenumber=3
@@ -209,11 +207,24 @@ gcloud() {
 
 mergerinstall() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfs
+  # ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
 }
 
 rcloneinstall() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
-}
+rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
+touch /var/plexguide/checkers/rclonestored.log
+touch /var/plexguide/checkers/rclone.log
+rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1 )"
+echo "$rcstored" >> /var/plexguide/checkers/rclonestored.log
+rcstored="$(tail -n 1 /var/plexguide/checkers/rclonestored.log)"
+if [[ "$rcversion" == "$rcstored" ]]; then
+  echo ""
+elif [[ "$rcversion" != "$rcstored" ]]; then
+   ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstal
+else echo "stupid line"
+
+fi
+  }
 
 motd() {
   ansible-playbook /opt/plexguide/menu/motd/motd.yml
