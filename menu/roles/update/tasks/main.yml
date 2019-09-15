@@ -8,8 +8,9 @@
 
 - name: Install a list of packages
   apt:
-    name: "{{ packages }}"
-    state: latest
+    name:  "{{ packages }}"
+    state: present
+    update_cache:  yes
   vars:
     packages:
     - ctop
@@ -17,6 +18,18 @@
     - software-properties-common
     - sysstat 
     - nmon
+
+- name: Replace false to true in systat
+  lineinfile:
+    path: /etc/default/sysstat
+    regexp: '^ENABLED=false'
+    line: ENABLED=true
+
+- name: Ensure systat is ENABLED=true
+  lineinfile:
+    path: /etc/default/sysstat
+    regexp: '^ENABLED='
+    line: ENABLED=true
 
 - name: Autoremove unused packages
   command: apt-get -y autoremove
