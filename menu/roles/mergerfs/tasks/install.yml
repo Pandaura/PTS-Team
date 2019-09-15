@@ -1,0 +1,36 @@
+---
+- name: "Gather OS specific variables"
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version }}.yml"
+        - "{{ ansible_distribution | lower }}-{{ ansible_distribution_release }}.yml"
+        - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution | lower }}.yml"
+        - "{{ ansible_os_family | lower }}-{{ ansible_distribution_version }}.yml"
+        - "{{ ansible_os_family | lower }}-{{ ansible_distribution_release }}.yml"
+        - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_os_family | lower }}.yml"
+    - paths:
+        - ../vars
+
+- name: "Check if mergerfs is installed"
+  command: "which mergerfs"
+  register: mergerfs_which
+  changed_when: false
+  failed_when: false
+
+- name: "Print mergerfs package URL for debugging"
+  debug:
+    var: mergerfs_package_url
+
+- include_tasks: setup-Ubuntu.yml
+  when: mergerfs_which.rc != 0 and ansible_os_family == 'Ubuntu'
+
+- include_tasks: setup-Debian.yml
+  when: mergerfs_which.rc != 0 and ansible_os_family == 'Debian'
+
+- name: "Ensure that mergerfs is installed"
+  command: "which mergerfs"
+  changed_when: false
+  when: mergerfs_which.rc != 0

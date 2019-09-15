@@ -1,0 +1,3 @@
+---
+architecture: "{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"
+mergerfs_package_name: "mergerfs_{{ mergerfs_version }}.{{ ansible_distribution | lower }}-{{ ansible_distribution_release }}_{{ architecture }}.deb"
