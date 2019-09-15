@@ -34,10 +34,19 @@ rclone latest version 	 = 		$rcversion
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
-read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
+read -p 'Type  Y or Z | Press [ENTER]: ' typed </dev/tty
 
-  if [[ "$typed" == "Y" || "y" ]]; then
-        curl https://rclone.org/install.sh | sudo bash
-  else [[ "$typed" == "Z" || "$typed" == "z" ]]
 
-  fi
+    case $typed in
+
+    Y) curl https://rclone.org/install.sh | sudo bash
+        ;;
+    y) curl https://rclone.org/install.sh | sudo bash
+       ;;
+    z)
+        exit
+        ;;
+    Z)
+        exit
+        ;;
+esac
