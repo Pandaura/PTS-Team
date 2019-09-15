@@ -213,24 +213,24 @@
     path: /etc/systemd/system/docker.service.d
   register: docker_root
 
-- name: Create docker.root.conf folder
-  file:
-    path: /etc/systemd/system/docker.service.d
-    state: directory
-    mode: 0775
-  when:
-    - docker_root.stat.exists == False
-    - switch == "on"
-  tags: docker_standard
+# - name: Create docker.root.conf folder
+  # file:
+    # path: /etc/systemd/system/docker.service.d
+    # state: directory
+    # mode: 0775
+  # when:
+    # - docker_root.stat.exists == False
+    # - switch == "on"
+  # tags: docker_standard
 
-- name: Import docker.root.conf file
-  copy:
-    src: docker.root.conf
-    dest: /etc/systemd/system/docker.service.d/docker.root.conf
-    force: yes
-    mode: 0775
-  tags: docker_standard
-  when: switch == "on"
+# - name: Import docker.root.conf file
+  # copy:
+    # src: docker.root.conf
+    # dest: /etc/systemd/system/docker.service.d/docker.root.conf
+    # force: yes
+    # mode: 0775
+  # tags: docker_standard
+  # when: switch == "on"
 
 # - name: Rsync docker files to new path
   # shell: rsync -a /var/lib/docker/* /opt/docker
