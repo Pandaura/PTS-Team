@@ -123,9 +123,6 @@ ansible-playbook /opt/plexguide/menu/alias/alias.yml >/dev/null 2>&1
 }
 
 aptupdate() {
-  # yes | apt-get update
-  # yes | apt-get install software-properties-common
-  # yes | apt-get install sysstat nmon
   ansible-playbook /opt/plexguide/menu/pg.yml --tags update
   sed -i 's/false/true/g' /etc/default/sysstat
 }
@@ -197,11 +194,10 @@ prune() {
 }
 
 hetzner() {
-  if [ -e "$file" ]; then rm -rf /bin/hcloud; fi
-  version="v1.10.0"
+  version="$(curl -s https://api.github.com/repos/hetznercloud/cli/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
   wget -P /tmp "https://github.com/hetznercloud/cli/releases/download/$version/hcloud-linux-amd64-$version.tar.gz"
   tar -xvf "/tmp/hcloud-linux-amd64-$version.tar.gz" -C /tmp
-  mv "/tmp/plexguide/hcloud-linux-amd64-$version/bin/hcloud" /bin/
+  mv "/tmp/hcloud-linux-amd64-$version/bin/hcloud" /bin/
   rm -rf /tmp/hcloud-linux-amd64-$version.tar.gz
   rm -rf /tmp/hcloud-linux-amd64-$version
 }

@@ -131,6 +131,13 @@
         force: yes
         mode: 0775
 
+    - name: Install mergefes updater
+      template:
+        src: mgupdate
+        dest: /bin/mgupdate
+        force: yes
+        mode: 0775
+
     - name: Install Backup & Restore
       template:
         src: backup

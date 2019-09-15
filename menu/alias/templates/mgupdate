@@ -1,19 +1,20 @@
 #!/bin/bash
 #
-# Title:      rclone updater
+# Title:      mergerfs updater
 # GNU:        General Public License v3.0
 ################################################################################
 
-rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
-rcstored="$(tail -n 1 /var/plexguide/checkers/rclonestored.log)"
-      tee <<-EOF
+mgversion="$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
+mgstored="$(tail -n 1 /var/plexguide/checkers/mgfs.log)"
+
+tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- rClone Update Panel  			$rcstored
+ mergerfs Update Panel  --local version $mgstored
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-rclone installed version = 		$rcstored
-rclone latest version 	 = 		$rcversion
+mergerfs installed version = 		$mgstored
+mergerfs latest version    = 		$mgversion
 
 [Y] UPDATE to lateste version
 
@@ -26,14 +27,12 @@ read -p 'Type  Y or Z | Press [ENTER]: ' typed </dev/tty
 
     case $typed in
 
-    Y)
-        curl https://rclone.org/install.sh | sudo bash
-        bash /opt/plexguide/menu/pgui/templates/check.sh >/dev/null 2>&1
+    Y)  
+        ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfs
         ;;
-    y)
-        curl https://rclone.org/install.sh | sudo bash
-        bash /opt/plexguide/menu/pgui/templates/check.sh >/dev/null 2>&1
-        ;;
+    y)  
+	    ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfs
+	    ;;
     z)
         exit
         ;;
