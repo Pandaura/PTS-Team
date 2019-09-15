@@ -248,19 +248,19 @@
       
   # when: "'FAILED' in command_result.stderr"
 
-- name: "docker-root dir to new path it prints FAILED when it fails"
-  synchronize:
-    src: /var/lib/docker/
-    dest: /opt/docker
-    recursive: yes
+# - name: "docker-root dir to new path it prints FAILED when it fails"
+  # synchronize:
+    # src: /var/lib/docker/
+    # dest: /opt/docker
+    # recursive: yes
 
-- name: 'Wait for 20 seconds before commencing'
-  wait_for:
-    timeout: 20
-  when: switch == "on"
+# - name: 'Wait for 20 seconds before commencing'
+  # wait_for:
+    # timeout: 20
+  # when: switch == "on"
 
-- name: Reload daemon for docker override.conf and docker.root.conf
-  shell: systemctl daemon-reload && systemctl restart docker
+# - name: Reload daemon for docker override.conf and docker.root.conf
+  # shell: systemctl daemon-reload && systemctl restart docker
 
 - name: create plexguide network
   docker_network:
