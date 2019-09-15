@@ -4,6 +4,8 @@
 # URL:           https://github.com/cloudbox/cloudbox                   #
 # --                                                                    #
 #         Part of the Cloudbox project: https://cloudbox.works          #
+# --                                                                    #
+# Mod:          MrDoob                                                  #
 #########################################################################
 #                   GNU General Public License v3.0                     #
 #########################################################################
@@ -33,33 +35,19 @@
       - apt-utils
       - byobu
 
-- name: APT update
-  apt:
-    update_cache: yes
-  ignore_errors: yes
+- name: Update APT package cache
+  apt: update_cache=yes cache_valid_time=600
 
-# https://serverfault.com/a/839563
-# https://raymii.org/s/tutorials/Silent-automatic-apt-get-upgrade.html
-- name: APT upgrade
-  shell: apt-get upgrade --quiet --yes --allow-unauthenticated -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
-  environment: "{{ env_vars }}"
-  when: not continuous_integration
-  ignore_errors: yes
+- name: Upgrade APT to the latest packages
+  apt: upgrade=dist
+  register: apt_result
 
-# https://serverfault.com/a/839563
-# https://raymii.org/s/tutorials/Silent-automatic-apt-get-upgrade.html
-- name: APT dist-upgrade
-  shell: apt-get dist-upgrade --quiet --yes --allow-unauthenticated -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
-  environment: "{{ env_vars }}"
-  when: not continuous_integration
-  ignore_errors: yes
+- name: Autoremove unused packages
+  command: apt-get -y autoremove
+  register: apt_result
+  changed_when: "'packages will be REMOVED' in apt_result.stdout"
 
-- name: Remove useless packages from the cache
-  apt:
-    autoclean: yes
-  ignore_errors: yes
-
-- name: Remove dependencies that are no longer required
-  apt:
-    autoremove: yes
-  ignore_errors: yes
+- name: Purge residual kernel packages
+  shell: apt-get remove -y --purge $(dpkg -l | grep "^rc\s*linux-image-" | awk '{print $2}' | tr '\n' ' ')
+  register: apt_result
+  changed_when: "'packages will be REMOVED' in apt_result.stdout"
