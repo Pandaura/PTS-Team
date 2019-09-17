@@ -207,7 +207,6 @@ gcloud() {
 
 mergerinstall() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfs
-  # ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
 }
 
 rcloneinstall() {
@@ -215,9 +214,9 @@ rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest 
 rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1 )"
 
 if [[ "$rcversion" == "$rcstored" ]]; then
-  echo ""
+  echo "rclone latest stable version check"
 elif [[ "$rcversion" != "$rcstored" ]]; then
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstal
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
 fi
 }
 
