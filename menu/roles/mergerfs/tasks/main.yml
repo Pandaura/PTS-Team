@@ -41,7 +41,7 @@
     - debhelper 
     - libfuse-dev 
     - libattr1-dev
-  when: ansible_distribution == 'Debian'
+  when: ansible_distribution == 'Ubuntu'
 
 - name: "MergerFS | Get URL for latest mergerfs release"
   shell: |
