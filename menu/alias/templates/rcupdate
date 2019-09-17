@@ -27,11 +27,11 @@ read -p 'Type  Y or Z | Press [ENTER]: ' typed </dev/tty
     case $typed in
 
     Y)
-        curl https://rclone.org/install.sh | sudo bash
+        ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
         bash /opt/plexguide/menu/pgui/templates/check.sh >/dev/null 2>&1
         ;;
     y)
-        curl https://rclone.org/install.sh | sudo bash
+        ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
         bash /opt/plexguide/menu/pgui/templates/check.sh >/dev/null 2>&1
         ;;
     z)
