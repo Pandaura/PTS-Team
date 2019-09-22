@@ -1,8 +1,0 @@
----
-- name: "Merge variables with defaults"
-  set_fact:
-    merged_unions: "{{ (merged_unions | default([])) + [ union_default_args | combine(item) ] }}"
-  loop: "{{ unions }}"
-
-- name: "Install mergerfs packages and prereqs"
-  include: install.yml

@@ -69,7 +69,7 @@ pginstall() {
   core alias
   core folders
   core dependency
-  core mergerinstall
+  core mergerfsinstall
   core dockerinstall
   core docstart
 
@@ -205,19 +205,24 @@ gcloud() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags gcloud_sdk
 }
 
-mergerinstall() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfs
+mergerfsupdate() {
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerupdate
+}
+
+mergerfsinstall() {
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerinstall
 }
 
 rcloneinstall() {
-rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
-rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1 )"
+ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
+# rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
+# rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1 )"
 
-if [[ "$rcversion" == "$rcstored" ]]; then
-  echo "rclone latest stable version check"
-elif [[ "$rcversion" != "$rcstored" ]]; then
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
-fi
+# if [[ "$rcversion" == "$rcstored" ]]; then
+  # echo "rclone latest stable version check"
+# elif [[ "$rcversion" != "$rcstored" ]]; then
+  # ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
+# fi
 }
 
 motd() {

@@ -28,10 +28,10 @@ read -p 'Type  Y or Z | Press [ENTER]: ' typed </dev/tty
     case $typed in
 
     Y)  
-        ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfs
+        ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsupdate
         ;;
     y)  
-	    ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfs
+	    ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsupdate
 	    ;;
     z)
         exit
