@@ -35,7 +35,9 @@ updateprime() {
   ospgversion=$(cat /etc/*-release | grep Debian | grep 9)
   if [ "$ospgversion" != "" ]; then
     echo "debian" >${abc}/os.version
-  else echo "ubuntu" >${abc}/os.version; fi
+  else 
+    echo "ubuntu" >${abc}/os.version; 
+  fi
 
   echo "3" >${abc}/pg.mergerfsinstall
   echo "52" >${abc}/pg.pythonstart
@@ -215,7 +217,7 @@ rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest 
 rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1 )"
 
 if [[ "$rcversion" == "$rcstored" ]]; then
-  echo "rclone latest stable version check"
+  echo "✅ rclone latest stable version check "
 elif [[ "$rcversion" != "$rcstored" ]]; then
   ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
 fi
@@ -231,21 +233,7 @@ mountcheck() {
 
 localspace() {
   ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
-  ansible-playbook /opt/plexguide/menu/pgui/pgui.yml
-
-  tee <<-EOF
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  User Interface (PGUI) Installed / Updated
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-INFORMATION:  PGUI is a simple interface that provides information,
-warnings, and stats that will assist both yourself and tech support!
-To turn this off, goto settings and turn off/on the User Interface!
-VISIT:
-https://pgui.yourdomain.com | http://pgui.domain.com:8555 | ipv4:8555
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-  read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
-
+  ansible-playbook /opt/plexguide/menu/pgui/pgui.yml 
 }
 
 
