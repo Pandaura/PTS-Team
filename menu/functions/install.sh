@@ -77,9 +77,7 @@ pginstall() {
   rolenumber=3
   # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
   if [[ $(cat /var/plexguide/install.roles) != "$rolenumber" ]]; then
-    rm -rf /opt/communityapps
-    rm -rf /opt/coreapps
-    rm -rf /opt/pgshield
+    rm -rf /opt/{coreapps,communityapps,pgshield} 
 
     pgcore
     pgcommunity
@@ -118,18 +116,16 @@ alias() {
 }
 
 templatespart2() {
-ansible-playbook /opt/plexguide/menu/alias/alias.yml >/dev/null 2>&1
+   ansible-playbook /opt/plexguide/menu/alias/alias.yml >/dev/null 2>&1
 }
 
 aptupdate() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags update
-  sed -i 's/false/true/g' /etc/default/sysstat
 }
 
 customcontainers() {
-  mkdir -p /opt/mycontainers
+  mkdir -p /opt/{coreapps,communityapps/apps,pgshield}
   touch /opt/appdata/plexguide/rclone.conf
-  mkdir -p /opt/communityapps/apps
   rclone --config /opt/appdata/plexguide/rclone.conf copy /opt/mycontainers/ /opt/communityapps/apps
 }
 
@@ -206,11 +202,11 @@ gcloud() {
 }
 
 mergerfsupdate() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerupdate
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsupdate
 }
 
 mergerfsinstall() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerinstall
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsinstall
 }
 
 rcloneinstall() {
