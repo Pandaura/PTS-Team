@@ -37,7 +37,7 @@ updateprime() {
     echo "debian" >${abc}/os.version
   else echo "ubuntu" >${abc}/os.version; fi
 
-  echo "3" >${abc}/pg.mergerinstall
+  echo "3" >${abc}/pg.mergerfsinstall
   echo "52" >${abc}/pg.pythonstart
   echo "12" >${abc}/pg.aptupdate
   echo "150" >${abc}/pg.preinstall
