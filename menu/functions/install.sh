@@ -231,7 +231,23 @@ mountcheck() {
 
 localspace() {
   ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
+  ansible-playbook /opt/plexguide/menu/pgui/pgui.yml
+
+  tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+↘️  User Interface (PGUI) Installed / Updated
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INFORMATION:  PGUI is a simple interface that provides information,
+warnings, and stats that will assist both yourself and tech support!
+To turn this off, goto settings and turn off/on the User Interface!
+VISIT:
+https://pgui.yourdomain.com | http://pgui.domain.com:8555 | ipv4:8555
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
+
 }
+
 
 newinstall() {
   rm -rf ${abc}/pg.exit 1>/dev/null 2>&1
