@@ -211,19 +211,14 @@ mergerinstall() {
 
 rcloneinstall() {
 rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
-touch /var/plexguide/checkers/rclonestored.log
-touch /var/plexguide/checkers/rclone.log
 rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1 )"
-echo "$rcstored" >> /var/plexguide/checkers/rclonestored.log
-rcstored="$(tail -n 1 /var/plexguide/checkers/rclonestored.log)"
-if [[ "$rcversion" == "$rcstored" ]]; then
-  echo ""
-elif [[ "$rcversion" != "$rcstored" ]]; then
-   ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstal
-else echo "stupid line"
 
+if [[ "$rcversion" == "$rcstored" ]]; then
+  echo "rclone latest stable version check"
+elif [[ "$rcversion" != "$rcstored" ]]; then
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
 fi
-  }
+}
 
 motd() {
   ansible-playbook /opt/plexguide/menu/motd/motd.yml
