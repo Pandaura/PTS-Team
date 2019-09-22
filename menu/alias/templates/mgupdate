@@ -5,7 +5,7 @@
 ################################################################################
 
 mgversion="$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
-mgstored="$(tail -n 1 /var/plexguide/checkers/mgfs.log)"
+mgstored="$(mergerfs -v | grep 'mergerfs version:' | awk '{print $3}')"
 
 tee <<-EOF
 
