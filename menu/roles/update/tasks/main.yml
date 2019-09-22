@@ -19,17 +19,17 @@
     - sysstat 
     - nmon
 
-- name: Replace false to true in systat
-  lineinfile:
-    path: /etc/default/sysstat
-    regexp: '^ENABLED=false'
-    line: ENABLED=true
-
-#- name: Ensure systat is ENABLED=true
+#- name: Replace false to true in systat
 #  lineinfile:
 #    path: /etc/default/sysstat
-#    regexp: '^ENABLED='
+##    regexp: '^ENABLED=false'
 #    line: ENABLED=true
+
+- name: Ensure systat is ENABLED=true
+  lineinfile:
+    path: /etc/default/sysstat
+    regexp: '^ENABLED='
+    line: ENABLED=true
 
 - name: Autoremove unused packages
   command: apt-get -y autoremove
