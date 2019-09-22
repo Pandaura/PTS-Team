@@ -39,7 +39,6 @@
 - name: Remove useless packages from the cache
   apt:
    autoclean: yes
-   register: apt_result
 
 - name: Autoremove unused packages
   command: apt-get -y autoremove
