@@ -25,11 +25,11 @@
     regexp: '^ENABLED=false'
     line: ENABLED=true
 
-- name: Ensure systat is ENABLED=true
-  lineinfile:
-    path: /etc/default/sysstat
-    regexp: '^ENABLED='
-    line: ENABLED=true
+#- name: Ensure systat is ENABLED=true
+#  lineinfile:
+#    path: /etc/default/sysstat
+#    regexp: '^ENABLED='
+#    line: ENABLED=true
 
 - name: Autoremove unused packages
   command: apt-get -y autoremove
