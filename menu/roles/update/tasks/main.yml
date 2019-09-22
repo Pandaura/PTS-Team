@@ -1,35 +1,45 @@
 ---
 - name: Update APT package cache
   apt: update_cache=yes cache_valid_time=600
+  register: apt_result
 
 - name: Upgrade APT to the latest packages
-  apt: upgrade=dist
+  apt: upgrade=full
   register: apt_result
+
+- name: Upgrade Distrubution to the latest stable version
+  apt: upgrade=dist state=present only_upgrade=yes
 
 - name: Install a list of packages
   apt:
     name:  "{{ packages }}"
-    state: present
-    update_cache:  yes
+    state: latest
+    update_cache: yes
+    allow_unauthenticated: yes
   vars:
     packages:
     - ctop
     - dnsutils
     - software-properties-common
-    - sysstat 
+    - sysstat
     - nmon
 
-#- name: Replace false to true in systat
-#  lineinfile:
-#    path: /etc/default/sysstat
-##    regexp: '^ENABLED=false'
-#    line: ENABLED=true
+- name: Replace false to true in systat
+  lineinfile:
+    path: /etc/default/sysstat
+    regexp: '^ENABLED='
+    line: ENABLED=true
 
 - name: Ensure systat is ENABLED=true
   lineinfile:
     path: /etc/default/sysstat
     regexp: '^ENABLED='
     line: ENABLED=true
+
+- name: Remove useless packages from the cache
+  apt:
+   autoclean: yes
+   register: apt_result
 
 - name: Autoremove unused packages
   command: apt-get -y autoremove
