@@ -10,6 +10,7 @@ mkdir -p /var/plexguide/checkers
 rm -rf /var/plexguide/checkers/*.log
 #mkdir -p /var/plexguide/checkers
 
+###mergerfs part
 mgversion="$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
 touch /var/plexguide/checkers/mgfs.log
 touch /var/plexguide/checkers/mergerfs.log
@@ -26,9 +27,7 @@ elif [[ "$mgversion" != "$mgstored" ]]; then
 else echo "stupid line"
 
 fi
-
-
-
+##### rclpone part
 rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
 touch /var/plexguide/checkers/rclonestored.log
 touch /var/plexguide/checkers/rclone.log
