@@ -25,6 +25,7 @@
     - debhelper 
     - libfuse-dev 
     - libattr1-dev
+    - jq 
   when: ansible_distribution == 'Debian'
 
 - name: "MergerFS | Install prerequisite build tools for UBUNTU"
@@ -41,6 +42,7 @@
     - debhelper 
     - libfuse-dev 
     - libattr1-dev
+    - jq 
   when: ansible_distribution == 'Ubuntu'
 
 - name: "MergerFS | Get URL for latest mergerfs release"
