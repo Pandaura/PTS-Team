@@ -19,10 +19,10 @@
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
-      include_tasks: '/opt/coreapps/apps/_core.yml'
+      include_tasks: '/opt/plexguide/menu/pgui/templates/_core.yml'
 
     - name: 'Including cron job'
-      include_tasks: '/opt/plexguide/menu/pgui/_cron.yml'
+      include_tasks: '/opt/plexguide/menu/pgui/templates/_cron.yml'
 
     - name: 'Including Tasks'
       include_tasks: '/opt/plexguide/menu/pgui/dynamic.yml'
