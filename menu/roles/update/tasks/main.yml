@@ -7,7 +7,11 @@
   register: apt_result
 
 - name: Upgrade Distrubution to the latest stable version
-  apt: upgrade=dist state=present only_upgrade=yes
+  #apt: upgrade=dist state=present only_upgrade=yes
+  apt:
+    upgrade: dist
+    state: present
+  register: apt_result 
 
 - name: Install a list of packages
   apt:
