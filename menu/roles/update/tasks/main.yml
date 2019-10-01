@@ -5,8 +5,6 @@
     update_cache: yes
     state: latest
   register: apt_result
-  args:
-    warn: false
 
 - name: Upgrade Distrubution to the latest stable version
   #apt: upgrade=dist state=present only_upgrade=yes
@@ -14,8 +12,6 @@
     upgrade: dist
     state: present
   register: apt_result
-  args:
-    warn: false
  
 - name: Install a list of packages
   apt:
