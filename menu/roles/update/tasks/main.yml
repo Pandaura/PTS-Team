@@ -1,10 +1,9 @@
 ---
-- name: Update APT package cache
-  apt: update_cache=yes cache_valid_time=600
-  register: apt_result
-
 - name: Upgrade APT to the latest packages
-  apt: upgrade=full
+  apt: 
+    name: "*"
+    update_cache: yes
+    state: latest
   register: apt_result
 
 - name: Upgrade Distrubution to the latest stable version
