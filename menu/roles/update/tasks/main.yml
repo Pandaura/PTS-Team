@@ -44,7 +44,8 @@
    autoclean: yes
 
 - name: Fix filled /boot
-  shell: apt-get remove `dpkg --list 'linux-image*' | grep ^ii | awk '{print $2}'\ | grep -v \`uname -r\``
+  #shell: apt-get remove `dpkg --list 'linux-image*' | grep ^ii | awk '{print $2}'\ | grep -v \`uname -r\``
+  shell:  dpkg -l linux-{image,headers}-"[0-9]*" | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cut -f1,2 -d"-"` | grep -e '[0-9]' | xargs sudo apt-get -y purge
 
 - name: Update APT package cache
   apt: update_cache=yes cache_valid_time=600
