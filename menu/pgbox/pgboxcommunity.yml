@@ -13,7 +13,7 @@
 
     - name: Cloning Community Apps
       git:
-        repo: 'https://github.com/PGBlitz/Apps-Community'
+        repo: 'https://github.com/MrDoobPG/Apps-Community'
         dest: /opt/communityapps
-        version: 'v8.6'
+        version: 'master'
         force: yes
