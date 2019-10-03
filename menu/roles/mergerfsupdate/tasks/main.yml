@@ -94,7 +94,7 @@
   ignore_errors: yes
 
 - name: 'Restart check.sh'
-  shell: 'bash /opt/plexguide/menu/pgui/check.sh >/dev/null 2>&1'
+  shell: 'bash /opt/plexguide/menu/pgui/templates/check.sh >/dev/null 2>&1'
   ignore_errors: yes
 
 - name: Check if docker is running and works
