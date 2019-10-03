@@ -323,8 +323,8 @@ mainbanner() {
 🚀 PTS APP Box Edition! 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💬 ´Core Box apps simplify their usage within PTS! 
-PG provides more focused support and development based on core usage.
+💬 PTS Core Box apps simplify their usage within PTS! 
+PTS provides more focused support and development based on core usage.
 
 💬 The Personal Forked option will install your version of Core Box. Good
 for testing or for personal mods! Ensure that it exist prior to use!
