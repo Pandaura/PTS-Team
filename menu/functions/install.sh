@@ -151,6 +151,7 @@ docstart() {
 }
 
 emergency() {
+  mkdir -p /opt/appdata/plexguide/emergency
   variable ${abc}/emergency.display "On"
   if [[ $(ls /opt/appdata/plexguide/emergency) != "" ]]; then
 
