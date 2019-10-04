@@ -107,7 +107,7 @@
         path: /mnt/tmp
       register: tmp
 
-    - name: Create GDrive Folders
+    - name: Create Temp Folder
       file: 'path={{item}} state=directory'
       with_items:
         - /mnt/tmp
@@ -132,7 +132,7 @@
       when: gdrive.stat.exists == False
       ignore_errors: yes
     ############ TCrypt
-    - name: Create GDrive Folders
+    - name: Create TCrypt Folders
       file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
       with_items:
         - /mnt/tcrypt
@@ -183,6 +183,7 @@
       file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000 recurse=true'
       with_items:
         - '/opt/appdata/plexguide'
+        - '/opt/appdata/plexguide/emergency'
         - '/opt/communityapps'
         - '/opt/coreapps'
         - '/var/plexguide'
