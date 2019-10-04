@@ -22,7 +22,7 @@ function setPref {
     sed -i -E "s/\/>/ ${key}=\"$value\"\/>/" "${prefFile}"
   fi
 }
-
+PMSdir="/opt/appdata/plex/database/Library/Application Support/Plex Media Server"
 prefFile="/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Preferences.xml"
 
 PLEX_CLAIM="$1"
@@ -30,11 +30,12 @@ PLEX_CLAIM="$1"
 # Create empty shell pref file if it doesn't exist already
 if [ ! -e "${prefFile}" ]; then
   echo "Creating pref shell"
+  mkdir -p "${PMSdir}"
   cat > "${prefFile}" <<-EOF
 <?xml version="1.0" encoding="utf-8"?>
 <Preferences/>
 EOF
-  chown -R 1000:1000 "${prefFile}"
+  chown -R 1000:1000 "/opt/appdata/plex"
 fi
 
 # Setup Server's client identifier
