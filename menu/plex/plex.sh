@@ -25,7 +25,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎 PG - PGBlitz Installer ~ http://plex.pgblitz.com
+🌎 Plex Install 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 NOTE: DO NOT SELECT LOCAL SYSTEM for a REMOTE SERVER outside of your
 network as in using Hetzner, Google GCE, WholeSale Internet & Etc! If you
