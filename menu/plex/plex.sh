@@ -65,7 +65,13 @@ this step as you won't need to claim it again.
 EOF
 
   read -p 'Plex Server Claim Number | Press [ENTER]: ' typed </dev/tty
-  echo $typed >/var/plexguide/plex.claim && break=on
+  echo $typed >/var/plexguide/plex.claim 
+  if [ $(cat /var/plexguide/image/plex) == linuxserver/plex ];then
+  bash /opt/plexguide/menu/plex/lsio-plex-claim.sh $(cat /var/plexguide/plex.claim)
+  break
+  else
+  break
+  fi
 }
 
 # FUNCTIONS END ##############################################################
