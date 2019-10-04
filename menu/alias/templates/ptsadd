@@ -23,7 +23,7 @@ else
                 pass=$(perl -e 'print crypt($ARGV[0], "password")' $password)
                 useradd -m -p $pass $username
                 usermod -aG sudo $username
-		usermod -aG video $username
+                usermod -aG video $username
                 sudo usermod -s /bin/bash $username
         echo ""
         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
