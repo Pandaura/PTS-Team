@@ -12,7 +12,7 @@
     # FACTS ######################################################################
     - cron:
         name: Build a Cron Job - Auto Prune
-        special_time: 'hourly'
+        special_time: 'weekly'
         job: 'prune 1>/dev/null 2>&1'
         state: present
       ignore_errors: yes
