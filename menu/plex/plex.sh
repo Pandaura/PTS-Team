@@ -33,7 +33,8 @@ do you, it will not work and you will have to uninstall it!
 
 [1] Plex Remote System ~ OUTSIDE your LOCAL NETWORK (i.e 3rd Party)
 [2] Plex Local System  ~ INSIDE  your LOCAL NETWORK (i.e Home)
-Z - Exit
+
+[Z] - Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
