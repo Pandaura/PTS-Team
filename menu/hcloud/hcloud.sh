@@ -108,7 +108,7 @@ EOF
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  PG - New Server Information - [$name]
+↘️  New Server Information - [$name]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -126,7 +126,7 @@ EOF
 
   tee <<-EOF
 
-⚠️  To Reach Your Server >>> Exit PG >>> TYPE: pg-$name ⚠️
+⚠️  To Reach Your Server >>> Exit PTS >>> TYPE: pg-$name ⚠️
 
 ✅️ [IMPORTANT NOTE]
 
@@ -144,7 +144,6 @@ EOF
   echo "echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >/bin/pg-$name
   echo "echo '↘️  Server - $name | Initial Password $initialpw'" >>/bin/pg-$name
   echo "echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >>/bin/pg-$name
-  echo "echo '✅️ Donate @ donate.pgblitz.com - Helps Costs & Mrs. Admin - #1 Enemy!'" >>/bin/pg-$name
   echo "echo ''" >>/bin/pg-$name
   echo "ssh root@$serverip" >>/bin/pg-$name
   chmod 777 /bin/pg-$name
@@ -157,7 +156,7 @@ elif [ "$typed" == "A" ] || [ "$typed" == "a" ]; then
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  PG - Hetzner Server Cloud List
+↘️  Hetzner Server Cloud List
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Server Name
