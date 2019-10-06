@@ -418,7 +418,6 @@ selection1() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Instantly Kick Video Transcodes?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚡ Reference: http://pgtrakt.pgblitz.com
 
 [1] False
 
@@ -440,12 +439,11 @@ selection2() {
 🚀 Limit Amount of Different IPs a User Can Make?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-Set a Number from [1] 99
+Set a Number from [1] to [25]
 
 EOF
   read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
-  if [[ "$typed" -ge "1" && "$typed" -le "99" ]]; then
+  if [[ "$typed" -ge "1" && "$typed" -le "25" ]]; then
     echo "$typed" >/var/plexguide/pgtrakt/multiple.ips && question1
   else badinput; fi
 }
@@ -457,11 +455,11 @@ selection3() {
 🚀 Limit How Long a User Can Pause For!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Set a Number from [5] 999 Mintues
+Set a Number from [5] to [180] Mintues
 
 EOF
   read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
-  if [[ "$typed" -ge "1" && "$typed" -le "999" ]]; then
+  if [[ "$typed" -ge "1" && "$typed" -le "180" ]]; then
     echo "$typed" >/var/plexguide/pgtrakt/kick.minutes && question1
   else badinput; fi
 }
