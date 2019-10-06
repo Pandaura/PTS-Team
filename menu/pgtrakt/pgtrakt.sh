@@ -69,6 +69,7 @@ case senstive! If you mess this up, it will put invalid profiles that do
 not exist within Sonarr!
 
 Default Profiles for Sonarr (case senstive):
+
 Any
 SD
 HD-720p
@@ -113,6 +114,7 @@ case senstive! If you mess this up, it will put invalid profiles that do
 not exist within Radarr!
 
 Default Profiles for Radarr (case senstive):
+
 Any
 SD
 HD-720p
@@ -175,7 +177,7 @@ EOF
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ SYSTEM MESSAGE: PGTrak API Notice
+✅ SYSTEM MESSAGE: Traktarr API Notice
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 NOTE: The API Client and Secret is set! Ensure to setup your <paths> and
@@ -202,6 +204,7 @@ NOTE: In order for this to work, you must set the PATH to where Sonarr is
 actively scanning your tv shows.
 
 Examples:
+
 /mnt/unionfs/tv
 /media/tv
 /secondhd/tv
@@ -276,7 +279,7 @@ EOF
 Note: Exiting the Process! You must ensure that linux is able to READ
 your location.
 
-Advice: Exit PG and (Test) Type >>> mkdir $typed/testfolder
+Advice: Exit PTS and (Test) Type >>> mkdir $typed/testfolder
 
 EOF
       read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
@@ -296,6 +299,12 @@ rpath() {
 
 NOTE: In order for this to work, you must set the PATH to where Radarr is
 actively scanning your movies.
+
+Examples:
+
+/mnt/unionfs/Movies
+/media/Movies
+/secondhd/Movies
 
 Go Back? Type > exit
 EOF
@@ -367,7 +376,7 @@ EOF
 Note: Exiting the Process! You must ensure that linux is able to READ
 your location.
 
-Advice: Exit PG and (Test) Type >>> mkdir $typed/testfolder
+Advice: Exit PTS and (Test) Type >>> mkdir $typed/testfolder
 
 EOF
       read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
@@ -412,6 +421,7 @@ selection1() {
 ⚡ Reference: http://pgtrakt.pgblitz.com
 
 [1] False
+
 [2] True
 
 EOF
@@ -429,7 +439,7 @@ selection2() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Limit Amount of Different IPs a User Can Make?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚡ Reference: http://pgtrakt.pgblitz.com
+
 
 Set a Number from [1] 99
 
@@ -446,7 +456,6 @@ selection3() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Limit How Long a User Can Pause For!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚡ Reference: http://pgtrakt.pgblitz.com
 
 Set a Number from [5] 999 Mintues
 
@@ -472,19 +481,19 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PGTrakt Interface
+🚀 Traktarr Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚡ Reference: http://pgtrakt.pgblitz.com
 
-NOTE: Changes Made? Must Redeploy PGTrak when Complete!
+NOTE: Changes Made? Must Redeploy Traktarr when Complete!
 
-[1] Trakt API-Key   [$api]
-[2] Sonarr Path     [$spath]
-[3] Raddar Path     [$rpath]
-[4] Sonarr Profile  [$sprofile]
-[5] Radarr Profile  [$rprofile]
-[6] Deploy PGTrak   [$dstatus]
-Z - Exit
+[1] Trakt API-Key    [ $api ]
+[2] Sonarr Path      [ $spath ]
+[3] Raddar Path      [ $rpath ]
+[4] Sonarr Profile   [ $sprofile ]
+[5] Radarr Profile   [ $rprofile ]
+[6] Deploy Traktarr  [ $dstatus ]
+
+[Z] - Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
@@ -523,7 +532,7 @@ EOF
         tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - PGTrakt will only work for movies! Sonarr Not Running!
+⛔️  WARNING! - Traktarr will only work for movies! Sonarr Not Running!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -535,7 +544,7 @@ EOF
         tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - PGTrakt will only work for shows! Radarr Not Running!
+⛔️  WARNING! - Traktarr will only work for shows! Radarr Not Running!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
