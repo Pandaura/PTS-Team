@@ -9,23 +9,15 @@
 
 tee <<-EOF
 	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-	⌛  Verifiying PG DNS ( resolv.conf ) changer
+	⌛  Verifiying DNS ( resolv.conf ) changer
 	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
-echo "Updating packages"
-apt-get update -yqq >/dev/null
-echo "Upgrading packages"
-apt-get upgrade -yqq >/dev/null
-echo "Dist-Upgrading packages"
-apt-get dist-upgrade -yqq >/dev/null
-echo "Autoremove old Updates"
-apt-get autoremove -yqq >/dev/null
-echo "install complete"
+ansible-playbook  /opt/plexguide/menu/pg.yml --tags update
 
 tee <<-EOF
 	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-	🚀 PG DNS ( resolv.conf ) changer 
+	🚀 DNS ( resolv.conf ) changer 
 	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 	
 	[1] Google DNS IPv4
