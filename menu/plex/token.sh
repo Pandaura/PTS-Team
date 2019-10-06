@@ -54,7 +54,7 @@ EOF
 EOF
     sleep 3
     question2
-  elif [ "$typed == "2" ]; then 
+  elif [ "$typed" == "2" ]; then 
 
     tee <<-EOF
 
