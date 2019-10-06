@@ -9,21 +9,10 @@
 
 tee <<-EOF
 	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-	⌛  Verifiying PG Hetzner iGPU / GPU HW-Transcode !
+	⌛  Verifiying Hetzner iGPU HW-Transcode !
 	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-echo "Updating packages"
-apt-get update -yqq 2>&1 >>/dev/null
-export DEBIAN_FRONTEND=noninteractive
-echo "Upgrading packages"
-apt-get upgrade -yqq 2>&1 >>/dev/null
-export DEBIAN_FRONTEND=noninteractive
-echo "Dist-Upgrading packages"
-apt-get dist-upgrade -yqq 2>&1 >>/dev/null
-export DEBIAN_FRONTEND=noninteractive
-echo "Autoremove old Updates"
-apt-get autoremove -yqq 2>&1 >>/dev/null
-export DEBIAN_FRONTEND=noninteractive
+ansible-playbook  /opt/plexguide/menu/pg.yml --tags update 2>&1 >>/dev/null
 echo "install vainfo"
 sudo apt-get install vainfo -yqq 2>&1 >>/dev/null
 export DEBIAN_FRONTEND=noninteractive
@@ -33,7 +22,7 @@ echo "install complete"
 
 tee <<-EOF
 	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-	🚀 PG Hetzner iGPU / GPU HW-Transcode
+	🚀 Hetzner iGPU HW-Transcode
 	
 	NOTE : You MUST have Plex Pass to enable hardware transcoding in the Plex server
 	
@@ -44,7 +33,7 @@ tee <<-EOF
 	[2] Ubuntu 18.04 LTS
 	[3] Debian 9.6
 	
-	[4] iGPU / GPU TEST
+	[4] iGPU TEST
 	
 	[Z] Exit
 
@@ -66,7 +55,7 @@ if [ "$typed" == "1" ]; then
 	docker exec plex apt-get -y install i965-va-driver vainfo
 	docker restart plex
 	echo " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
-	echo " ✅ PASSED ! PG Hetzner iGPU / GPU HW-Transcode - finish	"
+	echo " ✅ PASSED ! Hetzner iGPU HW-Transcode - finish	"
 	echo " ✅ PASSED ! Please reboot your server , and edit plex to hardware decode "
 	echo "	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	sleep 10
@@ -81,7 +70,7 @@ elif [ "$typed" == "2" ]; then
 	docker exec plex apt-get -y install i965-va-driver vainfo
 	docker restart plex
 	echo " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
-	echo " ✅ PASSED ! PG Hetzner iGPU / GPU HW-Transcode - finish	"
+	echo " ✅ PASSED ! Hetzner iGPU HW-Transcode - finish	"
 	echo " ✅ PASSED ! Please reboot your server , and edit plex to hardware decode "
 	echo "	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	sleep 10
@@ -96,7 +85,7 @@ elif [ "$typed" == "3" ]; then
 	docker exec plex apt-get -y install i965-va-driver vainfo
 	docker restart plex
 	echo " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
-	echo " ✅ PASSED ! PG Hetzner iGPU / GPU HW-Transcode - finish	"
+	echo " ✅ PASSED ! Hetzner iGPU HW-Transcode - finish	"
 	echo " ✅ PASSED ! Please reboot your server , and edit plex to hardware decode "
 	echo "	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	sleep 10
