@@ -53,14 +53,14 @@ EOF
 tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PG Tools Interface Menu
+🚀 Tools Interface Menu
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] PG Patrol
-[2] PG Trakt
-[3] PG Hetzner iGPU / GPU HW-Transcode
-[4] PG DNS changer
-[5] PG System Tweak
+[1] Plex Patrol
+[2] Traktarr  ( old PGTrakt )
+[3] Hetzner iGPU / GPU HW-Transcode
+[4] DNS changer
+[5] System Tweak
 [6] Personal VPN Service Installer
 [7] System & Network Auditor
 [8] TroubleShoot ~ PreInstaller
