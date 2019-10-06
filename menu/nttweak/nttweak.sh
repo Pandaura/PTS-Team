@@ -15,30 +15,17 @@ tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
-echo "Updating packages"
-apt-get update -yqq 2>&1 >>/dev/null
-export DEBIAN_FRONTEND=noninteractive
-echo "Upgrading packages"
-apt-get upgrade -yqq 2>&1 >>/dev/null
-export DEBIAN_FRONTEND=noninteractive
-echo "Dist-Upgrading packages"
-apt-get dist-upgrade -yqq 2>&1 >>/dev/null
-export DEBIAN_FRONTEND=noninteractive
-echo "Autoremove old Updates"
-apt-get autoremove -yqq 2>&1 >>/dev/null
-export DEBIAN_FRONTEND=noninteractive
-echo "install complete"
-
+ansible-playbook /opt/plexguide/menu/pg.yml --tags update  2>&1 >>/dev/null
 tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PG System Tweaker
+🚀 System Tweaker
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💬 PG System Tweaker
+💬 System Tweaker
 
 [1] Network Tweaker ( Debian 9 & Ubuntu 18 only )
 [2] Docker Swapness
-[3] PGBlitz logrotator
+[3] Logrotator  [ tlogs did the same ]
 [4] VnStat autoinstaller
 
 [Z] Exit
@@ -61,7 +48,7 @@ if [ "$typed" == "1" ]; then
         ethtool -K $network tso off tx off
         sed -i '$a\' /etc/crontab
         sed -i '$a\#################################' /etc/crontab
-        sed -i '$a\##	PG Network tweak	  ' /etc/crontab
+        sed -i '$a\## PTS Network tweak	  ' /etc/crontab
         sed -i '$a\#################################' /etc/crontab
         sed -i '$a\@reboot ethtool -K '$network' tso off tx off\' /etc/crontab
         sleep 2
@@ -78,7 +65,7 @@ elif [ "$typed" == "2" ]; then
         sed -i '$a\' /etc/sysctl.conf
         sed -i '$a\' /etc/sysctl.conf
         sed -i '$a\#########################################' /etc/sysctl.conf
-        sed -i '$a\##	Docker PG Swapness changes	  ' /etc/sysctl.conf
+        sed -i '$a\##	Docker PTS Swapness changes	  ' /etc/sysctl.conf
         sed -i '$a\#########################################' /etc/sysctl.conf
         sed -i '$a\vm.swappiness=0\' /etc/sysctl.conf
         sed -i '$a\vm.overcommit_memory=1\' /etc/sysctl.conf
@@ -101,7 +88,7 @@ elif [ "$typed" == "3" ]; then
 
         sed -i '$a\ ' /etc/logrotate.conf
         sed -i '$a\########################################' /etc/logrotate.conf
-        sed -i '$a\##    PGBlitz Upload logrotate          ' /etc/logrotate.conf
+        sed -i '$a\## PTS Upload logrotate          ' /etc/logrotate.conf
         sed -i '$a\########################################' /etc/logrotate.conf
         sed -i '$a\ ' /etc/logrotate.conf
         sed -i '$a\/var/plexguide/logs/*.log {' /etc/logrotate.conf
@@ -116,12 +103,12 @@ elif [ "$typed" == "3" ]; then
         sed -i '$a\}' /etc/logrotate.conf
         sed -i '$a\ ' /etc/logrotate.conf
         sed -i '$a\######################################' /etc/logrotate.conf
-        sed -i '$a\##    PGBlitz Upload logrotate        ' /etc/logrotate.conf
+        sed -i '$a\##    PTS Upload logrotate        ' /etc/logrotate.conf
         sed -i '$a\######################################' /etc/logrotate.conf
         sleep 2
         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         echo ""
-        echo " ✅ PASSED ! PGBlitz logrotate installed"
+        echo " ✅ PASSED ! PTS logrotate installed"
         echo " ✅ PASSED ! Daily backup from the logs"
         echo " ✅ PASSED ! max age 7 Days "
         echo " ✅ PASSED ! auto delete older logs"
