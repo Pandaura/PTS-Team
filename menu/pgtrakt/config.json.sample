@@ -29,10 +29,9 @@
         ],
         "allowed_languages": [],
         "blacklisted_min_runtime": 15,
-        "blacklisted_min_year": 1980,
-        "blacklisted_max_year": 2019,
+        "blacklisted_min_year": 1950,
+        "blacklisted_max_year": 2050,
         "blacklisted_genres": [
-          "animation",
           "game-show",
           "news",
           "special-interest"
@@ -68,8 +67,8 @@
           "ufc"
         ],
         "blacklisted_min_runtime": 30,
-        "blacklisted_min_year": 1970,
-        "blacklisted_max_year": 2020,
+        "blacklisted_min_year": 1950,
+        "blacklisted_max_year": 2050,
         "blacklisted_tmdb_ids": [],
         "allowed_countries": [
           "us",
