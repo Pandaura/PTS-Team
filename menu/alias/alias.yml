@@ -151,3 +151,10 @@
         dest: /bin/gce
         force: yes
         mode: 0775
+
+    - name: purge old Journal files
+      template:
+        src: jpurge
+        dest: /bin/jpurge
+        force: yes
+        mode: 0775
