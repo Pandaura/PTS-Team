@@ -28,7 +28,7 @@
         mode: 0775
         owner: root
 
-    - name: PG
+    - name: PTS
       template:
         src: pts
         dest: /bin/pts
@@ -131,7 +131,7 @@
         force: yes
         mode: 0775
 
-    - name: Install mergefes updater
+    - name: Install mergerfes updater
       template:
         src: mgupdate
         dest: /bin/mgupdate
