@@ -1,0 +1,32 @@
+##ansible
+##Journal_task_replace_lines
+
+- name: Replace out comment Compress to yes
+  lineinfile:
+    path: /etc/systemd/journald.conf
+    regexp: '^#Compress='
+    line: Compress=yes
+
+- name: Replace out comment RateLimitIntervalSec to 30sec
+  lineinfile:
+    path: /etc/systemd/journald.conf
+    regexp: '^#RateLimitIntervalSec='
+    line: RateLimitIntervalSec=30s
+
+- name: Replace out comment SystemMaxUse to 100Mb
+  lineinfile:
+    path: /etc/systemd/journald.conf
+    regexp: '^#SystemMaxUse='
+    line: SystemMaxUse=100M
+
+- name: Replace out comment SystemMaxFiles to 10
+  lineinfile:
+    path: /etc/systemd/journald.conf
+    regexp: '^#SystemMaxFiles='
+    line: SystemMaxFiles=10
+
+- name: Replace out comment SystemMaxFileSize to1M
+  lineinfile:
+    path: /etc/systemd/journald.conf
+    regexp: '^#SystemMaxFileSize='
+    line: SystemMaxFileSize=1M
