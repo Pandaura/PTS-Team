@@ -1,7 +1,7 @@
 ---
 - name: Install Journald Fix
   template:
-    src: journald.conf
+    src: journald.conf.sample
     dest:  /etc/systemd/journald.conf
     force: yes
 
