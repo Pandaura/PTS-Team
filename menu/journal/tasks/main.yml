@@ -2,7 +2,7 @@
 - name: Install Journald Fix
   template:
     src: journald.conf.sample
-    dest:  /etc/systemd/journald.conf
+    dest: /etc/systemd/journald.conf
     force: yes
 
 - name: systemd reloading
