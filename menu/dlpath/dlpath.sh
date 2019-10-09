@@ -26,16 +26,16 @@ percentage=$(df -h $pgpath | tail -n +2 | awk '{print $5}')
 tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎  PG Processing Disk Interface
+🌎  Processing Disk Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🌵  Processing Disk : $pgpath
     Processing Space: $used of $capacity | $percentage Used Capacity
 
-☑️   PG does not format your second disk, nor mount it! We can
+☑️  PTS does not format your second disk, nor mount it! We can
 only assist by changing the location path!
 
-☑️   Enables PG System to process items on a SECONDARY Drive rather
+☑️   Enables PTS System to process items on a SECONDARY Drive rather
 than tax the PRIMARY DRIVE. Like Windows, you can have your items
 process on a (D): Drive instead of on a (C): Drive.
 

@@ -14,7 +14,7 @@ echo 'v8.6' >/var/plexguide/pgcloner.projectversion
 echo 'pgshield.sh' >/var/plexguide/pgcloner.startlink
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-echo "💬 PG Shield protects users by deploying adding Google
+echo "💬 Shield protects users by deploying adding Google
 Authentication to all the containers for protection!" >/var/plexguide/pgcloner.info
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

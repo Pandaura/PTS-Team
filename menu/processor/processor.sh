@@ -9,16 +9,17 @@ question1() {
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎  Processer Policy Interface      ⚡ Reference: processor.pgblitz.com
+🌎  Processer Policy Interface:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 💬  Works only on Dedicated Servers! (No VPS, ESXI, VMs, and etc)
 
-1. Performance Mode
-2. OnDemand Mode
-3. Conservative Mode
-4. View Processor Policy
-Z. Exit
+[1] Performance Mode
+[2] OnDemand Mode
+[3] Conservative Mode
+[4] View Processor Policy
+
+[Z] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF

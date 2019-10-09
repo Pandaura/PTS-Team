@@ -1,10 +1,7 @@
 #!/bin/bash
 #
-# Title:      PGBlitz (Reference Title File)
-# Author(s):  Admin9705 - Deiteq
-# URL:        https://pgblitz.com - http://github.pgblitz.com
-# GNU:        General Public License v3.0
-################################################################################
+# Title:      Docker Install
+###############################################################
 ---
 - name: 'Establish Facts'
   set_fact:
@@ -25,22 +22,6 @@
     switch: 'off'
   when: updatecheck.stdout == "18.09.8,"
 
-- name: Install required packages
-  apt:
-    name: '{{ packages }}'
-  vars:
-    packages:
-      - apt-transport-https
-      - ca-certificates
-      - software-properties-common
-  when: switch == "on"
-
-- name: Add official gpg signing key
-  apt_key:
-    id: 0EBFCD88
-    url: https://download.docker.com/linux/ubuntu/gpg
-  when: switch == "on"
-
 - name: 'Stop All Containers'
   shell: 'docker stop $(docker ps -a -q)'
   ignore_errors: yes
@@ -48,49 +29,107 @@
     - check.stat.exists == True
     - switch == "on"
 
-- name: Official Repo
-  apt_repository:
-    repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} edge'
-  register: apt_docker_repositories
-  when: switch == "on"
+#########update part
+- name: Update APT package cache
+  apt: update_cache=yes cache_valid_time=600
 
-- name: Update APT packages list
+- name: Upgrade APT to the latest packages
+  apt: upgrade=dist
+  register: apt_result
+
+- name: Autoremove unused packages
+  command: apt-get -y autoremove
+  register: apt_result
+  changed_when: "'packages will be REMOVED' in apt_result.stdout"
+
+- name: Purge residual kernel packages
+  shell: apt-get remove -y --purge $(dpkg -l | grep "^rc\s*linux-image-" | awk '{print $2}' | tr '\n' ' ')
+  register: apt_result
+  changed_when: "'packages will be REMOVED' in apt_result.stdout"
+
+###Debian part
+- name: "Install packages for apt add repository over HTTPS for Debian"
   apt:
-    update_cache: yes
-  when: apt_docker_repositories.changed and switch == "on"
-
-- name: Release docker-ce from hold
-  dpkg_selections:
-    name: docker-ce
-    selection: install
-  when: switch == "on"
-
-- name: Install docker-ce
-  apt:
-    name: docker-ce
+    name: "{{ packagesdeb }}"
     state: latest
     update_cache: yes
-  when: switch == "on"
+  vars:
+    packagesdeb:
+    - git
+    - apt-transport-https
+    - ca-certificates
+    - wget
+    - software-properties-common
+    - gnupg2
+    - curl
+    - python3-pip
+    - virtualenv 
+    - python3-setuptools
+  when: ansible_distribution == 'Debian'
 
-- name: Put docker-ce into hold
-  dpkg_selections:
-    name: docker-ce
-    selection: hold
-  when: switch == "on"
+##Ubuntu part
 
-- name: Uninstall docker-py pip module
-  pip:
-    name: docker-py
-    state: absent
-  ignore_errors: yes
-  when: switch == "on"
+- name: "Install packages for apt add repository over HTTPS  for Ubuntu"
+  apt:
+    name: "{{ packagesubu }}"
+    state: latest
+    update_cache: yes
+  vars:
+    packagesubu:
+    - software-properties-common
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+    - python3-pip
+    - virtualenv
+    - python3-setuptools
+  when: ansible_distribution == 'Ubuntu'
 
-- name: Install docker pip module
+##Ubuntu and Debian repo adds
+
+- name: Add Apt signing key from official docker repo
+  apt_key:
+    url: https://download.docker.com/linux/{{ ansible_distribution|lower }}/gpg
+    state: present
+
+- name: Add docker official repository for {{ ansible_distribution|lower }} - {{ ansible_distribution_release }}
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/{{ansible_distribution|lower}} {{ansible_distribution_release}} edge
+    state: present
+
+#install part
+
+- name: Update APT package cache
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Upgrade APT to the latest packages
+  apt: upgrade=dist
+
+- name: Update apt and install docker-ce
+  apt: update_cache=yes name=docker-ce state=latest
+
+- name: Update apt and install docker-ce-cli
+  apt: update_cache=yes name=docker-ce-cli state=latest
+
+- name: Update apt and install containerd.io
+  apt: update_cache=yes name=containerd.io state=latest
+
+- name: Install Docker Module for Python
   pip:
     name: docker
-    state: latest
-  ignore_errors: yes
-  when: switch == "on"
+
+- name: Install Docker-compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-{{ansible_system}}-{{ansible_architecture}}"
+    dest: /usr/local/bin/docker-compose
+    force: yes
+    mode: 0775
+
+- name: Debian install Fix
+  shell: systemctl disable docker
+  when: ansible_distribution == 'Debian'
 
 - name: Check docker daemon.json exists
   stat:
@@ -154,6 +193,13 @@
   tags: docker_standard
   when: switch == "on"
 
+#need check too
+- name: systemctl deamon-reload
+  systemd:
+    daemon_reload: yes
+  notify:
+    - systemd daemon-reload
+
 - name: create plexguide network
   docker_network:
     name: 'plexguide'
@@ -167,3 +213,20 @@
   when:
     - switch == "on"
     - check.stat.exists == True
+
+- name: Check if docker is running and works
+  command: systemctl status "{{ item }}"
+  with_items:
+    - docker
+  ignore_errors: yes
+  changed_when: false
+  register: service_docker_status
+
+- name: Report status of docker
+  fail:
+    msg: |
+      Service docker is not running.
+      Output of `systemctl status docker`:
+      {{ service_docker_status.stdout }}
+      {{ service_docker_status.stderr }}
+  when: service_docker_status | failed

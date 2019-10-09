@@ -27,27 +27,34 @@ while true; do
         pgmove=$(systemctl list-unit-files | grep pgmove.service | awk '{ print $2 }')
 
         touch /var/plexguide/status.mounts
+
         status=$(tail -n 1 /var/plexguide/status.mounts)
 
         if [[ "$pgmove" == "enabled" ]]; then
                 echo "1" >> /var/plexguide/status.mounts
-        else [[ "pgblitz" == "enabled" ]]
+        elif [[ "$pgblitz" == "enabled" ]]; then
                 echo "2" >> /var/plexguide/status.mounts
+        else
+                echo "3" >> /var/plexguide/status.mounts
         fi
 
-        if [[ $status == "1" ]] ; then
+        if [[ "$status" == "1" ]] ; then
                 if [[ "$pgmovecheck" != "active" ]]; then
                         echo " 🔴 Not Operational MOVE" >>/var/plexguide/pg.blitz
                 else
                         echo " ✅ Operational MOVE" >>/var/plexguide/pg.blitz
                 fi
         fi
-        if [[ $status == "2" ]] ; then
+        if [[ "$status" == "2" ]] ; then
                 if [[ "$pgblitzcheck" != "active" ]]; then
                         echo " 🔴 Not Operational BLITZ" >>/var/plexguide/pg.blitz
                 else
                         echo " ✅ Operational BLITZ" >>/var/plexguide/pg.blitz
                 fi
+        fi
+
+        if [[ "$status" == "3" ]] ; then
+            echo " 🔴 Not Operational UPLOADER" >>/var/plexguide/pg.blitz
         fi
 
   # Todo remove the dupes or change to crypt once PGUI is updated
@@ -65,7 +72,7 @@ while true; do
   else echo " ✅ Operational" >/var/plexguide/pg.tdrive; fi
 
   if [[ "$tcryptcheck" != "active" ]]; then
-    echo " 🔴 Not Operational " >/var/plexguide/pg.crypt
+    echo " 🔴 Not Operational " >/var/plexguide/pg.tcrypt
   else echo " ✅ Operational" >/var/plexguide/pg.tcrypt; fi
 
   if [[ "$pgunioncheck" != "active" ]]; then

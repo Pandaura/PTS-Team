@@ -23,7 +23,7 @@ setstart() {
 [3] Processor        :  Enhance the CPU Processing Power
 [4] WatchTower       :  Auto-Update Application Manager
 [5] Change Time      :  Change the Server Time
-[6] PG UI            :  $switchcheck | Port 8555 | pgui.domain.com
+[6] Comm UI          :  $switchcheck | Port 8555 | pgui.domain.com
 [7] Emergency Display:  $emdisplay
 
 [Z] Exit

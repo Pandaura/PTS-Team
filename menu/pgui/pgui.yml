@@ -19,20 +19,58 @@
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
-      include_tasks: '/opt/coreapps/apps/_core.yml'
+      include_tasks: '/opt/plexguide/menu/pgui/templates/_core.yml'
 
     - name: 'Including cron job'
-      include_tasks: '/opt/plexguide/menu/pgui/_cron.yml'
+      include_tasks: '/opt/plexguide/menu/pgui/templates/_cron.yml'
 
     - name: 'Including Tasks'
-      include_tasks: '/opt/plexguide/menu/pgui/dynamic.yml'
+      include_tasks: '/opt/plexguide/menu/pgui/tasks/dynamic.yml'
 
     # refix the UI     ############################################################
 
     - name: 'Install File new UI'
       template:
-        src: /opt/plexguide/menu/pgui/index.php
+        src: /opt/plexguide/menu/pgui/templates/index.php
         dest: /opt/appdata/pgui/index.php
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+    - name: 'Install File Check mergerfs / rClone'
+      template:
+        src: /opt/plexguide/menu/pgui/templates/check.sh
+        dest: /opt/appdata/pgui/check.sh
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+    - name: 'Install File GTused'
+      template:
+        src: /opt/plexguide/menu/pgui/templates/gtused.sh
+        dest: /opt/appdata/pgui/gtused.sh
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+    - name: 'Install File Mountcheck file'
+      copy:
+        src: /opt/plexguide/menu/pgui/templates/mountcheck.sh
+        dest: /opt/plexguide/menu/pgui/mountcheck.sh
+        force: yes
+
+    - name: 'Install File Check mergerfs / rClone'
+      template:
+        src: /opt/plexguide/menu/pgui/templates/check.sh
+        dest: /opt/appdata/pgui/check.sh
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+    - name: 'Install File GTused'
+      template:
+        src: /opt/plexguide/menu/pgui/templates/gtused.sh
+        dest: /opt/appdata/pgui/gtused.sh
         force: yes
         owner: '1000'
         group: '1000'
@@ -41,7 +79,7 @@
  
     - name: replacing MountCheck Service
       template:
-        src: /opt/plexguide/menu/pgui/mountcheck.service
+        src: /opt/plexguide/menu/pgui/templates/mountcheck.service
         dest: /etc/systemd/system/mountcheck.service
         force: yes
 
@@ -55,7 +93,7 @@
  
     - name: replacing localspace Service
       template:
-        src: /opt/plexguide/menu/pgui/localspace.service
+        src: /opt/plexguide/menu/pgui/templates/localspace.service
         dest: /etc/systemd/system/localspace.service
         force: yes
 
@@ -64,7 +102,6 @@
 
     - name: Start pgscan
       systemd: state=started name=localspace enabled=yes
-
 
     # LABELS ######################################################################
     - name: 'Adding Traefik'
@@ -97,11 +134,6 @@
           PUID: '1000'
           PGID: '1000'
 
-    # first catchup data ##########################################################
-
-    - name: Please wait this will need some minutes
-      shell: 'bash /opt/plexguide/menu/pgui/check.sh'
-
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'
       docker_container:
@@ -119,4 +151,3 @@
               - '{{pgrole}}'
         state: started
         labels: '{{pg_labels}}'
-

@@ -28,7 +28,7 @@
         mode: 0775
         owner: root
 
-    - name: PG
+    - name: PTS
       template:
         src: pts
         dest: /bin/pts
@@ -119,7 +119,7 @@
 
     - name: Install PTS-User ADD
       template:
-        src: sufs
+        src: ptsadd
         dest: /bin/ptsadd
         force: yes
         mode: 0775
@@ -131,10 +131,30 @@
         force: yes
         mode: 0775
 
-    - name: Install Backup & Restore
+    - name: Install mergerfes updater
       template:
-        src: rcupdate
-        dest: /bin/rcupdate
+        src: mgupdate
+        dest: /bin/mgupdate
         force: yes
         mode: 0775
 
+    - name: Install Backup & Restore
+      template:
+        src: backup
+        dest: /bin/backup
+        force: yes
+        mode: 0775
+
+    - name: GCE 
+      template:
+        src: gce
+        dest: /bin/gce
+        force: yes
+        mode: 0775
+
+    - name: purge old Journal files
+      template:
+        src: jpurge
+        dest: /bin/jpurge
+        force: yes
+        mode: 0775

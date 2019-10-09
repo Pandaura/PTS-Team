@@ -25,7 +25,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎 PG - PGBlitz Installer ~ http://plex.pgblitz.com
+🌎  PLEX Installer
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 NOTE: DO NOT SELECT LOCAL SYSTEM for a REMOTE SERVER outside of your
 network as in using Hetzner, Google GCE, WholeSale Internet & Etc! If you
@@ -33,7 +33,8 @@ do you, it will not work and you will have to uninstall it!
 
 [1] Plex Remote System ~ OUTSIDE your LOCAL NETWORK (i.e 3rd Party)
 [2] Plex Local System  ~ INSIDE  your LOCAL NETWORK (i.e Home)
-Z - Exit
+
+[Z] - Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF

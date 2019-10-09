@@ -13,7 +13,7 @@ echo 'PGPatrol' >/var/plexguide/pgcloner.projectname
 echo 'v8.6' >/var/plexguide/pgcloner.projectversion
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-echo "💬 PG Patrol can boot idle plex users, users utilizing multiple
+echo "💬 Patrol can boot idle plex users, users utilizing multiple
 ips (sharing the server), and much more!" >/var/plexguide/pgcloner.info
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

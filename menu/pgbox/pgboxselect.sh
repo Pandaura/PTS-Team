@@ -16,8 +16,10 @@ mainstart() {
 💬  PTS Box installs a series of Core and Community applications!
 
 [1] PTS          : Core
-[2] PGBlitzs Box : Community [ be careful ]
+[2] PTS          : Community
 [3] Apps         : Removal
+
+
 [Z] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

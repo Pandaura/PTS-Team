@@ -1,0 +1,13 @@
+---
+- name: check for short-circuit
+  raw: "> /dev/null command -v todo_fixme;"
+  register: installed
+  ignore_errors: True
+  changed_when: False
+
+- name: set should_run fact
+  set_fact:
+    should_run: "{{installed|failed or not gcloud_sdk_should_shortcircuit}}"
+
+- include: include_vars.yml
+- include: sudoorbecome.yml

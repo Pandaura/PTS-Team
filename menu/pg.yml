@@ -6,8 +6,13 @@
   roles:
     - { role: docker, tags: ['docker'] }
     - { role: docstart, tags: ['docstart'] }
-    - { role: dockerdeb, tags: ['dockerdeb'] }
     - { role: autodelete, tags: ['autodelete'] }
     - { role: clean, tags: ['clean'] }
     - { role: clean-encrypt, tags: ['clean-encrypt'] }
     - { role: update, tags: ['update'] }
+    - { role: rcloneinstall, tags: ['rcloneinstall'] }
+    - { role: mergerfsinstall, tags: ['mergerfsinstall'] }
+    - { role: gcloud_sdk, tags: ['gcloud_sdk'] }
+    - { role: system, tags: ['system'] }
+    - { role: mergerfsupdate, tags: ['mergerfsupdate'] }
+    - { role: journal, tags: ['journal'] }

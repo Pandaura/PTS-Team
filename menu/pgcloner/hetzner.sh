@@ -14,7 +14,7 @@ echo 'v8.6' >/var/plexguide/pgcloner.projectversion
 echo 'hcloud.sh' >/var/plexguide/pgcloner.startlink
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-echo "💬 HCloud in conjuction with PGBlitz enables users to
+echo "💬 HCloud in conjuction with PTS enables users to
 deploy Hetzner Cloud Instance (VMs) within seconds" >/var/plexguide/pgcloner.info
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

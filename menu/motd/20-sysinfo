@@ -18,7 +18,7 @@ G="\e[1;32m"
 
 echo -e "
 ${W}system:
-$W  Distro.......: $W$(cat /etc/*release | grep "PRETTY_NAME" | cut -d "=" -f 2- | sed 's/"//g')
+$W  Distro.......: $W$(lsb_release -s -d)
 $W  Kernel.......: $W$(uname -sr)
 
 $W  Uptime.......: $W$(uptime -p)
