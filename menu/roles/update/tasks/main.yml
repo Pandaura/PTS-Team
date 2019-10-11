@@ -5,32 +5,25 @@
     autoclean: yes
     autoremove: yes
     cache_valid_time: 86400
+    force_apt_get: yes
   register: apt_result
 
-#- name: Upgrade APT to the latest packages
-#  apt: 
-#    name: "*"
-#    update_cache: yes
-#    state: latest
-#  register: apt_result
-
 - name: Upgrade Distrubution to the latest stable version
-  #apt: upgrade=dist state=present only_upgrade=yes
   apt:
     upgrade: full
     state: present
+    force_apt_get: yes
   register: apt_result
-
-#    upgrade: dist
-#    state: present
-#  register: apt_result
  
 - name: Install a list of packages
   apt:
-    name:  "{{ packages }}"
+    name: "{{ packages }}"
     state: latest
     update_cache: yes
     allow_unauthenticated: yes
+    force_apt_get: yes
+    force: yes
+    install_recommends: yes
   vars:
     packages:
     - ctop
@@ -56,13 +49,14 @@
 - name: Remove useless packages from the cache
   apt:
    autoclean: yes
+   autoremove: yes
 
 - name: Fix filled /boot
   #shell: apt-get remove `dpkg --list 'linux-image*' | grep ^ii | awk '{print $2}'\ | grep -v \`uname -r\``
   shell:  dpkg -l linux-{image,headers}-"[0-9]*" | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cut -f1,2 -d"-"` | grep -e '[0-9]' | xargs sudo apt-get -y purge
 
 - name: Update APT package cache
-  apt: update_cache=yes cache_valid_time=600
+  apt: update_cache=yes cache_valid_time=600 force_apt_get=yes
 
 - name: Autoremove unused packages
   command: apt-get -y autoremove
