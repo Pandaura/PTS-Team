@@ -50,6 +50,7 @@
   apt:
    autoclean: yes
    autoremove: yes
+   force_apt_get: yes
 
 - name: Fix filled /boot
   #shell: apt-get remove `dpkg --list 'linux-image*' | grep ^ii | awk '{print $2}'\ | grep -v \`uname -r\``
