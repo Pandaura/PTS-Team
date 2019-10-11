@@ -38,6 +38,8 @@
     - software-properties-common
     - sysstat
     - nmon
+    - cowsay 
+    - fortune
 
 - name: Replace false to true in systat
   lineinfile:
