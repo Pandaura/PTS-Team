@@ -232,10 +232,10 @@ mountcheck() {
   ansible-playbook /opt/plexguide/menu/pgui/mcdeploy.yml
 }
 
-localspace() {
-  ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
-  ansible-playbook /opt/plexguide/menu/pgui/pgui.yml 
-}
+#localspace() {
+#  ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
+#  ansible-playbook /opt/plexguide/menu/pgui/pgui.yml 
+#}
 
 
 newinstall() {
