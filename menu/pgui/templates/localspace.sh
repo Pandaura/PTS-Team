@@ -22,21 +22,11 @@ startscript() {
         while [ 1 ]; do
 
                 rm -rf /var/plexguide/spaceused.log
-                rm -rf /var/plexguide/logs/trafficused.log
-                rm -rf /var/plexguide/logs/incomplete-used.log
 
                 # move and downloads for the UI
 
                 du -sh /mnt/move | awk '{print $1}' >>/var/plexguide/spaceused.log
                 du -sh /mnt/downloads | awk '{print $1}' >>/var/plexguide/spaceused.log
-
-                echo "Used Traffic | last 7 days" >>/var/plexguide/logs/trafficused.log
-
-                vnstat -d | tail -n 10 | head -n 8 >>/var/plexguide/logs/trafficused.log
-
-                #used space of incomplete
-
-                du -sh /mnt/incomplete | awk '{print $1}' >>/var/plexguide/logs/incomplete-used.log
 
                 sleep 60
 
