@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # file names to filter
 
 UNWANTED_FILES=(
@@ -20,11 +21,8 @@ UNWANTED_FILES=(
 'debug'
 'dpkg.log'
 '*.log.*'
-'*.tar.*.gz'
-)
-
+'*.tar.*.gz' )
 # advanced settings
-
 FIND=$(which find)
 FIND_BASE_CONDITION='-type f'
 FIND_ADD_NAME='-o -name'
@@ -33,7 +31,6 @@ FIND_ACTION=' -delete'
 #Folder Setting
 TARGET_FOLDER=$1'/var/log/'
 
-TARGET_FOLDER=$2'/var/backup/'
 if [ ! -d "${TARGET_FOLDER}" ]; then
         echo 'Target directory does not exist.'
         exit 1
@@ -47,4 +44,6 @@ do
 command="${FIND} '${TARGET_FOLDER}' ${FIND_BASE_CONDITION} \( ${condition} \) ${FIND_ACTION}"
 echo "Executing ${command}"
 eval ${command}
+
 exit 0
+
