@@ -118,8 +118,8 @@ alias() {
 }
 
 templatespart2() {
-   ansible-playbook /opt/plexguide/menu/alias/alias.yml
-   ansible-playbook /opt/plexguide/menu/prune/main.yml
+   ansible-playbook /opt/plexguide/menu/alias/alias.yml >/dev/null 2>&1
+   ansible-playbook /opt/plexguide/menu/prune/main.yml >/dev/null 2>&1
 
 }
 
@@ -153,6 +153,7 @@ docstart() {
 }
 
 emergency() {
+  abc="/var/plexguide"
   mkdir -p /opt/appdata/plexguide/emergency
   variable ${abc}/emergency.display "On"
   if [[ $(ls /opt/appdata/plexguide/emergency) != "" ]]; then
@@ -221,8 +222,10 @@ rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1 )"
 
 if [[ "$rcversion" == "$rcstored" ]]; then
   echo "✅ rclone latest stable version check "
+  clear
 elif [[ "$rcversion" != "$rcstored" ]]; then
   ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
+  clear
 fi
 }
 
@@ -238,7 +241,6 @@ mountcheck() {
 #  ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
 #  ansible-playbook /opt/plexguide/menu/pgui/pgui.yml 
 #}
-
 
 newinstall() {
   rm -rf ${abc}/pg.exit 1>/dev/null 2>&1
