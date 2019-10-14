@@ -118,8 +118,9 @@ alias() {
 }
 
 templatespart2() {
-   ansible-playbook /opt/plexguide/menu/alias/alias.yml >/dev/null 2>&1
-   ansible-playbook /opt/plexguide/menu/prune/main.yml >/dev/null 2>&1
+  ansible-playbook /opt/plexguide/menu/alias/alias.yml >/dev/null 2>&1
+  ansible-playbook /opt/plexguide/menu/prune/main.yml >/dev/null 2>&1
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags journal >/dev/null 2>&1
 
 }
 
@@ -137,6 +138,7 @@ cleaner() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete &>/dev/null &
   ansible-playbook /opt/plexguide/menu/pg.yml --tags clean &>/dev/null &
   ansible-playbook /opt/plexguide/menu/pg.yml --tags clean-encrypt &>/dev/null &
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags journal >/dev/null 2>&1
 }
 
 dependency() {
