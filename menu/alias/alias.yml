@@ -161,8 +161,8 @@
 
     - name: purge old log files
       template:
-        src: jpurge
-        dest: /bin/killogs
+        src: kill_logs
+        dest: /bin/kill_logs
         force: yes
         mode: 0775
 
