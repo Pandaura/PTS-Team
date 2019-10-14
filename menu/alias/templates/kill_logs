@@ -1,0 +1,6 @@
+#!/bin/bash 
+## cleanup old log files
+
+bash /opt/plexguide/menu/log/kill_log.sh 1>/dev/null 2>&1
+
+echo "/var/log/ is cleared for your security"

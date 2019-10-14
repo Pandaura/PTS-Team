@@ -118,7 +118,10 @@ alias() {
 }
 
 templatespart2() {
-   ansible-playbook /opt/plexguide/menu/alias/alias.yml >/dev/null 2>&1
+  ansible-playbook /opt/plexguide/menu/alias/alias.yml >/dev/null 2>&1
+  ansible-playbook /opt/plexguide/menu/prune/main.yml >/dev/null 2>&1
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags journal >/dev/null 2>&1
+
 }
 
 aptupdate() {
@@ -135,6 +138,7 @@ cleaner() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete &>/dev/null &
   ansible-playbook /opt/plexguide/menu/pg.yml --tags clean &>/dev/null &
   ansible-playbook /opt/plexguide/menu/pg.yml --tags clean-encrypt &>/dev/null &
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags journal >/dev/null 2>&1
 }
 
 dependency() {
@@ -151,6 +155,7 @@ docstart() {
 }
 
 emergency() {
+  abc="/var/plexguide"
   mkdir -p /opt/appdata/plexguide/emergency
   variable ${abc}/emergency.display "On"
   if [[ $(ls /opt/appdata/plexguide/emergency) != "" ]]; then
@@ -219,8 +224,10 @@ rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1 )"
 
 if [[ "$rcversion" == "$rcstored" ]]; then
   echo "✅ rclone latest stable version check "
+  clear
 elif [[ "$rcversion" != "$rcstored" ]]; then
   ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
+  clear
 fi
 }
 
@@ -232,11 +239,10 @@ mountcheck() {
   ansible-playbook /opt/plexguide/menu/pgui/mcdeploy.yml
 }
 
-localspace() {
-  ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
-  ansible-playbook /opt/plexguide/menu/pgui/pgui.yml 
-}
-
+#localspace() {
+#  ansible-playbook /opt/plexguide/menu/pgui/localspace.yml
+#  ansible-playbook /opt/plexguide/menu/pgui/pgui.yml 
+#}
 
 newinstall() {
   rm -rf ${abc}/pg.exit 1>/dev/null 2>&1
@@ -286,7 +292,7 @@ pgshield() { if [ ! -e "/opt/pgshield/place.holder" ]; then
 fi; }
 
 pythonstart() {
-bash /opt/plexguide/menu/roles/pythonstart/pyansible.sh >/dev/null 2>&1
+    bash /opt/plexguide/menu/roles/pythonstart/pyansible.sh >/dev/null 2>&1
 }
 
 dockerinstall() {

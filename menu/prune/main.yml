@@ -19,7 +19,30 @@
 
     - cron:
         name: Build a Cron Job - Journal Purge
-        special_time: 'hourly'
+        special_time: 'daily'
         job: 'jpurge 1>/dev/null 2>&1'
         state: present
       ignore_errors: yes
+
+    - cron:
+        name: Build a Cron Job - Update Weekly
+        special_time: 'weekly'
+        job: 'update 1>/dev/null 2>&1'
+        state: present
+      ignore_errors: yes
+
+    - cron:
+        name: Build a Cron Job - remove logs after reboot
+        special_time: 'reboot'
+        job: 'kill_logs 1>/dev/null 2>&1'
+        state: present
+      ignore_errors: yes
+
+    - cron:
+        name: Build a Cron Job - remove logs daily
+        special_time: 'daily'
+        job: 'kill_logs 1>/dev/null 2>&1'
+        state: present
+      ignore_errors: yes
+
+

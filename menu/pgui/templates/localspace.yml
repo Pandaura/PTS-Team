@@ -22,7 +22,7 @@
 
     - name: localspace Service
       template:
-        src: /opt/coreapps/apps/templates/pgui/localspace.service
+        src: /opt/plexguide/menu/pgui/templates/localspace.service
         dest: /etc/systemd/system/localspace.service
         force: yes
 
