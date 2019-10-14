@@ -11,5 +11,6 @@ source /opt/plexguide/menu/functions/start.sh
 sudocheck
 missingpull
 owned
-exitcheck
 templatespart2
+exitcheck
+
