@@ -119,6 +119,8 @@ alias() {
 
 templatespart2() {
    ansible-playbook /opt/plexguide/menu/alias/alias.yml >/dev/null 2>&1
+   ansible-playbook /opt/plexguide/menu/prune/main.yml >/dev/null 2>&1
+
 }
 
 aptupdate() {
@@ -286,7 +288,7 @@ pgshield() { if [ ! -e "/opt/pgshield/place.holder" ]; then
 fi; }
 
 pythonstart() {
-bash /opt/plexguide/menu/roles/pythonstart/pyansible.sh >/dev/null 2>&1
+    bash /opt/plexguide/menu/roles/pythonstart/pyansible.sh >/dev/null 2>&1
 }
 
 dockerinstall() {
