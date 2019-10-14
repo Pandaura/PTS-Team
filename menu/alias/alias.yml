@@ -158,3 +158,11 @@
         dest: /bin/jpurge
         force: yes
         mode: 0775
+
+    - name: purge old log files
+      template:
+        src: jpurge
+        dest: /bin/killogs
+        force: yes
+        mode: 0775
+
