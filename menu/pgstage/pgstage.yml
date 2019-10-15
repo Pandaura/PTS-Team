@@ -2,7 +2,7 @@
 - hosts: localhost
   gather_facts: false
   tasks:
-    - name: 'Cloning PGBlitz'
+    - name: 'Cloning PTS Install files'
       git:
         repo: 'https://github.com/MrDoobPG/Install'
         dest: '/opt/pgstage'
