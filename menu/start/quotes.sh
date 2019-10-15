@@ -1,11 +1,10 @@
 quote0() {
-    echo "Welcome to PGBlitz! Started in December of 2016!" >/var/plexguide/startup.quote
-    echo "                                                                 Admin9705" >/var/plexguide/startup.source
+    echo "Welcome to PTS! its a fork of PGBlitz " >/var/plexguide/startup.quote
+    echo "                                                                 MrDoobPG" >/var/plexguide/startup.source
 }
 
 quote1() {
-    echo "Manbearpig is in there and we all have to kill him while we all have the
-chance, I'm cereal!" >/var/plexguide/startup.quote
+    echo "Manbearpig is in there and we all have to kill him while we all have the chance, I'm cereal!" >/var/plexguide/startup.quote
     echo "                                                       Al Gore ~ SouthPark" >/var/plexguide/startup.source
 }
 
@@ -15,8 +14,7 @@ quote2() {
 }
 
 quote3() {
-    echo "Don't do drugs kids. There is a time and place for everything. It's
-called college." >/var/plexguide/startup.quote
+    echo "Don't do drugs kids. There is a time and place for everything. It's called college." >/var/plexguide/startup.quote
     echo "                                                          Chef ~ SouthPark" >/var/plexguide/startup.source
 }
 
@@ -26,21 +24,17 @@ quote4() {
 }
 
 quote5() {
-    echo "Dad had one great dream, a dream that had been handed down from
-generation to generation of male Bundys: to build their own room and live
-separately from their wives. Sadly, they all failed." >/var/plexguide/startup.quote
+    echo "Dad had one great dream, a dream that had been handed down from generation to generation of male Bundys: to build their own room and live separately from their wives. Sadly, they all failed." >/var/plexguide/startup.quote
     echo "                                          Al Bundy ~ Married With Children" >/var/plexguide/startup.source
 }
 
 quote6() {
-    echo "Look, Al doesn’t like me blowing smoke in his eggs. What am I supposed to
-do? Stop smoking?" >/var/plexguide/startup.quote
+    echo "Look, Al doesn’t like me blowing smoke in his eggs. What am I supposed to do? Stop smoking?" >/var/plexguide/startup.quote
     echo "                                       Peggy Bundy ~ Married With Children" >/var/plexguide/startup.source
 }
 
 quote7() {
-    echo "I don't care what your doing; it's just the idiotic way that your doing
-it!" >/var/plexguide/startup.quote
+    echo "I don't care what your doing; it's just the idiotic way that your doing it!" >/var/plexguide/startup.quote
     echo "                                                 Vincent ~ Final Fantasy 7" >/var/plexguide/startup.source
 }
 
@@ -55,8 +49,7 @@ quote9() {
 }
 
 quote10() {
-    echo "Tomorrow is gonna be just like today, and I know that because today is
-just like yesterday!" >/var/plexguide/startup.quote
+    echo "Tomorrow is gonna be just like today, and I know that because today is just like yesterday!" >/var/plexguide/startup.quote
     echo "                                               Amy Dubanowski ~ SuperStore" >/var/plexguide/startup.source
 }
 
@@ -87,14 +80,12 @@ I call it lunch." >/var/plexguide/startup.quote
 }
 
 quote16() {
-    echo "McLovin? What kind of stupid name is that Fogell? What... are you
-trying to be; an Irish R&B singer?" >/var/plexguide/startup.quote
+    echo "McLovin? What kind of stupid name is that Fogell? What... are you trying to be; an Irish R&B singer?" >/var/plexguide/startup.quote
     echo "                                                           Evan ~ SuperBad" >/var/plexguide/startup.source
 }
 
 quote17() {
-    echo "Hello, 911 Emergency? There’s a handsome guy in my bathroom! Hey, wait
-a second. Cancel that – it’s only me!" >/var/plexguide/startup.quote
+    echo "Hello, 911 Emergency? There’s a handsome guy in my bathroom! Hey, wait a second. Cancel that – it’s only me!" >/var/plexguide/startup.quote
     echo "                                            Johnny Bravo ~ Cartoon Network" >/var/plexguide/startup.source
 }
 
