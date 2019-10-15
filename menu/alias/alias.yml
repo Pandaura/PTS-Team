@@ -64,7 +64,7 @@
 
     - name: list pts commands
       template:
-        src: slist
+        src: scommands
         dest: /bin/scommands
         force: yes
         mode: 0775
