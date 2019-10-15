@@ -63,7 +63,7 @@
         mode: 0775
         owner: root
 
-    - name: list systemd services
+    - name: list pts commands
       template:
         src: slist
         dest: /bin/scommands
