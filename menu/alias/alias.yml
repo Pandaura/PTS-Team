@@ -63,6 +63,14 @@
         mode: 0775
         owner: root
 
+    - name: list systemd services
+      template:
+        src: slist
+        dest: /bin/scommands
+        force: yes
+        mode: 0775
+        owner: root
+
     ###### Server update
 
     - name: update server
