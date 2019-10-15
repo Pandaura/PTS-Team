@@ -1,0 +1,8 @@
+
+#!/bin/bash
+#
+# Title:      PTS List commands
+# Author(s):  MrDoobPG
+# GNU:        General Public License v3.0
+################################################################################
+sudo cat /opt/plexguide/menu/alias/alias.yml
