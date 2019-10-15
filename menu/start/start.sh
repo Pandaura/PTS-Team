@@ -52,18 +52,17 @@ quoteselect() {
 
 varstart() {
   ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - START
-  file="/var/plexguide"
-  if [ ! -e "$file" ]; then
-    mkdir -p /var/plexguide/logs 1>/dev/null 2>&1
-    chown -R 0775 /var/plexguide 1>/dev/null 2>&1
-    chmod -R 1000:1000 /var/plexguide 1>/dev/null 2>&1
+  filevg="/var/plexguide"
+  if [ ! -e "$filevg" ]; then
+    mkdir -p $filevg/logs 1>/dev/null 2>&1
+    chown -R 1000:1000 $file 1>/dev/null 2>&1
+    chmod -R 775 $file 1>/dev/null 2>&1
   fi
-
-  file="/opt/appdata/plexguide"
-  if [ ! -e "$file" ]; then
-    mkdir -p /opt/appdata/plexguide 1>/dev/null 2>&1
-    chown -R 0775 /opt/appdata/plexguide 1>/dev/null 2>&1
-    chmod -R 1000:1000 /opt/appdata/plexguide 1>/dev/null 2>&1
+  fileag="/opt/appdata/plexguide"
+  if [ ! -e "$fileag" ]; then
+    mkdir -p $fileag 1>/dev/null 2>&1
+    chown -R 1000:1000 $fileag 1>/dev/null 2>&1
+    chmod -R 775 $fileag 1>/dev/null 2>&1
   fi
 
   ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - START
