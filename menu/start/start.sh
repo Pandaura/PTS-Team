@@ -43,14 +43,6 @@ primestart() {
   menuprime
 }
 
-# When Called, A Quoate is Randomly Selected
-# quoteselect() {
-  # bash /opt/plexguide/menu/start/quotes.sh
-  # quote=$(cat /var/plexguide/startup.quote)
-  # source=$(cat /var/plexguide/startup.source)
-# }
-
-
 wisword=$(/usr/games/fortune -as | sed "s/^/ /")
 
 
@@ -202,7 +194,6 @@ EOF
     ports="OPEN"
   else ports="CLOSED"; fi
 
-  quoteselect
 
   tee <<-EOF
 
