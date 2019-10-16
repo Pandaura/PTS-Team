@@ -28,7 +28,7 @@
       Info: update server to the latest packages / remove old apt-cache
       
     - name: upgrade server
-      command: update
+      command: upgrade
       Info: upgrade server to the latest packages / remove old apt-cache
       
     - name: install appname
