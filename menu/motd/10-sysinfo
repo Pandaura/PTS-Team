@@ -21,6 +21,23 @@ UNIONFS=$(systemctl is-active pgunion)
 
 HSTNAME=$(cat /etc/hostname)
 
+###storage local part
+mntused=$(df -h | grep "/mnt" | awk '{print $3}' | head -n 1)
+mntavi=$(df -h | grep "/mnt" | awk '{print $4}' | head -n 1)
+mntpercent=$(df -h | awk '{if($(NF) == "/") {print $(NF-1); exit;}}')
+
+baseused=$(df -h | grep "/mnt" | awk '{print $3}' | head -n 1)
+baseavi=$(df -h | grep "/mnt" | awk '{print $4}' | head -n 1)
+basepercent=$(df -h | awk '{if($(NF) == "/") {print $(NF-1); exit;}}')
+
+#google hack for loginshell
+
+tdrive=$(tail -n 1 /var/plexguide/tduncrypt.log)
+gdrive=$(tail -n 1 /var/plexguide/gduncrypt.log)
+tcrypt=$(tail -n 1 /var/plexguide/tdcrypt.log)
+gcrypt=$(tail -n 1 /var/plexguide/gdcrypt.log)
+
+
 W="\e[0;39m"
 G="\e[1;32m"
 
@@ -43,4 +60,14 @@ $W  Network-Card...: $G$NTCARD
 
 $W  Service Status
 $W  Docker..........: $W$DOCKER , v$G$DOCKER2
-$W  unionfs.........: $W$UNIONFS"
+$W  unionfs.........: $W$UNIONFS
+
+$W  Storage - Local
+$W  /...............: $W$baseused USED, $W$baseavi Avail, $W$basepercent
+$W  /mnt........... : $W$mntused USED, $W$mntavi Avail, $W$mntpercent
+
+$W  Storage - Cloud
+$W  GDrive | uncrypted : $G$gdrive
+$W  TDrive | uncrypted : $G$tdrive
+$W  GDrive | crypted   : $G$gcrypt
+$W  TDrive | crypted   : $G$tcrypt "
