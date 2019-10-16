@@ -213,6 +213,7 @@ EOF
 
 [9]  Tools
 [10] Settings
+
 [Z]  Exit
 
 "$quote"
