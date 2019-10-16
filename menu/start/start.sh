@@ -203,8 +203,8 @@ EOF
   tee <<-EOF
 
 [1]  Traefik    : Reverse Proxy
-[2]  Port Guard : [$ports] Protects the Server Ports
-[3]  PTS Shield : Enable Google's OAuthentication Protection
+[2]  PTS Shield : Enable Google's OAuthentication Protection
+[3]  Port Guard : [$ports] Protects the Server Ports
 [4]  rClone     : Mount Transport
 [5]  APPBox     : Apps ~ Core, Community & Removal
 [6]  WordPress  : Deploy WordPress Instances
@@ -230,11 +230,11 @@ EOF
     primestart
     ;;
   2)
-    bash /opt/plexguide/menu/portguard/portguard.sh
+    bash /opt/plexguide/menu/pgcloner/pgshield.sh
     primestart
     ;;
   3)
-    bash /opt/plexguide/menu/pgcloner/pgshield.sh
+    bash /opt/plexguide/menu/portguard/portguard.sh
     primestart
     ;;
   4)
