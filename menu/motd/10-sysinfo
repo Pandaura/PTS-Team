@@ -37,6 +37,7 @@ gdrive=$(tail -n 1 /var/plexguide/gduncrypt.log)
 tcrypt=$(tail -n 1 /var/plexguide/tdcrypt.log)
 gcrypt=$(tail -n 1 /var/plexguide/gdcrypt.log)
 
+wisword=$(/usr/games/fortune -as | sed "s/^/ /")
 
 W="\e[0;39m"
 G="\e[1;32m"
@@ -70,4 +71,8 @@ $W  Storage - Cloud
 $W  GDrive | uncrypted : $G$gdrive
 $W  TDrive | uncrypted : $G$tdrive
 $W  GDrive | crypted   : $G$gcrypt
-$W  TDrive | crypted   : $G$tcrypt "
+$W  TDrive | crypted   : $G$tcrypt
+
+$W %++++++++++ WISE WORD OF THE DAY ++++++++++%
+$W $W$wisword
+$W %++++++++++ WISE WORD OF THE DAY ++++++++++%"
