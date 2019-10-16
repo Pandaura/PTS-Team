@@ -43,4 +43,4 @@ $W  Network-Card...: $G$NTCARD
 
 $W  Service Status
 $W  Docker..........: $W$DOCKER , v$G$DOCKER2
-$W  unionfs.........: $W$UNIONFS
+$W  unionfs.........: $W$UNIONFS"
