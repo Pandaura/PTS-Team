@@ -204,12 +204,13 @@ EOF
 
 [1]  Traefik    : Reverse Proxy
 [2]  Port Guard : [$ports] Protects the Server Ports
-[3]  GOAuth     : Enable Google's OAuthentication Protection
+[3]  PTS Sheild : Enable Google's OAuthentication Protection
 [4]  rClone     : Mount Transport
 [5]  APPBox     : Apps ~ Core, Community & Removal
 [6]  WordPress  : Deploy WordPress Instances
-[7]  Back&Rest  : Backup & Restore
+[7]  PTS Vault  : Backup & Restore
 [8]  Cloud      : GCE & Virtual Instances
+
 [9]  Tools
 [10] Settings
 [Z]  Exit
