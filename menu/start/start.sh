@@ -44,11 +44,15 @@ primestart() {
 }
 
 # When Called, A Quoate is Randomly Selected
-quoteselect() {
-  bash /opt/plexguide/menu/start/quotes.sh
-  quote=$(cat /var/plexguide/startup.quote)
-  source=$(cat /var/plexguide/startup.source)
-}
+# quoteselect() {
+  # bash /opt/plexguide/menu/start/quotes.sh
+  # quote=$(cat /var/plexguide/startup.quote)
+  # source=$(cat /var/plexguide/startup.source)
+# }
+
+
+wisword=$(/usr/games/fortune -as | sed "s/^/ /")
+
 
 varstart() {
   ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - START
@@ -216,7 +220,7 @@ EOF
 
 [Z]  Exit
 
-"$quote"
+"$wisword"
 
 $source
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
