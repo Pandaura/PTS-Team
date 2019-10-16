@@ -22,12 +22,12 @@ UNIONFS=$(systemctl is-active pgunion)
 HSTNAME=$(cat /etc/hostname)
 
 ###storage local part
-mntused=$(df -h | grep "/mnt" | awk '{print $3}' | head -n 1)
-mntavi=$(df -h | grep "/mnt" | awk '{print $4}' | head -n 1)
-mntpercent=$(df -h | awk '{if($(NF) == "/") {print $(NF-1); exit;}}')
+mntused=$(df -h /mnt | awk '{ a = $3 } END { print a }')
+mntavi=$(df -h /mnt | awk '{ a = $4 } END { print a }')
+mntpercent=$(df -h | awk '{if($(NF) == "/mnt") {print $(NF-1); exit;}}')
 
-baseused=$(df -h | grep "/mnt" | awk '{print $3}' | head -n 1)
-baseavi=$(df -h | grep "/mnt" | awk '{print $4}' | head -n 1)
+baseused=$(df -h / | awk '{ a = $3 } END { print a }')
+baseavi=$(df -h / | awk '{ a = $4 } END { print a }')
 basepercent=$(df -h | awk '{if($(NF) == "/") {print $(NF-1); exit;}}')
 
 #google hack for loginshell
