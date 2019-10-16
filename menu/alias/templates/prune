@@ -3,5 +3,5 @@
 # docker autoprune unused docker/ volumes 
 ################################################################################
 #sudo docker system prune -a -f
-#sudo docker image prune -a -f
-sudo docker system prune --volumes -a -f
+docker image prune -a -f
+docker system prune --volumes -a -f

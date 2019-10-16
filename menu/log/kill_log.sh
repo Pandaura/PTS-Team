@@ -21,7 +21,8 @@ UNWANTED_FILES=(
 'debug'
 'dpkg.log'
 '*.log.*'
-'*.tar.*.gz' )
+'*.tar.*.gz' 
+)
 # advanced settings
 FIND=$(which find)
 FIND_BASE_CONDITION='-type f'
@@ -39,11 +40,11 @@ fi
 condition="-name '${UNWANTED_FILES[0]}'"
 for ((i = 1; i < ${#UNWANTED_FILES[@]}; i++))
 do
-    condition="${condition} ${FIND_ADD_NAME} '${UNWANTED_FILES[i]}'"done
+    condition="${condition} ${FIND_ADD_NAME} '${UNWANTED_FILES[i]}'"
+done
 
 command="${FIND} '${TARGET_FOLDER}' ${FIND_BASE_CONDITION} \( ${condition} \) ${FIND_ACTION}"
 echo "Executing ${command}"
 eval ${command}
 
 exit 0
-

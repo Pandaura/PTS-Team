@@ -43,27 +43,22 @@ primestart() {
   menuprime
 }
 
-# When Called, A Quoate is Randomly Selected
-quoteselect() {
-  bash /opt/plexguide/menu/start/quotes.sh
-  quote=$(cat /var/plexguide/startup.quote)
-  source=$(cat /var/plexguide/startup.source)
-}
+wisword=$(/usr/games/fortune -as | sed "s/^/ /")
+
 
 varstart() {
   ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - START
-  file="/var/plexguide"
-  if [ ! -e "$file" ]; then
-    mkdir -p /var/plexguide/logs 1>/dev/null 2>&1
-    chown -R 0775 /var/plexguide 1>/dev/null 2>&1
-    chmod -R 1000:1000 /var/plexguide 1>/dev/null 2>&1
+  filevg="/var/plexguide"
+  if [ ! -e "$filevg" ]; then
+    mkdir -p $filevg/logs 1>/dev/null 2>&1
+    chown -R 1000:1000 $file 1>/dev/null 2>&1
+    chmod -R 775 $file 1>/dev/null 2>&1
   fi
-
-  file="/opt/appdata/plexguide"
-  if [ ! -e "$file" ]; then
-    mkdir -p /opt/appdata/plexguide 1>/dev/null 2>&1
-    chown -R 0775 /opt/appdata/plexguide 1>/dev/null 2>&1
-    chmod -R 1000:1000 /opt/appdata/plexguide 1>/dev/null 2>&1
+  fileag="/opt/appdata/plexguide"
+  if [ ! -e "$fileag" ]; then
+    mkdir -p $fileag 1>/dev/null 2>&1
+    chown -R 1000:1000 $fileag 1>/dev/null 2>&1
+    chmod -R 775 $fileag 1>/dev/null 2>&1
   fi
 
   ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - START
@@ -199,23 +194,24 @@ EOF
     ports="OPEN"
   else ports="CLOSED"; fi
 
-  quoteselect
 
   tee <<-EOF
 
 [1]  Traefik    : Reverse Proxy
-[2]  Port Guard : [$ports] Protects the Server Ports
-[3]  GOAuth     : Enable Google's OAuthentication Protection
+[2]  PTS Shield : Enable Google's OAuthentication Protection
+[3]  Port Guard : [$ports] Protects the Server Ports
 [4]  rClone     : Mount Transport
 [5]  APPBox     : Apps ~ Core, Community & Removal
 [6]  WordPress  : Deploy WordPress Instances
-[7]  Back&Rest  : Backup & Restore
+[7]  PTS Vault  : Backup & Restore
 [8]  Cloud      : GCE & Virtual Instances
+
 [9]  Tools
 [10] Settings
+
 [Z]  Exit
 
-"$quote"
+"$wisword"
 
 $source
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -229,11 +225,11 @@ EOF
     primestart
     ;;
   2)
-    bash /opt/plexguide/menu/portguard/portguard.sh
+    bash /opt/plexguide/menu/pgcloner/pgshield.sh
     primestart
     ;;
   3)
-    bash /opt/plexguide/menu/pgcloner/pgshield.sh
+    bash /opt/plexguide/menu/portguard/portguard.sh
     primestart
     ;;
   4)

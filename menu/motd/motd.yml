@@ -21,9 +21,8 @@
     - name: Import MOTD Files
       copy: 'src={{item}} dest=/etc/update-motd.d/{{item}} force=yes mode=0775'
       with_items:
-        - 10-hostname-color
-        - 20-sysinfo
-        - 30-diskinfo
+        - 00-header
+        - 10-sysinfo
 
     - name: Install lolcat pip module
       pip:

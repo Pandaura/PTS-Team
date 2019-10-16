@@ -14,7 +14,7 @@ undim="\e[0m"
 
 # disk usage: ignore zfs, squashfs & tmpfs
 mapfile -t dfs < <(df -H -x fuse.rclone -x fuse.unionfs -x proc -x sys -x dev -x zfs -x squashfs -x tmpfs -x devtmpfs --output=target,pcent,size,avail,used | tail -n+2)
-printf "\nstorage:\n"
+printf "\n Storage:\n"
 
 for line in "${dfs[@]}"; do
 
