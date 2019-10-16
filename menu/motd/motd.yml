@@ -21,6 +21,7 @@
     - name: Import MOTD Files
       copy: 'src={{item}} dest=/etc/update-motd.d/{{item}} force=yes mode=0775'
       with_items:
+        - 00-header
         - 20-sysinfo
         - 30-diskinfo
 
