@@ -39,6 +39,10 @@ gcrypt=$(tail -n 1 /var/plexguide/gdcrypt.log)
 
 wisword=$(/usr/games/fortune -as | sed "s/^/ /")
 
+##security part
+failledssh=$(cat /var/log/auth.log | grep -i "fail" | wc -l)
+failledsshacc=$(head -n1 /var/log/auth.log | awk '{print $1, $2 ,$3 }')
+
 W="\e[0;39m"
 G="\e[1;32m"
 
@@ -58,6 +62,10 @@ $W  CPU-Cores......: $G$PROCESSOR_COUNT$W vCPU
 $W  Memory.........: $G$USED$W used , $G$FREE$W free, $G$TOTAL$W total $W
 $W  Network........: $G$IP_ADDRESS$W
 $W  Network-Card...: $G$NTCARD
+
+$W  Fail2ban
+$W  SSH.fails......: $G$failledssh
+$W  SSH.fails.since: $G$failledsshacc
 
 $W  Service Status
 $W  Docker..........: $W$DOCKER , v$G$DOCKER2
