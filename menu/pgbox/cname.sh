@@ -25,8 +25,6 @@ question1() {
 ⌛ $program - Set subdomains & ports
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⚡ Reference: http://$program.pgblitz.com
-
 EOF
     if [[ $port != "" ]]; then
         tee <<-EOF
