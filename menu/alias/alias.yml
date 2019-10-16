@@ -173,3 +173,9 @@
         force: yes
         mode: 0775
 
+    - name: automatic backup /opt/appdata 
+      template:
+        src: autobackup
+        dest: /bin/autobackup
+        force: yes
+        mode: 0775

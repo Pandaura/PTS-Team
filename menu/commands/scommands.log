@@ -70,3 +70,7 @@
     - name: purge old log files
       command: kill_logs
       Info: remove old log files from /var/log for your security
+
+    - name: automatic backup /opt/appdata/[app names to gdrive]
+      command: autobackup
+      Info: remove old log files from /var/log for your security
