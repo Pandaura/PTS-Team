@@ -35,13 +35,17 @@ EOF
     fi
 
     tee <<-EOF
+    
 [1] Change subdomain
 [2] Change external port
+
 EOF
 
     if [[ $port != "" ]]; then
         tee <<-EOF
+        
 [A] Use https://$cname.$domain:$port
+
 EOF
     else
         tee <<-EOF
