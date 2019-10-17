@@ -296,14 +296,29 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
+useragent="$(cat /var/plexguide/uagent)"
+bwlimit="$(cat /var/plexguide/blitz.bw)"
+
+vfs_dcs="$(cat /var/plexguide/vfs_dcs)"
+vfs_mt="$(cat /var/plexguide/vfs_mt)"
+vfs_t="$(cat /var/plexguide/vfs_t)"
+vfs_c="$(cat /var/plexguide/vfs_c)"
+
 
   rclone --config /opt/appdata/plexguide/rclone.conf mkdir gdrive:/plexguide/backup/${server_id} 1>/dev/null 2>&1
 
-  rclone --config /opt/appdata/plexguide/rclone.conf \
-    --stats-one-line --stats 1s --progress \
-    moveto ${tarlocation}/${program_var}.tar \
+  rclone moveto ${tarlocation}/${program_var}.tar \
     gdrive:/plexguide/backup/${server_id}/${program_var}.tar \
-    -v --checksum --drive-chunk-size=64M --transfers=8
+	--config /opt/appdata/plexguide/rclone.conf \
+	-v --checksum --stats-one-line --stats 1s --progress \
+	--tpslimit=10 \
+	--checkers="$vfs_c" \
+	--transfers="$vfs_t" \
+	--no-traverse \
+	--fast-list \
+	--bwlimit="$bwlimit" \
+	--drive-chunk-size="$vfs_dcs" \
+	--user-agent="$useragent"
 
   ##### Remove File Incase
   rm -rf ${tarlocation}/${program_var}.tar 1>/dev/null 2>&1
