@@ -320,5 +320,6 @@ vfs_c="$(cat /var/plexguide/vfs_c)"
 	--drive-chunk-size="$vfs_dcs" \
 	--user-agent="$useragent"
 
-  ##### Remove File Incase
-  rm -rf ${tarlocation}/${program_var}.tar 1>/dev/null 2>&1
+##### Remove File Incase
+rm -rf ${tarlocation}/${program_var}.tar 1>/dev/null 2>&1
+}
