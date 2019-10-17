@@ -1,2 +1,15 @@
 ./database/Library/Application Support/Plex Media Server/Cache/PhotoTranscoder
 ./database/Library/Application Support/Plex Media Server/Cache/Transcode
+./database/Library/Application Support/Plex Media Server/Logs
+./database/Library/Application Support/Plex Media Server/Crash Reports
+./transcoding-temp
+./log
+./logs
+./Log
+./Logs
+./backup
+./backups
+./Backup
+./Backups
+./transcodes
+./Transcodes
