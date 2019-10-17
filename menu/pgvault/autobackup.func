@@ -56,7 +56,7 @@ pgboxrecall() {
   ls -p /opt/coreapps/apps | grep -v / >/var/plexguide/pgvault.apprecall
   while read p; do
     sed -i "/^$p\b/Id" /var/plexguide/pgvault.apprecall
-  done </opt/pgvault/exempt.list
+  done </opt/plexguide/menu/pgvault/exempt.list
 
   while read p; do
     sed -i "/^$p\b/Id" /var/plexguide/pgvault.apprecall
@@ -84,7 +84,7 @@ apprecall() {
   tree -d -L 1 /opt/appdata | awk '{print $2}' | tail -n +2 | head -n -2 >/var/plexguide/pgvault.apprecall
   while read p; do
     sed -i "/^$p\b/Id" /var/plexguide/pgvault.apprecall
-  done </opt/pgvault/exempt.list
+  done </opt/plexguide/menu/pgvault/exempt.list
 
   ### Blank Out Temp List
   rm -rf /var/plexguide/program.temp && touch /var/plexguide/program.temp
@@ -272,7 +272,7 @@ EOF
 
   tar \
     --warning=no-file-changed --ignore-failed-read --absolute-names --warning=no-file-removed \
-    --exclude-from=/opt/pgvault/exclude.list \
+    --exclude-from=/opt/plexguide/menu/pgvault/exclude.list \
     -C /opt/appdata/${program_var} -cvf /opt/appdata/plexguide/${program_var}.tar ./
 
   ##### Restart Docker Application if was Running Prior
