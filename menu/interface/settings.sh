@@ -10,9 +10,10 @@ source /opt/plexguide/menu/functions/install.sh
 # Menu Interface
 setstart() {
 ### executed parts 
+touch /var/plexguide/pgui.switch
  dstatus=$(docker ps --format '{{.Names}}' | grep "pgui")
-  if [ "$dstatus" != "pgui" ]; then
-  echo "On" >/var/plexguide/pgui.switch
+  if [ "pgui" != "$dstatus" ]; then
+  echo "Off" >/var/plexguide/pgui.switch
   fi
 
   # Declare Ports State
@@ -70,22 +71,37 @@ EOF
     dpkg-reconfigure tzdata
     ;;
   6)
-    echo
-    echo "Standby ..."
-    echo
+
     if [[ "$switchcheck" == "On" ]]; then
       echo "Off" >/var/plexguide/pgui.switch
-      docker stop pgui
-      docker rm pgui
+      docker stop pgui &>/dev/null &
+      docker rm pgui &>/dev/null &
       service localspace stop
 	  systemctl daemon-reload
       rm -f /etc/systemd/system/localspace.servive
       rm -f /etc/systemd/system/mountcheck.service
+	  clear
+    tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅️   WOOT WOOT: Process Complete!
+✅️   WOOT WOOT: PGUI Removed
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+
     else
       echo "On" >/var/plexguide/pgui.switch
       ansible-playbook /opt/coreapps/apps/pgui.yml
       systemctl daemon-reload
       service localspace start
+	  clear
+    tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅️   WOOT WOOT: Process Complete!
+✅️   WOOT WOOT: PGUI installed
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
     fi
     setstart
     ;;
