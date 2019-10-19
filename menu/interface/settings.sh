@@ -18,10 +18,10 @@ touch /var/plexguide/pgui.switch
 
   # Declare Ports State
   ports=$(cat /var/plexguide/server.ports)
-  if [ "$ports" != "OPEN" ]; then
+  if [ "OPEN" == "$ports" ]; then
     echo "8555" >/var/plexguide/http.ports
-  else ports="CLOSED"; fi
-
+  else echo "CLOSED"  >/var/plexguide/http.ports ;
+  fi
 
 ### read Variables
   emdisplay=$(cat /var/plexguide/emergency.display)
