@@ -33,6 +33,8 @@
     - nmon
     - cowsay 
     - fortune
+    - figlet
+    - lolcat
 
 - name: Replace false to true in systat
   lineinfile:
