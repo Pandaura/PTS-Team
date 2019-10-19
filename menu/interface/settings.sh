@@ -9,7 +9,10 @@ source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/install.sh
 # Menu Interface
 setstart() {
-
+  pguistatus=$(docker ps --format '{{.Names}}' | grep "pgui")
+  if [ "pguidstatus" != "" ]; then
+      echo "Off" >/var/plexguide/pgui.switch
+  fi
   emdisplay=$(cat /var/plexguide/emergency.display)
   switchcheck=$(cat /var/plexguide/pgui.switch)
   tee <<-EOF
@@ -62,12 +65,14 @@ EOF
       docker stop pgui
       docker rm pgui
       service localspace stop
+	  systemctl daemon-reload
       rm -f /etc/systemd/system/localspace.servive
-      rm -f /etc/systemd/system/localspace.service
+      rm -f /etc/systemd/system/mountcheck.service
     else
       echo "On" >/var/plexguide/pgui.switch
       bash /opt/plexguide/menu/pgcloner/solo/pgui.sh
-      ansible-playbook /opt/pgui/pgui.yml
+      ansible-playbook /opt/coreapps/apps/pgui.yml
+      systemctl daemon-reload
       service localspace start
     fi
     setstart
