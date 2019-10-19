@@ -14,14 +14,19 @@ touch /var/plexguide/pgui.switch
  dstatus=$(docker ps --format '{{.Names}}' | grep "pgui")
   if [ "pgui" != "$dstatus" ]; then
   echo "Off" >/var/plexguide/pgui.switch
+  elif [ "pgui" == "$dstatus" ]; then
+   echo "On" >/var/plexguide/pgui.switch
+  else echo ""
   fi
 
   # Declare Ports State
   touch /var/plexguide/ui.ports
+  touch /var/plexguide/http.ports
   ports=$(cat /var/plexguide/ui.ports)
-  if [ "OPEN" == "$ports" ]; then
+  ports2=$(cat /var/plexguide/server.ports)
+  if [[ "OPEN" == "$ports" || "" == "$ports2"  ]]; then
     echo "8555" >/var/plexguide/http.ports
-  elif [ "CLOSED" == "$ports" ]; then
+  elif [[ "CLOSED" == "$ports" || "*127.0.0.1*" == "$ports2" ]]; then
     echo "CLOSED" >/var/plexguide/http.ports
   else echo ""
   fi
