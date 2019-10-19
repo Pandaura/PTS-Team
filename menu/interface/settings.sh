@@ -10,9 +10,9 @@ source /opt/plexguide/menu/functions/install.sh
 # Menu Interface
 setstart() {
 ### executed parts 
-  pguistatus=$(docker ps --format '{{.Names}}' | grep "pgui")
-  if [ "pguidstatus" != "" ]; then
-      echo "Off" >/var/plexguide/pgui.switch
+ dstatus=$(docker ps --format '{{.Names}}' | grep "pgui")
+  if [ "$dstatus" != "pgui" ]; then
+  echo "On" >/var/plexguide/pgui.switch
   fi
 
   # Declare Ports State
@@ -83,7 +83,6 @@ EOF
       rm -f /etc/systemd/system/mountcheck.service
     else
       echo "On" >/var/plexguide/pgui.switch
-      bash /opt/plexguide/menu/pgcloner/solo/pgui.sh
       ansible-playbook /opt/coreapps/apps/pgui.yml
       systemctl daemon-reload
       service localspace start
