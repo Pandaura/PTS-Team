@@ -25,7 +25,6 @@ touch /var/plexguide/pgui.switch
   else echo ""
   fi
 
-
 ### read Variables
   emdisplay=$(cat /var/plexguide/emergency.display)
   switchcheck=$(cat /var/plexguide/pgui.switch)
