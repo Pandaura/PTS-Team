@@ -10,6 +10,7 @@
 program=$(cat /tmp/program_var)
 mkdir -p /var/plexguide/cron/
 mkdir -p /opt/appdata/plexguide/cron
+touch /var/plexguide/ui.ports
 # FUNCTIONS START ##############################################################
 
 # BAD INPUT
@@ -43,13 +44,14 @@ EOF
   read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
   if [ "$typed" == "1" ]; then
     if [ "$guard" == "CLOSED" ]; then
-      echo "" >/var/plexguide/server.ports
-    else echo "127.0.0.1:" >/var/plexguide/server.ports; fi
+      echo "" >/var/plexguide/server.ports && echo "OPEN" >/var/plexguide/ui.ports
+    else echo "127.0.0.1:" >/var/plexguide/server.ports && echo "CLOSED" >/var/plexguide/ui.ports ; fi
     bash /opt/plexguide/menu/portguard/rebuild.sh
   elif [[ "$typed" == "z" || "$typed" == "Z" ]]; then
     exit
   else badinput; fi
 }
+
 
 # FUNCTIONS END ##############################################################
 
