@@ -9,12 +9,25 @@ source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/install.sh
 # Menu Interface
 setstart() {
+### executed parts 
   pguistatus=$(docker ps --format '{{.Names}}' | grep "pgui")
   if [ "pguidstatus" != "" ]; then
       echo "Off" >/var/plexguide/pgui.switch
   fi
+
+  # Declare Ports State
+  ports=$(cat /var/plexguide/server.ports)
+  if [ "$ports" != "OPEN" ]; then
+    echo "8555" >/var/plexguide/http.ports
+  else ports="CLOSED"; fi
+
+
+### read Variables
   emdisplay=$(cat /var/plexguide/emergency.display)
   switchcheck=$(cat /var/plexguide/pgui.switch)
+  domain=$(cat /var/plexguide/server.domain)
+  ports=$(cat /var/plexguide/http.ports)
+
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -26,8 +39,8 @@ setstart() {
 [3] Processor        :  Enhance the CPU Processing Power
 [4] WatchTower       :  Auto-Update Application Manager
 [5] Change Time      :  Change the Server Time
-[6] Comm UI          :  $switchcheck | Port 8555 | pgui.domain.com
-[7] Emergency Display:  $emdisplay
+[6] Comm UI          :  [ $switchcheck ] | Port [ $ports ] | pgui.$domain
+[7] Emergency Display:  [ $emdisplay ]
 
 [Z] Exit
 
