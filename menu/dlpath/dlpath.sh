@@ -162,7 +162,7 @@ EOF
 EOF
     sleep 2
 
-    ansible-playbook /opt/plexguide/menu/installer/main.yml
+    ansible-playbook /opt/plexguide/menu/installer/folders.yml
     bash /opt/plexguide/menu/dlpath/rebuild.sh
 
     tee <<-EOF
@@ -181,7 +181,7 @@ EOF
 
 $typed does not exist!
 
-You may have forgotten to create it, but PG is unable to see it!
+You may have forgotten to create it, but PTS is unable to see it!
 Try >>> cd $path and see what happens!
 
 Exiting! Nothing has changed!

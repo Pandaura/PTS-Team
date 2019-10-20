@@ -9,9 +9,34 @@ source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/install.sh
 # Menu Interface
 setstart() {
+### executed parts 
+touch /var/plexguide/pgui.switch
+ dstatus=$(docker ps --format '{{.Names}}' | grep "pgui")
+  if [ "pgui" != "$dstatus" ]; then
+  echo "Off" >/var/plexguide/pgui.switch
+  elif [ "pgui" == "$dstatus" ]; then
+   echo "On" >/var/plexguide/pgui.switch
+  else echo ""
+  fi
 
+  # Declare Ports State
+  touch /var/plexguide/ui.ports
+  touch /var/plexguide/http.ports
+  ports=$(cat /var/plexguide/ui.ports)
+  ports2=$(cat /var/plexguide/server.ports)
+  if [[ "OPEN" == "$ports" || "" == "$ports2"  ]]; then
+    echo "8555" >/var/plexguide/http.ports
+  elif [[ "CLOSED" == "$ports" || "*127.0.0.1*" == "$ports2" ]]; then
+    echo "CLOSED" >/var/plexguide/http.ports
+  else echo ""
+  fi
+
+### read Variables
   emdisplay=$(cat /var/plexguide/emergency.display)
   switchcheck=$(cat /var/plexguide/pgui.switch)
+  domain=$(cat /var/plexguide/server.domain)
+  ports=$(cat /var/plexguide/http.ports)
+
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -23,8 +48,8 @@ setstart() {
 [3] Processor        :  Enhance the CPU Processing Power
 [4] WatchTower       :  Auto-Update Application Manager
 [5] Change Time      :  Change the Server Time
-[6] Comm UI          :  $switchcheck | Port 8555 | pgui.domain.com
-[7] Emergency Display:  $emdisplay
+[6] Comm UI          :  [ $switchcheck ] | Port [ $ports ] | pgui.$domain
+[7] Emergency Display:  [ $emdisplay ]
 
 [Z] Exit
 
@@ -54,21 +79,37 @@ EOF
     dpkg-reconfigure tzdata
     ;;
   6)
-    echo
-    echo "Standby ..."
-    echo
+
     if [[ "$switchcheck" == "On" ]]; then
       echo "Off" >/var/plexguide/pgui.switch
-      docker stop pgui
-      docker rm pgui
+      docker stop pgui &>/dev/null &
+      docker rm pgui &>/dev/null &
       service localspace stop
+	  systemctl daemon-reload
       rm -f /etc/systemd/system/localspace.servive
-      rm -f /etc/systemd/system/localspace.service
+      rm -f /etc/systemd/system/mountcheck.service
+	  clear
+    tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅️   WOOT WOOT: Process Complete!
+✅️   WOOT WOOT: PGUI Removed
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+
     else
       echo "On" >/var/plexguide/pgui.switch
-      bash /opt/plexguide/menu/pgcloner/solo/pgui.sh
-      ansible-playbook /opt/pgui/pgui.yml
+      ansible-playbook /opt/coreapps/apps/pgui.yml
+      systemctl daemon-reload
       service localspace start
+	  clear
+    tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅️   WOOT WOOT: Process Complete!
+✅️   WOOT WOOT: PGUI installed
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
     fi
     setstart
     ;;
