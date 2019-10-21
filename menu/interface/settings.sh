@@ -66,7 +66,7 @@ EOF
     setstart
     ;;
   2)
-    bash /opt/plexguide/menu/pgcloner/multihd.sh
+    bash /opt/plexguide/menu/multihd/multihd.sh
     ;;
   3)
     bash /opt/plexguide/menu/processor/processor.sh
