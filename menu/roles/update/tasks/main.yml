@@ -42,8 +42,12 @@
 
 - name: remove | cowsay 
   apt:
-    name: cowsay
+    name: "{{ packages }}"
     state: absent
+  vars:
+    packages:
+    - cowsay
+    - nodejs
 
 - name: Ensure systat is ENABLED=true
   lineinfile:
