@@ -30,7 +30,11 @@
 
 - name: Install required packages
   apt:
-    state: present
+    state: latest
+    update_cache: yes
+    allow_unauthenticated: yes
+    force_apt_get: yes
+    force: yes
     name:
       - apt-utils
       - byobu
