@@ -44,6 +44,8 @@
   apt:
     name: "{{ packages }}"
     state: absent
+    force_apt_get: yes
+    force: yes
   vars:
     packages:
     - cowsay
