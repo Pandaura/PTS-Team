@@ -23,7 +23,6 @@
     allow_unauthenticated: yes
     force_apt_get: yes
     force: yes
-    install_recommends: yes
   vars:
     packages:
     - ctop
@@ -31,7 +30,6 @@
     - software-properties-common
     - sysstat
     - nmon
-    - cowsay 
     - fortune
     - figlet
     - lolcat
@@ -41,6 +39,11 @@
     path: /etc/default/sysstat
     regexp: '^ENABLED='
     line: ENABLED=true
+
+- name: remove | cowsay 
+  apt:
+    name: cowsay
+    state: absent
 
 - name: Ensure systat is ENABLED=true
   lineinfile:
