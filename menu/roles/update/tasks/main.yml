@@ -31,6 +31,8 @@
     - sysstat
     - nmon
     - fortune
+    - fortune-mod
+    - fortunes-bofh-excuses
     - figlet
     - lolcat
 
