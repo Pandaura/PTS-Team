@@ -122,7 +122,7 @@ PAS_CONFIG="/opt/appdata/pgscan/config/config.json"
 
 "Your Plex Autoscan URL:"
 
-"https://${SERVER_IP}:${SERVER_PORT}/${SERVER_PASS}"
+"http://${SERVER_IP}:${SERVER_PORT}/${SERVER_PASS}"
 
 Press Enter to Exit
 
