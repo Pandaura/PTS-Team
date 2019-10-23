@@ -108,7 +108,9 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   if [ "$typed" == "1" ]; then
-    ansible-playbook /opt/plexguide/menu/pgscan/pgscan.yml && question1
+    ansible-playbook /opt/plexguide/menu/pgscan/pgscan.yml
+    ansible-playbook /opt/plexguide/menu/pgscan/alias/alias.yml
+	question1
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     exit
   else badinput; fi
