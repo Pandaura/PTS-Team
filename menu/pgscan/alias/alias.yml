@@ -10,21 +10,21 @@
   tasks:
     - name: PTS-PAS-Domain
       template:
-        src: pgscan
+        src: pgscan-domain
         dest: /bin/pgscan-domain
         force: yes
         mode: 0775
 
     - name: PTS-PAS-log
       template:
-        src: pgscan
+        src: pgscan-log
         dest: /bin/pgscan-log
         force: yes
         mode: 0775
 
-    - name: PTS-PAS-log
+    - name: PTS-PAS-status
       template:
-        src: pgscan
+        src: pgscan-status
         dest: /bin/pgscan-status
         force: yes
         mode: 0775
