@@ -18,12 +18,12 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⌛ PG Cron - Schedule Cron Jobs (Backups) | $program?
+⌛ Cron - Schedule Cron Jobs (Backups) | $program?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚡ Reference: http://cron.pgblitz.com
 
-[1] No
-[2] Yes
+[ 1 ] No
+
+[ 2 ] Yes
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
@@ -41,20 +41,21 @@ question2() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⌛ PG Cron - Backup How Often?
+⌛  Cron - Backup How Often?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 WEEKLY
-0 - Sunday
-[1] Monday
-[2] Tuesday
-[3] Wednesday
-[4] Thursday
-[5] Friday
-[6] Saturday
+
+[ 0 ] - Monday
+[ 1 ] - Tuesday
+[ 2 ] - Wednesday
+[ 3 ] - Thursday
+[ 4 ] - Friday
+[ 5 ] - Saturday
+[ 6 ] - Sunday
 
 DAILY
-[7] Daily
+[ D ] - Daily
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
@@ -62,7 +63,7 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
   if [[ "$typed" -ge "0" && "$typed" -le "7" ]]; then
     echo $typed >/var/plexguide/cron/cron.day && break=1
-  elif [ "$typed" == "8" ]; then
+  elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
     echo "*/1" >/var/plexguide/cron/$program.cron.day && break=1
   else badinput; fi
 }
