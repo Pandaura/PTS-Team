@@ -41,7 +41,7 @@ class Config(object):
         'PLEX_FIX_MISMATCHED': False,
         'PLEX_TOKEN': '',
         'PLEX_CHECK_BEFORE_SCAN': False,
-        'SERVER_IP': '{{ip}}',
+        'SERVER_IP': '0.0.0.0',
         'SERVER_PORT': 3467,
         'SERVER_PASS': uuid.uuid4().hex,
         'SERVER_PATH_MAPPINGS': {},

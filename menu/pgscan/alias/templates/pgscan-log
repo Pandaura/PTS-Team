@@ -1,0 +1,3 @@
+##/bin/bash
+
+tail -n 200 /opt/appdata/pgscan/plex_autoscan.log

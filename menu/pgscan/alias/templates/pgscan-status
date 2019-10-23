@@ -1,0 +1,8 @@
+##/bin/bash
+
+  dcheck=$(systemctl is-active pgscan.service)
+  if [ "$dcheck" == "active" ]; then
+    dstatus="✅ DEPLOYED"
+  else dstatus="⚠️ NOT DEPLOYED"; fi
+  
+  echo $dstatus

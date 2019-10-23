@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# Title:      PTS List commands
+# Author(s):  MrDoobPG
+# GNU:        General Public License v3.0
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: PTS-PAS-Domain
+      template:
+        src: pgscan
+        dest: /bin/pgscan-domain
+        force: yes
+        mode: 0775
+
+    - name: PTS-PAS-log
+      template:
+        src: pgscan
+        dest: /bin/pgscan-log
+        force: yes
+        mode: 0775
+
+    - name: PTS-PAS-log
+      template:
+        src: pgscan
+        dest: /bin/pgscan-status
+        force: yes
+        mode: 0775

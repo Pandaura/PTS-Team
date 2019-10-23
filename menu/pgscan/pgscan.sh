@@ -19,10 +19,10 @@ variable() {
 }
 
 deploycheck() {
-  dcheck=$(systemctl status pgscan | grep "\(running\)\>" | grep "\<since\>")
-  if [ "$dcheck" != "" ]; then
+  dcheck=$(systemctl is-active pgscan.service)
+  if [ "$dcheck" == "active" ]; then
     dstatus="✅ DEPLOYED"
-  else dstatus="⚠️  NOT DEPLOYED"; fi
+  else dstatus="⚠️ NOT DEPLOYED"; fi
 }
 
 plexcheck() {
@@ -67,6 +67,26 @@ badinput() {
   question1
 }
 
+# Print Plex Autoscan URL
+showupdomain() {
+#If SERVER_IP is 0.0.0.0, assign public IP address to REAL_IP.
+SERVER_IP=$(ip a | grep glo | awk '{print $2}' | head -1 | cut -f1 -d/)
+SUBDOMAIN=$(cat /var/plexguide/server.domain)
+PAS_CONFIG="/opt/appdata/pgscan/config/config.json"
+
+    SERVER_IP=$(cat ${PAS_CONFIG} | jq -r .SERVER_IP)
+    SERVER_PORT=$(cat ${PAS_CONFIG} | jq -r .SERVER_PORT)
+    SERVER_PASS=$(cat ${PAS_CONFIG} | jq -r .SERVER_PASS)
+	
+    if (( SIMPLE - 1 )); then
+        echo "Your Plex Autoscan URL:"
+        echo "http://${SUBDOMAIN}:${SERVER_PORT}/${SERVER_PASS}"
+        echo ""
+    else
+        echo http://${SUBDOMAIN}:${SERVER_PORT}/${SERVER_PASS}
+    fi
+}
+
 # FIRST QUESTION
 question1() {
 
@@ -78,6 +98,8 @@ question1() {
 
 [1] Deploy Scan                     [$dstatus]
 
+[2] PlexAutoScan Domain 
+
 [Z] - Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -87,6 +109,26 @@ EOF
 
   if [ "$typed" == "1" ]; then
     ansible-playbook /opt/plexguide/menu/pgscan/pgscan.yml && question1
+  elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
+    exit
+  else badinput; fi
+}
+showupdomain() {
+
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Scan Interface
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ [ $showupdomain ]
+
+[Z] - Exit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  if [ "$typed" != "Z" ]; then
+    question1
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     exit
   else badinput; fi
