@@ -67,6 +67,12 @@ badinput() {
   question1
 }
 
+works(){
+ echo
+  read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+  question1
+}
+
 # FIRST QUESTION
 question1() {
 
@@ -98,6 +104,7 @@ EOF
   else badinput; fi
 }
 showupdomain() {
+clear
 #If SERVER_IP is 0.0.0.0, assign public IP address to REAL_IP.
 SERVER_IP=$(ip a | grep glo | awk '{print $2}' | head -1 | cut -f1 -d/)
 SUBDOMAIN=$(cat /var/plexguide/server.domain)
@@ -106,31 +113,27 @@ PAS_CONFIG="/opt/appdata/pgscan/config/config.json"
     SERVER_IP=$(cat ${PAS_CONFIG} | jq -r .SERVER_IP)
     SERVER_PORT=$(cat ${PAS_CONFIG} | jq -r .SERVER_PORT)
     SERVER_PASS=$(cat ${PAS_CONFIG} | jq -r .SERVER_PASS)
-	
-    if (( SIMPLE - 1 )); then
-        echo "Your Plex Autoscan URL:"
-        echo "http://${SUBDOMAIN}:${SERVER_PORT}/${SERVER_PASS}"
-        echo ""
-    else
-        echo http://${SUBDOMAIN}:${SERVER_PORT}/${SERVER_PASS}
-    fi
+
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Scan Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
- [ $showupdomain ]
+"Your Plex Autoscan URL:"
 
-[Z] - Exit
+"https://${SUBDOMAIN}:${SERVER_PORT}/${SERVER_PASS}"
+
+Press Enter to Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  if [ "$typed" != "Z" ]; then
+
+ if [ "$typed" == "" ]; then
     question1
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     exit
-  else badinput; fi
+  else works; fi
 }
 
 # FUNCTIONS END ##############################################################
