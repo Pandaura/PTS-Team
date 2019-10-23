@@ -13,8 +13,8 @@ After=multi-user.target network-online.target
 User=0
 Group=0
 Type=simple
-WorkingDirectory=/opt/appdata/pgscan/
-ExecStart=/opt/appdata/pgscan/scan.py server --loglevel=INFO
+WorkingDirectory=/opt/plex_autoscan/
+ExecStart=/opt/plex_autoscan/scan.py server --loglevel=INFO
 Restart=always
 RestartSec=10
 

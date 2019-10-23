@@ -17,8 +17,12 @@
         extport: '0'
 
     - name: Token Recall
-      shell: 'cat /var/plexguide/plex.token'
+      shell: 'cat /opt/appdata/pgscan/plex.token'
       register: token
+
+    - name: Server IP recall
+      shell: 'cat /opt/appdata/pgscan/server.ip'
+      register: ip
 
     - name: Install pip requirements
       pip:
@@ -57,6 +61,12 @@
         owner: '1000'
         group: '1000'
         mode: a+x
+
+    # - name: Replace false to true in systat
+      # lineinfile:
+        # path: /etc/default/sysstat
+        # regexp: '^ENABLED='
+        # line: ENABLED=true
 
     - name: 'Create /usr/local/bin symlink'
       file:

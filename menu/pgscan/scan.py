@@ -1,15 +1,15 @@
-#!/usr/bin/env python2.7
-from gdrive import Gdrive
-import utils
-import plex
-import db
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import json
 import logging
 import os
 import sys
 import time
-from copy import copy
 from logging.handlers import RotatingFileHandler
+
+# Replace Python2.X input with raw_input, renamed to input in Python 3
+if hasattr(__builtins__, 'raw_input'):
+    input = raw_input
 
 from flask import Flask
 from flask import abort
@@ -25,8 +25,7 @@ import threads
 ############################################################
 
 # Logging
-logFormatter = logging.Formatter(
-    '%(asctime)24s - %(levelname)8s - %(name)9s [%(thread)5d]: %(message)s')
+logFormatter = logging.Formatter('%(asctime)24s - %(levelname)8s - %(name)9s [%(thread)5d]: %(message)s')
 rootLogger = logging.getLogger()
 rootLogger.setLevel(logging.INFO)
 
@@ -48,7 +47,7 @@ conf = config.Config()
 # File logger
 fileHandler = RotatingFileHandler(
     conf.settings['logfile'],
-    maxBytes=1024 * 1024 * 5,
+    maxBytes=1024 * 1024 * 2,
     backupCount=5,
     encoding='utf-8'
 )
@@ -69,8 +68,14 @@ scan_lock = threads.PriorityLock()
 resleep_paths = []
 
 # local imports
+import db
+import plex
+import utils
+import rclone
+from google import GoogleDrive, GoogleDriveManager
 
 google = None
+manager = None
 
 
 ############################################################
@@ -79,10 +84,10 @@ google = None
 
 
 def queue_processor():
-    logger.info("Starting queue processor in 10 seconds")
+    logger.info("Starting queue processor in 10 seconds...")
     try:
         time.sleep(10)
-        logger.info("Queue processor started")
+        logger.info("Queue processor started.")
         db_scan_requests = db.get_all_items()
         items = 0
         for db_item in db_scan_requests:
@@ -91,10 +96,9 @@ def queue_processor():
                                           db_item['scan_type'], resleep_paths])
             items += 1
             time.sleep(2)
-        logger.info("Restored %d scan requests from database", items)
+        logger.info("Restored %d scan requests from database.", items)
     except Exception:
-        logger.exception(
-            "Exception while processing scan requests from database: ")
+        logger.exception("Exception while processing scan requests from database.")
     return
 
 
@@ -103,25 +107,27 @@ def queue_processor():
 ############################################################
 
 
-def start_scan(path, scan_for, scan_type):
+def start_scan(path, scan_for, scan_type, scan_title=None, scan_lookup_type=None, scan_lookup_id=None):
     section = utils.get_plex_section(conf.configs, path)
     if section <= 0:
         return False
     else:
-        logger.debug("Using section id: %d for '%s'", section, path)
+        logger.debug("Using Section ID '%d' for '%s'", section, path)
 
     if conf.configs['SERVER_USE_SQLITE']:
         db_exists, db_file = db.exists_file_root_path(path)
         if not db_exists and db.add_item(path, scan_for, section, scan_type):
-            logger.info("Added '%s' to database, proceeding with scan", path)
+            logger.info("Added '%s' to database.", path)
+            logger.info("Proceeding with scan...")
         else:
             logger.info(
-                "Already processing '%s' from same folder, aborting adding an extra scan request to the queue", db_file)
+                "Already processing '%s' from same folder. Skip adding extra scan request to the queue.", db_file)
             resleep_paths.append(db_file)
             return False
 
-    thread.start(plex.scan, args=[
-                 conf.configs, scan_lock, path, scan_for, section, scan_type, resleep_paths])
+    thread.start(plex.scan,
+                 args=[conf.configs, scan_lock, path, scan_for, section, scan_type, resleep_paths, scan_title,
+                       scan_lookup_type, scan_lookup_id])
     return True
 
 
@@ -139,97 +145,34 @@ def start_google_monitor():
 # GOOGLE DRIVE
 ############################################################
 
-def process_google_changes(changes):
-    global google
-    file_paths = []
+def process_google_changes(items_added):
+    new_file_paths = []
 
-    # convert changes to file paths list
-    for change in changes:
-        logger.debug("Processing Google change: %s", change)
-        if 'file' in change and 'fileId' in change:
-            # dont consider trashed/removed events for processing
-            if ('trashed' in change['file'] and change['file']['trashed']) or (
-                    'removed' in change and change['removed']):
-                # remove item from cache
-                if google.remove_item_from_cache(change['fileId']):
-                    logger.info("Removed '%s' from cache: %s",
-                                change['fileId'], change['file']['name'])
+    # process items added
+    if not items_added:
+        return True
+
+    for file_id, file_paths in items_added.items():
+        for file_path in file_paths:
+            if file_path in new_file_paths:
                 continue
-
-            # we always want to add changes to the cache so renames etc can be reflected inside the cache
-            google.add_item_to_cache(change['fileId'], change['file']['name'],
-                                     [] if 'parents' not in change['file'] else change['file']['parents'])
-
-            # dont process folder events
-            if 'mimeType' in change['file'] and 'vnd.google-apps.folder' in change['file']['mimeType']:
-                # ignore this change as we dont want to scan folders
-                continue
-
-            # get this files paths
-            success, item_paths = google.get_id_file_paths(change['fileId'],
-                                                           change['file']['teamDriveId'] if 'teamDriveId' in change[
-                                                               'file'] else None)
-            if success and len(item_paths):
-                file_paths.extend(item_paths)
-        elif 'teamDrive' in change and 'teamDriveId' in change:
-            # this is a teamdrive change
-            # dont consider trashed/removed events for processing
-            if 'removed' in change and change['removed']:
-                # remove item from cache
-                if google.remove_item_from_cache(change['teamDriveId']):
-                    logger.info("Removed teamDrive '%s' from cache: %s", change['teamDriveId'],
-                                change['teamDrive']['name'] if 'name' in change['teamDrive'] else 'Unknown teamDrive')
-                continue
-
-            if 'id' in change['teamDrive'] and 'name' in change['teamDrive']:
-                # we always want to add changes to the cache so renames etc can be reflected inside the cache
-                google.add_item_to_cache(
-                    change['teamDrive']['id'], change['teamDrive']['name'], [])
-                continue
-
-    # always dump the cache after running changes
-    google.dump_cache()
-
-    # remove files that are not of an allowed extension type
-    removed_rejected_extensions = 0
-    for file_path in copy(file_paths):
-        if not utils.allowed_scan_extension(file_path, conf.configs['GDRIVE']['SCAN_EXTENSIONS']):
-            # this file did not have an allowed extension, remove it
-            file_paths.remove(file_path)
-            removed_rejected_extensions += 1
-
-    if removed_rejected_extensions:
-        logger.info("Ignored %d file(s) from Google Drive changes for disallowed file extensions",
-                    removed_rejected_extensions)
-
-    # remove files that are in the ignore paths list
-    removed_rejected_paths = 0
-    for file_path in copy(file_paths):
-        for ignore_path in conf.configs['GDRIVE']['IGNORE_PATHS']:
-            if file_path.lower().startswith(ignore_path.lower()):
-                # this file was from an ignored path, remove it
-                file_paths.remove(file_path)
-                removed_rejected_paths += 1
-
-    if removed_rejected_paths:
-        logger.info("Ignored %d file(s) from Google Drive changes for disallowed file paths",
-                    removed_rejected_paths)
+            new_file_paths.append(file_path)
 
     # remove files that already exist in the plex database
-    removed_rejected_exists = utils.remove_files_exist_in_plex_database(
-        file_paths, conf.configs['PLEX_DATABASE_PATH'])
+    removed_rejected_exists = utils.remove_files_exist_in_plex_database(conf.configs,
+                                                                        new_file_paths)
 
     if removed_rejected_exists:
-        logger.info("Ignored %d file(s) from Google Drive changes for already being in Plex!",
+        logger.info("Rejected %d file(s) from Google Drive changes for already being in Plex.",
                     removed_rejected_exists)
 
     # process the file_paths list
-    if len(file_paths):
-        logger.info("Proceeding with scan of %d file(s) from Google Drive changes: %s", len(
-            file_paths), file_paths)
+    if len(new_file_paths):
+        logger.info("Proceeding with scan of %d file(s) from Google Drive changes: %s", len(new_file_paths),
+                    new_file_paths)
 
         # loop each file, remapping and starting a scan thread
-        for file_path in file_paths:
+        for file_path in new_file_paths:
             final_path = utils.map_pushed_path(conf.configs, file_path)
             start_scan(final_path, 'Google Drive', 'Download')
 
@@ -237,94 +180,50 @@ def process_google_changes(changes):
 
 
 def thread_google_monitor():
-    global google
+    global manager
 
-    logger.info("Starting Google Drive changes monitor in 30 seconds...")
+    logger.info("Starting Google Drive monitoring in 30 seconds...")
     time.sleep(30)
 
-    # load access tokens
-    google = Gdrive(
-        conf.configs, conf.settings['tokenfile'], conf.settings['cachefile'])
-    if not google.first_run():
-        logger.error("Failed to retrieve Google Drive access tokens...")
+    # initialize crypt_decoder to None
+    crypt_decoder = None
+
+    # load rclone client if crypt being used
+    if conf.configs['RCLONE']['CRYPT_MAPPINGS'] != {}:
+        logger.info("Crypt mappings have been defined. Initializing Rclone Crypt Decoder...")
+        crypt_decoder = rclone.RcloneDecoder(conf.configs['RCLONE']['BINARY'], conf.configs['RCLONE']['CRYPT_MAPPINGS'],
+                                            conf.configs['RCLONE']['CONFIG'])
+
+    # load google drive manager
+    manager = GoogleDriveManager(conf.configs['GOOGLE']['CLIENT_ID'], conf.configs['GOOGLE']['CLIENT_SECRET'],
+                                 conf.settings['cachefile'], allowed_config=conf.configs['GOOGLE']['ALLOWED'],
+                                 show_cache_logs=conf.configs['GOOGLE']['SHOW_CACHE_LOGS'],
+                                 crypt_decoder=crypt_decoder, allowed_teamdrives=conf.configs['GOOGLE']['TEAMDRIVES'])
+
+    if not manager.is_authorized():
+        logger.error("Failed to validate Google Drive Access Token.")
         exit(1)
     else:
-        logger.info("Google Drive access tokens were successfully loaded")
+        logger.info("Google Drive access token was successfully validated.")
+
+    # load teamdrives (if enabled)
+    if conf.configs['GOOGLE']['TEAMDRIVE'] and not manager.load_teamdrives():
+        logger.error("Failed to load Google Teamdrives.")
+        exit(1)
+
+    # set callbacks
+    manager.set_callbacks({'items_added': process_google_changes})
 
     try:
-
-        logger.info("Google Drive changes monitor started")
+        logger.info("Google Drive changes monitor started.")
         while True:
-            if not google.token['page_token']:
-                # we have no page_token, likely this is first run, lets retrieve a starting page token
-                if not google.get_changes_first_page_token():
-                    logger.error(
-                        "Failed to retrieve starting Google Drive changes page token...")
-                    return
-                else:
-                    logger.info(
-                        "Retrieved starting Google Drive changes page token: %s", google.token['page_token'])
-                    time.sleep(conf.configs['GDRIVE']['POLL_INTERVAL'])
-
-            # get page changes
-            changes = []
-            changes_attempts = 0
-
-            while True:
-                try:
-                    success, page = google.get_changes()
-                    changes_attempts = 0
-                except Exception:
-                    changes_attempts += 1
-                    logger.exception(
-                        "Exception occurred while polling Google Drive for changes on page %s on attempt %d/12: ",
-                        str(google.token['page_token']), changes_attempts)
-
-                    if changes_attempts < 12:
-                        logger.warning(
-                            "Sleeping for 5 minutes before trying to poll Google Drive for changes again...")
-                        time.sleep(60 * 5)
-                        continue
-                    else:
-                        logger.error("Failed to poll Google Drive changes after 12 consecutive attempts, "
-                                     "aborting...")
-                        return
-
-                if not success:
-                    logger.error("Failed to retrieve Google Drive changes for page: %s, aborting...",
-                                 str(google.token['page_token']))
-                    return
-                else:
-                    # successfully retrieved some changes
-                    if 'changes' in page:
-                        changes.extend(page['changes'])
-
-                    # page logic
-                    if page is not None and 'nextPageToken' in page:
-                        # there are more pages to retrieve
-                        logger.debug(
-                            "There are more Google Drive changes pages to retrieve, retrieving next page...")
-                        continue
-                    elif page is not None and 'newStartPageToken' in page:
-                        # there are no more pages to retrieve
-                        break
-                    else:
-                        logger.error("There was an unexpected outcome when polling Google Drive for changes, "
-                                     "aborting future polls...")
-                        return
-
-            # process changes
-            if len(changes):
-                logger.info(
-                    "There's %d Google Drive change(s) to process", len(changes))
-                process_google_changes(changes)
-
+            # poll for changes
+            manager.get_changes()
             # sleep before polling for changes again
-            time.sleep(conf.configs['GDRIVE']['POLL_INTERVAL'])
+            time.sleep(conf.configs['GOOGLE']['POLL_INTERVAL'])
 
     except Exception:
-        logger.exception("Fatal Exception occurred while monitoring Google Drive for changes, page = %s: ",
-                         google.token['page_token'])
+        logger.exception("Fatal Exception occurred while monitoring Google Drive for changes: ")
 
 
 ############################################################
@@ -348,12 +247,10 @@ def api_call():
 
         # verify cmd was supplied
         if 'cmd' not in data:
-            logger.error("Unknown %s API call from %r",
-                         request.method, request.remote_addr)
+            logger.error("Unknown %s API call from %r", request.method, request.remote_addr)
             return jsonify({'error': 'No cmd parameter was supplied'})
         else:
-            logger.info("Client %s API call from %r, type: %s",
-                        request.method, request.remote_addr, data['cmd'])
+            logger.info("Client %s API call from %r, type: %s", request.method, request.remote_addr, data['cmd'])
 
         # process cmds
         cmd = data['cmd'].lower()
@@ -369,8 +266,7 @@ def api_call():
             return jsonify({'error': 'Unknown cmd: %s' % cmd})
 
     except Exception:
-        logger.exception("Exception parsing %s API call from %r: ",
-                         request.method, request.remote_addr)
+        logger.exception("Exception parsing %s API call from %r: ", request.method, request.remote_addr)
 
     return jsonify({'error': 'Unexpected error occurred, check logs...'})
 
@@ -419,15 +315,12 @@ def client_pushed():
     if not data:
         logger.error("Invalid scan request from: %r", request.remote_addr)
         abort(400)
-    logger.debug("Client %r request dump:\n%s", request.remote_addr,
-                 json.dumps(data, indent=4, sort_keys=True))
+    logger.debug("Client %r request dump:\n%s", request.remote_addr, json.dumps(data, indent=4, sort_keys=True))
 
     if ('eventType' in data and data['eventType'] == 'Test') or ('EventType' in data and data['EventType'] == 'Test'):
-        logger.info("Client %r made a test request, event: '%s'",
-                    request.remote_addr, 'Test')
+        logger.info("Client %r made a test request, event: '%s'", request.remote_addr, 'Test')
     elif 'eventType' in data and data['eventType'] == 'Manual':
-        logger.info("Client %r made a manual scan request for: '%s'",
-                    request.remote_addr, data['filepath'])
+        logger.info("Client %r made a manual scan request for: '%s'", request.remote_addr, data['filepath'])
         final_path = utils.map_pushed_path(conf.configs, data['filepath'])
         # ignore this request?
         ignore, ignore_match = utils.should_ignore(final_path, conf.configs)
@@ -484,8 +377,7 @@ def client_pushed():
         # sonarr Rename webhook
         logger.info("Client %r scan request for series: '%s', event: '%s'", request.remote_addr, data['series']['path'],
                     "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'])
-        final_path = utils.map_pushed_path(
-            conf.configs, data['series']['path'])
+        final_path = utils.map_pushed_path(conf.configs, data['series']['path'])
         start_scan(final_path, 'Sonarr',
                    "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'])
 
@@ -494,41 +386,76 @@ def client_pushed():
         logger.info("Client %r scan request for movie: '%s', event: '%s'", request.remote_addr,
                     data['movie']['folderPath'],
                     "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'])
-        final_path = utils.map_pushed_path(
-            conf.configs, data['movie']['folderPath'])
+        final_path = utils.map_pushed_path(conf.configs, data['movie']['folderPath'])
         start_scan(final_path, 'Radarr',
                    "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'])
 
     elif 'movie' in data and 'movieFile' in data and 'folderPath' in data['movie'] and \
             'relativePath' in data['movieFile'] and 'eventType' in data:
         # radarr download/upgrade webhook
-        path = os.path.join(data['movie']['folderPath'],
-                            data['movieFile']['relativePath'])
+        path = os.path.join(data['movie']['folderPath'], data['movieFile']['relativePath'])
         logger.info("Client %r scan request for movie: '%s', event: '%s'", request.remote_addr, path,
                     "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'])
         final_path = utils.map_pushed_path(conf.configs, path)
+
+        # parse scan inputs
+        scan_title = None
+        scan_lookup_type = None
+        scan_lookup_id = None
+
+        if 'remoteMovie' in data:
+            if 'imdbId' in data['remoteMovie'] and data['remoteMovie']['imdbId']:
+                # prefer imdb
+                scan_lookup_id = data['remoteMovie']['imdbId']
+                scan_lookup_type = 'IMDB'
+            elif 'tmdbId' in data['remoteMovie'] and data['remoteMovie']['tmdbId']:
+                # fallback tmdb
+                scan_lookup_id = data['remoteMovie']['tmdbId']
+                scan_lookup_type = 'TheMovieDB'
+
+            scan_title = data['remoteMovie']['title'] if 'title' in data['remoteMovie'] and data['remoteMovie'][
+                'title'] else None
+
+        # start scan
         start_scan(final_path, 'Radarr',
-                   "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'])
+                   "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'], scan_title,
+                   scan_lookup_type, scan_lookup_id)
 
     elif 'series' in data and 'episodeFile' in data and 'eventType' in data:
         # sonarr download/upgrade webhook
-        path = os.path.join(data['series']['path'],
-                            data['episodeFile']['relativePath'])
+        path = os.path.join(data['series']['path'], data['episodeFile']['relativePath'])
         logger.info("Client %r scan request for series: '%s', event: '%s'", request.remote_addr, path,
                     "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'])
         final_path = utils.map_pushed_path(conf.configs, path)
-        start_scan(final_path, 'Sonarr',
-                   "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'])
 
-    elif 'artist' in data and 'trackFile' in data and 'eventType' in data:
+        # parse scan inputs
+        scan_title = None
+        scan_lookup_type = None
+        scan_lookup_id = None
+        if 'series' in data:
+            scan_lookup_id = data['series']['tvdbId'] if 'tvdbId' in data['series'] and data['series'][
+                'tvdbId'] else None
+            scan_lookup_type = 'TheTVDB' if scan_lookup_id is not None else None
+            scan_title = data['series']['title'] if 'title' in data['series'] and data['series'][
+                'title'] else None
+
+        # start scan
+        start_scan(final_path, 'Sonarr',
+                   "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'], scan_title,
+                   scan_lookup_type, scan_lookup_id)
+
+    elif 'artist' in data and 'trackFiles' in data and 'eventType' in data:
         # lidarr download/upgrade webhook
-        path = os.path.join(data['artist']['path'],
-                            data['trackFile']['relativePath'])
-        logger.info("Client %r scan request for album track: '%s', event: '%s'", request.remote_addr, path,
-                    "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'])
-        final_path = utils.map_pushed_path(conf.configs, path)
-        start_scan(final_path, 'Lidarr',
-                   "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'])
+        for track in data['trackFiles']:
+            if 'path' not in track and 'relativePath' not in track:
+                continue
+
+            path = track['path'] if 'path' in track else os.path.join(data['artist']['path'], track['relativePath'])
+            logger.info("Client %r scan request for album track: '%s', event: '%s'", request.remote_addr, path,
+                        "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'])
+            final_path = utils.map_pushed_path(conf.configs, path)
+            start_scan(final_path, 'Lidarr',
+                       "Upgrade" if ('isUpgrade' in data and data['isUpgrade']) else data['eventType'])
 
     else:
         logger.error("Unknown scan request from: %r", request.remote_addr)
@@ -543,38 +470,61 @@ def client_pushed():
 
 if __name__ == "__main__":
     logger.info("""
-PG Scan Started!
+        _                         _                            
+  _ __ | | _____  __   __ _ _   _| |_ ___  ___  ___ __ _ _ __  
+ | '_ \| |/ _ \ \/ /  / _` | | | | __/ _ \/ __|/ __/ _` | '_ \ 
+ | |_) | |  __/>  <  | (_| | |_| | || (_) \__ \ (_| (_| | | | |
+ | .__/|_|\___/_/\_\  \__,_|\__,_|\__\___/|___/\___\__,_|_| |_|
+ |_|                                                           
+ 
+###########################################################
+# Author:   l3uddz                                        #
+# URL:      https://github.com/l3uddz/plex_autoscan       #
+# --                                                      #
+#  Part of the Cloudbox project: https://cloudbox.works   #
+###########################################################
+#            GNU General Public License v3.0              #
+###########################################################
 """)
     if conf.args['cmd'] == 'sections':
         plex.show_sections(conf.configs)
-
+        exit(0)
+    elif conf.args['cmd'] == 'update_config':
         exit(0)
     elif conf.args['cmd'] == 'update_sections':
         plex.updateSectionMappings(conf)
     elif conf.args['cmd'] == 'authorize':
-        if not conf.configs['GDRIVE']['ENABLED']:
-            logger.error(
-                "You must enable the ENABLED setting in the GDRIVE config section...")
+        if not conf.configs['GOOGLE']['ENABLED']:
+            logger.error("You must enable the GOOGLE section in config.")
             exit(1)
         else:
-            google = Gdrive(
-                conf.configs, conf.settings['tokenfile'], conf.settings['cachefile'])
-            if not google.first_run():
-                logger.error("Failed to retrieve access tokens...")
-                exit(1)
+            logger.debug("client_id: %r", conf.configs['GOOGLE']['CLIENT_ID'])
+            logger.debug("client_secret: %r", conf.configs['GOOGLE']['CLIENT_SECRET'])
+
+            google = GoogleDrive(conf.configs['GOOGLE']['CLIENT_ID'], conf.configs['GOOGLE']['CLIENT_SECRET'],
+                                 conf.settings['cachefile'], allowed_config=conf.configs['GOOGLE']['ALLOWED'])
+
+            # Provide authorization link
+            logger.info("Visit the link below and paste the authorization code: ")
+            logger.info(google.get_auth_link())
+            logger.info("Enter authorization code: ")
+            auth_code = input()
+            logger.debug("auth_code: %r", auth_code)
+
+            # Exchange authorization code
+            token = google.exchange_code(auth_code)
+            if not token or 'access_token' not in token:
+                logger.error("Failed exchanging authorization code for an Access Token.")
+                sys.exit(1)
             else:
-                logger.info("Access tokens were successfully retrieved!")
-                exit(0)
+                logger.info("Exchanged authorization code for an Access Token:\n\n%s\n", json.dumps(token, indent=2))
+            sys.exit(0)
 
     elif conf.args['cmd'] == 'server':
         if conf.configs['SERVER_USE_SQLITE']:
             start_queue_reloader()
 
-        if conf.configs['GDRIVE']['ENABLED']:
-            if not os.path.exists(conf.settings['tokenfile']):
-                logger.error(
-                    "You must authorize your Google Drive account with the authorize option...")
-                exit(1)
+        if conf.configs['GOOGLE']['ENABLED']:
             start_google_monitor()
 
         logger.info("Starting server: http://%s:%d/%s",
@@ -582,10 +532,31 @@ PG Scan Started!
                     conf.configs['SERVER_PORT'],
                     conf.configs['SERVER_PASS']
                     )
-        app.run(host=conf.configs['SERVER_IP'],
-                port=conf.configs['SERVER_PORT'], debug=False, use_reloader=False)
+        app.run(host=conf.configs['SERVER_IP'], port=conf.configs['SERVER_PORT'], debug=False, use_reloader=False)
         logger.info("Server stopped")
         exit(0)
+    elif conf.args['cmd'] == 'build_caches':
+        logger.info("Building caches")
+        # load google drive manager
+        manager = GoogleDriveManager(conf.configs['GOOGLE']['CLIENT_ID'], conf.configs['GOOGLE']['CLIENT_SECRET'],
+                                     conf.settings['cachefile'], allowed_config=conf.configs['GOOGLE']['ALLOWED'],
+                                     allowed_teamdrives=conf.configs['GOOGLE']['TEAMDRIVES'])
+
+        if not manager.is_authorized():
+            logger.error("Failed to validate Google Drive Access Token.")
+            exit(1)
+        else:
+            logger.info("Google Drive Access Token was successfully validated.")
+
+        # load teamdrives (if enabled)
+        if conf.configs['GOOGLE']['TEAMDRIVE'] and not manager.load_teamdrives():
+            logger.error("Failed to load Google Teamdrives.")
+            exit(1)
+
+        # build cache
+        manager.build_caches()
+        logger.info("Finished building all caches.")
+        exit(0)
     else:
-        logger.error("Unknown command...")
+        logger.error("Unknown command.")
         exit(1)
