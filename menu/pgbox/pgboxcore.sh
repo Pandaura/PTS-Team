@@ -200,7 +200,7 @@ question2() {
 
   # Cron Execution
   edition=$(cat /var/plexguide/pg.edition)
-  if [[ "$edition" == "PG Edition - HD Solo" ]]; then
+  if [[ "$edition" == "Edition - HD Solo" ]]; then
     a=b
   else
     croncount=$(sed -n '$=' /var/plexguide/pgbox.buildup)

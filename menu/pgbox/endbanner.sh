@@ -9,7 +9,7 @@ program=$(cat /tmp/program_var)
 cname=$program
 
 if [[ -f "/var/plexguide/$program.cname" ]]; then
-  cname=$(cat "/var/plexguide/$program.cname")
+  cname=$(cat /var/plexguide/$program.cname)
 fi
 
 domain=$(cat /var/plexguide/server.domain)
@@ -84,7 +84,8 @@ EOF
   This will result in files being copied instead of moved, and it will cause other issues.
 
   The mappings are on the download client settings (advanced setting), at the bottom of the page.
-  Visit https://github.com/PGBlitz/PGBlitz.com/wiki/Remote-Path-Mappings for more information.
+ 
+  Visit https://github.com/MrDoobPG/PGBlitz.com/wiki/Remote-Path-Mappings for more information.
 
 EOF
   fi
@@ -94,7 +95,8 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🌍 Visit the wiki for instructions on how to configure $program.
-http://$program.pgblitz.com or http://github.com/PGBlitz/PGBlitz.com/wiki/$program
+
+ https://github.com/MrDoobPG/PGBlitz.com/wiki/$program
 
 EOF
 fi
