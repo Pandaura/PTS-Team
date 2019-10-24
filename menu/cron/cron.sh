@@ -46,28 +46,29 @@ question2() {
 
 WEEKLY
 
-[ 1 ] - Monday
-[ 2 ] - Tuesday
-[ 3 ] - Wednesday
-[ 4 ] - Thursday
-[ 5 ] - Friday
-[ 6 ] - Saturday
-[ 7 ] - Sunday
+[ 0 / 7 ] - Sunday
+[ 1 ]     - Monday
+[ 2 ]     - Tuesday
+[ 3 ]     - Wednesday
+[ 4 ]     - Thursday
+[ 5 ]     - Friday
+[ 6 ]     - Saturday
 
 DAILY
-[ D ] - Daily
+[ 8 ] - Daily
+
+RANDOM
+[ 9 ] - RANDOM
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-  if [[ "$typed" -ge "0" && "$typed" -le "7" ]]; then
-    echo $typed >/var/plexguide/cron/cron.day && break=1
-  elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
-    echo -e "*" >/var/plexguide/cron/cron.day 
-	sed -i 's/d/*/g' /var/plexguide/cron/cron.day
-	break=1
-  else badinput; fi
+read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+  
+if [[ "$typed" -ge "0" && "$typed" -le "7" ]]; then echo $typed > var/plexguide/cron/cron.day && break=1;
+elif [ "$typed" == "8" ]; then echo "*/1" > /var/plexguide/cron/$program.cron.day && break=1;
+elif [ "$typed" == "9" ]; then echo $(($RANDOM % 7)) >/var/plexguide/cron/$program.cron.day && break=1;
+else badinput; fi
 }
 
 # THIRD QUESTION
