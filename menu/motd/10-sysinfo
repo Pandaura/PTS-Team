@@ -52,7 +52,7 @@ ${W}System information as of $(date) :
 
 $W  Hostname.......: $W$HSTNAME
 $W  Distro.........: $W$(lsb_release -s -d)
-$W  PTS-Version....: $W$PTS
+$W  PTS-Version....: $G$PTS
 $W  Kernel.........: $W$(uname -sr)
 
 $W  Uptime.........: $W$(uptime -p)
