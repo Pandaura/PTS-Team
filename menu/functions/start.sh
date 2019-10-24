@@ -22,8 +22,13 @@ EOF
 }
 
 downloadpg() {
+##fast change the editions 
+edition=master
+##fast change the editions
   rm -rf /opt/plexguide
-  git clone --single-branch https://github.com/MrDoobPG/PGBlitz.com.git /opt/plexguide  1>/dev/null 2>&1
+  git clone -b $edition --single-branch https://github.com/MrDoobPG/PGBlitz.com.git /opt/plexguide
+  rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
+  rm -rf /opt/plexguide/.git* >/dev/null 2>&1
   ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
 }
 
@@ -63,7 +68,7 @@ owned() {
 }
 
 exitcheck() {
-  bash /opt/plexguide/menu/version/file.sh
+  downloadpg
   file="/var/plexguide/exited.upgrade"
   if [ ! -e "$file" ]; then
     bash /opt/plexguide/menu/interface/ending.sh
