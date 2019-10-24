@@ -16,15 +16,15 @@ variable() {
 variablepull() {
 
   ### sets variables if they do not exist
-  variable /var/plexguide/project.account NOT-SET
-  variable /var/plexguide/project.ipaddress NOT-SET
-  variable /var/plexguide/project.ipregion NOT-SET
-  variable /var/plexguide/project.ipzone NOT-SET
-  variable /var/plexguide/project.processor 4 
-  variable /var/plexguide/project.ram 8
-  variable /var/plexguide/project.nvme 1
-  variable /var/plexguide/project.id NOT-SET
-  variable /var/plexguide/project.switch off
+  variable /var/plexguide/project.account "NOT-SET"
+  variable /var/plexguide/project.ipaddress "NOT-SET"
+  variable /var/plexguide/project.ipregion "NOT-SET"
+  variable /var/plexguide/project.ipzone "NOT-SET"
+  variable /var/plexguide/project.processor "4"
+  variable /var/plexguide/project.ram "8"
+  variable /var/plexguide/project.nvme "1"
+  variable /var/plexguide/project.id "NOT-SET"
+  variable /var/plexguide/project.switch "off"
 
   ### variables being called
 

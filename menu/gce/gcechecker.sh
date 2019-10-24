@@ -1,23 +1,25 @@
-	#!/bin/bash
-	#
+#!/bin/bash
+#
 # Title:      PGBlitz (Reference Title File)
 # Author(s):  Admin9705 - Deiteq
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
 
-	### NOTE THIS IS JUST A COPY - MAIN ONE SITE IN MAIN REPO - THIS IS JUST FOR INFO
-	file1="/dev/nvme0n1"
-	file2="/var/plexguide/gce.check"
-	gcheck=$(dnsdomainname | tail -c 10)
+### NOTE THIS IS JUST A COPY - MAIN ONE SITE IN MAIN REPO - THIS IS JUST FOR INFO
+#file1="/dev/nvme0n1"
+#file2="/var/plexguide/gce.check"
+gcheck=$(dnsdomainname | tail -c 10)
 
-	file3="$(cat /var/plexguide/gce.done)"
+file3="$(tail -n 1 /var/plexguide/gce.done)"
+file3b="/var/plexguide/gce.done"
 
-if [ "$file3" == 1 ];then 
- echo " NVME are created "
-elif [ "$file3" != ];then
-	if [ -e "$file1" ] && [ ! -e "$file2" ] && [ "$gcheck" == ".internal" ]; then
+if [[ "$file3" == "1" ]]; then
+ exit
+elif [[ -e "$file3b" ]]; then
 
+	###if [ -e "$file1" ] && [ ! -e "$file2" ] && 
+	if [ "$gcheck" == ".internal" ]; then
 		  tee <<-EOF
 
 	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -50,7 +52,7 @@ elif [ "$file3" != ];then
 				chown -cR 1000:1000 /mnt
 				tune2fs -m 0 /dev/md0
 				echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-				echo "✅ PASSED ! PG NVME RAID0 Creator with 2 NVMEs - finish"
+				echo "✅ PASSED ! NVME RAID0 Creator with 2 NVMEs as RAID0  - finish"
 				echo "✅ PASSED ! HDD Space now :" $(df -h /mnt/ --total --local -x tmpfs | grep 'total' | awk '{print $2}')
 				echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 				echo -e "1" >/var/plexguide/gce.done
@@ -64,13 +66,13 @@ elif [ "$file3" != ];then
 				chown -cR 1000:1000 /mnt
 				tune2fs -m 0 /dev/md0
 				echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-				echo "✅ PASSED ! PG NVME RAID0 Creator with 3 NVMEs - finish"
+				echo "✅ PASSED ! NVME RAID0 Creator with 3 NVMEs as RAID0 - finish"
 				echo "✅ PASSED ! HDD Space now :" $(df -h /mnt/ --total --local -x tmpfs | grep 'total' | awk '{print $2}')
 				echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 				echo -e "1" >/var/plexguide/gce.done
 				sleep 2
 		  elif [[ "$nvme" == "4" ]]; then
-				mdadm --create /dev/md0 --level=0 --raid-devices=4 /dev/nvme0n1 /dev/nvme0n2 /dev/nvme0n3 /dev/nvme0n4
+				mdadm --create /dev/md0 --level=5 --raid-devices=4 /dev/nvme0n1 /dev/nvme0n2 /dev/nvme0n3 /dev/nvme0n4
 				mkfs.ext4 -F /dev/md0
 				mkdir -p /mnt
 				mount /dev/md0 /mnt
@@ -78,7 +80,7 @@ elif [ "$file3" != ];then
 				chown -cR 1000:1000 /mnt
 				tune2fs -m 0 /dev/md0
 				echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-				echo "✅ PASSED ! PG NVME RAID0 Creator with 4 NVMEs - finish"
+				echo "✅ PASSED ! NVME RAID0 Creator with 4 NVMEs as RAID5 - finish"
 				echo "✅ PASSED ! HDD Space now :" "$(df -h /mnt/ --total --local -x tmpfs | grep 'total' | awk '{print $2}')"
 				echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 				sleep 2
@@ -114,7 +116,7 @@ elif [ "$file3" != ];then
 	📂  GCE Harddrive Deployed!
 	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-	⚡  Automatically Setting PG Google Feeder Edition (GCE)
+	⚡  Automatically Setting Google Feeder Edition (GCE)
 
 	⚠️  Please Wait!
 
@@ -146,5 +148,7 @@ elif [ "$file3" != ];then
 		  rm -rf /var/plexguide/nvmeraid.log1 >/dev/null 2>&1
 	else
 		  touch /var/plexguide/gce.false
-	fi
+    fi
+else 
+echo "beware of this stupid lines"
 fi

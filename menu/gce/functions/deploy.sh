@@ -5,7 +5,7 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-source /opt/plexguide/menu/gce/functions/main.sh
+source /opt/blitzgce/functions/main.sh
 
 deployserver() {
   variablepull
@@ -17,7 +17,7 @@ deployserver() {
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 ERROR: PG GCE Instance Already Detected
+🚀 ERROR: GCE Instance Already Detected
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 INFORMATION: The prior GCE Server must be deleted prior to deloying a
@@ -65,7 +65,7 @@ EOF
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Deleting Old PG Template
+🚀 Deleting Old Template
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -79,7 +79,7 @@ EOF
   gcloud compute instance-templates create pg-gce-blueprint \
     --custom-cpu $processor --custom-memory $ramcount \
     --image-family ubuntu-1804-lts --image-project ubuntu-os-cloud \
-    --boot-disk-auto-delete --boot-disk-size 200GB \
+    --boot-disk-auto-delete --boot-disk-size 100GB \
     $(tail /var/plexguide/deploy.nvme)
 
   # ### Deploys the PG Template

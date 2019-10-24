@@ -5,7 +5,7 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-source /opt/plexguide/menu/gce/functions/main.sh
+source /opt/blitzgce/functions/main.sh
 
 destroyserver() {
 
@@ -16,7 +16,7 @@ destroyserver() {
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎 SYSTEM MESSAGE: No PG-GCE Server Deployed! Exiting!
+🌎 SYSTEM MESSAGE: No GCE Server Deployed! Exiting!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
