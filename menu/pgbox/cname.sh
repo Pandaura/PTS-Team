@@ -9,7 +9,7 @@ source /opt/plexguide/menu/functions/functions.sh
 
 # vars
 program=$(cat /tmp/program_var)
-domain=$(cat "/var/plexguide/server.domain")
+domain=$(cat /var/plexguide/server.domain)
 
 variable /var/plexguide/"$program".cname "$program"
 
@@ -17,8 +17,8 @@ variable /var/plexguide/"$program".port ""
 
 # FIRST QUESTION
 question1() {
-    cname=$(cat "/var/plexguide/$program.cname")
-    port=$(cat "/var/plexguide/$program.port")
+    cname=$(cat /var/plexguide/$program.cname)
+    port=$(cat /var/plexguide/$program.port)
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
