@@ -41,7 +41,7 @@ EOF
   fi
 }
 
-user () {
+user() {
   touch /var/plexguide/plex.pw
   user=$(cat /var/plexguide/plex.pw)
   if [ "$user" == "" ]; then
