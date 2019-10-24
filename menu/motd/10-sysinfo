@@ -19,6 +19,7 @@ DOCKER=$(systemctl is-active docker)
 DOCKER2=$(docker --version | awk '{print $3}')
 UNIONFS=$(systemctl is-active pgunion)
 
+PTS=$(cat /var/plexguide/pg.number)
 HSTNAME=$(cat /etc/hostname)
 
 ###storage local part
@@ -51,6 +52,7 @@ ${W}System information as of $(date) :
 
 $W  Hostname.......: $W$HSTNAME
 $W  Distro.........: $W$(lsb_release -s -d)
+$W  PTS-Version....: $W$PTS
 $W  Kernel.........: $W$(uname -sr)
 
 $W  Uptime.........: $W$(uptime -p)
