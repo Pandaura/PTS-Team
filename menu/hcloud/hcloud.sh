@@ -14,9 +14,12 @@ if [ "$test" == "" ]; then
 ⛔️  WARNING! - You Must Input an API Token from Hetzner First!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-* Activate a Hetzner Cloud Account and Create a Project
-* Click Access (left hand side) and then click API Tokens
-* Create a Token and Save It (and paste below here)
+[ 1 } Activate a Hetzner Cloud Account 
+[ 2 ] Create a Project
+[ 3 ] Click Access (left hand side)
+[ 4 ]click API Tokens
+[ 5 ]Create a Token and Save It (and paste below here)
+
 * Not Ready? Just type something & Press [ENTER]
 
 EOF
@@ -37,11 +40,11 @@ tee <<-EOF
  Hetzner's Cloud Generator
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Deploy a New Server
-[2] Destory a Server
+[ 1 ] Deploy a New Server
+[ 2 ] Destory a Server
 
-[A] List Server Info
-[B] Display Inital Server Passwords
+[ A ] List Server Info
+[ B ] Display Inital Server Passwords
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [Z] Exit
@@ -65,12 +68,11 @@ EOF
 ↘️  Hetzner's Cloud OS Selector
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Ubuntu 18.04 (PGBlitz Works)
-[2] Ubuntu 16.04 (PGBlitz Works)
-[3] Debian 9
-[4] Centos 7
-[5] Fendora 28
-[6] Fendora 27
+[1] Ubuntu 18.04              [ PTS works ]
+[2] Ubuntu 16.04              [ PTS works ]
+[3] Debian 9                  [ PTS works ]
+
+[4] Debian 10                 [ only for testing | PTS dont works ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [Z] Exit
@@ -87,11 +89,7 @@ EOF
   elif [ "$typed" == "3" ]; then
     os="debian-9"
   elif [ "$typed" == "4" ]; then
-    os="centos-7"
-  elif [ "$typed" == "5" ]; then
-    os="fendora-28"
-  elif [ "$typed" == "6" ]; then
-    os="fendora-27"
+    os="debian-10"
   elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
     exit
   fi
@@ -146,8 +144,8 @@ EOF
   echo "echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >>/bin/pg-$name
   echo "echo ''" >>/bin/pg-$name
   echo "ssh root@$serverip" >>/bin/pg-$name
-  chmod 777 /bin/pg-$name
-  chown 1000:1000 /bin/pg-$name
+  chmod -R 777 /bin/pg-$name
+  chown -R 1000:1000 /bin/pg-$name
 
   bash /opt/plexguide/menu/hcloud/hcloud.sh
   exit
@@ -224,6 +222,8 @@ elif [ "$typed" == "B" ] || [ "$typed" == "b" ]; then
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ↘️  Inital Server Passwords
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ [ $initialpw ]
 
 ⚠️  Useful if NEVER logged in! List created by this Server (new > old)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

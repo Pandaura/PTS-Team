@@ -37,20 +37,21 @@ gcestart() {
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎  PG GCE Deployment
+🌎 GCE Deployment
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-1. Log Into the Account  : $account
-2. Project Interface     : $projectid
-3. Processor Count       : $processor
-4. Ram Count             : $ramcount
-5. NVME Count            : $nvmecount
-6. Set IP Region / Server: $ipaddress [$ipregion]
-7. Deploy GCE Server     : $gcedeployedcheck
-8. SSH into the GCE Box
+[ 1 ] Log Into the Account  : [ $account ]
+[ 2 ] Project Interface     : [ $projectid ]
+[ 3 } Processor Count       : [ $processor ]
+[ 4 ] Ram Count             : [ $ramcount ]
+[ 5 ] NVME Count            : [ $nvmecount ]
+[ 6 ] Set IP Region / Server: [ $ipaddress ] | [ $ipregion ]
+[ 7 ] Deploy GCE Server     : [ $gcedeployedcheck ]
+[ 8 ] SSH into the GCE Box
 
-a. Destroy Server
-z. Exit
+[ A ] Destroy Server
+
+[ Z ] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
