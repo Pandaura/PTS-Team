@@ -208,14 +208,13 @@ EOF
 [8]  PTS Vault  : Backup & Restore
 [9]  Cloud      : GCE & Virtual Instances
 
-[10]  Tools
+[10] Tools
 [11] Settings
 
 [Z]  Exit
 
 "$wisword"
 
-$source
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   # Standby
