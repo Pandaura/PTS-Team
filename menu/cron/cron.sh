@@ -46,13 +46,13 @@ question2() {
 
 WEEKLY
 
-[ 0 ] - Monday
-[ 1 ] - Tuesday
-[ 2 ] - Wednesday
-[ 3 ] - Thursday
-[ 4 ] - Friday
-[ 5 ] - Saturday
-[ 6 ] - Sunday
+[ 1 ] - Monday
+[ 2 ] - Tuesday
+[ 3 ] - Wednesday
+[ 4 ] - Thursday
+[ 5 ] - Friday
+[ 6 ] - Saturday
+[ 7 ] - Sunday
 
 DAILY
 [ D ] - Daily
@@ -64,7 +64,7 @@ EOF
   if [[ "$typed" -ge "0" && "$typed" -le "7" ]]; then
     echo $typed >/var/plexguide/cron/cron.day && break=1
   elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
-    echo "*/1" >/var/plexguide/cron/$program.cron.day && break=1
+    echo "*" >/var/plexguide/cron/$program.cron.day && break=1
   else badinput; fi
 }
 
@@ -73,7 +73,7 @@ question3() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⌛ PG Cron - Hour of the Day?
+⌛ Cron - Hour of the Day?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Type an HOUR from [0 to 23]
