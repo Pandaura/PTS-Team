@@ -26,8 +26,8 @@ downloadpg() {
   ansible-playbook /opt/pgstage/clone.yml 
   rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
   rm -rf /opt/plexguide/.git* >/dev/null 2>&1
-
-  ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
+  ansible-playbook /opt/plexguide/menu/alias/alias.yml 1>/dev/null 2>&1
+  touch /var/plexguide/exited.upgrade
 }
 
 missingpull() {

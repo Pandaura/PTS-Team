@@ -54,7 +54,7 @@ parttwo() {
 
   if [ "$storage" != "" ]; then
     break=yes
-    echo $storage >/var/plexguide/pg.number
+    echo -e $storage >/var/plexguide/pg.number
     ansible-playbook /opt/plexguide/menu/version/choice.yml
 
     tee <<-EOF
