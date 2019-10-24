@@ -66,7 +66,7 @@ owned() {
 }
 
 exitcheck() {
-  downloadpg
+  bash /opt/plexguide/menu/version/file.sh
   file="/var/plexguide/exited.upgrade"
   if [ ! -e "$file" ]; then
     bash /opt/plexguide/menu/interface/ending.sh
