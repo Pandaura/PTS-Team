@@ -64,7 +64,9 @@ EOF
   if [[ "$typed" -ge "0" && "$typed" -le "7" ]]; then
     echo $typed >/var/plexguide/cron/cron.day && break=1
   elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
-    echo -e "*"  >/var/plexguide/cron/$program.cron.day && break=1
+    echo -e "*" >/var/plexguide/cron/cron.day 
+	sed -i 's/d/*/g' /var/plexguide/cron/cron.day
+	break=1
   else badinput; fi
 }
 
