@@ -202,12 +202,14 @@ EOF
 [3]  Port Guard : [$ports] Protects the Server Ports
 [4]  rClone     : Mount Transport
 [5]  APPBox     : Apps ~ Core, Community & Removal
-[6]  WordPress  : Deploy WordPress Instances
-[7]  PTS Vault  : Backup & Restore
-[8]  Cloud      : GCE & Virtual Instances
+[6]  PTS-PAS    : PlexAutoScan [ ALPHA VERSION ]
 
-[9]  Tools
-[10] Settings
+[7]  WordPress  : Deploy WordPress Instances
+[8]  PTS Vault  : Backup & Restore
+[9]  Cloud      : GCE & Virtual Instances
+
+[10]  Tools
+[11] Settings
 
 [Z]  Exit
 
@@ -241,22 +243,26 @@ EOF
     primestart
     ;;
   6)
-    bash /opt/plexguide/menu/pgcloner/pgpress.sh
+    bash /opt/plexguide/menu/pgscan/pgscan.sh
     primestart
     ;;
   7)
-    bash /opt/plexguide/menu/pgcloner/pgvault.sh
+    bash /opt/plexguide/menu/pgcloner/pgpress.sh
     primestart
     ;;
   8)
-    bash /opt/plexguide/menu/interface/cloudselect.sh
+    bash /opt/plexguide/menu/pgcloner/pgvault.sh
     primestart
     ;;
   9)
-    bash /opt/plexguide/menu/tools/tools.sh
+    bash /opt/plexguide/menu/interface/cloudselect.sh
     primestart
     ;;
   10)
+    bash /opt/plexguide/menu/tools/tools.sh
+    primestart
+    ;;
+  11)
     bash /opt/plexguide/menu/interface/settings.sh
     primestart
     ;;
