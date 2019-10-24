@@ -12,7 +12,7 @@ mkdir -p /var/plexguide/cron/
 mkdir -p /opt/appdata/plexguide/cron
 # FUNCTIONS START ##############################################################
 source /opt/plexguide/menu/functions/functions.sh
-
+RAN=$(head /dev/urandom | tr -dc 0-7 | head -c 1)
 # FIRST QUESTION
 question1() {
   tee <<-EOF
@@ -65,9 +65,9 @@ EOF
 
 read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
   
-if [[ "$typed" -ge "0" && "$typed" -le "7" ]]; then echo $typed > var/plexguide/cron/cron.day && break=1;
-elif [ "$typed" == "8" ]; then echo "*/1" > /var/plexguide/cron/$program.cron.day && break=1;
-elif [ "$typed" == "9" ]; then echo $(($RANDOM % 7)) >/var/plexguide/cron/$program.cron.day && break=1;
+f [[ "$typed" -ge "0" && "$typed" -le "7" ]]; then echo $typed >/var/plexguide/cron/cron.day && break=1;
+elif [ "$typed" == "8" ]; then echo "*" > /var/plexguide/cron/cron.day && break=1;
+elif [ "$typed" == "9" ]; then echo $RAN >/var/plexguide/cron/cron.day && break=1;
 else badinput; fi
 }
 
