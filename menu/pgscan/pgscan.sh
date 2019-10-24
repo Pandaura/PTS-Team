@@ -41,6 +41,13 @@ EOF
   fi
 }
 
+user () {
+  touch /var/plexguide/plex.pw
+  user=$(cat /var/plexguide/plex.pw)
+  if [ "$user" == "" ]; then
+    bash /opt/plexguide/menu/pgscan/scripts/plex_pw.sh
+  fi
+}
 token() {
   touch /opt/appdata/pgscan/plex.token
   ptoken=$(cat /opt/appdata/pgscan/plex.token)
@@ -59,7 +66,6 @@ EOF
     fi
   fi
 }
-
 # BAD INPUT
 badinput() {
   echo
@@ -135,6 +141,7 @@ EOF
 
 # FUNCTIONS END ##############################################################
 plexcheck
+user
 token
 deploycheck
 question1
