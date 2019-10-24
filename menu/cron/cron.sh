@@ -65,7 +65,7 @@ EOF
 
 read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
   
-f [[ "$typed" -ge "0" && "$typed" -le "7" ]]; then echo $typed >/var/plexguide/cron/cron.day && break=1;
+if [[ "$typed" -ge "0" && "$typed" -le "7" ]]; then echo $typed >/var/plexguide/cron/cron.day && break=1;
 elif [ "$typed" == "8" ]; then echo "*" > /var/plexguide/cron/cron.day && break=1;
 elif [ "$typed" == "9" ]; then echo $RAN >/var/plexguide/cron/cron.day && break=1;
 else badinput; fi
