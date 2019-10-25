@@ -45,33 +45,33 @@
     ############ GCrypt
     - name: GCrypt Check
       stat:
-        path: /mnt/gcrypt
+        path: '{{path.stdout}}/gcrypt'
       register: gcrypt
 
     - name: Create GCrypt Folders
       file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
       with_items:
-        - /mnt/gcrypt/tv
-        - /mnt/gcrypt/movies
-        - /mnt/gcrypt/music
-        - /mnt/gcrypt/ebooks
-        - /mnt/gcrypt/abooks
+        - '{{path.stdout}}/gcrypt/tv'
+        - '{{path.stdout}}/gcrypt/movies'
+        - '{{path.stdout}}/gcrypt/music'
+        - '{{path.stdout}}/gcrypt/ebooks'
+        - '{{path.stdout}}/gcrypt/abooks'
       when: gcrypt.stat.exists == False
       ignore_errors: yes
     ############ TCrypt
     - name: TCrypt Check
       stat:
-        path: /mnt/tcrypt
+        path: '{{path.stdout}}/tcrypt'
       register: tcrypt
 
     - name: Create TCrypt Folders
       file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
       with_items:
-        - /mnt/tcrypt/tv
-        - /mnt/tcrypt/movies
-        - /mnt/tcrypt/music
-        - /mnt/tcrypt/ebooks
-        - /mnt/tcrypt/abooks
+        - '{{path.stdout}}/tcrypt/tv'
+        - '{{path.stdout}}/tcrypt/movies'
+        - '{{path.stdout}}/tcrypt/music'
+        - '{{path.stdout}}/tcrypt/ebooks'
+        - '{{path.stdout}}/tcrypt/abooks'
       when: tcrypt.stat.exists == False
       ignore_errors: yes
 
@@ -91,91 +91,91 @@
     ############ PGUnion
     - name: PGUnion Check
       stat:
-        path: /mnt/unionfs
+        path: '{{path.stdout}}/unionfs'
       register: pgunion
 
     - name: Create PGUnion Folders
       file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
       with_items:
-        - /mnt/unionfs
+        - '{{path.stdout}}/unionfs'
       when: pgunion.stat.exists == False
       ignore_errors: yes
 
     ############ TMP
     - name: TMP Check
       stat:
-        path: /mnt/tmp
+        path: '{{path.stdout}}/tmp'
       register: tmp
 
     - name: Create Temp Folder
       file: 'path={{item}} state=directory'
       with_items:
-        - /mnt/tmp
+        - '{{path.stdout}}/tmp'
       when: tmp.stat.exists == False
       ignore_errors: yes
 
     ############ GDrive
     - name: GDrive Check
       stat:
-        path: /mnt/gdrive
+        path: '{{path.stdout}}/gdrive'
       register: gdrive
 
     - name: Create GDrive Folders
       file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
       with_items:
-        - /mnt/gdrive
-        - /mnt/gdrive/tv
-        - /mnt/gdrive/movies
-        - /mnt/gdrive/music
-        - /mnt/gdrive/ebooks
-        - /mnt/gdrive/abooks
+        - '{{path.stdout}}/gdrive'
+        - '{{path.stdout}}/gdrive/tv'
+        - '{{path.stdout}}/gdrive/movies'
+        - '{{path.stdout}}/gdrive/music'
+        - '{{path.stdout}}/gdrive/ebooks'
+        - '{{path.stdout}}/gdrive/abooks'
       when: gdrive.stat.exists == False
       ignore_errors: yes
     ############ TCrypt
     - name: Create TCrypt Folders
       file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
       with_items:
-        - /mnt/tcrypt
-        - /mnt/tcrypt/tv
-        - /mnt/tcrypt/movies
-        - /mnt/tcrypt/music
-        - /mnt/tcrypt/ebooks
-        - /mnt/tcrypt/abooks
+        - '{{path.stdout}}/tcrypt'
+        - '{{path.stdout}}/tcrypt/tv'
+        - '{{path.stdout}}/tcrypt/movies'
+        - '{{path.stdout}}/tcrypt/music'
+        - '{{path.stdout}}/tcrypt/ebooks'
+        - '{{path.stdout}}/tcrypt/abooks'
       when: gdrive.stat.exists == False
       ignore_errors: yes
 
     ############ TDrive
     - name: TDrive Check
       stat:
-        path: /mnt/tdrive
+        path: '{{path.stdout}}/tdrive'
       register: tdrive
 
     - name: Create TDrive Folders
       file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
       with_items:
-        - /mnt/tdrive
-        - /mnt/tdrive/tv
-        - /mnt/tdrive/movies
-        - /mnt/tdrive/music
-        - /mnt/tdrive/ebooks
-        - /mnt/tdrive/abooks
+        - '{{path.stdout}}/tdrive'
+        - '{{path.stdout}}/tdrive/tv'
+        - '{{path.stdout}}/tdrive/movies'
+        - '{{path.stdout}}/tdrive/music'
+        - '{{path.stdout}}/tdrive/ebooks'
+        - '{{path.stdout}}/tdrive/abooks'
       when: tdrive.stat.exists == False
       ignore_errors: yes
 
     ############ Encrypt
     - name: Encrypt Check
       stat:
-        path: /mnt/encrypt
+        path: '{{path.stdout}}/encrypt'
       register: encrypt
 
     - name: Create Encrypt Folders
       file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
       with_items:
-        - /mnt/encrypt/tv
-        - /mnt/encrypt/movies
-        - /mnt/encrypt/music
-        - /mnt/encrypt/ebooks
-        - /mnt/encrypt/abooks
+        - '{{path.stdout}}/encrypt/tv'
+        - '{{path.stdout}}/encrypt/movies'
+        - '{{path.stdout}}/encrypt/music'
+        - '{{path.stdout}}/encrypt/ebooks'
+        - '{{path.stdout}}/encrypt/abooks'
       when: encrypt.stat.exists == False
       ignore_errors: yes
 
@@ -187,7 +187,7 @@
         - '/opt/communityapps'
         - '/opt/coreapps'
         - '/var/plexguide'
-        - '/mnt/move'
+        - '{{path.stdout}}/move'
         - '/var/plexguide/logs'
         - '/opt/appdata/plexguide/keys/unprocessed'
         - '/opt/appdata/plexguide/keys/processed'
@@ -196,6 +196,7 @@
         - '{{path.stdout}}/downloads'
         - '{{path.stdout}}/nzb'
         - '{{path.stdout}}/torrent'
+        - '{{path.stdout}}/torrent/watch'
         - '{{path.stdout}}/move'
         - '/opt/var'
       ignore_errors: yes
