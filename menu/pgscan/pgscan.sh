@@ -100,6 +100,7 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   if [ "$typed" == "1" ]; then
+    sudo python -m pip install -r /opt/plexguide/menu/pgscan/requirements.txt
     ansible-playbook /opt/plexguide/menu/pgscan/pgscan.yml
     ansible-playbook /opt/plexguide/menu/pgscan/alias/alias.yml
 	question1
