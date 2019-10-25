@@ -16,9 +16,51 @@
         pgrole: 'pgscan'
         extport: '0'
 
-    - name: Token Recall
-      shell: 'cat /opt/appdata/pgscan/plex.token'
-      register: token
+    - name: User Recall
+      set_fact:
+        shell: 'cat /opt/appdata/pgscan/plex.user'
+      register:  plex.user
+
+    - name: password Recall
+      set_fact:
+        shell: 'cat /opt/appdata/pgscan/plex.passwd'
+      register: plex.pass
+
+    - name: "Get X-Plex-Token"
+      uri:
+        url: https://plex.tv/users/sign_in.json
+        method: POST
+        headers:
+           X-Plex-Version: "1.0.0"
+            X-Plex-Product: "CB"
+            X-Plex-Client-Identifier: "XXXX"
+            Content-Type: "application/x-www-form-urlencoded; charset=utf-8"
+          user: '{{ plex.user }}'
+          password: '{{ plex.pass }}'
+          status_code: 201
+        register: plex_token_raw
+
+    - name: Display 'Plex Pass' status
+      debug:
+        msg: "Plex Pass is {{ ('plexpass' in plex_token_raw.json.user.roles.roles) | ternary('enabled','disabled') }}."
+
+    - name: Set plex_auth_token variable
+      set_fact:
+        plex_auth_token: "{{ plex_token_raw.json.user.authToken | regex_replace('\n', '') }}"
+
+    - name: Display Plex Auth Token
+      debug:
+        msg: "Plex Auth Token: {{ plex_auth_token }}"
+  
+    - name: Display Plex Auth Token
+      debug:
+      msg: "Plex Auth Token: {{ token }}"
+
+    - name: Settings | Update Plex Token in 'config.json'
+      shell: |
+        CONFIG_PATH="/opt/appdata/pgscan/config/config.json"
+        jq '.PLEX_TOKEN = "{{  plex_auth_token | default('') }}"'
+      become: yes
 
     - name: Server IP call
       shell: echo "$(ip a | grep glo | awk '{print $2}' | head -1 | cut -f1 -d/)" >/opt/appdata/pgscan/server.ip
@@ -52,12 +94,16 @@
 
     - name: Import default config
       template:
-        src: /opt/appdata/pgscan/config/default.config
-        dest: /opt/appdata/pgscan/config.json
+        src: /opt/plexguide/menu/pgscan/config/config.json.j2
+        dest: /opt/appdata/pgscan/config/config.json
         owner: '1000'
         group: '1000'
         mode: 0775
         force: yes
+
+    - name: Settings | Generate 32 character 'SERVER_PASS'
+      set_fact:
+        plex_autoscan_server_pass: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=32') }}
 
     - name: Set pgscan.py as executable
       file:
@@ -92,13 +138,19 @@
     - name: Daemon-Reload
       systemd: state=stopped name=pgscan daemon_reload=yes enabled=no
 
-    - name: Section Updates
-      command: '/opt/appdata/pgscan/scan.py sections'
-      tags: plex_autoscan_update_sections
+    - name: Settings | Upgrade 'config.json'
+      shell: "/opt/plex_autoscan/scan.py update_config"
+      become: yes
+      ignore_errors: yes
+      tags: pgscan-autoscan-update-sections
 
-    - name: Mapping Configs
-      command: '/opt/appdata/pgscan/scan.py update_sections'
-      tags: plex_autoscan_update_sections
+    - name: Settings | Update 'PLEX_SECTION_PATH_MAPPINGS' in 'config.json'
+      shell: "/opt/plex_autoscan/scan.py update_sections"
+      become: yes
+      ignore_errors: yes
+      async: 60
+      poll: 0
+      tags: plex-autoscan-update-sections
 
     - name: Start pgscan
       systemd: state=started name=pgscan enabled=yes
