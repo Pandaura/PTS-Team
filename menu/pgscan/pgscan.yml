@@ -31,14 +31,14 @@
         url: https://plex.tv/users/sign_in.json
         method: POST
         headers:
-            X-Plex-Version: "1.0.0"
-            X-Plex-Product: "CB"
-            X-Plex-Client-Identifier: "XXXX"
-            Content-Type: "application/x-www-form-urlencoded; charset=utf-8"
-          user: '{{ plex.user }}'
-          password: '{{ plex.pass }}'
-          status_code: 201
-        register: plex_token_raw
+          X-Plex-Version: "1.0.0"
+          X-Plex-Product: "CB"
+          X-Plex-Client-Identifier: "XXXX"
+          Content-Type: "application/x-www-form-urlencoded; charset=utf-8"
+        user: '{{ plex.user }}'
+        password: '{{ plex.pass }}'
+        status_code: 201
+      register: plex_token_raw
 
     - name: Display 'Plex Pass' status
       debug:
