@@ -17,3 +17,4 @@
     - { role: mergerfsupdate, tags: ['mergerfsupdate'] }
     - { role: journal, tags: ['journal'] }
     - { role: plex_autoscan, tags: ['plex_autoscan'] }
+    - { role: plex_auth_token, tags: ['plex_auth_token'] }
