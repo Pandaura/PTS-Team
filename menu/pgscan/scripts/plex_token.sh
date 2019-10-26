@@ -7,8 +7,8 @@
 #########################################################################
 #                           MIT License                                 #
 #########################################################################
-template=/opt/plexguide/menu/roles/plex_autoscan/templates/config.json.j2.backup
-templatebackup=/opt/plexguide/menu/roles/plex_autoscan/templates/config.json.j2
+templatebackup=/opt/plexguide/menu/roles/plex_autoscan/templates/config.backup
+template=/opt/plexguide/menu/roles/plex_autoscan/templates/config.json.j2
 
 PLEX_LOGIN=$(cat /var/plexguide/plex.user)
 PLEX_PASSWORD=$(cat /var/plexguide/plex.pw)
