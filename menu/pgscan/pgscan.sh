@@ -114,7 +114,7 @@ EOF
 		question1 
   elif [[ "$typed" == "A" || "$typed" == "a"  ]]; then
 		ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
-		question1z
+		question1
   elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
 		showupdomain
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
