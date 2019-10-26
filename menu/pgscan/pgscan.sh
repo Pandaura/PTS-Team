@@ -123,6 +123,8 @@ EOF
 		question1
   elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
 		showupdomain
+  elif [[ "$typed" == "S" || "$typed" == "S" ]]; then
+		plexautoscansettings
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     exit
   else badinput; fi
@@ -138,7 +140,7 @@ SERVER_PASS=$(cat ${PAS_CONFIG} | jq -r .SERVER_PASS)
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Scan Interface
+🚀 Plex_AutoScan Domain Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 "Your Plex Autoscan URL:"
@@ -155,6 +157,41 @@ EOF
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     exit
   else works; fi
+}
+
+plexautoscansettings() {
+clear
+
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Plex_AutoScan Domain Interface
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[ 1 ] Show last 50 lins of Log
+[ 2 ] Update Sections
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
+  if [ "$typed" == "1" ]; then
+		tail -n 50 /opt/plex_autoscan/plex_autoscan.log
+		plexautoscansettings 
+  elif [ "$typed" == "2" ]; then
+        python /opt/plex_autoscan/scan.py update_sections
+		plexautoscansettings 
+  elif [[ "$typed" == "A" || "$typed" == "a"  ]]; then
+		plexautoscansettings
+  elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
+		plexautoscansettings
+  elif [[ "$typed" == "S" || "$typed" == "S" ]]; then
+		plexautoscansettings
+  elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
+    exit
+  else question1; fi
 }
 
 # FUNCTIONS END ##############################################################
