@@ -221,7 +221,7 @@ EOF
 
   if [ "$typed" == "1" ]; then
 		tail -n 50 /opt/plex_autoscan/plex_autoscan.log
-		done
+		doneenter
   elif [ "$typed" == "2" ]; then
         python /opt/plex_autoscan/scan.py update_sections
 		doneenter
