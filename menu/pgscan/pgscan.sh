@@ -112,10 +112,10 @@ EOF
   elif [ "$typed" == "2" ]; then
 		bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh
 		question1 
-  elif [ "$typed" == "A" || "$typed" == "a" || ]; then
+  elif [[ "$typed" == "A" || "$typed" == "a"  ]]; then
 		ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
-		question1
-  elif [ "$typed" == "D" || "$typed" == "d" ]]; then
+		question1z
+  elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
 		showupdomain
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     exit
