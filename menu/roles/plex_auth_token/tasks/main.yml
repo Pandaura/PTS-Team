@@ -8,14 +8,6 @@
 #                   GNU General Public License v3.0                     #
 #########################################################################
 ---
-- name: Set plex.user fact | username
-  shell: cat /var/plexguide/plex.user
-  register: plexus
-
-- name: Set plex.user fact | passwort
-  shell: cat /var/plexguide/plex.pw
-  register: plexpw
-
 - name: "Get X-Plex-Token"
   uri:
     url: https://plex.tv/users/sign_in.json
@@ -25,10 +17,14 @@
       X-Plex-Product: "{{ plex_auth_token_product }}"
       X-Plex-Client-Identifier: "{{ plex_auth_token_client_identifier }}"
       Content-Type: "application/x-www-form-urlencoded; charset=utf-8"
-    user: '{{ plexus }}'
-    password: '{{ plexpw }}'
+    user: '{{ plex.user }}'
+    password: '{{ plex.pass }}'
     status_code: 201
   register: plex_token_raw
+
+- name: Display 'Plex Pass' status
+  debug:
+    msg: "Plex Pass is {{ ('plexpass' in plex_token_raw.json.user.roles.roles) | ternary('enabled','disabled') }}."
 
 - name: Set plex_auth_token variable
   set_fact:
@@ -37,4 +33,3 @@
 - name: Display Plex Auth Token
   debug:
     msg: "Plex Auth Token: {{ plex_auth_token }}"
-
