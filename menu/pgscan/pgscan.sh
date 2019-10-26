@@ -88,9 +88,12 @@ question1() {
 🚀 Scan Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Deploy Scan                     [$dstatus]
+[1] Deploy Plex Username & Plex Passwort
+[2] Deploy Plex Token
 
-[2] PlexAutoScan Domain 
+[A] Deploy Scan                     [$dstatus]
+
+[D] PlexAutoScan Domain 
 
 [Z] - Exit
 
@@ -100,10 +103,16 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   if [ "$typed" == "1" ]; then
-    ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
-	question1
+		bash /opt/plexguide/menu/pgscan/scripts/plex_pw.sh
+		question1 
   elif [ "$typed" == "2" ]; then
-    showupdomain
+		bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh
+		question1 
+  elif [ "$typed" == "A" ]; then
+		ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
+		question1
+  elif [ "$typed" == "D" ]; then
+		showupdomain
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     exit
   else badinput; fi

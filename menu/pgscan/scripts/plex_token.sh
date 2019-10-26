@@ -7,6 +7,8 @@
 #########################################################################
 #                           MIT License                                 #
 #########################################################################
+template=/opt/plexguide/menu/roles/plex_autoscan/templates/config.json.j2.backup
+templatebackup=/opt/plexguide/menu/roles/plex_autoscan/templates/config.json.j2
 
 PLEX_LOGIN=$(cat /var/plexguide/plex.user)
 PLEX_PASSWORD=$(cat /var/plexguide/plex.pw)
@@ -27,6 +29,6 @@ if [ -z "$X_PLEX_TOKEN" ]; then
     >&2 echo 'Failed to retrieve the X-Plex-Token.'
     exit 1
 fi
-
+cp -r $template $templatebackup
 echo $X_PLEX_TOKEN >/opt/appdata/pgscan/plex.token
-sed -i 's/plex_auth_token/'$X_PLEX_TOKEN'/g' /opt/plexguide/menu/roles/plex_autoscan/templates/config.json.j2
+sed -i 's/plex_auth_token/'$X_PLEX_TOKEN'/g' $template
