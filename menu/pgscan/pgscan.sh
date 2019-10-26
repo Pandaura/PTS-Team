@@ -101,7 +101,6 @@ EOF
 
   if [ "$typed" == "1" ]; then
     ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
-    ansible-playbook /opt/plexguide/menu/pgscan/alias/alias.yml
 	question1
   elif [ "$typed" == "2" ]; then
     showupdomain
