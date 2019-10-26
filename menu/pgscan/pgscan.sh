@@ -200,3 +200,5 @@ userstatus
 tokenstatus
 deploycheck
 question1
+plexautoscansettings
+works
