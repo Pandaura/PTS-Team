@@ -5,13 +5,13 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-file="/var/plexguide/pg.number"
-if [ -e "$file" ]; then
-  check="$(cat /var/plexguide/pg.number | head -c 1)"
-  if [[ "$check" == "5" || "$check" == "6" || "$check" == "7" ]]; then
-    exit
-  fi
-fi
+# file="/var/plexguide/pg.number"
+# if [ -e "$file" ]; then
+  # check="$(cat /var/plexguide/pg.number | head -c 1)"
+  # if [[ "$check" == "5" || "$check" == "6" || "$check" == "7" ]]; then
+    # exit
+  # fi
+# fi
 
 # Create Variables (If New) & Recall
 pcloadletter() {
@@ -42,9 +42,7 @@ primestart() {
   varstart
   menuprime
 }
-
 wisword=$(/usr/games/fortune -as | sed "s/^/ /")
-
 
 varstart() {
   ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - START
@@ -145,9 +143,9 @@ varstart() {
   if [ ! -e "$file" ]; then echo "/opt/appdata/plexguide" >/var/plexguide/data.location; fi
 
   space=$(cat /var/plexguide/data.location)
-  used=$(df -h /opt/ | tail -n +2 | awk '{print $3}')
-  capacity=$(df -h /opt/ | tail -n +2 | awk '{print $4}')
-  percentage=$(df -h /opt/ | tail -n +2 | awk '{print $5}')
+  used=$(df -h / --local | tail -n +2 | awk '{print $3}' )
+  capacity=$(df -h / --local  | tail -n +2 | awk '{print $2}')
+  percentage=$(df -h / --local | tail -n +2 | awk '{print $5}')
 
   # For the PGBlitz UI
   echo "$used" >/var/plexguide/pg.used
@@ -223,53 +221,66 @@ EOF
   case $typed in
   1)
     bash /opt/plexguide/menu/pgcloner/traefik.sh
+	clear
     primestart
     ;;
   2)
     bash /opt/plexguide/menu/pgcloner/pgshield.sh
-    primestart
+    clear
+	primestart
     ;;
   3)
     bash /opt/plexguide/menu/portguard/portguard.sh
-    primestart
+    clear
+	primestart
     ;;
   4)
     bash /opt/plexguide/menu/pgcloner/pgclone.sh
-    primestart
+    clear
+	primestart
     ;;
   5)
     bash /opt/plexguide/menu/pgbox/pgboxselect.sh
-    primestart
+    clear
+	primestart
     ;;
   6)
     bash /opt/plexguide/menu/pgscan/pgscan.sh
-    primestart
+    clear
+	primestart
     ;;
   7)
     bash /opt/plexguide/menu/pgcloner/pgpress.sh
-    primestart
+    clear
+	primestart
     ;;
   8)
     bash /opt/plexguide/menu/pgcloner/pgvault.sh
-    primestart
+    clear
+	primestart
     ;;
   9)
     bash /opt/plexguide/menu/interface/cloudselect.sh
-    primestart
+    clear
+	primestart
     ;;
   10)
     bash /opt/plexguide/menu/tools/tools.sh
-    primestart
+    clear
+	primestart
     ;;
   11)
     bash /opt/plexguide/menu/interface/settings.sh
-    primestart
+    clear
+	primestart
     ;;
   z)
+    clear
     bash /opt/plexguide/menu/interface/ending.sh
     exit
     ;;
   Z)
+    clear
     bash /opt/plexguide/menu/interface/ending.sh
     exit
     ;;
