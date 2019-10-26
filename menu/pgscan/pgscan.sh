@@ -100,8 +100,7 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   if [ "$typed" == "1" ]; then
-    sudo python -m pip install -r /opt/plexguide/menu/pgscan/requirements.txt
-    ansible-playbook /opt/plexguide/menu/pgscan/pgscan.yml
+    ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
     ansible-playbook /opt/plexguide/menu/pgscan/alias/alias.yml
 	question1
   elif [ "$typed" == "2" ]; then
@@ -112,7 +111,7 @@ EOF
 }
 showupdomain() {
 clear
-PAS_CONFIG="/opt/appdata/pgscan/config/config.json"
+PAS_CONFIG="/opt/plex_autoscan/config/config.json"
 
 SERVER_IP=$(ip a | grep glo | awk '{print $2}' | head -1 | cut -f1 -d/)
 SERVER_PORT=$(cat ${PAS_CONFIG} | jq -r .SERVER_PORT)

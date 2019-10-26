@@ -16,3 +16,4 @@
     - { role: system, tags: ['system'] }
     - { role: mergerfsupdate, tags: ['mergerfsupdate'] }
     - { role: journal, tags: ['journal'] }
+    - { role: plex_autoscan, tags: ['plex_autoscan'] }

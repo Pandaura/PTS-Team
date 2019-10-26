@@ -1,0 +1,96 @@
+#########################################################################
+# Title:         Cloudbox: Plex Autoscan Role                           #
+# Author(s):     l3uddz, desimaniac                                     #
+# URL:           https://github.com/cloudbox/cloudbox                   #
+# --                                                                    #
+#         Part of the Cloudbox project: https://cloudbox.works          #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Set plex.user fact
+  shell: cat /var/plexguide/plex.user
+  register: plex.user
+
+- name: Set plex.user fact
+  shell: cat /var/plexguide/plex.user
+  register: plex.pass
+
+- name: "Get X-Plex-Token"
+  uri:
+    url: https://plex.tv/users/sign_in.json
+    method: POST
+    headers:
+      X-Plex-Version: "1.0.0"
+      X-Plex-Product: "CB"
+      X-Plex-Client-Identifier: "XXXX"
+      Content-Type: "application/x-www-form-urlencoded; charset=utf-8"
+    user: '{{ plex.user }}'
+    password: '{{ plex.pass }}'
+    status_code: 201
+  register: plex_token_raw
+
+- name: Display 'Plex Pass' status
+  debug:
+    msg: "Plex Pass is {{ ('plexpass' in plex_token_raw.json.user.roles.roles) | ternary('enabled','disabled') }}."
+
+- name: Set plex_auth_token variable
+  set_fact:
+    plex_auth_token: "{{ plex_token_raw.json.user.authToken | regex_replace('\n', '') }}"
+
+- name: Display Plex Auth Token
+  debug:
+    msg: "Plex Auth Token: {{ plex_auth_token }}"
+
+- name: Import Services Task
+  import_tasks: "subtasks/services.yml"
+
+- name: Create plex_autoscan directories
+  file: "path={{ item }} state=directory mode=0775 owner=1000 group=1000 recurse=yes"
+  with_items:
+    - /opt/plex_autoscan
+
+- name: Clone plex_autoscan repo 'HEAD'
+  git:
+    repo: https://github.com/l3uddz/plex_autoscan.git
+    dest: /opt/plex_autoscan
+    clone: yes
+    version: HEAD
+    force: yes
+  become: yes
+  become_user: "1000"
+  ignore_errors: yes
+  register: plex_autoscan_clone_status
+
+- name: Clone plex_autoscan repo 'master'
+  git:
+    repo: https://github.com/l3uddz/plex_autoscan.git
+    dest: /opt/plex_autoscan
+    clone: yes
+    version: master
+    force: yes
+  become: yes
+  become_user: "1000"
+  when: plex_autoscan_clone_status is failed
+
+- name: Install pip requirements
+  pip:
+    requirements: /opt/plex_autoscan/requirements.txt
+    executable: pip2
+
+- name: Set 'scan.py' as executable
+  file:
+    path: /opt/plex_autoscan/scan.py
+    owner: "1000"
+    group: "1000"
+    mode: a+x
+
+- name: Import Settings Task
+  import_tasks: "subtasks/settings.yml"
+
+- name: Start 'plex_autoscan.service'
+  systemd:
+    name: plex_autoscan
+    state: started
+    enabled: yes
+    daemon_reload: yes
