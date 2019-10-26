@@ -77,9 +77,9 @@ question2() {
 📂  User Name & Password Confirmation
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-User Name: $user
+User Name:  [ $user ]
 
-User Pass: $pw
+User Pass:  [ $pw ]
 
 ⚠️  Information Correct?
 

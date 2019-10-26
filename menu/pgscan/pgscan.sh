@@ -1,11 +1,3 @@
-#!/bin/bash
-#
-# Title:      PGBlitz (Reference Title File)
-# Author(s):  Admin9705
-# URL:        https://pgblitz.com - http://github.pgblitz.com
-# GNU:        General Public License v3.0
-################################################################################
-
 # KEY VARIABLE RECALL & EXECUTION
 mkdir -p /var/plexguide/pgscan
 mkdir -p /opt/appdata/pgscan
@@ -20,10 +12,22 @@ variable() {
 
 deploycheck() {
   dcheck=$(systemctl is-active plex_autoscan.service)
-  if [ "$dcheck" == "active" ]; then
+  if [ "$user" == "" ]; then
     dstatus="✅ DEPLOYED"
   else dstatus="⚠️ NOT DEPLOYED"; fi
 }
+userstatus() {
+  userdep=$(cat /var/plexguide/plex.pw)
+  if [ "$userdep" != "active" ]; then
+    dstatus="✅ DEPLOYED"
+  else dstatus="⚠️ NOT DEPLOYED"; fi
+ }
+tokenstatus() {
+  ptokendep=$(cat /opt/appdata/pgscan/plex.token)
+  if [ "$ptokendep" != "" ]; then
+    dstatus="✅ DEPLOYED"
+  else dstatus="⚠️ NOT DEPLOYED"; fi
+ }
 
 plexcheck() {
   pcheck=$(docker ps | grep "\<plex\>")
@@ -88,11 +92,11 @@ question1() {
 🚀 Scan Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Deploy Plex Username & Plex Passwort
-[2] Deploy Plex Token
+[1] Deploy Plex Username & Plex Passwort  [ $userdep   ]
+[2] Deploy Plex Token                     [ $ptokendep ]
 
-[A] Deploy Scan                     [$dstatus]
 
+[A] Deploy Scan                           [ $dstatus ]
 [D] PlexAutoScan Domain 
 
 [Z] - Exit
@@ -108,10 +112,10 @@ EOF
   elif [ "$typed" == "2" ]; then
 		bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh
 		question1 
-  elif [ "$typed" == "A" ]; then
+  elif [ "$typed" == "A" || "$typed" == "a" || ]; then
 		ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
 		question1
-  elif [ "$typed" == "D" ]; then
+  elif [ "$typed" == "D" || "$typed" == "d" ]; then
 		showupdomain
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     exit

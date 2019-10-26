@@ -202,7 +202,7 @@ EOF
 [3]  Port Guard : [$ports] Protects the Server Ports
 [4]  rClone     : Mount Transport
 [5]  APPBox     : Apps ~ Core, Community & Removal
-[6]  PTS-PAS    : PlexAutoScan [ ALPHA VERSION ]
+[6]  CBOX-PAS   : PlexAutoScan [ ALPHA VERSION ]
 
 [7]  WordPress  : Deploy WordPress Instances
 [8]  PTS Vault  : Backup & Restore
