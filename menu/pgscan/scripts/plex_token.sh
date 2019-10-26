@@ -29,3 +29,4 @@ if [ -z "$X_PLEX_TOKEN" ]; then
 fi
 
 echo $X_PLEX_TOKEN >/opt/appdata/pgscan/plex.token
+sed -i 's/plex_auth_token/'$X_PLEX_TOKEN'/g' /opt/plexguide/menu/roles/plex_autoscan/templates/config.json.j2
