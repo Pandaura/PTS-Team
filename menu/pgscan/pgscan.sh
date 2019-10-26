@@ -92,7 +92,7 @@ question1() {
 🚀 Scan Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Deploy Plex Username & Plex Passwort  [ $ustatus   ]
+[1] Deploy Plex Username & Plex Passwort  [ $ustatus ]
 [2] Deploy Plex Token                     [ $pstatus ]
 
 
