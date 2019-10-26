@@ -12,7 +12,7 @@ variable() {
 
 deploycheck() {
   dcheck=$(systemctl is-active plex_autoscan.service)
-  if [ "$dcheck" != "" ]; then
+  if [ "$dcheck" == "active" ]; then
     dstatus="✅ DEPLOYED"
   else dstatus="⚠️ NOT DEPLOYED"; fi
 }
