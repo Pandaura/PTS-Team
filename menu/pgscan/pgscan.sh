@@ -18,15 +18,15 @@ deploycheck() {
 }
 userstatus() {
   userdep=$(cat /var/plexguide/plex.pw)
-  if [ "$userdep" != "active" ]; then
-    dstatus="✅ DEPLOYED"
-  else dstatus="⚠️ NOT DEPLOYED"; fi
+  if [ "$userdep" == "" ]; then
+    ustatus="✅ DEPLOYED"
+  else ustatus="⚠️ NOT DEPLOYED"; fi
  }
 tokenstatus() {
   ptokendep=$(cat /opt/appdata/pgscan/plex.token)
-  if [ "$ptokendep" != "" ]; then
-    dstatus="✅ DEPLOYED"
-  else dstatus="⚠️ NOT DEPLOYED"; fi
+  if [ "$ptokendep" == "" ]; then
+    pstatus="✅ DEPLOYED"
+  else pstatus="⚠️ NOT DEPLOYED"; fi
  }
 
 plexcheck() {
@@ -92,8 +92,8 @@ question1() {
 🚀 Scan Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Deploy Plex Username & Plex Passwort  [ $userdep   ]
-[2] Deploy Plex Token                     [ $ptokendep ]
+[1] Deploy Plex Username & Plex Passwort  [ $ustatus   ]
+[2] Deploy Plex Token                     [ $pstatus ]
 
 
 [A] Deploy Scan                           [ $dstatus ]
@@ -115,7 +115,7 @@ EOF
   elif [ "$typed" == "A" || "$typed" == "a" || ]; then
 		ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
 		question1
-  elif [ "$typed" == "D" || "$typed" == "d" ]; then
+  elif [ "$typed" == "D" || "$typed" == "d" ]]; then
 		showupdomain
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     exit
