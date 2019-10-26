@@ -12,22 +12,22 @@ variable() {
 
 deploycheck() {
   dcheck=$(systemctl is-active plex_autoscan.service)
-  if [ "$dcheck" == "" ]; then
+  if [ "$dcheck" != "" ]; then
     dstatus="✅ DEPLOYED"
   else dstatus="⚠️ NOT DEPLOYED"; fi
 }
 userstatus() {
   userdep=$(cat /var/plexguide/plex.pw)
-  if [ "$userdep" == "" ]; then
+  if [ "$userdep" != "" ]; then
     ustatus="✅ DEPLOYED"
   else ustatus="⚠️ NOT DEPLOYED"; fi
- }
+}
 tokenstatus() {
-  ptokendep=$(cat /opt/appdata/pgscan/plex.token)
-  if [ "$ptokendep" == "" ]; then
+  ptokendep=$(cat /var/plexguide/plex.token)
+  if [ "$ptokendep" != "" ]; then
     pstatus="✅ DEPLOYED"
   else pstatus="⚠️ NOT DEPLOYED"; fi
- }
+}
 
 plexcheck() {
   pcheck=$(docker ps | grep "\<plex\>")
@@ -153,7 +153,7 @@ EOF
 
 # FUNCTIONS END ##############################################################
 plexcheck
-user
-token
+userstatus
+tokenstatus
 deploycheck
 question1

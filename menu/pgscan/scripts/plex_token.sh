@@ -30,5 +30,5 @@ if [ -z "$X_PLEX_TOKEN" ]; then
     exit 1
 fi
 cp -r $template $templatebackup
-echo $X_PLEX_TOKEN >/opt/appdata/pgscan/plex.token
+echo $X_PLEX_TOKEN >/var/plexguide/plex.token
 sed -i 's/plex_auth_token/'$X_PLEX_TOKEN'/g' $template
