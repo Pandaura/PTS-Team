@@ -82,6 +82,47 @@ works(){
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
   question1
 }
+credits(){
+clear
+
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Plex_AutoScan Credits 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+           _                         _                            
+     _ __ | | _____  __   __ _ _   _| |_ ___  ___  ___ __ _ _ __  
+    | '_ \| |/ _ \ \/ /  / _` | | | | __/ _ \/ __|/ __/ _` | '_ \ 
+    | |_) | |  __/>  <  | (_| | |_| | || (_) \__ \ (_| (_| | | | |
+    | .__/|_|\___/_/\_\  \__,_|\__,_|\__\___/|___/\___\__,_|_| |_|
+    |_|                                                           
+ 
+#########################################################################
+# Author:   l3uddz                                                      #
+# URL:      https://github.com/l3uddz/plex_autoscan                     #
+# Coder of plex_autoscan                                                #
+# --                                                                    #
+# Author(s):     l3uddz, desimaniac                                     #
+# URL:           https://github.com/cloudbox/cloudbox                   #
+# Coder of plex_autoscan role                                           #
+# --                                                                    #
+#         Part of the Cloudbox project: https://cloudbox.works          #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+EOF
+
+ echo
+  read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+  question1
+}
+
+doneenter(){
+ echo
+  read -p 'All done | PRESS [ENTER] ' typed </dev/tty
+  question1
+}
 
 # FIRST QUESTION
 question1() {
@@ -89,7 +130,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Plex_AutoScan Interface 
+🚀 Plex_AutoScan Interface  || l3uddz/plex_autoscan
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 NOTE : Plex_AutoScan are located  in /opt/plex_autoscan
@@ -100,8 +141,8 @@ NOTE : Plex_AutoScan are located  in /opt/plex_autoscan
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [A] Deploy Scan                           [ $dstatus ]
-[D] PlexAutoScan Domain 
-[S] Plex_AutoScan Settings                [ not finished ] 
+[D] PlexAutoScan Domain
+[S] Plex_AutoScan Settings
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -165,12 +206,13 @@ clear
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Plex_AutoScan Domain Interface
+🚀 Plex_AutoScan Settings Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[ 1 ] Show last 50 lins of Log
+[ 1 ] Show last 50 lines of plex_autoscan.log
 [ 2 ] Update Sections
 
+[ 3 ] Credits 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
@@ -179,18 +221,21 @@ EOF
 
   if [ "$typed" == "1" ]; then
 		tail -n 50 /opt/plex_autoscan/plex_autoscan.log
-		plexautoscansettings 
+		done
   elif [ "$typed" == "2" ]; then
         python /opt/plex_autoscan/scan.py update_sections
-		plexautoscansettings 
+		doneenter
+  elif [ "$typed" == "3" ]; then
+        credits
+		doneenter	
   elif [[ "$typed" == "A" || "$typed" == "a"  ]]; then
-		plexautoscansettings
+		badinput
   elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
-		plexautoscansettings
+		badinput
   elif [[ "$typed" == "S" || "$typed" == "S" ]]; then
-		plexautoscansettings
+		badinput
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
-    exit
+    question1
   else question1; fi
 }
 
