@@ -14,7 +14,7 @@ echo 'master' >/var/plexguide/pgcloner.projectversion
 echo 'pgclone.sh' >/var/plexguide/pgcloner.startlink
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-echo "💬 PG Clone utilizes RClone's Mounts + MergerFS's Union" >/var/plexguide/pgcloner.info
+echo "💬 rClone utilizes RClone's Mounts + MergerFS's Union" >/var/plexguide/pgcloner.info
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ### START PROCESS

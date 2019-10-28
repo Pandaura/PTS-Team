@@ -15,9 +15,9 @@ mainstart() {
     if [ -e "$file" ]; then waitvar=1; fi
   done
 
-  pgnumber=$(cat "/var/plexguide/pg.number")
-  latest=$(cat "/opt/pgstage/versions.sh" | head -n1)
-  dev=$(cat /opt/pgstage/versions.sh | sed -n 4p)
+  pgnumber=$(cat /var/plexguide/pg.number)
+  latest=$(cat /opt/pgstage/versions.sh | head -n1)
+  dev=$(cat /opt/pgstage/versions.sh | sed -n 2p)
   release="$(curl -s https://api.github.com/repos/MrDoobPG/PGBlitz.com/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
 
   tee <<-EOF
@@ -54,7 +54,7 @@ parttwo() {
 
   if [ "$storage" != "" ]; then
     break=yes
-    echo $storage >/var/plexguide/pg.number
+    echo -e $storage >/var/plexguide/pg.number
     ansible-playbook /opt/plexguide/menu/version/choice.yml
 
     tee <<-EOF

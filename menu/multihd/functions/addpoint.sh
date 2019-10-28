@@ -1,102 +1,122 @@
 #!/bin/bash
 #
-# Title:      PTS (Reference Title File)
-# Author(s):  Admin9705 - Deiteq
-# URL:        https://PTS.com - http://github.PTS.com
+# Title:      PGBlitz (Reference Title File)
+# Author(s):  Admin9705
+# URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-
-# Menu Interface
-tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚥 TroubleShoot Interface
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-[1] Pre-Installer: Force the Entire Process Again
-[2] UnInstaller  : Docker & Running Containers | Force Pre-Install
-[3] UnInstaller  : PTS
-Z - Exit
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-
-# Standby
-read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
-
-if [ "$typed" == "1" ]; then
+addpoint() {
+  rolevars
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🍖  NOM NOM - Resetting the Starting Variables!
+💪 Add HD or MountPoint
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTE1: This point must EXIST! PTS does not format drives, nor mount
+the secondary HDs for the user. Visit the URL to learn about the basics!
+Feel free to add/change the wiki in ordeer to help us all!
+
+NOTE2: Formatting Examples
+
+/hd2/mystuff
+/mystash/media
+/nas/XXYZY/hiddenvideos
+/media-NAS/storage/media
+/secondhd/user/
+
+Quitting? Type >>> q or exit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 EOF
-  sleep 3
-  echo "0" >/var/plexguide/pg.preinstall.stored
-  echo "0" >/var/plexguide/pg.ansible.stored
-  echo "0" >/var/plexguide/pg.rclone.stored
-  echo "0" >/var/plexguide/pg.python.stored
-  echo "0" >/var/plexguide/pg.docker.stored
-  echo "0" >/var/plexguide/pg.docstart.stored
-  echo "0" >/var/plexguide/pg.watchtower.stored
-  echo "0" >/var/plexguide/pg.label.stored
-  echo "0" >/var/plexguide/pg.alias.stored
-  echo "0" >/var/plexguide/pg.dep.stored
+  read -rp '↘️  Input Selection | Press [ENTER]: ' addpath </dev/tty
 
-  tee <<-EOF
+  if [[ "$addpath" == "exit" || "$addpath" == "Exit" || "$addpath" == "EXIT" || "$addpath" == "z" || "$addpath" == "Z" ]]; then multihdstart; fi
+  if [[ "$addpath" == "" ]]; then addpoint; fi
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅️ WOOT WOOT - Process Complete! Exit & Restart PTS Now!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-  sleep 5
+  addpointcheck
+}
 
-elif [ "$typed" == "2" ]; then
-  tee <<-EOF
+addpointcheck() {
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🍖  NOM NOM - Uninstalling Docker & Resetting the Variables!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-  sleep 3
-
-  rm -rf /etc/docker
-  apt-get purge docker-ce
-  rm -rf /var/lib/docker
-  rm -rf /var/plexguide/dep*
-  echo "0" >/var/plexguide/pg.preinstall.stored
-  echo "0" >/var/plexguide/pg.ansible.stored
-  echo "0" >/var/plexguide/pg.rclone.stored
-  echo "0" >/var/plexguide/pg.python.stored
-  echo "0" >/var/plexguide/pg.docstart.stored
-  echo "0" >/var/plexguide/pg.watchtower.stored
-  echo "0" >/var/plexguide/pg.label.stored
-  echo "0" >/var/plexguide/pg.alias.stored
-  echo "0" >/var/plexguide/pg.dep
+  # adds slashes if missing
+  if [[ $(echo $addpath | cut -c1) != "/" ]]; then addpath="/$addpath"; fi
+  if [[ $(echo $addpath | tail -c 2) == "/" ]]; then addpath="${addpath::-1}"; fi
 
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅️ WOOT WOOT - Process Complete! Exit & Restart PTS Now!
+💪 Processing Path: $addpath
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 EOF
-  sleep 5
-elif [ "$typed" == "3" ]; then
+
+  checkcheck1=$(ls -la "$addpath" 2>&1)
+  checkcheck2=$(echo $checkcheck1 | grep "cannot access")
+
+  # Checks to Make Sure the Path Is Valid
+  if [[ "$checkcheck2" != "" ]]; then
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💪 ERROR NOTICE 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PATH: $addpath
+
+NOTE: We are unable to verify that the following path above exists!
+Type "ls -la $addpath"
+
+Utilizing the above command may help determine what the problem is!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+    read -rp '↘️  Acknowledge Info | Press [ENTER] ' typed </dev/tty
+    addpoint
+  fi
+
+  # Checks to Make Sure BoneHead doesn't store the same path twice
+  checkcheck3=$(cat /var/plexguide/multihd.paths | grep "$addpath")
+  if [[ "$checkcheck3" != "" ]]; then
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💪 ERROR NOTICE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PATH: $addpath
+
+NOTE: This path ALREADY EXISTS in the MultiHD Setup! There is nothing else
+to do! EXITING!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+    read -rp '↘️  Acknowledge Info | Press [ENTER] ' typed </dev/tty
+    multihdstart
+  fi
+
+  # Congrats! The Path Exists and is now stored!
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🍖  NOM NOM - Starting the PG UnInstaller
+💪 SUCCESS NOTICE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PATH: $addpath
+
+NOTE1: The path exists! The path has now been saved to our MultiHD list!
+
+NOTE2: To take full affect Move/Blitz must be deployed/redeployed
+through rClone!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 EOF
-  sleep 3
 
-  echo "uninstall" >/var/plexguide/type.choice && bash /opt/plexguide/menu/core/scripts/main.sh
-elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
-  exit
-else
-  bash /opt/plexguide/menu/tshoot/tshoot.sh
-  exit
-fi
+  echo $addpath >>/var/plexguide/multihd.paths
+  read -rp '↘️  Acknowledge Info | Press [ENTER] ' typed </dev/tty
 
-bash /opt/plexguide/menu/tshoot/tshoot.sh
-exit
+  multihdstart
+}

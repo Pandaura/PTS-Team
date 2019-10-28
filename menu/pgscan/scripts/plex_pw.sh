@@ -1,102 +1,142 @@
 #!/bin/bash
 #
-# Title:      PTS (Reference Title File)
+# Title:      PGBlitz (Reference Title File)
 # Author(s):  Admin9705 - Deiteq
-# URL:        https://PTS.com - http://github.PTS.com
+# URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
 
-# Menu Interface
-tee <<-EOF
+# FUNCTIONS START ##############################################################
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚥 TroubleShoot Interface
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# BAD INPUT
+badinput() {
+  echo
+  read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
+  question1
+}
 
-[1] Pre-Installer: Force the Entire Process Again
-[2] UnInstaller  : Docker & Running Containers | Force Pre-Install
-[3] UnInstaller  : PTS
-Z - Exit
+badinput2() {
+  echo
+  read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
+  question2
+}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
+# FIRST QUESTION
 
-# Standby
-read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
-
-if [ "$typed" == "1" ]; then
+question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🍖  NOM NOM - Resetting the Starting Variables!
+🌎 Plex User Name Store
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1] - Generate stored details for PTS - PAS - Scan
+
+[Z] - Exit
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  sleep 3
-  echo "0" >/var/plexguide/pg.preinstall.stored
-  echo "0" >/var/plexguide/pg.ansible.stored
-  echo "0" >/var/plexguide/pg.rclone.stored
-  echo "0" >/var/plexguide/pg.python.stored
-  echo "0" >/var/plexguide/pg.docker.stored
-  echo "0" >/var/plexguide/pg.docstart.stored
-  echo "0" >/var/plexguide/pg.watchtower.stored
-  echo "0" >/var/plexguide/pg.label.stored
-  echo "0" >/var/plexguide/pg.alias.stored
-  echo "0" >/var/plexguide/pg.dep.stored
+  read -p 'Make a Selection | Press [ENTER]: ' typed </dev/tty
+  echo
 
+  if [ "$typed" == "1" ]; then
+    read -p 'Enter the PLEX User Name | Press [ENTER]: ' user </dev/tty
+    read -p 'Enter the PLEX User Pass | Press [ENTER]: ' pw </dev/tty
+
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🍖  NOM NOM - Saved Your Information!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+    sleep 3
+    question2
+  elif [ "$typed" == "2" ]; then 
+
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🍖  NOM NOM - Read Your Information!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+    sleep 3
+  question 2
+
+pw=$(cat /var/plexguide/plex.pw)
+user=$(cat /var/plexguide/plex.user)
+
+  elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
+    exit
+  else badinput; fi
+}
+
+question2() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅️ WOOT WOOT - Process Complete! Exit & Restart PTS Now!
+📂  User Name & Password Confirmation
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+User Name:  [ $user ]
+
+User Pass:  [ $pw ]
+
+⚠️  Information Correct?
+
+[1] YES
+
+[2] NO
+
+[Z] - Exit Interface
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  sleep 5
+  read -p 'Make a Selection | Press [ENTER]: ' typed </dev/tty
 
-elif [ "$typed" == "2" ]; then
-  tee <<-EOF
+  if [ "$typed" == "1" ]; then
+    tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🍖  NOM NOM - Uninstalling Docker & Resetting the Variables!
+🍖 NOM NOM - Got It!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTE: If the token is bad, this process will repeat again!
+
+EOF
+    sleep 4
+    question3
+  elif [ "$typed" == "2" ]; then
+    question1
+  elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
+    exit
+  else badinput2; fi
+}
+
+question3() {
+  echo "$pw" >/var/plexguide/plex.pw
+  echo "$user" >/var/plexguide/plex.user
+  ansible-playbook /opt/plexguide/menu/plex/token.yml
+  token=$(cat /var/plexguide/plex.token)
+  if [ "$token" != "" ]; then
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅️  Details stored Succeeded!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  sleep 3
-
-  rm -rf /etc/docker
-  apt-get purge docker-ce
-  rm -rf /var/lib/docker
-  rm -rf /var/plexguide/dep*
-  echo "0" >/var/plexguide/pg.preinstall.stored
-  echo "0" >/var/plexguide/pg.ansible.stored
-  echo "0" >/var/plexguide/pg.rclone.stored
-  echo "0" >/var/plexguide/pg.python.stored
-  echo "0" >/var/plexguide/pg.docstart.stored
-  echo "0" >/var/plexguide/pg.watchtower.stored
-  echo "0" >/var/plexguide/pg.label.stored
-  echo "0" >/var/plexguide/pg.alias.stored
-  echo "0" >/var/plexguide/pg.dep
-
-  tee <<-EOF
+    sleep 4
+  else
+    tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅️ WOOT WOOT - Process Complete! Exit & Restart PTS Now!
+⛔️  Details Failed!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTE: Process will repeat until you succeed or exit!
+
 EOF
-  sleep 5
-elif [ "$typed" == "3" ]; then
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🍖  NOM NOM - Starting the PG UnInstaller
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-  sleep 3
-
-  echo "uninstall" >/var/plexguide/type.choice && bash /opt/plexguide/menu/core/scripts/main.sh
-elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
-  exit
-else
-  bash /opt/plexguide/menu/tshoot/tshoot.sh
-  exit
-fi
-
-bash /opt/plexguide/menu/tshoot/tshoot.sh
-exit
+    read -p 'Confirm Info | Press [ENTER] ' typed </dev/tty
+    question1
+  fi
+}
+  question1

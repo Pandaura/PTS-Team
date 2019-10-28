@@ -12,8 +12,8 @@ tee <<-EOF
 📂  Cloud Service Installer
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Cloud Instance: Google   (Blitz ~ GCE Edition)
-[2] Cloud Instance: Hetzner
+[ 1 ] Cloud Instance: Google   [ Blitz ~ GCE Edition ]
+[ 2 ] Cloud Instance: Hetzner
 
 [Z] - Exit
 
@@ -25,7 +25,7 @@ read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
 
 if [ "$typed" == "1" ]; then
   echo gce >/var/plexguide/type.choice
-  bash /opt/plexguide/menu/gce/blitzgce.sh
+  bash /opt/plexguide/menu/pgcloner/blitzgce.sh
 elif [ "$typed" == "2" ]; then
   bash /opt/plexguide/menu/hcloud/hcloud.sh
 elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then

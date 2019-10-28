@@ -46,6 +46,7 @@
         - { package: 'python-lxml' }
         - { package: 'acl' }
         - { package: 'python-apt' }
+        - { package: 'rsync' }
 
     - name: Update pip packages for python3
       pip:

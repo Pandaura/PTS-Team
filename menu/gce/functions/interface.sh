@@ -5,7 +5,7 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-source /opt/plexguide/menu/gce/functions/main.sh
+source /opt/blitzgce/functions/main.sh
 suffix=GB
 billingdeny() {
   if [[ $(gcloud beta billing accounts list | grep "\<True\>") == "" ]]; then
@@ -17,8 +17,11 @@ billingdeny() {
 
 REASON: Billing Failed
 
-INSTRUCTIONS: Must turn on the billing for first for this project in
-GCE Panel. Exiting!
+INSTRUCTIONS: 
+
+Must turn on the billing for first for this project in GCE Panel. 
+
+Exiting!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -50,10 +53,13 @@ deployfail() {
 🌎  Deployment Checks Failed!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Failed to set the processer count, log in, and/or set your server
+Failed to set the processer/nvme or ram count, log in, and/or set your server
 location! Ensure that everything is set before deploying the GCE Server!
 
-INSTRUCTIONS: Quit Being a BoneHead and Read!
+INSTRUCTIONS: 
+
+Quit Being a BoneHead and Read!
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -70,11 +76,15 @@ nvmecount() {
 🌎  NVME Count
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Most users will only need to utilize 1 -2 NVME Drives. The more, the
-faster the processing, but the faster your credits drain. If intent is to
-be in beast mode during the GCEs duration, 3 - 4 is acceptable.
+Most users will only need to utilize 1 - 2 NVME Drives. 
+The more, the faster the processing, but the faster your credits drain. 
+If intent is to be in beast mode during the GCEs duration.
 
-INSTRUCTIONS: Set the NVME Count ~ 1/2/3/4
+INSTRUCTIONS: Set the NVME Count ~ 1 / 2 / 3 / 4
+
+NOTE : if you use 1- 3 Nvmes you will get a swraid0
+NOTE : if you use 4 Nvmes you will get a swraid5
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -110,9 +120,9 @@ ramcount() {
 🌎  RAM Count
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Most users will only need to utilize 8 Gb Ram . The more, the
-faster the processing, but the faster your credits drain. If intent is to
-be in beast mode during the GCEs duration, 16GB is acceptable.
+Most users will only need to utilize 8 Gb Ram. 
+Then more, the faster the processing, but the faster your credits drain. 
+If intent is to be in beast mode during the GCEs duration.
 
 INSTRUCTIONS: Set the RAM Count ~ 8 / 12 / 16 GB
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -136,11 +146,15 @@ processorcount() {
 🌎  Processor Count
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-INFORMATION: The processor count utilizes can affect how fast your credits
-drain. If usage is light, select 4. If for average use, 4 or 6 is fine.
+INFORMATION: 
+
+The processor count utilizes can affect how fast your credits drain. 
+If usage is light, select 4. 
+If for average use, 4 or 6 is fine.
 Only utilize 8 if the GCE will be used heavily!
 
-INSTRUCTIONS: Set the Processor Count ~ 4/6/8
+INSTRUCTIONS: Set the Processor Count ~ 4 / 6 / 8
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -162,13 +176,14 @@ projectinterface() {
 🌎  Project Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Project ID: $projectid
+Project ID: [ $projectid ]
 
-[1] Utilize/Change Existing Project
-[2] Build a New Project
-[3] Destroy Existing Project
+[ 1 ] Utilize/Change Existing Project
+[ 2 ] Build a New Project
 
-[Z] Exit
+[ 3 ] Destroy Existing Project
+
+[ Z ] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -185,10 +200,13 @@ EOF
 🌎  Utilize/Change Existing Project
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-QUESTION: Which existing project will be utilized for the PG-GCE?
-$prolist
+QUESTION: 
 
-[Z] Exit
+Which existing project will be utilized for the GCE?
+
+[ $prolist ]
+
+[ Z ] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -277,11 +295,13 @@ EOF
 🌎  Create & Set a Project Name
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-INSTRUCTIONS: Set a Project Name and keep it short and simple! No spaces
-and keep it all lower case! Failing to do so will result in naming
-issues.
+INSTRUCTIONS: 
 
-[Z] Exit
+Set a Project Name and keep it short and simple! 
+No spaces and keep it all lower case! 
+Failing to do so will result in naming issues.
+
+[ Z ] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -305,8 +325,9 @@ EOF
 🌎  Project Message
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-INFO: $projectfinal created. Ensure afterwards to ESTABLISH the project
-as your default to utilize!
+INFO: $projectfinal created.
+
+Ensure afterwards to ESTABLISH the project as your default to utilize!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -329,9 +350,10 @@ WARNING : Deleting projects will result in deleting keys that are
 associated with it! Be careful in what your doing!
 
 QUESTION: Which existing project will be deleted?
-$prolist
 
-[Z] Exit
+[ $prolist ]
+
+[ Z ] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

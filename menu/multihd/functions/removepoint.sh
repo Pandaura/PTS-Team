@@ -1,104 +1,103 @@
 #!/bin/bash
 #
 # Title:      PGBlitz (Reference Title File)
-# Author(s):  Admin9705 - Deiteq
+# Author(s):  Admin9705
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
+removepoint() {
+  rolevars
 
-# KEY VARIABLE RECALL & EXECUTION
-program=$(cat /tmp/program_var)
-mkdir -p /var/plexguide/cron/
-mkdir -p /opt/appdata/plexguide/cron
-# FUNCTIONS START ##############################################################
-source /opt/plexguide/menu/functions/functions.sh
-RAN=$(head /dev/urandom | tr -dc 0-7 | head -c 1)
-# FIRST QUESTION
-question1() {
+  # Nothing Exist; kick user back to main menu
+  frontoutput=$(cat /var/plexguide/multihd.paths)
+  if [[ "$frontoutput" == "" ]]; then
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💪 Remove an HD or MountPoint
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTE: No HD's or MountPoints have been stored! Unable to remove something
+that does not exist! EXITING!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+    read -rp '↘️  Acknowledge Info | Press [ENTER] ' typed </dev/tty
+    multihdstart
+  fi
+
+  inputphase
+}
+
+inputphase() {
+
+  rm -rf /var/plexguide/.tmp.removepointmenu 1>/dev/null 2>&1
+
+  # Starting Process
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⌛ Cron - Schedule Cron Jobs (Backups) | $program?
+💪 Remove an HD/MountPoint
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NOTE: Type a number selection in order to remove one of the HD/Mountpoints
 
-[ 1 ] No
-
-[ 2 ] Yes
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
+  num=0
+  while read p; do
+    ((num++))
+    echo "[$num] $p"
+    echo "[$num] $p" >>/var/plexguide/.tmp.removepointmenu
+  done </var/plexguide/multihd.paths
 
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-  if [ "$typed" == "1" ]; then
-    ansible-playbook /opt/plexguide/menu/cron/remove.yml && exit
-  elif [ "$typed" == "2" ]; then
-    break="on"
-  else badinput; fi
+  tee <<-EOF
+
+Quitting? Type >>> exit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+  read -rp '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
+  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then multihdstart; fi
+  if [[ "$typed" == "" ]]; then inputphase; fi
+
+  if [[ "$typed" -ge "1" && "$typed" -le "$num" ]]; then removepointfinal; fi
+
+  inputphase
 }
 
-# SECOND QUESTION
-question2() {
+removepointfinal() {
+
+  cat /var/plexguide/.tmp.removepointmenu | grep "$typed" >/var/plexguide/.tmp.removepointmenu.select
+  removestore=$(cat /var/plexguide/.tmp.removepointmenu.select | awk '{print $2}')
+
+  rm -rf /var/plexguide/.tmp.removebuild 1>/dev/null 2>&1
+  num=0
+  while read p; do
+    if [[ "$removestore" != "$p" ]]; then echo "$p" >>/var/plexguide/.tmp.removebuild; fi
+  done </var/plexguide/multihd.paths
+
+  rm -rf /var/plexguide/multihd.paths
+  cp /var/plexguide/.tmp.removebuild /var/plexguide/multihd.paths
+
+  # Congrats! The Path Should Now Be Removed
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⌛  Cron - Backup How Often?
+💪 SUCCESS NOTICE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-WEEKLY
+PATH: $removestore
 
-[ 0 / 7 ] - Sunday
-[ 1 ]     - Monday
-[ 2 ]     - Tuesday
-[ 3 ]     - Wednesday
-[ 4 ]     - Thursday
-[ 5 ]     - Friday
-[ 6 ]     - Saturday
+NOTE1: The following path has been removed from the MultiHD List!
 
-DAILY
-[ 8 ] - Daily
-
-RANDOM
-[ 9 ] - RANDOM
+NOTE2: To take full affect Move/Blitz must be deployed/redeployed
+through rClone!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 EOF
+  read -rp '↘️  Acknowledge Info | Press [ENTER] ' typed </dev/tty
 
-read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-  
-if [[ "$typed" -ge "0" && "$typed" -le "7" ]]; then echo $typed >/var/plexguide/cron/cron.day && break=1;
-elif [ "$typed" == "8" ]; then echo "*" > /var/plexguide/cron/cron.day && break=1;
-elif [ "$typed" == "9" ]; then echo $RAN >/var/plexguide/cron/cron.day && break=1;
-else badinput; fi
+  multihdstart
 }
-
-# THIRD QUESTION
-question3() {
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⌛ Cron - Hour of the Day?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Type an HOUR from [0 to 23]
-
-0  = 00:00 | 12AM
-12 = 12:00 | 12PM
-18 = 18:00 | 6 PM
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-
-  read -p '↘️  Type a Number | Press [ENTER]: ' typed </dev/tty
-  if [[ "$typed" -ge "0" && "$typed" -le "23" ]]; then
-    echo $typed >/var/plexguide/cron/cron.hour && break=1
-  else badinput; fi
-}
-
-# FUNCTIONS END ##############################################################
-
-break=off && while [ "$break" == "off" ]; do question1; done
-break=off && while [ "$break" == "off" ]; do question2; done
-break=off && while [ "$break" == "off" ]; do question3; done
-
-echo $(($RANDOM % 59)) >/var/plexguide/cron/cron.minute
-ansible-playbook /opt/plexguide/menu/cron/cron.yml

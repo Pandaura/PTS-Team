@@ -5,61 +5,70 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-source /opt/blitzgce/functions/main.sh
-
-destroyserver() {
-
-  ### checking to making sure there is a server deployed to destroy
-  destorycheck=$(gcloud compute instances list | grep pg-gce | head -n +1 | awk '{print $1}')
-  if [[ "$destorycheck" == "" ]]; then
-
+multihdstart() {
+    rolevars
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎 SYSTEM MESSAGE: No GCE Server Deployed! Exiting!
+💪 Welcome to MultiHD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1] Add     (HD or MountPoint)
+[2] Remove  (HD or MountPoint)
+[3] View    (Current MultiHD List)
+
+NOTE: When finished making changes; PG Clone must redeploy in order for
+the changes to take affect in (Union) MergerFS!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[Z] Exit
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-    read -p '↘️  Acknowledge Info | Press [ENTER] ' typed </dev/tty
-    gcestart
-  fi
+    read -rp '↘️  Input Selection | Press [ENTER]: ' typed </dev/tty
+    multihdstartinput
+}
 
-  ### starting process
-  echo
-  variablepull
-  zone=$(gcloud compute instances list | tail -n 1 | awk '{print $2}')
-  #ipdelete=$(gcloud compute addresses list | grep pg-gce | head -n +1 | awk '{print $2}')
-
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎 SYSTEM MESSAGE: Destroying Server - Can Take Awhile!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-
-  gcloud compute instances delete pg-gce --zone $ipzone --quiet
-
-  tee <<-EOF
+multihdstartinput() {
+    case $typed in
+    1)
+        addpoint
+        ;;
+    2)
+        removepoint
+        ;;
+    3)
+        tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎 SYSTEM MESSAGE: Releasing IP Address
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-  rm -rf /var/plexguide/project.zone
-  rm -rf /var/plexguide/project.ipregion
-  rm -rf /var/plexguide/project.ipaddress
-  gcloud compute addresses delete pg-gce --region $ipregion --quiet
-  rm -rf /root/.ssh/google_compute_engine 1>/dev/null 2>&1
-
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎 SYSTEM MESSAGE: Process Complete!
+💪 Established and Verified MountPoints
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
 
-  read -p '↘️  Acknowledge Info | Press [ENTER] ' typed </dev/tty
+        frontoutput=$(cat /var/plexguide/multihd.paths)
+        if [[ "$frontoutput" == "" ]]; then
+            echo "NOTHING HAS BEEN SETUP!"
+        else cat /var/plexguide/multihd.paths; fi
+
+        tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+        read -rp '↘️  Acknowledge Info | Press [ENTER] ' typed </dev/tty
+
+        multihdstart
+        ;;
+    z)
+        exit
+        ;;
+    Z)
+        exit
+        ;;
+    *)
+        multihdstart
+        ;;
+    esac
+    multihdstart
 }
