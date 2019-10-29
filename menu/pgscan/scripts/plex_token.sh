@@ -31,7 +31,11 @@ if [ -z "$X_PLEX_TOKEN" ]; then
 fi
 cp -r $template $templatebackup
 echo $X_PLEX_TOKEN >/var/plexguide/plex.token
-sed -i 's/plex_auth_token/'$X_PLEX_TOKEN'/g' $template
+#sed -i 's/plex_auth_token/'$X_PLEX_TOKEN'/g' $template
+#use jq instead.
+jq '.PLEX_TOKEN = "$X_PLEX_TOKEN"' $template | sponge $template 
 
 RAN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
-sed -i 's/plex_autoscan_server_pass/'$RAN'/g' $template
+#sed -i 's/plex_autoscan_server_pass/'$RAN'/g' $template
+#use jq instead
+jq '.SERVER_PASS = "$RAN" $template | sponge $template
