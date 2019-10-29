@@ -38,4 +38,4 @@ jq '.PLEX_TOKEN = "$X_PLEX_TOKEN"' $template | sponge $template
 RAN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 #sed -i 's/plex_autoscan_server_pass/'$RAN'/g' $template
 #use jq instead
-jq '.SERVER_PASS = "$RAN" $template | sponge $template
+jq '.SERVER_PASS = "$RAN"' $template | sponge $template
