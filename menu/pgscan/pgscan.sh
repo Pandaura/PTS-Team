@@ -25,7 +25,12 @@ userstatus() {
 tokenstatus() {
   ptokendep=$(cat /var/plexguide/plex.token)
   if [ "$ptokendep" != "" ]; then
-    pstatus="✅ DEPLOYED"
+  PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(cat /opt/plex_autoscan/config/config.json | jq .PLEX_TOKEN | sed 's/"//g' )"  -o /dev/null -w '%{http_code}\n' -s)
+  	if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then
+  	  pstatus="✅ DEPLOYED"
+	  else
+	  pstatus="❌ DEPLOYED BUT PAS TOKEN FAILED"
+	fi
   else pstatus="⚠️ NOT DEPLOYED"; fi
 }
 
