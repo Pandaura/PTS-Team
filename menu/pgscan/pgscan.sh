@@ -169,7 +169,7 @@ EOF
 		question1
   elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
 		showupdomain
-  elif [[ "$typed" == "S" || "$typed" == "S" ]]; then
+  elif [[ "$typed" == "S" || "$typed" == "s" ]]; then
 		plexautoscansettings
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     exit
