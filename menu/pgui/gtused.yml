@@ -17,7 +17,7 @@
 - cron:
     name: Daily check for mgerfs / rclone new version
     special_time: 'daily'
-    job: 'bash /opt/appdata/pgui/ckeck.sh'
+    job: 'bash /opt/appdata/pgui/check.sh'
     state: present
 
 - cron:
