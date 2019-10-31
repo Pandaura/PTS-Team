@@ -3,7 +3,7 @@
   action: "{{backcompat_pkg_mgr}} name={{item}}"
   sudo: yes
   register: result_default
-  until: result_default|success
+  until: result_default is success
   # Workaround https://github.com/ansible/ansible/issues/16868 and
   # increase default retry count
   retries: 20
@@ -32,7 +32,7 @@
   command: dnf install -y {{package_names | join(' ')}}
   sudo: yes
   register: result_dnf
-  until: result_dnf|success
+  until: result_dnf is success
   # Workaround https://github.com/ansible/ansible/issues/16868 and
   # increase default retry count
   retries: 20
@@ -42,4 +42,4 @@
     package_names is defined and
     package_names and
     backcompat_pkg_mgr == "dnf" and
-    package_exists_result|failed
+    package_exists_result is failed

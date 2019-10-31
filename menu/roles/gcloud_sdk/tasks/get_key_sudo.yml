@@ -8,7 +8,7 @@
     creates: /root/A7317B0F.gpg
   sudo: yes
   register: result_download
-  until: result_download|success
+  until: result_download is success
   # Workaround https://github.com/ansible/ansible/issues/16868 and
   # increase default retry count
   retries: 20

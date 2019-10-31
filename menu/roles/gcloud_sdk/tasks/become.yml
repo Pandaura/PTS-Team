@@ -1,6 +1,8 @@
 ---
-- { become: yes, include: compat.yml }
-- { become: yes, include: Debian.yml, when: ansible_os_family == 'Debian' }
-- { become: yes, include: RedHat.yml, when: ansible_os_family == 'RedHat' }
-- { become: yes, include: install_package_names.yml }
-- { become: yes, include: install_additional_packages.yml }
+- include_tasks: compat.yml
+- include_tasks: Debian.yml
+  when: ansible_os_family == 'Debian'
+- include_tasks: RedHat.yml
+  when: ansible_os_family == 'RedHat'
+- include_tasks: install_package_names.yml
+- include_tasks: install_additional_packages.yml

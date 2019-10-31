@@ -1,6 +1,7 @@
 ---
 - name: repo
-  template: >
-    src=google-cloud-sdk.repo.j2
-    dest=/etc/yum.repos.d/google-cloud-sdk.repo
-    force=no
+  template:
+    src: google-cloud-sdk.repo.j2
+    dest: /etc/yum.repos.d/google-cloud-sdk.repo
+    force: no
+  become: yes
