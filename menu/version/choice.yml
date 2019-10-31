@@ -11,7 +11,7 @@
   tasks:
     - name: 'Installing Version'
       git:
-        repo: 'https://github.com/MrDoobPG/PGBlitz.com'
+        repo: 'https://github.com/PTS-Team/PTS-Team'
         dest: '/opt/plexguide'
         version: 'master'
         force: yes
