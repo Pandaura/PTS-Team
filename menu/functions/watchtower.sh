@@ -9,18 +9,6 @@ source /opt/plexguide/menu/functions/functions.sh
 abc="/var/plexguide"
 echo "11" >${abc}/pg.watchtower
 
-core watchtower
-
-core() {
-  touch ${abc}/pg."${1}".stored
-  start=$(cat /var/plexguide/pg."${1}")
-  stored=$(cat /var/plexguide/pg."${1}".stored)
-  if [ "$start" != "$stored" ]; then
-    $1
-    cat ${abc}/pg."${1}" >${abc}/pg."${1}".stored
-  fi
-}
-
 watchtower() {
 
   file="/var/plexguide/watchtower.wcheck"

@@ -5,17 +5,9 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-# file="/var/plexguide/pg.number"
-# if [ -e "$file" ]; then
-  # check="$(cat /var/plexguide/pg.number | head -c 1)"
-  # if [[ "$check" == "5" || "$check" == "6" || "$check" == "7" ]]; then
-    # exit
-  # fi
-# fi
-
 # Create Variables (If New) & Recall
 pcloadletter() {
-  touch /var/plexguide/pgclone.transport
+  touch $filevg/pgclone.transport
   temp=$(cat /var/plexguide/pgclone.transport)
   if [ "$temp" == "mu" ]; then
     transport="Move"
@@ -28,7 +20,7 @@ pcloadletter() {
   elif [ "$temp" == "le" ]; then
     transport="Local"
   else transport="NOT-SET"; fi
-  echo "$transport" >/var/plexguide/pg.transport
+  echo "$transport" >$filevg/pg.transport
 }
 
 variable() {
@@ -60,27 +52,27 @@ varstart() {
   fi
 
   ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - START
-  variable /var/plexguide/pgfork.project "NOT-SET"
-  variable /var/plexguide/pgfork.version "NOT-SET"
-  variable /var/plexguide/tld.program "NOT-SET"
-  variable /opt/appdata/plexguide/plextoken "NOT-SET"
-  variable /var/plexguide/server.ht ""
-  variable /var/plexguide/server.ports "127.0.0.1:"
-  variable /var/plexguide/server.email "NOT-SET"
-  variable /var/plexguide/server.domain "NOT-SET"
-  variable /var/plexguide/tld.type "standard"
-  variable /var/plexguide/transcode.path "standard"
-  variable /var/plexguide/pgclone.transport "NOT-SET"
-  variable /var/plexguide/plex.claim ""
-
+  variable $filevg/pgfork.project "NOT-SET"
+  variable $filevg/pgfork.version "NOT-SET"
+  variable $filevg/tld.program "NOT-SET"
+  variable $fileag/plextoken "NOT-SET"
+  variable $filevg/server.ht ""
+  variable $filevg/server.ports "127.0.0.1:"
+  variable $filevg/server.email "NOT-SET"
+  variable $filevg/server.domain "NOT-SET"
+  variable $filevg/tld.type "standard"
+  variable $filevg/transcode.path "standard"
+  variable $filevg/pgclone.transport "NOT-SET"
+  variable $filevg/plex.claim ""
+  
   #### Temp Fix - Fixes Bugged AppGuard
   serverht=$(cat /var/plexguide/server.ht)
   if [ "$serverht" == "NOT-SET" ]; then
-    rm /var/plexguide/server.ht
-    touch /var/plexguide/server.ht
+    rm $filevg/server.ht
+    touch $filevg/server.ht
   fi
 
-  hostname -I | awk '{print $1}' >/var/plexguide/server.ip
+  hostname -I | awk '{print $1}' >$filevg/server.ip
   ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - END
   echo "export NCURSES_NO_UTF8_ACS=1" >>/etc/bash.bashrc.local
 
@@ -93,28 +85,28 @@ varstart() {
   #################################################################################
 
   # Touch Variables Incase They Do Not Exist
-  touch /var/plexguide/pg.edition
-  touch /var/plexguide/server.id
-  touch /var/plexguide/pg.number
-  touch /var/plexguide/traefik.deployed
-  touch /var/plexguide/server.ht
-  touch /var/plexguide/server.ports
-  touch /var/plexguide/pg.server.deploy
+  touch $filevg/pg.edition
+  touch $filevg/server.id
+  touch $filevg/pg.number
+  touch $filevg/traefik.deployed
+  touch $filevg/server.ht
+  touch $filevg/server.ports
+  touch $filevg/pg.server.deploy
 
   # For PG UI - Force Variable to Set
   ports=$(cat /var/plexguide/server.ports)
   if [ "$ports" == "" ]; then
-    echo "Open" >/var/plexguide/pg.ports
-  else echo "Closed" >/var/plexguide/pg.ports; fi
+    echo "Open" >$filevg/pg.ports
+  else echo "Closed" >$filevg/pg.ports; fi
 
-  ansible --version | head -n +1 | awk '{print $2'} >/var/plexguide/pg.ansible
-  docker --version | head -n +1 | awk '{print $3'} | sed 's/,$//' >/var/plexguide/pg.docker
-  lsb_release -si >/var/plexguide/pg.os
+  ansible --version | head -n +1 | awk '{print $2'} >$filevg/pg.ansible
+  docker --version | head -n +1 | awk '{print $3'} | sed 's/,$//' >$filevg/pg.docker
+  lsb_release -si >$filevg/pg.os
   
-  ## stupid line cat /etc/os-release | head -n +5 | tail -n +5 | cut -d'"' -f2 >/var/plexguide/pg.os
+  ## stupid line cat /etc/os-release | head -n +5 | tail -n +5 | cut -d'"' -f2 >$filevg/pg.os
 
   file="/var/plexguide/gce.false"
-  if [ -e "$file" ]; then echo "No" >/var/plexguide/pg.gce; else echo "Yes" >/var/plexguide/pg.gce; fi
+  if [ -e "$file" ]; then echo "No" >$filevg/pg.gce; else echo "Yes" >$filevg/pg.gce; fi
 
   # Call Variables
   edition=$(cat /var/plexguide/pg.edition)
@@ -124,23 +116,23 @@ varstart() {
   # Declare Traefik Deployed Docker State
   if [[ $(docker ps | grep "traefik") == "" ]]; then
     traefik="NOT DEPLOYED"
-    echo "Not Deployed" >/var/plexguide/pg.traefik
+    echo "Not Deployed" >$filevg/pg.traefik
   else
     traefik="DEPLOYED"
-    echo "Deployed" >/var/plexguide/pg.traefik
+    echo "Deployed" >$filevg/pg.traefik
   fi
 
   if [[ $(docker ps | grep "oauth") == "" ]]; then
     traefik="NOT DEPLOYED"
-    echo "Not Deployed" >/var/plexguide/pg.auth
+    echo "Not Deployed" >$filevg/pg.auth
   else
     traefik="DEPLOYED"
-    echo "Deployed" >/var/plexguide/pg.oauth
+    echo "Deployed" >$filevg/pg.oauth
   fi
 
   # For ZipLocations
   file="/var/plexguide/data.location"
-  if [ ! -e "$file" ]; then echo "/opt/appdata/plexguide" >/var/plexguide/data.location; fi
+  if [ ! -e "$file" ]; then echo "/opt/appdata/plexguide" >$filevg/data.location; fi
 
   space=$(cat /var/plexguide/data.location)
   used=$(df -h / --local | tail -n +2 | awk '{print $3}' )
@@ -148,8 +140,8 @@ varstart() {
   percentage=$(df -h / --local | tail -n +2 | awk '{print $5}')
 
   # For the PGBlitz UI
-  echo "$used" >/var/plexguide/pg.used
-  echo "$capacity" >/var/plexguide/pg.capacity
+  echo "$used" >$filevg/pg.used
+  echo "$capacity" >$filevg/pg.capacity
 }
 
 menuprime() {
