@@ -195,16 +195,16 @@ EOF
 
   tee <<-EOF
 
-[1]  Traefik    : Reverse Proxy
-[2]  PTS Shield : Enable Google's OAuthentication Protection
-[3]  Port Guard : [$ports] Protects the Server Ports
-[4]  rClone     : Mount Transport
-[5]  APPBox     : Apps ~ Core, Community & Removal
-[6]  CBOX-PAS   : PlexAutoScan [ ALPHA VERSION ]
+[1]  PTS-Traefik    : Reverse Proxy
+[2]  PTS-Shield     : Enable Google's OAuthentication Protection
+[3]  Port Guard     : [$ports] Protects the Server Ports
+[4]  PTS-Clone      : Mount Transport
+[5]  PTS-Apps       : Apps ~ Core, Community & Removal
+[6]  CBOX-PAS       : PlexAutoScan [ ALPHA VERSION ]
 
-[7]  WordPress  : Deploy WordPress Instances
-[8]  PTS Vault  : Backup & Restore
-[9]  Cloud      : GCE & Virtual Instances
+[7]  PTS-WordPress  : Deploy WordPress Instances
+[8]  PTS-Vault      : Backup & Restore
+[9]  PTS-Cloud      : GCE & Virtual Instances
 
 [10] Tools
 [11] Settings
