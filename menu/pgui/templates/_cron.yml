@@ -16,7 +16,7 @@
 - cron:
     name: Daily G/TDrive used space check | file checker
     special_time: 'daily'
-    job: 'bash /opt/appdata/pgui/ckeck.sh'
+    job: 'bash /opt/appdata/pgui/check.sh'
     state: absent
   ignore_errors: yes
 
