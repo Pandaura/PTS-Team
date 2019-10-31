@@ -93,7 +93,6 @@ pginstall() {
   core gcloud
   core cleaner &>/dev/null &
   core serverid
-  core watchtower
   core prune
   customcontainers &>/dev/null &
   pgedition
