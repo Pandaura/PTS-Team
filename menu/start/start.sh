@@ -7,6 +7,7 @@
 ################################################################################
 # Create Variables (If New) & Recall
 pcloadletter() {
+  filevg="/var/plexguide"
   touch $filevg/pgclone.transport
   temp=$(cat /var/plexguide/pgclone.transport)
   if [ "$temp" == "mu" ]; then
