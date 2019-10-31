@@ -32,6 +32,8 @@ watchtower() {
 [2] Containers: Auto-Update All Except | Plex & Emby
 [3] Containers: Never Update
 
+[4] Remove WatchTower
+
 [Z] - Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -53,6 +55,12 @@ EOF
   elif [ "$typed" == "3" ]; then
     echo null >/tmp/watchtower.set
     ansible-playbook /opt/coreapps/apps/watchtower.yml
+    echo "3" >${abc}/watchtower.wcheck
+  elif [ "$typed" == "4" ]; then
+    echo null >/tmp/watchtower.set
+    docker stop watchtower >/dev/null 2>&1
+	docker rm watchtower >/dev/null 2>&1
+	echo "Watchtower Removed"
     echo "3" >${abc}/watchtower.wcheck
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     if [ "$wexit" == "0" ]; then
