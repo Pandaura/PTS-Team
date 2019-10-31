@@ -8,12 +8,12 @@
 
 ### FILL OUT THIS AREA ###
 echo 'pgpatrol' >/var/plexguide/pgcloner.rolename
-echo 'PGPatrol' >/var/plexguide/pgcloner.roleproper
-echo 'PGPatrol' >/var/plexguide/pgcloner.projectname
+echo 'PTS-Patrol' >/var/plexguide/pgcloner.roleproper
+echo 'PTS-Patrol' >/var/plexguide/pgcloner.projectname
 echo 'v8.6' >/var/plexguide/pgcloner.projectversion
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-echo "💬 Patrol can boot idle plex users, users utilizing multiple
+echo "💬 PTS-Patrol can boot idle plex users, users utilizing multiple
 ips (sharing the server), and much more!" >/var/plexguide/pgcloner.info
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

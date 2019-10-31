@@ -8,9 +8,9 @@
 
 ### FILL OUT THIS AREA ###
 echo 'pgpress' >/var/plexguide/pgcloner.rolename
-echo 'PGPress' >/var/plexguide/pgcloner.roleproper
-echo 'PGPress' >/var/plexguide/pgcloner.projectname
-echo 'v8.6' >/var/plexguide/pgcloner.projectversion
+echo 'PTS-WordPress' >/var/plexguide/pgcloner.roleproper
+echo 'PTS-WordPress' >/var/plexguide/pgcloner.projectname
+echo 'master' >/var/plexguide/pgcloner.projectversion
 echo 'pressmain.sh' >/var/plexguide/pgcloner.startlink
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

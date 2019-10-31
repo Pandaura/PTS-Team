@@ -4,7 +4,7 @@
   tasks:
     - name: 'Cloning PTS Install files'
       git:
-        repo: 'https://github.com/MrDoobPG/Install'
+        repo: 'https://github.com/PTS-Team/Install'
         dest: '/opt/pgstage'
         version: 'master'
         force: yes

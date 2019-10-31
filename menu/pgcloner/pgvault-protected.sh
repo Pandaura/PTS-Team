@@ -8,9 +8,9 @@
 
 ### FILL OUT THIS AREA ###
 echo 'pgvault' >/var/plexguide/pgcloner.rolename
-echo 'PG Vault' >/var/plexguide/pgcloner.roleproper
-echo 'PGVault' >/var/plexguide/pgcloner.projectname
-echo 'v8.6' >/var/plexguide/pgcloner.projectversion
+echo 'PTS-Vault' >/var/plexguide/pgcloner.roleproper
+echo 'PTS-Vault' >/var/plexguide/pgcloner.projectname
+echo 'master' >/var/plexguide/pgcloner.projectversion
 echo 'pgvault-protected.sh' >/var/plexguide/pgcloner.startlink
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

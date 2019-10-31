@@ -10,7 +10,7 @@
 echo 'traefik' >/var/plexguide/pgcloner.rolename
 echo 'Traefik' >/var/plexguide/pgcloner.roleproper
 echo 'Traefik' >/var/plexguide/pgcloner.projectname
-echo 'v8.6' >/var/plexguide/pgcloner.projectversion
+echo 'master' >/var/plexguide/pgcloner.projectversion
 echo 'traefik.sh' >/var/plexguide/pgcloner.startlink
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
