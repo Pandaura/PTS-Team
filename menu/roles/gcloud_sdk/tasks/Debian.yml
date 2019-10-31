@@ -16,7 +16,6 @@
 # Install apt-transport-https
 - name: install apt-transport-https
   action: "{{backcompat_pkg_mgr}} name=apt-transport-https"
-  force_apt_get: yes
   register: result_install_transport_https
   until: result_install_transport_https is success
   # Workaround https://github.com/ansible/ansible/issues/16868 and
