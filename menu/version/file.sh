@@ -38,7 +38,7 @@ Installed : $pgnumber
 EOF
 
   break=no
-  read -p '🌍  TYPE master or dev | PRESS ENTER: ' typed
+  read -p '🌍  TYPE master | dev or preview | PRESS ENTER: ' typed
   storage=$(grep $typed /opt/pgstage/versions.sh)
 
   parttwo
