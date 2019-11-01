@@ -10,7 +10,7 @@
 echo 'pgpatrol' >/var/plexguide/pgcloner.rolename
 echo 'PTS-Patrol' >/var/plexguide/pgcloner.roleproper
 echo 'PTS-Patrol' >/var/plexguide/pgcloner.projectname
-echo 'v8.6' >/var/plexguide/pgcloner.projectversion
+echo 'master' >/var/plexguide/pgcloner.projectversion
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 echo "💬 PTS-Patrol can boot idle plex users, users utilizing multiple
