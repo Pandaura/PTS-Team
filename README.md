@@ -116,4 +116,5 @@ PTS  is a **fork ** of PGBlitz / Plexguide, an all-in-one media solution that de
 
 ## 6. Having Issues?
 
-[**[Click Here]**](https://github.com/MrDoobPG/PTS-Team/wiki/Common-Issues) for more information!
+[**[Click Here]**](https://github.com/PTS-Team/PTS-Team/wiki/Common-Issues) for more information!
+
