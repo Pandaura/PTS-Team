@@ -23,7 +23,7 @@ EOF
 
 downloadpg() {
   rm -rf /opt/plexguide
-  git clone --single-branch https://github.com/MrDoobPG/PGBlitz.com.git /opt/plexguide  1>/dev/null 2>&1
+  git clone --single-branch https://github.com/PTS-Team/PTS-Team.git /opt/plexguide  1>/dev/null 2>&1
   ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
   rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
   rm -rf /opt/plexguide/.git* >/dev/null 2>&1
