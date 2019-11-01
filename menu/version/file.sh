@@ -19,7 +19,7 @@ mainstart() {
   # latest=$(cat /opt/pgstage/versions.sh | head -n1)
   versions=$(cat /opt/pgstage/versions.sh)
   # dev=$(cat /opt/pgstage/versions.sh | sed -n 2p)
-  release="$(curl -s https://api.github.com/repos/MrDoobPG/PGBlitz.com/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
+  release="$(curl -s https://api.github.com/repos/PTS-Team/PTS-Team/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
 
   tee <<-EOF
 
