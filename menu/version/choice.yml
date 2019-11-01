@@ -9,12 +9,18 @@
 - hosts: localhost
   gather_facts: false
   tasks:
-    - name: 'Installing Version'
+    - name: Register Project
+      shell: 'cat /var/plexguide/pg.number'
+      register: serverid
+
+    - name: 'Installing Version {{serverid.stdout}}'
       git:
         repo: 'https://github.com/PTS-Team/PTS-Team'
         dest: '/opt/plexguide'
-        version: 'master'
+        version: '{{serverid.stdout}}'
         force: yes
+      when: not serverid.stdout == "master"
+      ignore_errors: True
 
     - name: 'Stops First Time Run'
       shell: 'touch /var/plexguide/ask.yes'
