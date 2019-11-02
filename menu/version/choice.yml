@@ -17,10 +17,11 @@
       git:
         repo: 'https://github.com/PTS-Team/PTS-Team'
         dest: '/opt/plexguide'
+        clone: yes
         version: '{{serverid.stdout}}'
         force: yes
       when: not serverid.stdout == "edge"
-      ignore_errors: True
+      ignore_errors: yes
 
     - name: 'Stops First Time Run'
       shell: 'touch /var/plexguide/ask.yes'
