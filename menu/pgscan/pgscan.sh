@@ -128,51 +128,6 @@ doneenter(){
   question1
 }
 
-# FIRST QUESTION
-question1() {
-
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Plex_AutoScan Interface  || l3uddz/plex_autoscan
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-NOTE : Plex_AutoScan are located  in /opt/plex_autoscan
-
-[1] Deploy Plex Username & Plex Passwort  [ $ustatus ]
-[2] Deploy Plex Token                     [ $pstatus ]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-[A] Deploy Scan                           [ $dstatus ]
-[D] PlexAutoScan Domain
-[S] Plex_AutoScan Settings
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-[Z] - Exit
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-
-  if [ "$typed" == "1" ]; then
-		bash /opt/plexguide/menu/pgscan/scripts/plex_pw.sh
-		question1 
-  elif [ "$typed" == "2" ]; then
-		bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh
-		question1 
-  elif [[ "$typed" == "A" || "$typed" == "a"  ]]; then
-		ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
-		question1
-  elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
-		showupdomain
-  elif [[ "$typed" == "S" || "$typed" == "s" ]]; then
-		plexautoscansettings
-  elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
-  exit
-}
 showupdomain() {
 clear
 PAS_CONFIG="/opt/plex_autoscan/config/config.json"
@@ -242,6 +197,53 @@ EOF
   else question1; fi
 }
 
+
+# FIRST QUESTION
+question1() {
+
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Plex_AutoScan Interface  || l3uddz/plex_autoscan
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTE : Plex_AutoScan are located  in /opt/plex_autoscan
+
+[1] Deploy Plex Username & Plex Passwort  [ $ustatus ]
+[2] Deploy Plex Token                     [ $pstatus ]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[A] Deploy Scan                           [ $dstatus ]
+[D] PlexAutoScan Domain
+[S] Plex_AutoScan Settings
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[Z] - Exit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
+  if [ "$typed" == "1" ]; then
+		bash /opt/plexguide/menu/pgscan/scripts/plex_pw.sh
+		question1 
+  elif [ "$typed" == "2" ]; then
+		bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh
+		question1 
+  elif [[ "$typed" == "A" || "$typed" == "a"  ]]; then
+		ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
+		question1
+  elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
+		showupdomain
+  elif [[ "$typed" == "S" || "$typed" == "s" ]]; then
+		plexautoscansettings
+  elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
+	exit
+  else question1; fi
+}
 # FUNCTIONS END ##############################################################
 plexcheck
 userstatus
