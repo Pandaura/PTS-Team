@@ -17,7 +17,7 @@ function gcheck() {
 ⛔️  WARNING! - Must Configure RClone First /w >>> gdrive
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-NOTE: You must deploy PG Move or PG Blitz in order to use the backup
+NOTE: You must deploy Move or Blitz in order to use the backup
 function. GDrive configuration is required to move data!
 
 EOF

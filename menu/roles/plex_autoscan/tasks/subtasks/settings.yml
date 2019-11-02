@@ -36,6 +36,26 @@
       mode: 0775
       force: yes
 
+    - name: Recall User
+      shell: 'cat /var/plexguide/plex.user'
+      register: user
+
+    - name: Token Recall
+      shell: 'cat /var/plexguide/plex.token'
+      register: plex_auth_token
+
+    - name: Register IP
+      shell: 'cat /var/plexguide/server.ip'
+      register: ipaddress
+
+    - name: plex_auto_scan server pass 
+      shell: 'cat /var/plexguide/pgscan.serverpass'
+      register: plex_autoscan_server_pass
+      
+    - name: kick 4k Transcodes
+      shell: 'cat /var/plexguide/pgpatrol/video.transcodes4k'
+      register: video4k
+
   when: not plex_autoscan_config.stat.exists
 
 - name: Settings | Existing 'config.json' tasks

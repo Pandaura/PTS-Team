@@ -40,7 +40,7 @@
    "PLEX_EMPTY_TRASH_MAX_FILES":100,
    "PLEX_EMPTY_TRASH_ZERO_DELETED":false,
    "PLEX_LD_LIBRARY_PATH":"/usr/lib/plexmediaserver/lib",
-   "PLEX_LOCAL_URL": "http://localhost:32400",
+   "PLEX_LOCAL_URL": "http://{{ipaddress.stdout}}:32400",
    "PLEX_SCANNER":"/usr/lib/plexmediaserver/Plex\\ Media\\ Scanner",
    "PLEX_SECTION_PATH_MAPPINGS":{
       "1":[
@@ -54,8 +54,8 @@
       ]
    },
    "PLEX_SUPPORT_DIR":"/var/lib/plexmediaserver/Library/Application\\ Support",
-   "PLEX_USER":"plex",
-   "PLEX_TOKEN":"plex_auth_token",
+   "PLEX_USER":"{{user.stdout}}",
+   "PLEX_TOKEN":"{{plex_auth_token.stdout}}",
    "PLEX_CHECK_BEFORE_SCAN":true,
    "PLEX_WAIT_FOR_EXTERNAL_SCANNERS":false,
    "RCLONE": {
@@ -89,7 +89,7 @@
       "Thumbs.db"
    ],
    "SERVER_IP":"0.0.0.0",
-   "SERVER_PASS":"plex_autoscan_server_pass",
+   "SERVER_PASS":"{{plex_autoscan_server_pass.stdout}}",
    "SERVER_PATH_MAPPINGS":{
       "/mnt/":[
          "/mnt/"
