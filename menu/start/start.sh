@@ -216,60 +216,73 @@ EOF
 
   case $typed in
   1)
+    clear
     bash /opt/plexguide/menu/pgcloner/traefik.sh
 	clear
     primestart
     ;;
   2)
+    clear
     bash /opt/plexguide/menu/pgcloner/pgshield.sh
     clear
 	primestart
     ;;
   3)
+    clear
     bash /opt/plexguide/menu/portguard/portguard.sh
     clear
 	primestart
     ;;
   4)
+    clear
     bash /opt/plexguide/menu/pgcloner/pgclone.sh
     clear
 	primestart
     ;;
   5)
+    clear
     bash /opt/plexguide/menu/pgbox/pgboxselect.sh
     clear
 	primestart
     ;;
   6)
+    clear
     bash /opt/plexguide/menu/pgscan/pgscan.sh
     clear
 	primestart
     ;;
   7)
+    clear
     bash /opt/plexguide/menu/pgcloner/pgpress.sh
     clear
 	primestart
     ;;
   8)
+    clear
     bash /opt/plexguide/menu/pgcloner/pgvault.sh
     clear
 	primestart
     ;;
   9)
+    clear
     bash /opt/plexguide/menu/interface/cloudselect.sh
     clear
 	primestart
     ;;
   10)
+    clear
     bash /opt/plexguide/menu/pgtrakt/pgtrakt.sh
     clear
 	primestart
 	;;
   11)
+    clear
 	bash /opt/plexguide/menu/pgcloner/pgpatrol.sh
 	bash /opt/pgpatrol/pgpatrol.sh
+    clear
 	;;
-  12)	
+  12)
+    clear
     bash /opt/plexguide/menu/interface/settings.sh
     clear
 	primestart
