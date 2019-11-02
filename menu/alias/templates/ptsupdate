@@ -10,7 +10,6 @@ source /opt/plexguide/menu/functions/start.sh
 
 sudocheck
 missingpull
-downloadpg
 owned
 exitcheck
 templatespart2
