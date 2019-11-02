@@ -570,8 +570,10 @@ EOF
     ansible-playbook /opt/plexguide/menu/pgtrakt/pgtrakt.yml && question1
 
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
-    exit
-  else badinput; fi
+   clear
+   bash /opt/plexguide/menu/start/start.sh
+ fi
+
 }
 
 # FUNCTIONS END ##############################################################
