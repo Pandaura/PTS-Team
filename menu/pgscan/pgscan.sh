@@ -171,10 +171,11 @@ EOF
 		showupdomain
   elif [[ "$typed" == "S" || "$typed" == "s" ]]; then
 		plexautoscansettings
-elif [[ "$typed" == "Z" ]] || [[ "$typed" == "z" ]]; then
-  bash /opt/plexguide/menu/start/start.sh
-  exit
-fi
+  elif [[ "$typed" == "z" || "$typed" == "Z" ]]; then
+    exit
+  else
+    badinput1
+  fi
 }
 showupdomain() {
 clear
