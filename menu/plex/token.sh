@@ -43,8 +43,8 @@ EOF
   echo
 
   if [ "$typed" == "1" ]; then
-    read -p 'Enter the PLEX User Name | Press [ENTER]: ' user </dev/tty
-    read -p 'Enter the PLEX User Pass | Press [ENTER]: ' pw </dev/tty
+    read -p 'Enter the PLEX User Name      | Press [ENTER]: ' user </dev/tty
+    read -p 'Enter the PLEX User Passwort  | Press [ENTER]: ' pw </dev/tty
 
     tee <<-EOF
 
@@ -63,7 +63,7 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
     sleep 3
-  question2
+  tokenexist
 
 pw=$(cat /var/plexguide/plex.pw)
 user=$(cat /var/plexguide/plex.user)
@@ -118,6 +118,35 @@ question3() {
   echo "$pw" >/var/plexguide/plex.pw
   echo "$user" >/var/plexguide/plex.user
   ansible-playbook /opt/plexguide/menu/plex/token.yml
+  token=$(cat /var/plexguide/plex.token)
+  if [ "$token" != "" ]; then
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅️  PlexToken Generation Succeeded!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+    sleep 4
+  else
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⛔️  PlexToken Generation Failed!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTE: Process will repeat until you succeed or exit!
+
+EOF
+    read -p 'Confirm Info | Press [ENTER] ' typed </dev/tty
+    question1
+  fi
+}
+
+tokenexist(){
+pw=$(cat /var/plexguide/plex.pw)
+user=$(cat /var/plexguide/plex.user)
+ansible-playbook /opt/plexguide/menu/plex/token.yml
+token=$(cat /var/plexguide/plex.token)
   token=$(cat /var/plexguide/plex.token)
   if [ "$token" != "" ]; then
     tee <<-EOF
