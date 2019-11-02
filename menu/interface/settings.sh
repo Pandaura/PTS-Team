@@ -74,7 +74,6 @@ EOF
   3)
     watchtower
     ;;
-    ;;
   4)
 
     if [[ "$switchcheck" == "On" ]]; then
