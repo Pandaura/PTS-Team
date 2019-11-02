@@ -568,11 +568,11 @@ EOF
     fi
     # keys for sonarr and radarr need to be added
     ansible-playbook /opt/plexguide/menu/pgtrakt/pgtrakt.yml && question1
-
-  elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
-   clear
-   bash /opt/plexguide/menu/start/start.sh
- fi
+	
+elif [[ "$typed" == "Z" ]] || [[ "$typed" == "z" ]]; then
+  bash /opt/plexguide/menu/start/start.sh
+  exit
+fi
 
 }
 
