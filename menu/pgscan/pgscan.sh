@@ -171,11 +171,8 @@ EOF
 		showupdomain
   elif [[ "$typed" == "S" || "$typed" == "s" ]]; then
 		plexautoscansettings
-  elif [[ "$typed" == "z" || "$typed" == "Z" ]]; then
-    exit
-  else
-    badinput1
-  fi
+  elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
+  exit
 }
 showupdomain() {
 clear
