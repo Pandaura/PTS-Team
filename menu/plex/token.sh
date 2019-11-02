@@ -21,6 +21,18 @@ badinput2() {
   question2
 }
 
+tokenstatus() {
+  ptokendep=$(cat /var/plexguide/plex.token)
+  if [ "$ptokendep" != "" ]; then
+  PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(cat /var/plexguide/plex.token)"  -o /dev/null -w '%{http_code}\n' -s)
+  	if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then
+  	  pstatus="✅ DEPLOYED"
+	  else
+	  pstatus="❌ DEPLOYED BUT TOKEN FAILED"
+	fi
+  else pstatus="⚠️ NOT DEPLOYED"; fi
+}
+
 # FIRST QUESTION
 
 question1() {
@@ -30,9 +42,10 @@ question1() {
 🌎 PlexToken Generator
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Token Status: [$(cat /var/plexguide/plex.token)]
+Token Status				: [$pstatus]
 
 [1] - Generate new Token
+
 [2] - Token - Existing
 
 [Z] - Exit
@@ -43,8 +56,8 @@ EOF
   echo
 
   if [ "$typed" == "1" ]; then
-    read -p 'Enter the PLEX User Name | Press [ENTER]: ' user </dev/tty
-    read -p 'Enter the PLEX User Pass | Press [ENTER]: ' pw </dev/tty
+    read -p 'Enter the PLEX User Name      | Press [ENTER]: ' user </dev/tty
+    read -p 'Enter the PLEX User Passwort  | Press [ENTER]: ' pw </dev/tty
 
     tee <<-EOF
 
@@ -63,7 +76,7 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
     sleep 3
-  question2
+  tokenexist
 
 pw=$(cat /var/plexguide/plex.pw)
 user=$(cat /var/plexguide/plex.user)
@@ -142,6 +155,35 @@ EOF
   fi
 }
 
-# FUNCTIONS END ##############################################################
+tokenexist(){
+pw=$(cat /var/plexguide/plex.pw)
+user=$(cat /var/plexguide/plex.user)
+ansible-playbook /opt/plexguide/menu/plex/token.yml
+token=$(cat /var/plexguide/plex.token)
+  token=$(cat /var/plexguide/plex.token)
+  if [ "$token" != "" ]; then
+    tee <<-EOF
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅️  PlexToken Generation Succeeded!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+    sleep 4
+  else
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⛔️  PlexToken Generation Failed!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTE: Process will repeat until you succeed or exit!
+
+EOF
+    read -p 'Confirm Info | Press [ENTER] ' typed </dev/tty
+    question1
+  fi
+}
+
+# FUNCTIONS END ##############################################################
+tokenstatus
 question1
