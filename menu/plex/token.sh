@@ -63,7 +63,7 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
     sleep 3
-  question 2
+  question2
 
 pw=$(cat /var/plexguide/plex.pw)
 user=$(cat /var/plexguide/plex.user)
