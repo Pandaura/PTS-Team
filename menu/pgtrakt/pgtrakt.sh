@@ -569,10 +569,9 @@ EOF
     # keys for sonarr and radarr need to be added
     ansible-playbook /opt/plexguide/menu/pgtrakt/pgtrakt.yml && question1
 	
-	elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
-  exit
-  fi
-
+  elif [[ "$typed" == "z" || "$typed" == "Z" ]]; then
+    exit
+  else badinput; fi
 }
 
 # FUNCTIONS END ##############################################################

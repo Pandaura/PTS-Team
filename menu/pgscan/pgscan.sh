@@ -3,7 +3,6 @@ mkdir -p /var/plexguide/pgscan
 mkdir -p /opt/appdata/pgscan
 
 # FUNCTIONS START ##############################################################
-
 # FIRST FUNCTION
 variable() {
   file="$1"
