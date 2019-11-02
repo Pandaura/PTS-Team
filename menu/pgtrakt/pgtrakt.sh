@@ -571,6 +571,7 @@ EOF
 	
 	elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
   exit
+  fi
 
 }
 
