@@ -194,13 +194,16 @@ EOF
 [4]  PTS-Clone      : Mount Transport
 [5]  PTS-Apps       : Apps ~ Core, Community & Removal
 [6]  CBOX-PAS       : PlexAutoScan [ ALPHA VERSION ]
+_________________________________________________________________
 
 [7]  PTS-WordPress  : Deploy WordPress Instances
 [8]  PTS-Vault      : Backup & Restore
 [9]  PTS-Cloud      : GCE & Virtual Instances
+_________________________________________________________________
 
-[10] Tools
-[11] Settings
+[10] Traktarr       : ( old PGTrakt )
+[11] Plex Patrol    : ----> IDK <-----
+[12] Settings       : ----> IDK <-----
 
 [Z]  Exit
 
@@ -258,15 +261,19 @@ EOF
 	primestart
     ;;
   10)
-    bash /opt/plexguide/menu/tools/tools.sh
+    bash /opt/plexguide/menu/pgtrakt/pgtrakt.sh
     clear
 	primestart
-    ;;
+	;;
   11)
+	bash /opt/plexguide/menu/pgcloner/pgpatrol.sh
+	bash /opt/pgpatrol/pgpatrol.sh
+	;;
+  12)	
     bash /opt/plexguide/menu/interface/settings.sh
     clear
 	primestart
-    ;;
+     ;;
   z)
     clear
     bash /opt/plexguide/menu/interface/ending.sh
