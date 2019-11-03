@@ -21,6 +21,18 @@ badinput2() {
   question2
 }
 
+tokenstatus() {
+  ptokendep=$(cat /var/plexguide/plex.token)
+  if [ "$ptokendep" != "" ]; then
+  PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(cat /var/plexguide/plex.token)"  -o /dev/null -w '%{http_code}\n' -s)
+  	if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then
+  	  pstatus="✅ DEPLOYED"
+	  else
+	  pstatus="❌ DEPLOYED BUT TOKEN FAILED"
+	fi
+  else pstatus="⚠️ NOT DEPLOYED"; fi
+}
+
 # FIRST QUESTION
 
 question1() {
@@ -30,9 +42,10 @@ question1() {
 🌎 PlexToken Generator
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Token Status: [$(cat /var/plexguide/plex.token)]
+Token Status				: [$pstatus]
 
 [1] - Generate new Token
+
 [2] - Token - Existing
 
 [Z] - Exit
@@ -172,5 +185,5 @@ EOF
 }
 
 # FUNCTIONS END ##############################################################
-
+tokenstatus
 question1
