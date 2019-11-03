@@ -10,7 +10,7 @@
 echo 'pgclone' >/var/plexguide/pgcloner.rolename
 echo 'PTS-Clone' >/var/plexguide/pgcloner.roleproper
 echo 'PTS-Clone' >/var/plexguide/pgcloner.projectname
-echo 'master' >/var/plexguide/pgcloner.projectversion
+echo 'final' >/var/plexguide/pgcloner.projectversion
 echo 'pgclone.sh' >/var/plexguide/pgcloner.startlink
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
