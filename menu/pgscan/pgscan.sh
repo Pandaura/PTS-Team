@@ -170,8 +170,6 @@ clear
 [ 1 ] Show last 50 lines of plex_autoscan.log
 [ 2 ] Update Sections
 
-[ 3 ] Credits 
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
@@ -183,15 +181,6 @@ EOF
   elif [ "$typed" == "2" ]; then
         python /opt/plex_autoscan/scan.py update_sections
 		doneenter
-  elif [ "$typed" == "3" ]; then
-        credits
-		doneenter	
-  elif [[ "$typed" == "A" || "$typed" == "a"  ]]; then
-		badinput
-  elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
-		badinput
-  elif [[ "$typed" == "S" || "$typed" == "S" ]]; then
-		badinput
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     question1
   else question1; fi
@@ -217,6 +206,7 @@ NOTE : Plex_AutoScan are located  in /opt/plex_autoscan
 [A] Deploy Scan                           [ $dstatus ]
 [D] PlexAutoScan Domain
 [S] Plex_AutoScan Settings
+[C] Credits
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -227,22 +217,51 @@ EOF
 
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
-  if [ "$typed" == "1" ]; then
-		bash /opt/plexguide/menu/pgscan/scripts/plex_pw.sh
-		question1 
-  elif [ "$typed" == "2" ]; then
-		bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh
-		question1 
-  elif [[ "$typed" == "A" || "$typed" == "a"  ]]; then
-		ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
-		question1
-  elif [[ "$typed" == "D" || "$typed" == "d" ]]; then
-		showupdomain
-  elif [[ "$typed" == "S" || "$typed" == "s" ]]; then
-		plexautoscansettings
-  elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
-	exit
-  else question1; fi
+  case $typed in
+  1)
+	bash /opt/plexguide/menu/pgscan/scripts/plex_pw.sh
+	question1 
+    ;;
+  2)
+	bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh
+	question1 
+    ;;
+  A)
+	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
+	question1
+		;;
+  a)
+	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
+	question1
+		;;
+  D)
+	showupdomain
+	;;
+  d)
+	showupdomain
+	;;
+  S)
+	plexautoscansettings
+	;;
+  s)
+	plexautoscansettings
+	;;
+  C)
+	credits
+	;;
+  c)		
+	credits
+	;;
+  z)
+    exit
+    ;;
+  Z)
+    exit
+    ;;
+  *)
+    question1
+    ;;
+  esac
 }
 # FUNCTIONS END ##############################################################
 plexcheck
