@@ -279,6 +279,7 @@ EOF
     clear
 	bash /opt/plexguide/menu/pgcloner/pgpatrol.sh
     clear
+	primestart
 	;;
   12)
     clear

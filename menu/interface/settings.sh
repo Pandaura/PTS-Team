@@ -73,6 +73,8 @@ EOF
 
   3)
     watchtower
+    clear
+    setstart
     ;;
   4)
 
@@ -88,7 +90,7 @@ EOF
     tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅️   WOOT WOOT: Process Complete!
-✅️   WOOT WOOT: PGUI Removed
+✅️   WOOT WOOT: UI Removed
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -102,7 +104,7 @@ EOF
     tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅️   WOOT WOOT: Process Complete!
-✅️   WOOT WOOT: PGUI installed
+✅️   WOOT WOOT: UI installed
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
