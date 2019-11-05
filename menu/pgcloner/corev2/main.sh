@@ -121,7 +121,7 @@ Username & Branch are both case sensitive! Make sure to check for the
 default or selected branch!
 
 NOTE: Forks are maintained only by YOU!
-You will not receive updates from PGBlitz on your fork.
+You will not receive updates from PTS on your fork.
 This means you will not receive bug fixes and new features on your fork!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
