@@ -44,13 +44,14 @@ touch /var/plexguide/pgui.switch
 🚀 Settings Interface Menu
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Download Path    :  Change the Processing Location
-[2] MultiHD          :  Add Multiple HDs and/or Mount Points to MergerFS
-[3] Processor        :  Enhance the CPU Processing Power
-[4] WatchTower       :  Auto-Update Application Manager
-[5] Change Time      :  Change the Server Time
-[6] Comm UI          :  [ $switchcheck ] | Port [ $ports ] | pgui.$domain
-[7] Emergency Display:  [ $emdisplay ]
+[1] Download Path      :  Change the Processing Location
+[2] MultiHD            :  Add Multiple HDs and/or Mount Points to MergerFS
+[3] WatchTower         :  Auto-Update Application Manager
+[4] Comm UI            :  [ $switchcheck ] | Port [ $ports ] | pgui.$domain
+[5] Emergency Display  :  [ $emdisplay ]
+[6] System & Network Auditor
+
+[99] TroubleShoot       : PreInstaller
 
 [Z] Exit
 
@@ -69,17 +70,13 @@ EOF
   2)
     bash /opt/plexguide/menu/multihd/multihd.sh
     ;;
+
   3)
-    bash /opt/plexguide/menu/processor/processor.sh
+    watchtower
+    clear
     setstart
     ;;
   4)
-    watchtower
-    ;;
-  5)
-    dpkg-reconfigure tzdata
-    ;;
-  6)
 
     if [[ "$switchcheck" == "On" ]]; then
       echo "Off" >/var/plexguide/pgui.switch
@@ -93,7 +90,7 @@ EOF
     tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅️   WOOT WOOT: Process Complete!
-✅️   WOOT WOOT: PGUI Removed
+✅️   WOOT WOOT: UI Removed
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -107,17 +104,28 @@ EOF
     tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅️   WOOT WOOT: Process Complete!
-✅️   WOOT WOOT: PGUI installed
+✅️   WOOT WOOT: UI installed
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
     fi
     setstart
     ;;
-  7)
+  5)
     if [[ "$emdisplay" == "On" ]]; then
       echo "Off" >/var/plexguide/emergency.display
     else echo "On" >/var/plexguide/emergency.display; fi
+    setstart
+    ;;
+  6)
+	bash /opt/plexguide/menu/functions/network.sh
+    clear
+    setstart
+    ;;
+	
+  99)
+	bash /opt/plexguide/menu/functions/tshoot.sh
+    clear
     setstart
     ;;
   z)

@@ -19,7 +19,7 @@
         dest: '/opt/plexguide'
         version: '{{serverid.stdout}}'
         force: yes
-      when: not serverid.stdout == "master"
+      when: not serverid.stdout == "edge"
       ignore_errors: True
 
     - name: 'Stops First Time Run'

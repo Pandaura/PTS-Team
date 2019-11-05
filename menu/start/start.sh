@@ -194,13 +194,18 @@ EOF
 [4]  PTS-Clone      : Mount Transport
 [5]  PTS-Apps       : Apps ~ Core, Community & Removal
 [6]  CBOX-PAS       : PlexAutoScan [ ALPHA VERSION ]
+_________________________________________________________________
 
 [7]  PTS-WordPress  : Deploy WordPress Instances
 [8]  PTS-Vault      : Backup & Restore
 [9]  PTS-Cloud      : GCE & Virtual Instances
+_________________________________________________________________
 
-[10] Tools
-[11] Settings
+[10] Traktarr       : ( old PGTrakt )
+[11] Plex Patrol    : Kick transcodes (audio or video or both)
+[12] Settings       : ----> IDK <-----
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [Z]  Exit
 
@@ -213,60 +218,77 @@ EOF
 
   case $typed in
   1)
+    clear
     bash /opt/plexguide/menu/pgcloner/traefik.sh
 	clear
     primestart
     ;;
   2)
+    clear
     bash /opt/plexguide/menu/pgcloner/pgshield.sh
     clear
 	primestart
     ;;
   3)
+    clear
     bash /opt/plexguide/menu/portguard/portguard.sh
     clear
 	primestart
     ;;
   4)
+    clear
     bash /opt/plexguide/menu/pgcloner/pgclone.sh
     clear
 	primestart
     ;;
   5)
+    clear
     bash /opt/plexguide/menu/pgbox/pgboxselect.sh
     clear
 	primestart
     ;;
   6)
+    clear
     bash /opt/plexguide/menu/pgscan/pgscan.sh
     clear
 	primestart
     ;;
   7)
+    clear
     bash /opt/plexguide/menu/pgcloner/pgpress.sh
     clear
 	primestart
     ;;
   8)
+    clear
     bash /opt/plexguide/menu/pgcloner/pgvault.sh
     clear
 	primestart
     ;;
   9)
+    clear
     bash /opt/plexguide/menu/interface/cloudselect.sh
     clear
 	primestart
     ;;
   10)
-    bash /opt/plexguide/menu/tools/tools.sh
+    clear
+    bash /opt/plexguide/menu/pgtrakt/pgtrakt.sh
     clear
 	primestart
-    ;;
+	;;
   11)
+    clear
+	bash /opt/plexguide/menu/pgcloner/pgpatrol.sh
+    clear
+	primestart
+	;;
+  12)
+    clear
     bash /opt/plexguide/menu/interface/settings.sh
     clear
 	primestart
-    ;;
+     ;;
   z)
     clear
     bash /opt/plexguide/menu/interface/ending.sh
