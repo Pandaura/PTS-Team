@@ -278,7 +278,6 @@ EOF
   11)
     clear
 	bash /opt/plexguide/menu/pgcloner/pgpatrol.sh
-	bash /opt/pgpatrol/pgpatrol.sh
     clear
 	;;
   12)
