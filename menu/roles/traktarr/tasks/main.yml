@@ -42,7 +42,7 @@
   git:
     repo: https://github.com/l3uddz/traktarr.git
     dest: /opt/appdata/traktarr
-    version: 1.2.4
+    version: release-1.2.4
     force: yes
   become: yes
 
