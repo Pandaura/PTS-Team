@@ -113,7 +113,7 @@
   # ignore_errors: True
 
 - name: 'Including cron job'
-      include_tasks: '/opt/coreapps/apps/_core.yml'
+  include_tasks: '/opt/coreapps/apps/_core.yml'
 
 - name: "Check if sonarr exists"
   stat:
