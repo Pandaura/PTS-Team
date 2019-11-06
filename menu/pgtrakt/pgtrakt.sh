@@ -459,9 +459,9 @@ NOTE: Changes Made? Must Redeploy Traktarr when Complete!
 [3] Raddar Path				[ $rpath ]
 [4] Sonarr Profile			[ $sprofile ]
 [5] Radarr Profile			[ $rprofile ]
-{6] Max Year allowed		[ $mxyear ]	
+{6] Max Year allowed        [ $mxyear ]	
 
-[6] Deploy Traktarr			[ $dstatus ]
+[7] Deploy Traktarr			[ $dstatus ]
 
 [C] Credits
 
