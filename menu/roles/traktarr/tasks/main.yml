@@ -62,6 +62,13 @@
   when:
     - traktarr.stat.exists == False
 
+- name: Create Basic Directories
+  file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
+  with_items:
+    - '/opt/appdata/traktarr'
+  when:
+    - traktarr.stat.exists == False
+
 - name: Move /tmp/traktarr-1.2.4 /opt/appdata/traktarr
   command: mv /tmp/traktarr-1.2.4 /opt/appdata/traktarr
 
