@@ -498,7 +498,7 @@ EOF
 }
 
 # FUNCTIONS END ##############################################################
-token
+
 variable /var/plexguide/pgtrak.client "NOT-SET"
 variable /var/plexguide/pgtrak.secret "NOT-SET"
 variable /var/plexguide/pgtrak.rpath "NOT-SET"
