@@ -55,7 +55,7 @@
   with_items:
     - '/opt/appdata/traktarr'
   when:
-    - trakarr.stat.exists == False
+    - traktarr.stat.exists == False
 
 - name: Clone traktarr v1.2.4
   unarchive:
