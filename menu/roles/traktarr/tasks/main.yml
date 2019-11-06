@@ -173,7 +173,7 @@
     mode: a+x
 
 - name: Set directory permissions
-  file: "path=/opt/appdata/traktarr state=directory owner={{ user.name }} group={{ user.name }} recurse=yes"
+  file: "path=/opt/appdata/traktarr state=directory owner=1000 group=1000 recurse=yes"
 
 - name: "Create /usr/local/bin symlink"
   file:
@@ -183,7 +183,7 @@
 
 - name: Import traktarr service
   template:
-    src: /opt/plexguide/menu/roles/traktarr/templatestraktarr.service.j2
+    src: /opt/plexguide/menu/roles/traktarr/templates/traktarr.service.j2
     dest: /etc/systemd/system/traktarr.service
     force: yes
   when: not traktarr_service.stat.exists
