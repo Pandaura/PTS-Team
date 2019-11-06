@@ -67,7 +67,7 @@
       register: rpath
       ignore_errors: True
 
-    - name: API Sonnar
+    - name: Sonnar Path
       shell: 'cat /var/plexguide/pgtrak.spath'
       register: spath
       ignore_errors: True
@@ -88,11 +88,11 @@
     - name: Create Basic Directories
       file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
       with_items:
-        - '/opt/appdata/pgtrakt/'
+        - '/opt/appdata/traktarr/'
 
     - name: Transfer Files
       copy:
-        src: /opt/plexguide/menu/pgtrakt
+        src: /opt/plexguide/menu/traktarr
         dest: /opt/appdata
         owner: '1000'
         group: '1000'
@@ -101,8 +101,8 @@
 
     - name: Import default config
       template:
-        src: /opt/appdata/pgtrakt/config.json.sample
-        dest: /opt/appdata/pgtrakt/config.json
+        src: /opt/appdata/traktarr/config.json.sample
+        dest: /opt/appdata/traktarr/config.json
         owner: '1000'
         group: '1000'
         mode: 0775
@@ -110,14 +110,14 @@
 
     - name: Set pgtrak.py as executable
       file:
-        path: /opt/appdata/pgtrakt/traktarr.py
+        path: /opt/appdata/traktarr/traktarr.py
         owner: '1000'
         group: '1000'
         mode: a+x
 
     - name: 'Create /usr/local/bin symlink'
       file:
-        src: '/opt/appdata/pgtrakt/traktarr.py'
+        src: '/opt/appdata/traktarr/traktarr.py'
         dest: '/bin/traktarr'
         state: link
 
@@ -134,7 +134,7 @@
 
     - name: traktarr Service
       template:
-        src: /opt/appdata/pgtrakt/systemd/traktarr.service
+        src: /opt/appdata/traktarr/systemd/traktarr.service
         dest: /etc/systemd/system/traktarr.service
         force: yes
 

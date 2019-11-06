@@ -498,7 +498,6 @@ EOF
 	question1
 	;;
   7)
-
     sonarr=$(docker ps | grep "sonarr")
     radarr=$(docker ps | grep "radarr")
 
@@ -555,7 +554,7 @@ EOF
         echo "$info2" >/var/plexguide/pgtrak.sapi
       fi
     fi
-    ansible-playbook /opt/plexguide/menu/pgtrakt/pgtrakt.yml
+    ansible-playbook /opt/plexguide/menu/traktarr/traktarr.yml
 	question1
 	;;
   C)
