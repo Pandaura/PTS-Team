@@ -454,14 +454,14 @@ question1() {
 
 NOTE: Changes Made? Must Redeploy Traktarr when Complete!
 
-[1] Trakt API-Key			[ $api ]
-[2] Sonarr Path				[ $spath ]
-[3] Raddar Path				[ $rpath ]
-[4] Sonarr Profile			[ $sprofile ]
-[5] Radarr Profile			[ $rprofile ]
-{6] Max Year allowed        [ $mxyear ]
+[1] Trakt API-Key                       [ $api ]
+[2] Sonarr Path                         [ $spath ]
+[3] Raddar Path                         [ $rpath ]
+[4] Sonarr Profile                      [ $sprofile ]
+[5] Radarr Profile                      [ $rprofile ]
+{6] Max Year allowed                    [ $mxyear ]
 
-[7] Deploy Traktarr			[ $dstatus ]
+[7] Deploy Traktarr                     [ $dstatus ]
 
 [C] Credits
 
