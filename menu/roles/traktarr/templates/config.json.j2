@@ -1,4 +1,10 @@
 {
+  "core": {
+    "debug": false
+  },
+  "notifications": {
+    "verbose": false
+  },
   "automatic": {
     "movies": {
       "anticipated": 3,
@@ -14,20 +20,47 @@
       "trending": 2
     }
   },
-  "notifications": {
-    "verbose": false
-  },
   "filters": {
+    "movies": {
+      "disabled_for": [],
+      "allowed_countries": [
+        "us",
+        "gb",
+        "ca",
+		"de"
+      ],
+      "allowed_languages": [
+        "en",
+		"ca",
+		"de"
+      ],
+      "blacklisted_genres": [
+        "documentary",
+        "music",
+        "short",
+        "sporting-event",
+        "film-noir",
+        "fan-film"
+      ],
+      "blacklisted_min_runtime": 60,
+      "blacklisted_max_runtime": 0,
+      "blacklisted_min_year": 1980,
+      "blacklisted_max_year": {{year.stdout}},
+      "blacklisted_title_keywords": [
+        "untitled",
+        "barbie",
+        "ufc"
+      ],
+      "rotten_tomatoes": 80
+    },
     "shows": {
+      "disabled_for": [],
       "allowed_countries": [
         "us",
         "gb",
         "ca"
       ],
       "allowed_languages": [],
-      "blacklisted_min_runtime": 15,
-      "blacklisted_min_year": 1980,
-      "blacklisted_max_year": "{{year.stdout}}",
       "blacklisted_genres": [
         "animation",
         "game-show",
@@ -35,7 +68,6 @@
         "home-and-garden",
         "children",
         "reality",
-        "anime",
         "news",
         "documentary",
         "special-interest"
@@ -56,57 +88,30 @@
         "fox sports",
         "yahoo!"
       ],
-      "blacklisted_tvdb_ids": [],
-      "disabled_for": []
-    },
-    "movies": {
-      "allowed_countries": [
-        "us",
-        "gb",
-        "ca"
-      ],
-      "allowed_languages": [],
-      "blacklisted_genres": [
-        "documentary",
-        "music",
-        "short",
-        "sporting-event",
-        "film-noir",
-        "fan-film"
-      ],
-      "blacklist_title_keywords": [
-        "untitled",
-        "barbie",
-        "ufc"
-      ],
-      "blacklisted_min_runtime": 60,
-      "blacklisted_min_year": 1990,
-      "blacklisted_max_year": "{{year.stdout}}",
-      "blacklisted_tmdb_ids": [],
-      "allowed_countries": [
-        "us",
-        "gb",
-        "ca"
-      ],
-      "disabled_for": []
+      "blacklisted_min_runtime": 15,
+      "blacklisted_max_runtime": 0,
+      "blacklisted_min_year": 1980,
+      "blacklisted_max_year": {{year.stdout}},
+      "blacklisted_title_keywords": []
     }
   },
-  "core": {
-    "debug": false
-  },
   "radarr": {
-    "radarr": {
-      "api_key": "{{rapi.stdout}}",
-      "profile": "{{rprofile.stdout}}",
-      "url": "http://0.0.0.0:7878",
-      "root_folder": "{{rpath.stdout}}"
+    "api_key": "{{rapi.stdout}}",
+    "quality": "{{rprofile.stdout}}",
+    "minimum_availability": "released",
+    "url": "http://localhost:7878/",
+    "root_folder": "{{rpath.stdout}}""
   },
   "sonarr": {
-      "api_key": "{{sapi.stdout}}",
-      "profile": "{{sprofile.stdout}}",
-      "url": "http://0.0.0.0:8989",
-      "root_folder": "{{spath.stdout}}",
-      "tags": {}
+    "api_key": "{{sapi.stdout}}",
+    "quality": "{{sprofile.stdout}}",
+	"minimum_availability": "released",
+    "url": "http://localhost:8989/",
+    "root_folder": "{{spath.stdout}}"
+    "tags": {}
+  },
+  "omdb": {
+    "api_key": ""
   },
   "trakt": {
     "client_id": "",
