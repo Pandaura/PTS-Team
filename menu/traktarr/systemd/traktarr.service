@@ -3,8 +3,6 @@ Description=traktarr
 After=network-online.target
 
 [Service]
-User=0
-Group=0
 Type=simple
 WorkingDirectory=/opt/appdata/traktarr/
 ExecStart=/usr/bin/python3 /opt/appdata/traktarr/traktarr.py run
