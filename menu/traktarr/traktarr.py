@@ -19,7 +19,7 @@ notify = None
 
 # Click
 @click.group(help='Add new shows & movies to Sonarr/Radarr from Trakt.')
-@click.version_option('1.2.5', prog_name='traktarr')
+@click.version_option('1.2.5 mod for PTS', prog_name='traktarr')
 @click.option(
     '--config',
     envvar='TRAKTARR_CONFIG',
