@@ -113,7 +113,7 @@
   ignore_errors: True
 
 - name: Max allowed Year
-  shell: 'cat /var/plexguide/pgtrakyear.max"
+  shell: 'cat /var/plexguide/pgtrakyear.max'
   register: year
   ignore_errors: True
 
