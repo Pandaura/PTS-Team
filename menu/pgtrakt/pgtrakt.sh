@@ -18,8 +18,8 @@ variable() {
 }
 
 deploycheck() {
-  dcheck=$(systemctl status traktarr | grep "\(running\)\>" | grep "\active\>")
-  if [ "$dcheck" != "" ]; then
+  dcheck=$(systemctl is-active traktarr)
+  if [ "$dcheck" == "active" ]; then
     dstatus="✅ DEPLOYED"
   else dstatus="⚠️ NOT DEPLOYED"; fi
 }
