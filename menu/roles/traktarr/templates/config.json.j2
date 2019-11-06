@@ -82,13 +82,13 @@
       "debug": false
     },
     "radarr": {
-      "api_key": "{{rapi.stdout}}",
+    "api_key": "{{ radarr | default('',true) }}",
       "profile": "{{rprofile.stdout}}",
       "url": "http://0.0.0.0:7878",
       "root_folder": "{{rpath.stdout}}"
     },
     "sonarr": {
-      "api_key": "{{sapi.stdout}}",
+      "api_key": "{{ sonarr_api_key | default('',true) }}",
       "profile": "{{sprofile.stdout}}",
       "url": "http://0.0.0.0:8989",
       "root_folder": "{{spath.stdout}}",

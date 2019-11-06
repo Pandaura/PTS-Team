@@ -356,13 +356,6 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-
-      ### Removes /mnt if /mnt/unionfs exists
-      #check=$(echo $typed | head -c 12)
-      #if [ "$check" == "/mnt/unionfs" ]; then
-      #typed=${typed:4}
-      #fi
-
       echo "$typed" >/var/plexguide/pgtrak.rpath
       read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
       echo ""
@@ -386,82 +379,12 @@ EOF
 
 }
 
-token() {
-  touch /var/plexguide/plex.token
-  ptoken=$(cat /var/plexguide/plex.token)
-  if [ "$ptoken" == "" ]; then
-    bash /opt/plexguide/menu/plex/token.sh
-    ptoken=$(cat /var/plexguide/plex.token)
-    if [ "$ptoken" == "" ]; then
-      tee <<-EOF
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - Failed to Generate a Valid Plex Token! Exiting Deployment!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-      read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-      exit
-    fi
-  fi
-}
 
 # BAD INPUT
 badinput() {
   echo
   read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
   question1
-}
-
-selection1() {
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Instantly Kick Video Transcodes?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-[1] False
-
-[2] True
-
-EOF
-  read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
-  if [ "$typed" == "1" ]; then
-    echo "False" >/var/plexguide/pgtrakt/video.transcodes && question1
-  elif [ "$typed" == "2" ]; then
-    echo "True" >/var/plexguide/pgtrakt/video.transcodes && question1
-  else badinput; fi
-}
-
-selection2() {
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Limit Amount of Different IPs a User Can Make?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Set a Number from [1] to [25]
-
-EOF
-  read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
-  if [[ "$typed" -ge "1" && "$typed" -le "25" ]]; then
-    echo "$typed" >/var/plexguide/pgtrakt/multiple.ips && question1
-  else badinput; fi
-}
-
-selection3() {
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Limit How Long a User Can Pause For!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Set a Number from [5] to [180] Mintues
-
-EOF
-  read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
-  if [[ "$typed" -ge "1" && "$typed" -le "180" ]]; then
-    echo "$typed" >/var/plexguide/pgtrakt/kick.minutes && question1
-  else badinput; fi
 }
 
 # FIRST QUESTION
@@ -484,12 +407,12 @@ question1() {
 
 NOTE: Changes Made? Must Redeploy Traktarr when Complete!
 
-[1] Trakt API-Key    [ $api ]
-[2] Sonarr Path      [ $spath ]
-[3] Raddar Path      [ $rpath ]
-[4] Sonarr Profile   [ $sprofile ]
-[5] Radarr Profile   [ $rprofile ]
-[6] Deploy Traktarr  [ $dstatus ]
+[1] Trakt API-Key			[ $api ]
+[2] Sonarr Path				[ $spath ]
+[3] Raddar Path				[ $rpath ]
+[4] Sonarr Profile			[ $sprofile ]
+[5] Radarr Profile			[ $rprofile ]
+[6] Deploy Traktarr			[ $dstatus ]
 
 [Z] - Exit
 
@@ -567,7 +490,7 @@ EOF
       fi
     fi
     # keys for sonarr and radarr need to be added
-    ansible-playbook /opt/plexguide/menu/pgtrakt/pgtrakt.yml && question1
+    ansible-playbook /opt/plexguide/menu/pg.yml --traktarr && question1
 	
   elif [[ "$typed" == "z" || "$typed" == "Z" ]]; then
     exit
