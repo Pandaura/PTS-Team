@@ -165,16 +165,16 @@
   template:
     src: /opt/plexguide/menu/roles/traktarr/templates/config.json.j2
     dest: /opt/appdata/traktarr/config.json
-    owner: '1000'
-    group: '1000'
+    owner: 1000
+    group: 1000
     mode: 0775
     force: yes
 
 - name: Set traktarr.py as executable
   file:
     path: /opt/appdata/traktarr/traktarr.py
-    owner: '1000'
-    group: '1000'
+    owner: 1000
+    group: 1000
     mode: a+x
 
 - name: Set directory permissions
