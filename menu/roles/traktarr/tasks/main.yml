@@ -158,7 +158,7 @@
 
 - name: Import default config
   template:
-    src: /opt/plexguide/traktarr/var/config.json.j2
+    src: /opt/plexguide/traktarr/templates/config.json.j2
     dest: /opt/appdata/traktarr/config.json
     owner: '1000'
     group: '1000'
@@ -183,7 +183,7 @@
 
 - name: Import traktarr service
   template:
-    src: traktarr.service.j2
+    src: /opt/plexguide/traktarr/templatestraktarr.service.j2
     dest: /etc/systemd/system/traktarr.service
     force: yes
   when: not traktarr_service.stat.exists
