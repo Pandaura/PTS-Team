@@ -38,11 +38,11 @@
   with_items:
     - /opt/appdata/traktarr
 
-- name: Clone traktarr
+- name: Clone traktarr v1.2.4
   git:
     repo: https://github.com/l3uddz/traktarr.git
     dest: /opt/appdata/traktarr
-    version: HEAD
+    version: 1.2.4
     force: yes
   become: yes
 
