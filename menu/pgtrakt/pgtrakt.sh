@@ -385,13 +385,13 @@ maxyear() {
 🚀 Limit of max allowed Year
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Set a Number from [ 1900 ] - [ 2010 ]
+Set a Number from [ 1900 ] - [ 2100 ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
   if [[ "$typed" -ge "1900" && "$typed" -le "2100" ]]; then
-    echo "$typed" >/var/plexguide/year.max && question1
+    echo "$typed" >/var/plexguide/pgtrakyear.max && question1
   else badinput; fi
 }
 
@@ -459,7 +459,7 @@ NOTE: Changes Made? Must Redeploy Traktarr when Complete!
 [3] Raddar Path				[ $rpath ]
 [4] Sonarr Profile			[ $sprofile ]
 [5] Radarr Profile			[ $rprofile ]
-{6] Max Year allowed        [ $mxyear ]	
+{6] Max Year allowed        [ $mxyear ]
 
 [7] Deploy Traktarr			[ $dstatus ]
 
