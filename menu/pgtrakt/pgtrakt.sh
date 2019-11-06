@@ -555,12 +555,7 @@ EOF
         echo "$info2" >/var/plexguide/pgtrak.sapi
       fi
     fi
-<<<<<<< Updated upstream
-    # keys for sonarr and radarr need to be added
-    ansible-playbook /opt/plexguide/menu/pg.yml --tags traktarr
-=======
     ansible-playbook /opt/plexguide/menu/pgtrakt/pgtrakt.yml
->>>>>>> Stashed changes
 	question1
 	;;
   C)

@@ -72,6 +72,11 @@
       register: spath
       ignore_errors: True
 
+    - name: Max allowed Year
+      shell: 'cat /var/plexguide/pgtrakyear.max'
+      register: year
+      ignore_errors: True
+
     - name: Install pip requirements
       pip:
         requirements: /opt/plexguide/menu/pgtrakt/requirements.txt
@@ -105,36 +110,36 @@
 
     - name: Set pgtrak.py as executable
       file:
-        path: /opt/appdata/pgtrakt/pgtrakt.py
+        path: /opt/appdata/pgtrakt/traktarr.py
         owner: '1000'
         group: '1000'
         mode: a+x
 
     - name: 'Create /usr/local/bin symlink'
       file:
-        src: '/opt/appdata/pgtrakt/pgtrakt.py'
-        dest: '/bin/pgtrakt'
+        src: '/opt/appdata/pgtrakt/traktarr.py'
+        dest: '/bin/traktarr'
         state: link
 
     - name: Check Service's Existance
       stat:
-        path: '/etc/systemd/systemd/pgtrakt.service'
+        path: '/etc/systemd/systemd/traktarr.service'
       register: pgp
 
     - name: Stop service
       service:
-        name: pgtrakt
+        name: traktarr
         state: stopped
       when: pgp.stat.exists
 
-    - name: PGTrakt Service
+    - name: traktarr Service
       template:
-        src: /opt/appdata/pgtrakt/systemd/pgtrakt.service
-        dest: /etc/systemd/system/pgtrakt.service
+        src: /opt/appdata/pgtrakt/systemd/traktarr.service
+        dest: /etc/systemd/system/traktarr.service
         force: yes
 
     - name: Daemon-Reload
-      systemd: state=stopped name=pgtrakt daemon_reload=yes enabled=no
+      systemd: state=stopped name=traktarr daemon_reload=yes enabled=no
 
     - name: Start PGTrakt
-      systemd: state=started name=pgtrakt enabled=yes
+      systemd: state=started name=traktarr enabled=yes
