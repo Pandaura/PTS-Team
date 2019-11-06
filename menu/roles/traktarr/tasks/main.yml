@@ -107,10 +107,10 @@
   register: rpath
   ignore_errors: True
 
-# - name: API Sonnar
-  # shell: 'cat /var/plexguide/pgtrak.spath'
-  # register: spath
-  # ignore_errors: True
+- name: API Path
+  shell: 'cat /var/plexguide/pgtrak.spath'
+  register: spath
+  ignore_errors: True
 
 - name: "Check if sonarr exists"
   stat:
