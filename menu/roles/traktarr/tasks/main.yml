@@ -60,7 +60,7 @@
 - name: Clone traktarr v1.2.4
   unarchive:
     src: https://github.com/l3uddz/traktarr/archive/1.2.4.zip
-    dest: /opt/appdata/traktarr
+    dest: /tmp/
     keep_newer: no
     owner: '1000'
     group: '1000'
@@ -68,6 +68,9 @@
     copy: no
   when:
     - traktarr.stat.exists == False
+
+- name: Move /tmp/traktarr-1.2.4 /opt/appdata/traktarr
+  command: mv /tmp/traktarr-1.2.4 /opt/appdata/traktarr
 
 - name: Install pip requirements
   pip:
