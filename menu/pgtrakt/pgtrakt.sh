@@ -378,7 +378,53 @@ EOF
   fi
 
 }
+maxyear() {
+  tee <<-EOF
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Limit of max allowed Year
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Set a Number from [ 1900 ] - [ 2010 ]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+  if [[ "$typed" -ge "1900" && "$typed" -le "2100" ]]; then
+    echo "$typed" >/var/plexguide/year.max && question1
+  else badinput; fi
+}
+
+credits(){
+clear
+chk=$(figlet traktarr | lolcat )
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 traktarr Credits 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+$chk
+
+#########################################################################
+# Author:   l3uddz                                                      #
+# URL:      https://github.com/l3uddz/l3uddz/traktarr                   #
+# Coder of l3uddz/traktarr                                              #
+# --                                                                    #
+# Author(s):     l3uddz, desimaniac                                     #
+# URL:           https://github.com/cloudbox/cloudbox                   #
+# Coder of l3uddz/traktarr role                                         #
+# --                                                                    #
+#         Part of the Cloudbox project: https://cloudbox.works          #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+EOF
+
+ echo
+  read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+  question1
+}
 
 # BAD INPUT
 badinput() {
@@ -397,6 +443,7 @@ question1() {
   spath=$(cat /var/plexguide/pgtrak.spath)
   rprofile=$(cat /var/plexguide/pgtrak.rprofile)
   sprofile=$(cat /var/plexguide/pgtrak.sprofile)
+  mxyear=$(cat /var/plexguide/pgtrakyear.max)
   deploycheck
 
   tee <<-EOF
@@ -412,7 +459,11 @@ NOTE: Changes Made? Must Redeploy Traktarr when Complete!
 [3] Raddar Path				[ $rpath ]
 [4] Sonarr Profile			[ $sprofile ]
 [5] Radarr Profile			[ $rprofile ]
+{6] Max Year allowed		[ $mxyear ]	
+
 [6] Deploy Traktarr			[ $dstatus ]
+
+[C] Credits
 
 [Z] - Exit
 
@@ -421,17 +472,32 @@ EOF
 
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
-  if [ "$typed" == "1" ]; then
+  case $typed in
+  1)
     api
-  elif [ "$typed" == "2" ]; then
+	question1
+	;;
+  2)
     spath
-  elif [ "$typed" == "3" ]; then
+	question1
+	;;
+  3)
     rpath
-  elif [ "$typed" == "4" ]; then
+	question1
+	;;
+  4)
     squality
-  elif [ "$typed" == "5" ]; then
+	question1
+	;;
+  5)
     rquality
-  elif [ "$typed" == "6" ]; then
+	question1
+	;;
+  6)
+    maxyear
+	question1
+	;;
+  7)
 
     sonarr=$(docker ps | grep "sonarr")
     radarr=$(docker ps | grep "radarr")
@@ -490,11 +556,29 @@ EOF
       fi
     fi
     # keys for sonarr and radarr need to be added
-    ansible-playbook /opt/plexguide/menu/pg.yml --tags traktarr && question1
-	
-  elif [[ "$typed" == "z" || "$typed" == "Z" ]]; then
+    ansible-playbook /opt/plexguide/menu/pg.yml --tags traktarr
+	question1
+	;;
+  C)
+	credits
+	clear
+	question1
+	;;
+  c)		
+	credits
+	clear
+	question1
+	;;
+  z)
     exit
-  else badinput; fi
+    ;;
+  Z)
+    exit
+    ;;
+  *)
+    question1
+    ;;
+  esac
 }
 
 # FUNCTIONS END ##############################################################
@@ -506,6 +590,7 @@ variable /var/plexguide/pgtrak.spath "NOT-SET"
 variable /var/plexguide/pgtrak.sprofile "NOT-SET"
 variable /var/plexguide/pgtrak.rprofile "NOT-SET"
 variable /var/plexguide/pgtrak.rprofile "NOT-SET"
+variable /var/plexguide/pgtrakyear.max "NOT-SET"
 
 deploycheck
 question1

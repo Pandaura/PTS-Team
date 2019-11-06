@@ -72,15 +72,15 @@
   shell: 'cat /var/plexguide/server.ip'
   register: ipaddress
 
-# - name: Sonarr API
-  # shell: 'cat /var/plexguide/pgtrak.sapi'
-  # register: sapi
-  # ignore_errors: True
+- name: Sonarr API
+  shell: 'cat /var/plexguide/pgtrak.sapi'
+  register: sapi
+  ignore_errors: True
 
-# - name: Radarr API
-  # shell: 'cat /var/plexguide/pgtrak.rapi'
-  # register: rapi
-  # ignore_errors: True
+- name: Radarr API
+  shell: 'cat /var/plexguide/pgtrak.rapi'
+  register: rapi
+  ignore_errors: True
 
 - name: Sonarr Profile
   shell: 'cat /var/plexguide/pgtrak.sprofile'
@@ -107,9 +107,14 @@
   register: rpath
   ignore_errors: True
 
-- name: API Path
+- name: Sonarr Path
   shell: 'cat /var/plexguide/pgtrak.spath'
   register: spath
+  ignore_errors: True
+
+- name: Max allowed Year
+  shell: 'cat /var/plexguide/pgtrakyear.max"
+  register: year
   ignore_errors: True
 
 - name: "Check if sonarr exists"
