@@ -18,8 +18,8 @@ variable() {
 }
 
 deploycheck() {
-  dcheck=$(systemctl status pgtrakt | grep "\(running\)\>" | grep "\<since\>")
-  if [ "$dcheck" != "" ]; then
+  dcheck=$(systemctl is-active traktarr)
+  if [ "$dcheck" == "active" ]; then
     dstatus="✅ DEPLOYED"
   else dstatus="⚠️ NOT DEPLOYED"; fi
 }
@@ -356,13 +356,6 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-
-      ### Removes /mnt if /mnt/unionfs exists
-      #check=$(echo $typed | head -c 12)
-      #if [ "$check" == "/mnt/unionfs" ]; then
-      #typed=${typed:4}
-      #fi
-
       echo "$typed" >/var/plexguide/pgtrak.rpath
       read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
       echo ""
@@ -385,24 +378,52 @@ EOF
   fi
 
 }
+maxyear() {
+  tee <<-EOF
 
-token() {
-  touch /var/plexguide/plex.token
-  ptoken=$(cat /var/plexguide/plex.token)
-  if [ "$ptoken" == "" ]; then
-    bash /opt/plexguide/menu/plex/token.sh
-    ptoken=$(cat /var/plexguide/plex.token)
-    if [ "$ptoken" == "" ]; then
-      tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - Failed to Generate a Valid Plex Token! Exiting Deployment!
+🚀 Limit of max allowed Year
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+Set a Number from [ 1900 ] - [ 2100 ]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-      read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-      exit
-    fi
-  fi
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+  if [[ "$typed" -ge "1900" && "$typed" -le "2100" ]]; then
+    echo "$typed" >/var/plexguide/pgtrakyear.max && question1
+  else badinput; fi
+}
+
+credits(){
+clear
+chk=$(figlet traktarr | lolcat )
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 traktarr Credits 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+$chk
+
+#########################################################################
+# Author:   l3uddz                                                      #
+# URL:      https://github.com/l3uddz/l3uddz/traktarr                   #
+# Coder of l3uddz/traktarr                                              #
+# --                                                                    #
+# Author(s):     l3uddz, desimaniac                                     #
+# URL:           https://github.com/cloudbox/cloudbox                   #
+# Coder of l3uddz/traktarr role                                         #
+# --                                                                    #
+#         Part of the Cloudbox project: https://cloudbox.works          #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+EOF
+
+ echo
+  read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+  question1
 }
 
 # BAD INPUT
@@ -410,58 +431,6 @@ badinput() {
   echo
   read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
   question1
-}
-
-selection1() {
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Instantly Kick Video Transcodes?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-[1] False
-
-[2] True
-
-EOF
-  read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
-  if [ "$typed" == "1" ]; then
-    echo "False" >/var/plexguide/pgtrakt/video.transcodes && question1
-  elif [ "$typed" == "2" ]; then
-    echo "True" >/var/plexguide/pgtrakt/video.transcodes && question1
-  else badinput; fi
-}
-
-selection2() {
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Limit Amount of Different IPs a User Can Make?
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Set a Number from [1] to [25]
-
-EOF
-  read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
-  if [[ "$typed" -ge "1" && "$typed" -le "25" ]]; then
-    echo "$typed" >/var/plexguide/pgtrakt/multiple.ips && question1
-  else badinput; fi
-}
-
-selection3() {
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Limit How Long a User Can Pause For!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Set a Number from [5] to [180] Mintues
-
-EOF
-  read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
-  if [[ "$typed" -ge "1" && "$typed" -le "180" ]]; then
-    echo "$typed" >/var/plexguide/pgtrakt/kick.minutes && question1
-  else badinput; fi
 }
 
 # FIRST QUESTION
@@ -474,6 +443,7 @@ question1() {
   spath=$(cat /var/plexguide/pgtrak.spath)
   rprofile=$(cat /var/plexguide/pgtrak.rprofile)
   sprofile=$(cat /var/plexguide/pgtrak.sprofile)
+  mxyear=$(cat /var/plexguide/pgtrakyear.max)
   deploycheck
 
   tee <<-EOF
@@ -484,12 +454,16 @@ question1() {
 
 NOTE: Changes Made? Must Redeploy Traktarr when Complete!
 
-[1] Trakt API-Key    [ $api ]
-[2] Sonarr Path      [ $spath ]
-[3] Raddar Path      [ $rpath ]
-[4] Sonarr Profile   [ $sprofile ]
-[5] Radarr Profile   [ $rprofile ]
-[6] Deploy Traktarr  [ $dstatus ]
+[1] Trakt API-Key                       [ $api ]
+[2] Sonarr Path                         [ $spath ]
+[3] Raddar Path                         [ $rpath ]
+[4] Sonarr Profile                      [ $sprofile ]
+[5] Radarr Profile                      [ $rprofile ]
+{6] Max Year allowed                    [ $mxyear ]
+
+[7] Deploy Traktarr                     [ $dstatus ]
+
+[C] Credits
 
 [Z] - Exit
 
@@ -498,18 +472,32 @@ EOF
 
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
-  if [ "$typed" == "1" ]; then
+  case $typed in
+  1)
     api
-  elif [ "$typed" == "2" ]; then
+	question1
+	;;
+  2)
     spath
-  elif [ "$typed" == "3" ]; then
+	question1
+	;;
+  3)
     rpath
-  elif [ "$typed" == "4" ]; then
+	question1
+	;;
+  4)
     squality
-  elif [ "$typed" == "5" ]; then
+	question1
+	;;
+  5)
     rquality
-  elif [ "$typed" == "6" ]; then
-
+	question1
+	;;
+  6)
+    maxyear
+	question1
+	;;
+  7)
     sonarr=$(docker ps | grep "sonarr")
     radarr=$(docker ps | grep "radarr")
 
@@ -566,16 +554,33 @@ EOF
         echo "$info2" >/var/plexguide/pgtrak.sapi
       fi
     fi
-    # keys for sonarr and radarr need to be added
-    ansible-playbook /opt/plexguide/menu/pgtrakt/pgtrakt.yml && question1
-	
-  elif [[ "$typed" == "z" || "$typed" == "Z" ]]; then
+    ansible-playbook /opt/plexguide/menu/traktarr/traktarr.yml
+	question1
+	;;
+  C)
+	credits
+	clear
+	question1
+	;;
+  c)		
+	credits
+	clear
+	question1
+	;;
+  z)
     exit
-  else badinput; fi
+    ;;
+  Z)
+    exit
+    ;;
+  *)
+    question1
+    ;;
+  esac
 }
 
 # FUNCTIONS END ##############################################################
-token
+
 variable /var/plexguide/pgtrak.client "NOT-SET"
 variable /var/plexguide/pgtrak.secret "NOT-SET"
 variable /var/plexguide/pgtrak.rpath "NOT-SET"
@@ -583,6 +588,7 @@ variable /var/plexguide/pgtrak.spath "NOT-SET"
 variable /var/plexguide/pgtrak.sprofile "NOT-SET"
 variable /var/plexguide/pgtrak.rprofile "NOT-SET"
 variable /var/plexguide/pgtrak.rprofile "NOT-SET"
+variable /var/plexguide/pgtrakyear.max "NOT-SET"
 
 deploycheck
 question1

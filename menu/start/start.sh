@@ -273,7 +273,7 @@ EOF
     ;;
   10)
     clear
-    bash /opt/plexguide/menu/pgtrakt/pgtrakt.sh
+    bash /opt/plexguide/menu/traktarr/traktarr.sh
     clear
 	primestart
 	;;

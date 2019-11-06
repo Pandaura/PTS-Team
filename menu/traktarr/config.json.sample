@@ -30,7 +30,7 @@
         "allowed_languages": [],
         "blacklisted_min_runtime": 15,
         "blacklisted_min_year": 1950,
-        "blacklisted_max_year": 2050,
+        "blacklisted_max_year": {{year.stdout}},
         "blacklisted_genres": [
           "game-show",
           "news",
@@ -68,7 +68,7 @@
         ],
         "blacklisted_min_runtime": 30,
         "blacklisted_min_year": 1950,
-        "blacklisted_max_year": 2050,
+        "blacklisted_max_year": {{year.stdout}},
         "blacklisted_tmdb_ids": [],
         "allowed_countries": [
           "us",

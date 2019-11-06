@@ -67,14 +67,19 @@
       register: rpath
       ignore_errors: True
 
-    - name: API Sonnar
+    - name: Sonnar Path
       shell: 'cat /var/plexguide/pgtrak.spath'
       register: spath
       ignore_errors: True
 
+    - name: Max allowed Year
+      shell: 'cat /var/plexguide/pgtrakyear.max'
+      register: year
+      ignore_errors: True
+
     - name: Install pip requirements
       pip:
-        requirements: /opt/plexguide/menu/pgtrakt/requirements.txt
+        requirements: /opt/plexguide/menu/traktarr/requirements.txt
         executable: pip3
 
     - name: 'Including cron job'
@@ -83,11 +88,11 @@
     - name: Create Basic Directories
       file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
       with_items:
-        - '/opt/appdata/pgtrakt/'
+        - '/opt/appdata/traktarr/'
 
     - name: Transfer Files
       copy:
-        src: /opt/plexguide/menu/pgtrakt
+        src: /opt/plexguide/menu/traktarr
         dest: /opt/appdata
         owner: '1000'
         group: '1000'
@@ -96,8 +101,8 @@
 
     - name: Import default config
       template:
-        src: /opt/appdata/pgtrakt/config.json.sample
-        dest: /opt/appdata/pgtrakt/config.json
+        src: /opt/appdata/traktarr/config.json.sample
+        dest: /opt/appdata/traktarr/config.json
         owner: '1000'
         group: '1000'
         mode: 0775
@@ -105,36 +110,36 @@
 
     - name: Set pgtrak.py as executable
       file:
-        path: /opt/appdata/pgtrakt/pgtrakt.py
+        path: /opt/appdata/traktarr/traktarr.py
         owner: '1000'
         group: '1000'
         mode: a+x
 
     - name: 'Create /usr/local/bin symlink'
       file:
-        src: '/opt/appdata/pgtrakt/pgtrakt.py'
-        dest: '/bin/pgtrakt'
+        src: '/opt/appdata/traktarr/traktarr.py'
+        dest: '/bin/traktarr'
         state: link
 
     - name: Check Service's Existance
       stat:
-        path: '/etc/systemd/systemd/pgtrakt.service'
+        path: '/etc/systemd/systemd/traktarr.service'
       register: pgp
 
     - name: Stop service
       service:
-        name: pgtrakt
+        name: traktarr
         state: stopped
       when: pgp.stat.exists
 
-    - name: PGTrakt Service
+    - name: traktarr Service
       template:
-        src: /opt/appdata/pgtrakt/systemd/pgtrakt.service
-        dest: /etc/systemd/system/pgtrakt.service
+        src: /opt/appdata/traktarr/systemd/traktarr.service
+        dest: /etc/systemd/system/traktarr.service
         force: yes
 
     - name: Daemon-Reload
-      systemd: state=stopped name=pgtrakt daemon_reload=yes enabled=no
+      systemd: state=stopped name=traktarr daemon_reload=yes enabled=no
 
     - name: Start PGTrakt
-      systemd: state=started name=pgtrakt enabled=yes
+      systemd: state=started name=traktarr enabled=yes

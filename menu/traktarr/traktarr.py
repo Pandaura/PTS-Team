@@ -19,7 +19,7 @@ notify = None
 
 # Click
 @click.group(help='Add new shows & movies to Sonarr/Radarr from Trakt.')
-@click.version_option('1.2.3', prog_name='pgtrakt')
+@click.version_option('1.2.5 mod for PTS', prog_name='traktarr')
 @click.option(
     '--config',
     envvar='TRAKTARR_CONFIG',
@@ -48,7 +48,7 @@ def app(config, logfile):
 
     # Load logger
     from misc.log import logger
-    log = logger.get_logger('pgtrack')
+    log = logger.get_logger('traktarr')
 
     # Load notifications
     from notifications import Notifications
@@ -940,8 +940,15 @@ def exit_handler(signum, frame):
 if __name__ == "__main__":
 
     print("")
-    print("""PGTrakt Started
-
+    print("""
+#########################################################################
+# Author:   l3uddz                                                      #
+# URL:      https://github.com/l3uddz/traktarr                          #
+# --                                                                    #
+# Part of the Cloudbox project: https://cloudbox.works                  #
+#########################################################################
+# GNU General Public License v3.0                                       #
+#########################################################################
 """)
 
     # Register the signal handlers
