@@ -17,7 +17,6 @@
   systemd: state=stopped name=pgtrakt
   when: pgtrakt_service.stat.exists
 
-
 - name: Remove | pgtrakt
   file: 'path={{item}} state=absent mode=0775 owner=1000 group=1000'
   with_items:
@@ -38,13 +37,37 @@
   with_items:
     - /opt/appdata/traktarr
 
+# - name: Clone traktarr v1.2.4
+  # git:
+    # repo: https://github.com/l3uddz/traktarr.git
+    # dest: /opt/appdata/traktarr
+    # version: release-1.2.4
+    # force: yes
+  # become: yes
+
+- name: Check WebTools
+  stat:
+    path: '/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Plug-ins/WebTools.bundle'
+  register: trakarr
+
+- name: Create Basic Directories
+  file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
+  with_items:
+    - '/opt/appdata/traktarr'
+  when:
+    - trakarr.stat.exists == False
+
 - name: Clone traktarr v1.2.4
-  git:
-    repo: https://github.com/l3uddz/traktarr.git
+  unarchive:
+    src: https://github.com/l3uddz/traktarr/archive/1.2.4.zip
     dest: /opt/appdata/traktarr
-    version: release-1.2.4
-    force: yes
-  become: yes
+    keep_newer: no
+    owner: '1000'
+    group: '1000'
+    mode: 0775
+    copy: no
+  when:
+    - traktarr.stat.exists == False
 
 - name: Install pip requirements
   pip:
