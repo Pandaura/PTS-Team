@@ -490,7 +490,7 @@ EOF
       fi
     fi
     # keys for sonarr and radarr need to be added
-    ansible-playbook /opt/plexguide/menu/pg.yml --traktarr && question1
+    ansible-playbook /opt/plexguide/menu/pg.yml --tags traktarr && question1
 	
   elif [[ "$typed" == "z" || "$typed" == "Z" ]]; then
     exit
