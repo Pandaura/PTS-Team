@@ -45,10 +45,10 @@
     # force: yes
   # become: yes
 
-- name: Check WebTools
+- name: Check traktarr
   stat:
     path: '/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Plug-ins/WebTools.bundle'
-  register: trakarr
+  register: traktarr
 
 - name: Create Basic Directories
   file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
