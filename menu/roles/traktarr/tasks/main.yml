@@ -47,15 +47,8 @@
 
 - name: Check traktarr
   stat:
-    path: '/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Plug-ins/WebTools.bundle'
+    path: '/opt/appdata/traktarr'
   register: traktarr
-
-- name: Create Basic Directories
-  file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
-  with_items:
-    - '/opt/appdata/traktarr'
-  when:
-    - traktarr.stat.exists == False
 
 - name: Clone traktarr v1.2.4
   unarchive:
@@ -71,6 +64,9 @@
 
 - name: Move /tmp/traktarr-1.2.4 /opt/appdata/traktarr
   command: mv /tmp/traktarr-1.2.4 /opt/appdata/traktarr
+
+- name: Fix permissions
+  file: path=/opt/appdata/traktarr owner=1000 group=1000 mode=0775 state=directory recurse=yes
 
 - name: Install pip requirements
   pip:
