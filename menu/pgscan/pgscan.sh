@@ -170,15 +170,19 @@ EOF
 
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
-  if [ "$typed" == "1" ]; then
-		tail -n 50 /opt/plex_autoscan/plex_autoscan.log
-		doneenter
-  elif [ "$typed" == "2" ]; then
-        python /opt/plex_autoscan/scan.py update_sections
-		doneenter
-  elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
+  case $typed in
+  1)
+	tail -n 50 /opt/plex_autoscan/plex_autoscan.log
+	doneenter
+	;;
+  2)
+	python /opt/plex_autoscan/scan.py update_sections
+	doneenter
+	;;
+  *)
     question1
-  else question1; fi
+    ;;
+  esac
 }
 
 
@@ -224,11 +228,11 @@ EOF
   A)
 	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
 	question1
-		;;
+	;;
   a)
 	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
 	question1
-		;;
+	;;
   D)
 	showupdomain
 	;;
