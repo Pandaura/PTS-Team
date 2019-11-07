@@ -1,7 +1,8 @@
 #!/bin/bash
 #
 # Title:      PTS Updater
-# Author(s):  MrDoobPG
+# Author(s):  Admin9705 - Deiteq
+# URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
 ---
@@ -25,17 +26,8 @@
         path: /opt/plexguide
       register: p
     - debug:
-        msg: "Path exists and PTS folder and pulled"
+        msg: "Path exists and PTS folder exists"
       when: p.stat.isdir is defined and p.stat.isdir
-
-    - name: Remove .githube folder and .git files
-      file: 'path={{item}} state=absent mode=0775 owner=1000 group=1000'
-      with_items:
-        - '/opt/plexguide/.git'
-        - '/opt/plexguide/.github'
-        - '/opt/plexguide/.gitignore'
-        - '/opt/plexguide/LICENSE'
-        - '/opt/plexguide/README.md'
 
     - name: 'Stops First Time Run'
       shell: 'touch /var/plexguide/ask.yes'
