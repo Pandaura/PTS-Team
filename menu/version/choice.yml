@@ -19,6 +19,7 @@
         dest: '/opt/plexguide'
         version: '{{serverid.stdout}}'
         force: yes
+        update: yes
       when: not serverid.stdout == "edge"
       ignore_errors: True
 
