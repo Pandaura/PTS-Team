@@ -13,7 +13,7 @@
     # FACTS ######################################################################
     - name: 'Set Known Facts'
       set_fact:
-        pgrole: 'pgtrakt'
+        pgrole: 'traktarr'
         extport: '0'
 
     - name: Server ID

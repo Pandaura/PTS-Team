@@ -185,7 +185,6 @@ EOF
     ports="OPEN"
   else ports="CLOSED"; fi
 
-
   tee <<-EOF
 
 [1]  PTS-Traefik    : Reverse Proxy
@@ -195,22 +194,16 @@ EOF
 [5]  PTS-Apps       : Apps ~ Core, Community & Removal
 [6]  CBOX-PAS       : PlexAutoScan [ ALPHA VERSION ]
 _________________________________________________________________
-
 [7]  PTS-WordPress  : Deploy WordPress Instances
 [8]  PTS-Vault      : Backup & Restore
 [9]  PTS-Cloud      : GCE & Virtual Instances
 _________________________________________________________________
-
 [10] Traktarr       : ( old PGTrakt )
 [11] Plex Patrol    : Kick transcodes (audio or video or both)
 [12] Settings       : ----> IDK <-----
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 [Z]  Exit
-
 "$wisword"
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   # Standby

@@ -22,14 +22,16 @@ EOF
 }
 
 downloadpg() {
+  pgnumber=$(cat /var/plexguide/pg.number)
   rm -rf /opt/plexguide
-  git clone --single-branch https://github.com/PTS-Team/PTS-Team.git /opt/plexguide  1>/dev/null 2>&1
+  git clone $pgnumber https://github.com/PTS-Team/PTS-Team.git /opt/plexguide  1>/dev/null 2>&1
   ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
   rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
   rm -rf /opt/plexguide/.git* >/dev/null 2>&1
 }
 
 missingpull() {
+  pgnumber=$(cat /var/plexguide/pg.number)
   file="/opt/plexguide/menu/functions/install.sh"
   if [ ! -e "$file" ]; then
     tee <<-EOF
@@ -43,7 +45,7 @@ EOF
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- 🍖  NOM NOM - Re-Downloading PTS
+ 🍖  NOM NOM - Re-Downloading PTS [ $pgnumber ]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
     sleep 2
