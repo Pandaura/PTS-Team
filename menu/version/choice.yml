@@ -29,6 +29,14 @@
         msg: "Path exists and PTS folder exists"
       when: p.stat.isdir is defined and p.stat.isdir
 
+    - name: Set permission and ownership
+      file:
+        path: /opt/plexguide
+        state: directory
+        recurse: yes
+        owner: '1000'
+        group: '1000'
+
     - name: 'Stops First Time Run'
       shell: 'touch /var/plexguide/ask.yes'
       register: program
