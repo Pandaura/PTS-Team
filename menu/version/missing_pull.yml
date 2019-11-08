@@ -41,9 +41,6 @@
     - name: Remove .githube folder and .git files
       file: 'path={{item}} state=absent mode=0775 owner=1000 group=1000'
       with_items:
-        - '/opt/plexguide/.git'
-        - '/opt/plexguide/.github'
-        - '/opt/plexguide/.gitignore'
         - '/opt/plexguide/LICENSE'
         - '/opt/plexguide/README.md'
 
