@@ -125,9 +125,6 @@
     - name: Please wait mergerfs | rclone check is running
       shell: 'bash /opt/appdata/pgui/check.sh'
 
-    - name: Please wait first catching  the Cloud used space is running 
-      shell: 'bash /opt/appdata/pgui/gtused.sh'
-
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'
       docker_container:
