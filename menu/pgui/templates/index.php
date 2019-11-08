@@ -162,11 +162,11 @@ echo "<pre>$output</pre>";
         <table width="100%" height="44" border="1" align="center" cellpadding="0" cellspacing="0">
 			<tbody>
 				<tr>
-				<td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong><strong>&nbsp;&nbsp;PGUnion - RClone | Mount</strong></span></span></td>
+				<td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong><strong>&nbsp;&nbsp;Union - RClone | Mount</strong></span></span></td>
 				<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 					<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.union');echo "<pre>$output</pre>";?></span></td>
 					
-				<td width="15%" height="21" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp; PGBlitz | PGMove</strong></span></span></td>
+				<td width="15%" height="21" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp; Blitz | Move</strong></span></span></td>
 				<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 					<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.blitz');echo "<pre>$output</pre>";?></span></td>
 					
@@ -231,7 +231,7 @@ echo "<pre>$output</pre>";
 				<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.used');echo "<pre>$output</pre>" ?></span></td>
             </tr>
             <tr>
-              <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp; PG GCE</strong></span></td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
+              <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp; GCE</strong></span></td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
 				<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.gce');echo "<pre>$output</pre>";?></span>
 			  </td>
               <td width="15%" height="21" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; "><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;Docker</strong></span></span></td>
