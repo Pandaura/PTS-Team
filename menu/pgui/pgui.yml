@@ -15,31 +15,31 @@
         pgrole: 'pgui'
         intport: '80'
         extport: '8555'
-        image: 'mrdoob/dngele:latest'
+        image: 'linuxserver/nginx:latest'
 
     # CORE (MANDATORY) ############################################################
-    - name: 'Including cron job'
-      include_tasks: '/opt/plexguide/menu/pgui/templates/_core.yml'
+    - name: 'Including core job'
+      include_tasks: '/opt/coreapps/apps/_core.yml'
 
     - name: 'Including cron job'
-      include_tasks: '/opt/plexguide/menu/pgui/templates/_cron.yml'
+      include_tasks: '/opt/coreapps/apps/_cron.yml'
 
     - name: 'Including Tasks'
-      include_tasks: '/opt/plexguide/menu/pgui/tasks/dynamic.yml'
+      include_tasks: '/opt/coreapps/apps/templates/tasks/dynamic.yml'
 
     # refix the UI     ############################################################
 
     - name: 'Install File new UI'
       template:
-        src: /opt/plexguide/menu/pgui/templates/index.php
-        dest: /opt/appdata/pgui/index.php
+        src: /opt/coreapps/apps/templates/pgui/index.php
+        dest: /opt/appdata/{{pgrole}}/www/index.ph
         force: yes
         owner: '1000'
         group: '1000'
 
     - name: 'Install File Check mergerfs / rClone'
       template:
-        src: /opt/plexguide/menu/pgui/templates/check.sh
+        src: /opt/coreapps/apps/templates/pgui/check.sh
         dest: /opt/appdata/pgui/check.sh
         force: yes
         owner: '1000'
@@ -47,7 +47,7 @@
 
     - name: 'Install File GTused'
       template:
-        src: /opt/plexguide/menu/pgui/templates/gtused.sh
+        src: /opt/coreapps/apps/templates/pgui/gtused.sh
         dest: /opt/appdata/pgui/gtused.sh
         force: yes
         owner: '1000'
@@ -55,22 +55,8 @@
 
     - name: 'Install File Mountcheck file'
       copy:
-        src: /opt/plexguide/menu/pgui/templates/mountcheck.sh
+        src: /opt/coreapps/apps/templates/pgui/mountcheck.sh
         dest: /opt/plexguide/menu/pgui/mountcheck.sh
-        force: yes
-
-    - name: 'Install File Check mergerfs / rClone'
-      template:
-        src: /opt/plexguide/menu/pgui/templates/check.sh
-        dest: /opt/appdata/pgui/check.sh
-        force: yes
-        owner: '1000'
-        group: '1000'
-
-    - name: 'Install File GTused'
-      template:
-        src: /opt/plexguide/menu/pgui/templates/gtused.sh
-        dest: /opt/appdata/pgui/gtused.sh
         force: yes
         owner: '1000'
         group: '1000'
@@ -79,7 +65,7 @@
  
     - name: replacing MountCheck Service
       template:
-        src: /opt/plexguide/menu/pgui/templates/mountcheck.service
+        src: /opt/coreapps/apps/templates/pgui/mountcheck.service
         dest: /etc/systemd/system/mountcheck.service
         force: yes
 
@@ -93,14 +79,14 @@
  
     - name: replacing localspace Service
       template:
-        src: /opt/plexguide/menu/pgui/templates/localspace.service
+        src: /opt/coreapps/apps/templates/pgui/localspace.service
         dest: /etc/systemd/system/localspace.service
         force: yes
 
-    - name: Daemon-Reload
+    - name: Daemon-Reload - Localspace 
       systemd: state=stopped name=localspace daemon_reload=yes enabled=no
 
-    - name: Start pgscan
+    - name: Start Daemo - Localspace
       systemd: state=started name=localspace enabled=yes
 
     # LABELS ######################################################################
@@ -110,7 +96,7 @@
           traefik.enable: 'true'
           traefik.port: '{{intport}}'
           traefik.frontend.auth.forward.address: '{{gauth}}'
-          traefik.frontend.rule: 'Host:{{pgrole}}.{{domain.stdout}}{{tldset}}{{cname}}'
+          traefik.frontend.rule: 'Host:{{tldset}}{{cname}}'
           traefik.frontend.headers.SSLHost: '{{domain.stdout}}'
           traefik.frontend.headers.SSLRedirect: 'true'
           traefik.frontend.headers.STSIncludeSubdomains: 'true'
@@ -124,15 +110,23 @@
     - name: 'Setting PG Volumes'
       set_fact:
         pg_volumes:
-          - '/opt/appdata/pgui/index.php:/var/www/html/index.php'
-          - '/var/plexguide:/plexguide'
-          - '/opt/appdata/plexguide:/log'
+          - '/opt/appdata/{{pgrole}}:/config'
+          - '/var/plexguide:/config/plexguide'
+          - '/opt/appdata/plexguide:/config/pglog'
 
     - name: 'Setting PG ENV'
       set_fact:
         pg_env:
           PUID: '1000'
           PGID: '1000'
+
+    # first catchup data ##########################################################
+
+    - name: Please wait mergerfs | rclone check is running
+      shell: 'bash /opt/appdata/pgui/check.sh'
+
+    - name: Please wait first catching  the Cloud used space is running 
+      shell: 'bash /opt/appdata/pgui/gtused.sh'
 
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'
