@@ -5,6 +5,7 @@
 # moded from MrDoob for ptSCOMM
 # GNU:        General Public License v3.0
 ################################################################################
+
 ---
 - hosts: localhost
   gather_facts: false
@@ -15,33 +16,32 @@
         pgrole: 'pgui'
         intport: '80'
         extport: '8555'
-        image: 'mrdoob/dngele:latest'
+        image: 'linuxserver/nginx:latest'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
-      include_tasks: '/opt/coreapps/apps/_core.yml'
+      include_tasks: '/opt/plexguide/menu/{{pgrole}}/templates/_core.yml'
 
     - name: 'Including cron job'
-      include_tasks: '/opt/plexguide/menu/pgui/_cron.yml'
+      include_tasks: '/opt/plexguide/menu/{{pgrole}}/templates/_cron.yml'
 
     - name: 'Including Tasks'
-      include_tasks: '/opt/plexguide/menu/pgui/dynamic.yml'
+      include_tasks: '/opt/plexguide/menu/{{pgrole}}/templates/dynamic.yml'
+      
+    - name: 'Including gtused'
+      include_tasks: '/opt/plexguide/menu/{{pgrole}}/templates/gtused.yml'
 
-    # refix the UI     ############################################################
+    - name: 'Including mcdeploy'
+      include_tasks: '/opt/plexguide/menu/{{pgrole}}/templates/mcdeploy.yml'
 
-    - name: 'Install File new UI'
-      template:
-        src: /opt/plexguide/menu/pgui/index.php
-        dest: /opt/appdata/pgui/index.php
-        force: yes
-        owner: '1000'
-        group: '1000'
+    - name: 'Including mcdeploy'
+      include_tasks: '/opt/plexguide/menu/{{pgrole}}/templates/commui.yml'
 
      ### mountcheck replace
- 
-    - name: replacing MountCheck Service
+
+    - name: 'replacing MountCheck Service'
       template:
-        src: /opt/plexguide/menu/pgui/mountcheck.service
+        src: /opt/plexguide/menu/{{pgrole}}/templates/mountcheck.service
         dest: /etc/systemd/system/mountcheck.service
         force: yes
 
@@ -52,10 +52,10 @@
       systemd: state=started name=mountcheck enabled=yes
 
      ### localspace replace
- 
+
     - name: replacing localspace Service
       template:
-        src: /opt/plexguide/menu/pgui/localspace.service
+        src: /opt/plexguide/menu/{{pgrole}}/templates/localspace.service
         dest: /etc/systemd/system/localspace.service
         force: yes
 
@@ -64,7 +64,6 @@
 
     - name: Start pgscan
       systemd: state=started name=localspace enabled=yes
-
 
     # LABELS ######################################################################
     - name: 'Adding Traefik'
@@ -87,20 +86,15 @@
     - name: 'Setting PG Volumes'
       set_fact:
         pg_volumes:
-          - '/opt/appdata/pgui/index.php:/var/www/html/index.php'
-          - '/var/plexguide:/plexguide'
-          - '/opt/appdata/plexguide:/log'
+          - '/opt/appdata/{{pgrole}}:/config'
+          - '/var/plexguide:/config/plexguide'
+          - '/opt/appdata/plexguide:/config/pglog'
 
     - name: 'Setting PG ENV'
       set_fact:
         pg_env:
           PUID: '1000'
           PGID: '1000'
-
-    # first catchup data ##########################################################
-
-    - name: Please wait this will need some minutes
-      shell: 'bash /opt/plexguide/menu/pgui/check.sh'
 
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'
@@ -119,4 +113,3 @@
               - '{{pgrole}}'
         state: started
         labels: '{{pg_labels}}'
-

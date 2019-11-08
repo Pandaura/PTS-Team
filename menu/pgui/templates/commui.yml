@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+# Title:      Community UI
+# moded from MrDoob for ptSCOMM
+# GNU:        General Public License v3.0
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: 'Install File new UI'
+      template:
+        src: /opt/plexguide/menu/{{pgrole}}/templates/index.php
+        dest: /opt/appdata/{{pgrole}}/www/index.php
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+    - name: Remove old files
+      file: 'path={{item}} state=absent mode=0775 owner=1000 group=1000'
+      with_items:
+        - '/opt/appdata/{{pgrole}}/www/index.html'
+
+    - name: 'Install File Check mergerfs / rClone'
+      template:
+        src: /opt/plexguide/menu/{{pgrole}}/templates/check.sh
+        dest: /opt/appdata/{{pgrole}}/check.sh
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+    - name: 'Install File GTused'
+      template:
+        src: /opt/plexguide/menu/{{pgrole}}/templates/gtused.sh
+        dest: /opt/appdata/{{pgrole}}/gtused.sh
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+    - name: 'Install File Mountcheck file'
+      copy:
+        src: /opt/plexguide/menu/{{pgrole}}/templates/mountcheck.sh
+        dest: /opt/plexguide/menu/{{pgrole}}/mountcheck.sh
+        force: yes
+
+    - name: 'Install File Check mergerfs / rClone'
+      template:
+        src: /opt/plexguide/menu/{{pgrole}}/templates/check.sh
+        dest: /opt/appdata/{{pgrole}}/check.sh
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+    - name: 'Install File GTused'
+      template:
+        src: /opt/plexguide/menu/{{pgrole}}/templates/gtused.sh
+        dest: /opt/appdata/{{pgrole}}/gtused.sh
+        force: yes
+        owner: '1000'
+        group: '1000'
