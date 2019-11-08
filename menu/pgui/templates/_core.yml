@@ -60,7 +60,7 @@
 
 - name: Set cname
   set_fact:
-    cname: "{{ucname.stdout}}.{{domain.stdout}}"
+    cname: ",{{ucname.stdout}}.{{domain.stdout}}"
   when:  ucname_check.stat.exists == true and ucname.stdout != ""
 
 - name: check if user port file exists
@@ -86,7 +86,7 @@
   ignore_errors: True
 
 - name: Storing Role Name
-  shell: "echo '{{pgrole}}' >/tmp/program_var"
+  shell: "echo '{{pgrole}}' > /tmp/program_var"
   ignore_errors: True
 
   # APPDATA
@@ -131,7 +131,7 @@
 
 - name: 'If Fact Matches - Enable TLD'
   set_fact:
-    tldset: '{{domain.stdout}}'
+    tldset: ',{{domain.stdout}},www.{{domain.stdout}}'
   when: 'toplevel.stdout == pgrole'
 
 - debug: msg="TLDSET is now for {{toplevel.stdout}}"
@@ -183,3 +183,7 @@
   when: not oauth.stdout == 'good'
 
 - debug: msg="OAuth - {{oauth.stdout}}"
+
+##PG-Core
+
+##PG-Core

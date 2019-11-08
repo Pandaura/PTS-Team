@@ -106,7 +106,7 @@ document.close();
           <tbody>
             <tr>
               <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-                <?php $output = shell_exec('tail -n 25 /config/plexguide/logs/pg*.log');
+                <?php $output = shell_exec('tail -n 25 /plexguide/logs/pg*.log');
 echo "<pre>$output</pre>";
 ?>
               </span></td>
@@ -126,7 +126,7 @@ echo "<pre>$output</pre>";
             <tr>
               <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
 			  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-                <?php $output = shell_exec('tail -n 10 /config/plexguide/logs/rclone-*.log');
+                <?php $output = shell_exec('tail -n 10 /plexguide/logs/rclone-*.log');
 echo "<pre>$output</pre>";
 ?>
               </span></td>
@@ -146,7 +146,7 @@ echo "<pre>$output</pre>";
             <tr>
 				<td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
 					<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
-					<?php $output = shell_exec('cat /config/plexguide/emergency.log');echo "<pre>$output</pre>";?></span>
+					<?php $output = shell_exec('cat /plexguide/emergency.log');echo "<pre>$output</pre>";?></span>
 				</td>
             </tr>
           </tbody>
@@ -164,28 +164,28 @@ echo "<pre>$output</pre>";
 				<tr>
 				<td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong><strong>&nbsp;&nbsp;PGUnion - RClone | Mount</strong></span></span></td>
 				<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.union');echo "<pre>$output</pre>";?></span></td>
+					<?php $output = shell_exec('tail -n 1 /plexguide/pg.union');echo "<pre>$output</pre>";?></span></td>
 					
 				<td width="15%" height="21" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp; PGBlitz | PGMove</strong></span></span></td>
 				<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.blitz');echo "<pre>$output</pre>";?></span></td>
+					<?php $output = shell_exec('tail -n 1 /plexguide/pg.blitz');echo "<pre>$output</pre>";?></span></td>
 					
 				</tr>
 				<tr>
 				  <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;/mnt/downloads</strong></span></td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
-					<?php $output = shell_exec('tail -n1 /config/plexguide/spaceused.log');echo "<pre>$output</pre>";?></span>
+					<?php $output = shell_exec('tail -n1 /plexguide/spaceused.log');echo "<pre>$output</pre>";?></span>
 				  </td>
 				  <td width="15%" height="21" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; "><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;/mnt/move</strong></span></span></td>
 				  <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<?php $output = shell_exec('head -n1 /config/plexguide/spaceused.log');echo "<pre>$output</pre>";?></span></td>
+					<?php $output = shell_exec('head -n1 /plexguide/spaceused.log');echo "<pre>$output</pre>";?></span></td>
 				</tr>
 				<tr>
 				  <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp; mergerfs </strong></span></td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
-					<?php $output = shell_exec('tail -n 1 /config/plexguide/checkers/mergerfs.log');echo "<pre>$output</pre>";?></span>
+					<?php $output = shell_exec('tail -n 1 /plexguide/checkers/mergerfs.log');echo "<pre>$output</pre>";?></span>
 				  </td>
 				  <td width="15%" height="21" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; "><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;rClone</strong></span></span></td>
 				  <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<?php $output = shell_exec('tail -n 1 /config/plexguide/checkers/rclone.log');echo "<pre>$output</pre>";?></span></td>
+					<?php $output = shell_exec('tail -n 1 /plexguide/checkers/rclone.log');echo "<pre>$output</pre>";?></span></td>
 				</tr>
 			</tbody>
         </table>
@@ -200,50 +200,61 @@ echo "<pre>$output</pre>";
             <tr>
               <td width="15%" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;Edition</td>
 				  <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
-				<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.transport');echo "<pre>$output</pre>" ?></span></td>
+				<?php $output = shell_exec('tail -n 1 /plexguide/pg.transport');echo "<pre>$output</pre>" ?></span></td>
               <td width="15%" height="21" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;Version</td>
 				  <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-				<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.number');echo "<pre>$output</pre>";?></span></td>
+				<?php $output = shell_exec('tail -n 1 /plexguide/pg.number');echo "<pre>$output</pre>";?></span></td>
               <td width="15%" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;ServerID</td>
 				<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-				<?php $output = shell_exec('tail -n 1 /config/plexguide/server.id');echo "<pre>$output</pre>" ?></span></td>
+				<?php $output = shell_exec('tail -n 1 /plexguide/server.id');echo "<pre>$output</pre>" ?></span></td>
             </tr>
             <tr>
               <td width="15%" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;Traefik</td>
 				<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
-				<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.traefik');echo "<pre>$output</pre>";?></span></td>
+				<?php $output = shell_exec('tail -n 1 /plexguide/pg.traefik');echo "<pre>$output</pre>";?></span></td>
               <td width="15%" height="21" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;GOAuth</td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-				<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.oauth');echo "<pre>$output</pre>";?></span></td>
+				<?php $output = shell_exec('tail -n 1 /plexguide/pg.oauth');echo "<pre>$output</pre>";?></span></td>
               <td width="15%" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;PortGuard</td>
               <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-				<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.ports');echo "<pre>$output</pre>";?></span></td>
+				<?php $output = shell_exec('tail -n 1 /plexguide/pg.ports');echo "<pre>$output</pre>";?></span></td>
             </tr>
             <tr>
 				<td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;OS</strong></span></td>
 				<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
-				<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.os');echo "<pre>$output</pre>";?></span>
+				<?php $output = shell_exec('tail -n 1 /plexguide/pg.os');echo "<pre>$output</pre>";?></span>
 				</td>
 				<td width="15%" height="21" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; "><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;Ansible</strong></span></span></td>
 				<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-				<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.ansible');echo "<pre>$output</pre>";?></span></td>
+				<?php $output = shell_exec('tail -n 1 /plexguide/pg.ansible');echo "<pre>$output</pre>";?></span></td>
 				<td width="15%" bgcolor="#000000" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium; font-weight: bold;"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong> &nbsp;&nbsp;Used Space</strong></span></span></td>
 				<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-				<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.used');echo "<pre>$output</pre>" ?></span></td>
+				<?php $output = shell_exec('tail -n 1 /plexguide/pg.used');echo "<pre>$output</pre>" ?></span></td>
             </tr>
             <tr>
               <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp; PG GCE</strong></span></td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
-				<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.gce');echo "<pre>$output</pre>";?></span>
+				<?php $output = shell_exec('tail -n 1 /plexguide/pg.gce');echo "<pre>$output</pre>";?></span>
 			  </td>
               <td width="15%" height="21" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; "><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;Docker</strong></span></span></td>
               <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-                <?php $output = shell_exec('tail -n 1 /config/plexguide/pg.docker');echo "<pre>$output</pre>";?></span></td>
+                <?php $output = shell_exec('tail -n 1 /plexguide/pg.docker');echo "<pre>$output</pre>";?></span></td>
               <td width="15%" bgcolor="#000000" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium; font-weight: bold;"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;Disk Space</strong></span></span></td>
               <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-                <?php $output = shell_exec('tail -n 1 /config/plexguide/pg.capacity');echo "<pre>$output</pre>";?></span></td>
+                <?php $output = shell_exec('tail -n 1 /plexguide/pg.capacity');echo "<pre>$output</pre>";?></span></td>
             </tr>
           </tbody>	
         </table>		  
 		<br>
+		<!--added -->
+		<!-- <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+			  <tbody>
+				<tr>
+				  <td width="100%" height="30" style="color: #E8DD06; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif; font-weight: bolder; font-size: large; text-align: left;"> More Informations </td>
+				</tr>
+			  </tbody>
+			</table>
+		<table width="100%" height="60" border="1" align="center" cellpadding="0" cellspacing="0">
+		<tbody>
+		</table> */ -->
 		<br>
 			<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
 			  <tbody>
@@ -255,29 +266,29 @@ echo "<pre>$output</pre>";
 			<table width="100%" height="40" border="1" align="center" cellpadding="0" cellspacing="0"><tbody> <!--// GDRIVE --><tr>
 					<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive - RClone | Mount</strong></span></td>
 					<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-						<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.gdrive');echo "<pre>$output</pre>";?></span></td>
+						<?php $output = shell_exec('tail -n 1 /plexguide/pg.gdrive');echo "<pre>$output</pre>";?></span></td>
 					<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GCrypt - RClone | Mount</strong></span></td>
 					<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-						<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.gcrypt');echo "<pre>$output</pre>";?></span></td>
+						<?php $output = shell_exec('tail -n 1 /plexguide/pg.gcrypt');echo "<pre>$output</pre>";?></span></td>
 				</tr></tbody>			
 			</table>
 			<br>
 			<table width="100%" height="40" border="1" align="center" cellpadding="0" cellspacing="0"><tbody> <!--// GDRIVE --><tr>
 					<td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;GDrive /wo Encryption</strong></span></td>
 					<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-						<?php $output = shell_exec('tail -n1 /config/plexguide/gduncrypt.log');echo "<pre>$output</pre>";?></span></td>
+						<?php $output = shell_exec('tail -n1 /plexguide/gduncrypt.log');echo "<pre>$output</pre>";?></span></td>
 					<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive /w Encyption</strong></span></td>
 					<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-						<?php $output = shell_exec('tail -n1 /config/plexguide/gdcrypt.log');echo "<pre>$output</pre>";?></span></td>
+						<?php $output = shell_exec('tail -n1 /plexguide/gdcrypt.log');echo "<pre>$output</pre>";?></span></td>
 				</tbody></tr>			
 			</table>
 			<table width="100%" height="40" border="1" align="center" cellpadding="0" cellspacing="0"><tbody> <!--// GDRIVE --><tr>
 					<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive /wo Encryption files/folder</strong></span></td>
 					<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-						<?php $output = shell_exec('tail -n2 /config/plexguide/gduncrypt.log | head -1');echo "<pre>$output</pre>";?></span></td>
+						<?php $output = shell_exec('tail -n2 /plexguide/gduncrypt.log | head -1');echo "<pre>$output</pre>";?></span></td>
 					<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive /w Encyption file/folders</strong></span></td>
 					<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-						<?php $output = shell_exec('tail -n2 /config/plexguide/gdcrypt.log | head -1');echo "<pre>$output</pre>";?></span></td>
+						<?php $output = shell_exec('tail -n2 /plexguide/gdcrypt.log | head -1');echo "<pre>$output</pre>";?></span></td>
 				</tr></tbody>			
 			</table>
 		<br>
@@ -293,10 +304,10 @@ echo "<pre>$output</pre>";
 				<tr>
 						<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive - RClone | Mount</strong></span></td>
 						<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-							<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.tdrive');echo "<pre>$output</pre>";?></span></td>
+							<?php $output = shell_exec('tail -n 1 /plexguide/pg.tdrive');echo "<pre>$output</pre>";?></span></td>
 						<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;TCrypt - RClone | Mount</strong></span></td>
 						<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-							<?php $output = shell_exec('tail -n 1 /config/plexguide/pg.tcrypt');echo "<pre>$output</pre>";?></span></td>
+							<?php $output = shell_exec('tail -n 1 /plexguide/pg.tcrypt');echo "<pre>$output</pre>";?></span></td>
 				</tr>
 			</tbody>			
 			</table>
@@ -304,19 +315,19 @@ echo "<pre>$output</pre>";
 			<table width="100%" height="42" border="1" align="center" cellpadding="0" cellspacing="0"><tbody>
 						<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive /wo Encryption</strong></span></td>
 						<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-							<?php $output = shell_exec('tail -n1 /config/plexguide/tduncrypt.log');echo "<pre>$output</pre>";?></td>
+							<?php $output = shell_exec('tail -n1 /plexguide/tduncrypt.log');echo "<pre>$output</pre>";?></td>
 						<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive /w Encryption</strong></span></td>
 						<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-							<?php $output = shell_exec('tail -n1 /config/plexguide/tdcrypt.log');echo "<pre>$output</pre>";?></td>			
+							<?php $output = shell_exec('tail -n1 /plexguide/tdcrypt.log');echo "<pre>$output</pre>";?></td>			
 				</tr></tbody>			
 			</table>
 			<table width="100%" height="42" border="1" align="center" cellpadding="0" cellspacing="0"><tbody>
 						<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive /wo Encryption files/folders</strong></span></td>
 						<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-							<?php $output = shell_exec('tail -n2 /config/plexguide/tduncrypt.log | head -1');echo "<pre>$output</pre>";?></span></td>
+							<?php $output = shell_exec('tail -n2 /plexguide/tduncrypt.log | head -1');echo "<pre>$output</pre>";?></span></td>
 						<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive /w Encryption files/folders</strong></span></td>
 						<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-							<?php $output = shell_exec('tail -n2 /config/plexguide/tdcrypt.log | head -1');echo "<pre>$output</pre>";?></span></td>
+							<?php $output = shell_exec('tail -n2 /plexguide/tdcrypt.log | head -1');echo "<pre>$output</pre>";?></span></td>
 				</tr></tbody>			
 			</table>
 				</tr>
