@@ -36,6 +36,7 @@ EOF
     question1
     ;;
   2)
+    clear
     echo ""
     chmod +x /opt/plexguide/menu/functions/bench.sh
     chmod +x /opt/plexguide/menu/functions/bench.sh
