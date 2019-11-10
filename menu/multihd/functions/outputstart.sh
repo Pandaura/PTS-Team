@@ -17,7 +17,7 @@ multihdstart() {
 [2] Remove  (HD or MountPoint)
 [3] View    (Current MultiHD List)
 
-NOTE: When finished making changes; PG Clone must redeploy in order for
+NOTE: When finished making changes; rClone must redeploy in order for
 the changes to take affect in (Union) MergerFS!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
