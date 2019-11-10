@@ -26,14 +26,16 @@ question1() {
 EOF
 
   # Standby
-  read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
-  if [ "$typed" == "1" ]; then
+  case $typed in
+  1)
     sudo wget -qO- bench.sh | bash
     echo ""
     read -p '🌍 Process Complete | Press [ENTER] ' typed </dev/tty
     question1
-  elif [ "$typed" == "2" ]; then
+    ;;
+  2)
     echo ""
     chmod +x /opt/plexguide/menu/functions/bench.sh
     chmod +x /opt/plexguide/menu/functions/bench.sh
@@ -41,18 +43,25 @@ EOF
     echo ""
     read -p '🌍 Process Complete | Press [ENTER] ' typed </dev/tty
     question1
-  elif [ "$typed" == "3" ]; then
+    ;;
+  3)
     pip install speedtest-cli
     echo ""
     speedtest-cli
     echo ""
     read -p '🌍 Process Complete | Press [ENTER] ' typed </dev/tty
-    question1
-  elif [[ "$typed" == "z" || "$typed" == "Z" ]]; then
+	question1
+    ;;
+  z)
     exit
-  else
-    badinput1
-  fi
+    ;;
+  Z)
+    exit
+    ;;
+  *)
+    question1
+    ;;
+  esac
 }
 
 question1

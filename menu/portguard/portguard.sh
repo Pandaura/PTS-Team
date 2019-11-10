@@ -10,7 +10,6 @@
 program=$(cat /tmp/program_var)
 mkdir -p /var/plexguide/cron/
 mkdir -p /opt/appdata/plexguide/cron
-touch /var/plexguide/ui.ports
 # FUNCTIONS START ##############################################################
 
 # BAD INPUT
@@ -29,29 +28,39 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🤖 Welcome to PortGuard!  
+🤖 Welcome to PortGuard!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Ports Are Currently: [$guard]
 
-[1] $opp Ports
+[ 1 ] $opp Ports
 
-[Z] Exit
+[ Z ] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
-  read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
-  if [ "$typed" == "1" ]; then
-    if [ "$guard" == "CLOSED" ]; then
-      echo "" >/var/plexguide/server.ports && echo "OPEN" >/var/plexguide/ui.ports
-    else echo "127.0.0.1:" >/var/plexguide/server.ports && echo "CLOSED" >/var/plexguide/ui.ports ; fi
-    bash /opt/plexguide/menu/portguard/rebuild.sh
-  elif [[ "$typed" == "z" || "$typed" == "Z" ]]; then
-    exit
-  else badinput; fi
-}
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
+  case $typed in
+  1)
+    if [ "$guard" == "CLOSED" ]; then
+      echo "" >/var/plexguide/server.ports
+    else echo "127.0.0.1:" >/var/plexguide/server.ports; fi
+    bash /opt/plexguide/menu/portguard/rebuild.sh
+	question1
+    ;;
+  z)
+    exit
+    ;;
+  Z)
+    exit
+    ;;
+  *)
+    question1
+    ;;
+  esac
+}
 
 # FUNCTIONS END ##############################################################
 

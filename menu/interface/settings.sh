@@ -21,15 +21,13 @@ touch /var/plexguide/pgui.switch
   fi
 
   # Declare Ports State
-  touch /var/plexguide/ui.ports
   touch /var/plexguide/http.ports
-  ports=$(cat /var/plexguide/ui.ports)
   ports2=$(cat /var/plexguide/server.ports)
-  if [[ "OPEN" == "$ports" || "" == "$ports2"  ]]; then
-    echo "8555" >/var/plexguide/http.ports
-  elif [[ "CLOSED" == "$ports" || "*127.0.0.1*" == "$ports2" ]]; then
-    echo "CLOSED" >/var/plexguide/http.ports
-  else echo ""
+
+  if [[ $ports2 == "127.0.0.1:" ]]; then
+     echo -e "CLOSED" >/var/plexguide/http.ports
+  else
+    echo -e "8555" >/var/plexguide/http.ports
   fi
 
 ### read Variables
@@ -44,14 +42,14 @@ touch /var/plexguide/pgui.switch
 🚀 Settings Interface Menu
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Download Path      :  Change the Processing Location
-[2] MultiHD            :  Add Multiple HDs and/or Mount Points to MergerFS
-[3] WatchTower         :  Auto-Update Application Manager
-[4] Comm UI            :  [ $switchcheck ] | Port [ $ports ] | pgui.$domain
-[5] Emergency Display  :  [ $emdisplay ]
+[1] Download Path            :  Change the Processing Location
+[2] MultiHD                  :  Add Multiple HDs and/or Mount Points to MergerFS
+[3] WatchTower               :  Auto-Update Application Manager
+[4] Comm UI                  :  [ $switchcheck ] | Port [ $ports ] | pgui.$domain
+[5] Emergency Display        :  [ $emdisplay ]
 [6] System & Network Auditor
 
-[99] TroubleShoot       : PreInstaller
+[99] TroubleShoot            : PreInstaller
 
 [Z] Exit
 
@@ -60,7 +58,7 @@ touch /var/plexguide/pgui.switch
 EOF
 
   # Standby
-  read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
   1)
@@ -70,7 +68,6 @@ EOF
   2)
     bash /opt/plexguide/menu/multihd/multihd.sh
     ;;
-
   3)
     watchtower
     clear
