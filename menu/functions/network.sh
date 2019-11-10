@@ -35,11 +35,9 @@ EOF
     question1
   elif [ "$typed" == "2" ]; then
     echo ""
-    curl -LsO raw.githubusercontent.com/PGBlitz/Bench/master/bench.sh
-    chmod +x bench.sh
-    chmod +x bench.sh
-    echo ""
-    ./bench.sh -a
+    chmod +x /opt/plexguide/menu/functions/bench.sh
+    chmod +x /opt/plexguide/menu/functions/bench.sh
+    bash /opt/plexguide/menu/functions/bench.sh -a
     echo ""
     read -p '🌍 Process Complete | Press [ENTER] ' typed </dev/tty
     question1
