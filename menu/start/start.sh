@@ -104,8 +104,6 @@ varstart() {
   docker --version | head -n +1 | awk '{print $3'} | sed 's/,$//' >$filevg/pg.docker
   lsb_release -si >$filevg/pg.os
   
-  ## stupid line cat /etc/os-release | head -n +5 | tail -n +5 | cut -d'"' -f2 >$filevg/pg.os
-
   file="/var/plexguide/gce.false"
   if [ -e "$file" ]; then echo "No" >$filevg/pg.gce; else echo "Yes" >$filevg/pg.gce; fi
 
@@ -115,7 +113,7 @@ varstart() {
   pgnumber=$(cat /var/plexguide/pg.number)
 
   # Declare Traefik Deployed Docker State
-  if [[ $(docker ps | grep "traefik") == "" ]]; then
+  if [[ $(docker ps --format {{.Names}}| grep "traefik") != "traefik" ]]; then
     traefik="NOT DEPLOYED"
     echo "Not Deployed" >$filevg/pg.traefik
   else
@@ -123,11 +121,11 @@ varstart() {
     echo "Deployed" >$filevg/pg.traefik
   fi
 
-  if [[ $(docker ps | grep "oauth") == "" ]]; then
-    traefik="NOT DEPLOYED"
+  if [[ $(docker ps --format {{.Names}}| grep "oauth") != "oauth" ]]; then
+    oauth="NOT DEPLOYED"
     echo "Not Deployed" >$filevg/pg.auth
   else
-    traefik="DEPLOYED"
+    oauth="DEPLOYED"
     echo "Deployed" >$filevg/pg.oauth
   fi
 
