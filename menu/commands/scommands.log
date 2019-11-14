@@ -1,5 +1,3 @@
-
-#!/bin/bash
 # Title:      PTS List commands
 # Author(s):  MrDoobPG
 ##############################################################
@@ -74,3 +72,4 @@
     - name: automatic backup /opt/appdata/[app names to gdrive]
       command: autobackup
       Info: remove old log files from /var/log for your security
+
