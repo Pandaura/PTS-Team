@@ -38,7 +38,7 @@ tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] Deploy a New Server
-[2] Destory a Server
+[2] Destroy a Server
 A - List Server Info
 B - Display Inital Server Passwords
 Z - Exit
@@ -140,7 +140,6 @@ EOF
   echo "echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >/bin/pg-$name
   echo "echo '↘️  Server - $name | Initial Password $initialpw'" >>/bin/pg-$name
   echo "echo ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >>/bin/pg-$name
-  echo "echo '✅️ Donate @ donate.pgblitz.com - Helps Costs & Mrs. Admin - #1 Enemy!'" >>/bin/pg-$name
   echo "echo ''" >>/bin/pg-$name
   echo "ssh root@$serverip" >>/bin/pg-$name
   chmod 777 /bin/pg-$name
@@ -170,7 +169,7 @@ elif [ "$typed" == "2" ]; then
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  PTS - Destory a Hetzner Cloud Server!
+↘️  PTS - Destroy a Hetzner Cloud Server!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Server Name
