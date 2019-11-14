@@ -101,7 +101,7 @@ EOF
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-☠  BONEHEAD:  PG Fixed the Paths For You... (read next time)
+⛔️  WARNING:  Your paths are incorrect so PTS fixed the paths For you.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 You Typed : $typed2

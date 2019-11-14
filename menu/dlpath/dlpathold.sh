@@ -13,11 +13,11 @@ while [ "$break" == "no" ]; do
   tee <<-EOF
 
 ---------------------------------------------------------------------------
-PGBlitz Download/Processing Selection Interface
+PTS Download/Processing Selection Interface
 ---------------------------------------------------------------------------
 
-NOTE: PG does not format harddrives. User is responsible to format and mount
-their secondary drives! You may change this later in the PG Settings!
+NOTE: PTS does not format harddrives. User is responsible to format and mount
+their secondary drives! You may change this later in the PTS Settings!
 
 PURPOSE: Allow DOWNLOADS to process on a SECONDARY DRIVE (which is good for
 small or slow primary drives). Like Windows, you can have your stuff download
@@ -222,7 +222,7 @@ Note: Restarting the Process! Remember, you have to format your secondary
 location (if another harddrive). You must ensure that linux is able to READ
 your location.
 
-Advice: Exit PG and (Test) Type >>> mkdir $typed/testfolder
+Advice: Exit PTS and (Test) Type >>> mkdir $typed/testfolder
 
 EOF
       read -n 1 -s -r -p "Press [ANY KEY] to Continue "
