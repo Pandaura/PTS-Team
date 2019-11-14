@@ -49,7 +49,7 @@ question1() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⌛ PG Cron - Schedule Cron Jobs (Backups) | Mass Program Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚡ Reference: http://cron.pgblitz.com
+⚡ Reference: https://github.com/MrDoobPG/PGBlitz.com/wiki/PG-Cron
 
 [1] No  [Skip   - All Cron Jobs]
 [2] Yes [Manual - Select for Each App]
