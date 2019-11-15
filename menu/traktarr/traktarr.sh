@@ -181,7 +181,7 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 NOTE: The API Client and Secret is set! Ensure to setup your <paths> and
-<profiles> prior to deploying PGTrak.
+<profiles> prior to deploying Traktarr.
 
 INFO: Messed up? Rerun this API Interface to update the information!
 
