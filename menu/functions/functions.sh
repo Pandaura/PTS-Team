@@ -47,6 +47,8 @@ readrcloneconfig() {
     echo "good" >/var/plexguide/rclone/tcrypt.status && tcstatus="good"
   else echo "bad" >/var/plexguide/rclone/tcrypt.status && tcstatus="bad"; fi
 
+}
+
 rcloneconfig() {
   rclone config --config /opt/appdata/plexguide/rclone.conf
 }
