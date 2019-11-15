@@ -48,7 +48,7 @@ readrcloneconfig() {
   else echo "bad" >/var/plexguide/rclone/tcrypt.status && tcstatus="bad"; fi
 
 rcloneconfig() {
-  rclone config --config /opt/appdata/plexguide/rclone.conf)
+  rclone config --config /opt/appdata/plexguide/rclone.conf
 }
 
 keysprocessed() {
