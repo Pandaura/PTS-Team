@@ -20,14 +20,6 @@
       shell: 'cat /var/plexguide/pg.serverid'
       register: serverid
 
-    - name: Token Recall
-      shell: 'cat /var/plexguide/plex.token'
-      register: plextoken
-
-    - name: Recall User
-      shell: 'cat /var/plexguide/plex.user'
-      register: user
-
     - name: Register IP
       shell: 'cat /var/plexguide/server.ip'
       register: ipaddress
