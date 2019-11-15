@@ -42,10 +42,13 @@ readrcloneconfig() {
     echo "good" >/var/plexguide/rclone/tdrive.status && tdstatus="good"
   else echo "bad" >/var/plexguide/rclone/tdrive.status && tdstatus="bad"; fi
 
-}
+  tccheck=$(cat /opt/appdata/plexguide/rclone.conf | grep "remote = tdrive:/encrypt")
+  if [ "$tccheck" != "" ]; then
+    echo "good" >/var/plexguide/rclone/tcrypt.status && tcstatus="good"
+  else echo "bad" >/var/plexguide/rclone/tcrypt.status && tcstatus="bad"; fi
 
 rcloneconfig() {
-  rclone config --config /opt/appdata/plexguide/rclone.conf
+  rclone config --config /opt/appdata/plexguide/rclone.conf)
 }
 
 keysprocessed() {

@@ -32,7 +32,25 @@ updateprime() {
   file="${abc}/new.install"
   if [ ! -e "$file" ]; then newinstall; fi
 
-  ospgversion=$(cat /etc/*-release | grep Debian | grep 9)
+versioncheck=$(cat /etc/*-release | grep "Ubuntu" | grep -E '19')
+  if [ "$versioncheck" == "19" ]; then
+    tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⛔ Argggggg ......  System Warning! 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Supported: UBUNTU 16.xx - 18.10 ~ LTS/SERVER and Debian 9.* / 10
+
+This server may not be supported due to having the incorrect OS detected!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  exit 1
+  else
+    echo "18"  >${abc}/os.version.check; 
+  fi
+
+ospgversion=$(cat /etc/*-release | grep Debian | grep -E '9|10')
   if [ "$ospgversion" != "" ]; then
     echo "debian" >${abc}/os.version
   else 

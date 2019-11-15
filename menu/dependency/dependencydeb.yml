@@ -49,6 +49,7 @@
         - { package: 'gnupg2' }
         - { package: 'python-apt' }
         - { package: 'rsync' }
+        - { package: 'python-docker' }
 
     - name: Update pip packages for python3
       pip:
@@ -59,7 +60,5 @@
           - requests
           - netaddr
           - lxml
-          - docker
-          - docker-py
         state: latest
         executable: pip3
