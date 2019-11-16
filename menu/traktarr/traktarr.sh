@@ -485,6 +485,8 @@ EOF
   *)
     question1
     ;;
+  esac
+}
 # BAD INPUT
 badinput() {
   echo
