@@ -16,6 +16,9 @@
         pgrole: 'traktarr'
         extport: '0'
 
+    - name: 'Including cron job'
+      include_tasks: '/opt/plexguide/menu/traktarr/traktarr-list/_cron.yml'
+
     - name: Server ID
       shell: 'cat /var/plexguide/pg.serverid'
       register: serverid
@@ -90,12 +93,6 @@
         group: '1000'
         mode: a+x
         force: yes
-
-    - cron:
-      name: Daily automatic add preconf lists for filling
-      special_time: 'daily'
-      job: 'bash /opt/appdata/traktarr/traktarr-list/traktarr.sh'
-      state: present
 
     - name: Import default config
       template:

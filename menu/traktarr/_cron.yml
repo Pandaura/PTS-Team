@@ -1,0 +1,6 @@
+---   
+- cron:
+    name: Daily automatic add preconf lists for filling
+    special_time: 'daily'
+    job: 'bash /opt/appdata/traktarr/traktarr-list/traktarr.sh'
+    state: present
