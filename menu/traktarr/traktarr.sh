@@ -625,11 +625,6 @@ EOF
 	clear
 	question1
 	;;
-  8)		
-	prefill
-	clear
-	question1
-	;;
   C)
 	credits
 	clear
