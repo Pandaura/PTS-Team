@@ -76,8 +76,9 @@ HD-720p
 HD-1080p
 Ultra-HD
 HD - 720p/1080p
-
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Go Back? Type > exit
+
 EOF
   read -p '↘️ Type Sonarr Location | Press [ENTER]: ' typed </dev/tty
 
@@ -92,6 +93,7 @@ EOF
 
 Quality Set Is: $typed
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
     echo "$typed" >/var/plexguide/pgtrak.sprofile
@@ -121,8 +123,9 @@ HD-720p
 HD-1080p
 Ultra-HD
 HD - 720p/1080p
-
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Go Back? Type > exit
+
 EOF
   read -p '↘️ Type Radarr Location | Press [ENTER]: ' typed </dev/tty
 
@@ -156,15 +159,17 @@ api() {
 NOTE: In order for this to work, you must retrieve your API Key! Prior to
 continuing, please follow the current steps.
 
-- Visit - https://trakt.tv/oauth/applications
-- Click - New Applications
-- Name  - Whatever You Like
-- Redirect UI - https://google.com
-- Permissions - Click /checkin and /scrobble
-- Click - Save App
-- Copy the Client ID & Secret for the Next Step!
+[ 1 ] Visit - https://trakt.tv/oauth/applications
+[ 2 ] Click - New Applications
+[ 3 ] Name  - Whatever You Like
+[ 4 ] Redirect UI - https://google.com
+[ 5 ] Permissions - Click /checkin and /scrobble
+[ 6 ] Click - Save App
+[ 7 ] Copy the Client ID & Secret for the Next Step!
 
 Go Back? Type > exit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   read -p '↘️ Type API Client | Press [ENTER]: ' typed </dev/tty
   echo $typed >/var/plexguide/pgtrak.client
@@ -194,6 +199,8 @@ EOF
 }
 
 spath() {
+hdpath=$(cat /var/plexguide/server.hd.path)
+tvfolderprint=$(ls $hdpath/unionfs/ | grep -E 'TV*|tv')
   sonarrcheck
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -205,11 +212,14 @@ actively scanning your tv shows.
 
 Examples:
 
-/mnt/unionfs/tv
-/media/tv
-/secondhd/tv
+Possible TV folder
 
+$hdpath/unionfs/ + 
+
+$tvfolderprint
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Go Back? Type > exit
+
 EOF
   read -p '↘️ Type Sonarr Location | Press [ENTER]: ' typed </dev/tty
 
@@ -281,6 +291,7 @@ your location.
 
 Advice: Exit PTS and (Test) Type >>> mkdir $typed/testfolder
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
       read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
       echo "" && question1
@@ -290,6 +301,9 @@ EOF
 }
 
 rpath() {
+hdpath=$(cat /var/plexguide/server.hd.path)
+moviefolderprint=$(ls $hdpath/unionfs/ | grep -E  'Movi*|movi*')
+
   radarrcheck
   tee <<-EOF
 
@@ -300,13 +314,16 @@ rpath() {
 NOTE: In order for this to work, you must set the PATH to where Radarr is
 actively scanning your movies.
 
-Examples:
+Possible Movie folder
 
-/mnt/unionfs/Movies
-/media/Movies
-/secondhd/Movies
+$hdpath/unionfs/ + 
 
+$moviefolderprint
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Go Back? Type > exit
+
 EOF
   read -p '↘️ Type Radarr Location | Press [ENTER]: ' typed </dev/tty
 
@@ -371,6 +388,8 @@ your location.
 
 Advice: Exit PTS and (Test) Type >>> mkdir $typed/testfolder
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 EOF
       read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
       echo "" && question1
@@ -419,6 +438,7 @@ $chk
 #########################################################################
 #                   GNU General Public License v3.0                     #
 #########################################################################
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
  echo

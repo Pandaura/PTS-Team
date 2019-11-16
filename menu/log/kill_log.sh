@@ -21,7 +21,14 @@ UNWANTED_FILES=(
 'debug'
 'dpkg.log'
 '*.log.*'
+'*tallylog*'
 '*.tar.*.gz' 
+'wtmp'
+'btmp'
+'alternatives.log'
+'bootstrap.log'
+'unattended-*'
+
 )
 # advanced settings
 FIND=$(which find)
