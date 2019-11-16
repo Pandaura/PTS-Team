@@ -25,5 +25,8 @@ sleep 30s
 traktarr shows -t https://trakt.tv/users/theultimatec0der/lists/all-hulu-series -l 15
 sleep 30s
 traktarr shows -t https://trakt.tv/users/theultimatec0der/lists/all-amazon-series -l 15
+sleep 30
+traktarr movies -t https://trakt.tv/users/pntjr/lists/upcoming-movies -l 15
+
 
 exit 0
