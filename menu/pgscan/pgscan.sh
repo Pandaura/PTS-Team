@@ -153,38 +153,6 @@ EOF
   else works; fi
 }
 
-plexautoscansettings() {
-clear
-
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Plex_AutoScan Settings Interface
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-[ 1 ] Show last 50 lines of plex_autoscan.log
-[ 2 ] Update Sections
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-
-  case $typed in
-  1)
-	tail -n 50 /opt/plex_autoscan/plex_autoscan.log
-	doneenter
-	;;
-  2)
-	python /opt/plex_autoscan/scan.py update_sections
-	doneenter
-	;;
-  *)
-    question1
-    ;;
-  esac
-}
-
 
 # FIRST QUESTION
 question1() {
@@ -204,7 +172,8 @@ NOTE : Plex_AutoScan are located  in /opt/plex_autoscan
 
 [A] Deploy Scan                           [ $dstatus ]
 [D] PlexAutoScan Domain
-[S] Plex_AutoScan Settings
+[S] Show last 50 lines of log
+
 [C] Credits
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -240,10 +209,12 @@ EOF
 	showupdomain
 	;;
   S)
-	plexautoscansettings
+	tail -n 50 /opt/plex_autoscan/plex_autoscan.log
+	doneenter
 	;;
   s)
-	plexautoscansettings
+	tail -n 50 /opt/plex_autoscan/plex_autoscan.log
+	doneenter
 	;;
   C)
 	credits
