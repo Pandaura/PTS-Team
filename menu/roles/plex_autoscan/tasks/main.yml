@@ -24,6 +24,10 @@
   shell: 'cat /var/plexguide/server.ip'
   register: ipaddress
 
+- name: Register ServerPass
+  shell: 'cat /var/plexguide/pgscan.serverpass'
+  register: plex_autoscan_server_pass
+
 - name: Display Plex Auth Token
   debug:
     msg: "Plex Auth Token: {{ plex_auth_token }}"
