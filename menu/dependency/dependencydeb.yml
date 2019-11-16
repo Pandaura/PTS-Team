@@ -50,6 +50,7 @@
         - { package: 'python-apt' }
         - { package: 'rsync' }
         - { package: 'python-docker' }
+        - { package: 'unrar' }        
 
     - name: Update pip packages for python3
       pip:

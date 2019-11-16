@@ -47,6 +47,7 @@
         - { package: 'acl' }
         - { package: 'python-apt' }
         - { package: 'rsync' }
+        - { package: 'unrar' }
 
     - name: Update pip packages for python3
       pip:
@@ -59,15 +60,3 @@
           - lxml
         state: latest
         executable: pip3
-
-    - name: Update pip packages for python2
-      pip:
-        name:
-          - pip
-          - setuptools
-          - pyOpenSSL
-          - requests
-          - netaddr
-          - lxml
-        state: latest
-        executable: pip2
