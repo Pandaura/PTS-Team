@@ -10,7 +10,7 @@
   gather_facts: false
   tasks:
 
-   - name: Daily automatic add preconf lists for filling
+   - name: Traktarr prefilling list @ daily
      cron:
        special_time: 'daily'
        job: 'bash /opt/plexguide/menu/traktarr/traktarr-list/traktarr.sh >/dev/null 2>&1'
