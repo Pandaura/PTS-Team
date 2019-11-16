@@ -17,7 +17,7 @@
         extport: '0'
 
     - name: 'Including cron job'
-      include_tasks: '/opt/plexguide/menu/traktarr/traktarr-list/_cron.yml'
+      include_tasks: '/opt/plexguide/menu/traktarr/_cron.yml'
 
     - name: Server ID
       shell: 'cat /var/plexguide/pg.serverid'
