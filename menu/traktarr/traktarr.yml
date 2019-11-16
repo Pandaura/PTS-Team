@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Title:      PGBlitz (Reference Title File)
+# Title:      Traktarr auto deploy
 # YML Author: Admin9705
-# URL:        https://pgblitz.com - http://github.pgblitz.com
+# Mod from MrDoobPG for PTS
 # GNU:        General Public License v3.0
 # Origin:     https://github.com/l3uddz/plex_patrol
 ################################################################################
@@ -100,7 +100,7 @@
         mode: 0775
         force: yes
 
-    - name: Set pgtrak.py as executable
+    - name: Set traktarr.py as executable
       file:
         path: /opt/appdata/traktarr/traktarr.py
         owner: '1000'
@@ -133,5 +133,5 @@
     - name: Daemon-Reload
       systemd: state=stopped name=traktarr daemon_reload=yes enabled=no
 
-    - name: Start PGTrakt
+    - name: Start Traktarr
       systemd: state=started name=traktarr enabled=yes

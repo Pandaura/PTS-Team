@@ -446,6 +446,45 @@ EOF
   question1
 }
 
+prefill(){
+clear
+chk=$(figlet traktarr | lolcat )
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 traktarr prefilling the system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1] Prefilling allowed
+
+[2] Prefilling disable
+
+[Z] - Exit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+
+ echo
+  read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+
+  case $typed in
+  1)
+    ansible-playbook /opt/plexguide/menu/traktarr/traktarr-list/prefillallow.yml
+	question1
+	;;
+  2)
+    ansible-playbook /opt/plexguide/menu/traktarr/traktarr-list/prefillremove.yml
+	question1
+	;;
+  z)
+    exit
+    ;;
+  Z)
+    exit
+    ;;
+  *)
+    question1
+    ;;
 # BAD INPUT
 badinput() {
   echo
@@ -577,6 +616,17 @@ EOF
     ansible-playbook /opt/plexguide/menu/traktarr/traktarr.yml
 	question1
 	;;
+  P)
+	prefill
+	clear
+	question1
+	;;
+  P)		
+	prefill
+	clear
+	question1
+	;;
+	
   C)
 	credits
 	clear
