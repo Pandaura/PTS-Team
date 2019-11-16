@@ -190,7 +190,7 @@ EOF
 [3]  PTS-Shield     : Enable Google's OAuthentication Protection
 [4]  PTS-Clone      : Mount Transport
 [5]  PTS-Apps       : Apps ~ Core, Community & Removal
-[6]  CBOX-PAS       : PlexAutoScan [ ALPHA VERSION ]
+[6]  CBOX-PAS       : PlexAutoScan 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [7]  PTS-WordPress  : Deploy WordPress Instances
 [8]  PTS-Vault      : Backup & Restore
@@ -198,7 +198,7 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [10] Traktarr       : ( old PGTrakt )
 [11] Plex Patrol    : Kick transcodes (audio or video or both)
-[12] Settings       : ----> IDK <-----
+[12] Settings 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [Z]  Exit
