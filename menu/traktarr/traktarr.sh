@@ -524,7 +524,8 @@ NOTE: Changes Made? Must Redeploy Traktarr when Complete!
 
 [7] Deploy Traktarr                     [ $dstatus ]
 
-[P] traktarr prefilling the system
+[8] traktarr prefilling the system
+
 [C] Credits
 
 [Z] - Exit
@@ -619,12 +620,12 @@ EOF
     ansible-playbook /opt/plexguide/menu/traktarr/traktarr.yml
 	question1
 	;;
-  P)
+  8)
 	prefill
 	clear
 	question1
 	;;
-  P)		
+  8)		
 	prefill
 	clear
 	question1
