@@ -91,6 +91,12 @@
         mode: a+x
         force: yes
 
+    - cron:
+      name: Daily automatic add preconf lists for filling
+      special_time: 'daily'
+      job: 'bash /opt/appdata/traktarr/traktarr-list/traktarr.sh'
+      state: present
+
     - name: Import default config
       template:
         src: /opt/appdata/traktarr/config.json.sample
