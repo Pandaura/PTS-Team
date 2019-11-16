@@ -524,6 +524,7 @@ NOTE: Changes Made? Must Redeploy Traktarr when Complete!
 
 [7] Deploy Traktarr                     [ $dstatus ]
 
+[P] traktarr prefilling the system
 [C] Credits
 
 [Z] - Exit
@@ -628,7 +629,6 @@ EOF
 	clear
 	question1
 	;;
-	
   C)
 	credits
 	clear
