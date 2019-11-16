@@ -23,10 +23,6 @@
 - name: Settings | New 'config.json' tasks
   block:
 
-  - name: Settings | Generate 32 character 'SERVER_PASS'
-    set_fact:
-      plex_autoscan_server_pass: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=32') }}"
-
   - name: Settings | Import default 'config.json'
     template:
       src: /opt/plexguide/menu/roles/plex_autoscan/templates/config.json.j2
