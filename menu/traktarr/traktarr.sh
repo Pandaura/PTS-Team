@@ -214,7 +214,7 @@ Examples:
 
 Possible TV folder
 
-$hdpath/unionfs/ + 
+$hdpath/unionfs/ +
 
 $tvfolderprint
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -316,7 +316,7 @@ actively scanning your movies.
 
 Possible Movie folder
 
-$hdpath/unionfs/ + 
+$hdpath/unionfs/ +
 
 $moviefolderprint
 
@@ -420,14 +420,14 @@ chk=$(figlet traktarr | lolcat )
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 traktarr Credits 
+🚀 traktarr Credits
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 $chk
 
 #########################################################################
 # Author:   l3uddz                                                      #
-# URL:      https://github.com/l3uddz/l3uddz/traktarr                   #
+# URL:      https://github.com/l3uddz/traktarr                   #
 # Coder of l3uddz/traktarr                                              #
 # --                                                                    #
 # Author(s):     l3uddz, desimaniac                                     #
@@ -630,7 +630,7 @@ EOF
 	clear
 	question1
 	;;
-  c)		
+  c)
 	credits
 	clear
 	question1
