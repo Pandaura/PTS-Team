@@ -10,7 +10,7 @@
   gather_facts: false
   tasks:
 
-   - name: Traktarr prefilling list @ daily
+   - name: Add Traktarr prefilling list @ daily
      cron:
        name: "Traktarr prefilling list @ daily"
        special_time: 'daily'
