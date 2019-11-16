@@ -1,19 +1,18 @@
 #!/bin/bash
 #
 # Title:      Traktarr auto deploy
-# YML Author: Admin9705
 # Mod from MrDoobPG for PTS
 # GNU:        General Public License v3.0
 # Origin:     https://github.com/l3uddz/plex_patrol
 ################################################################################
-
 ---
 - hosts: localhost
   gather_facts: false
   tasks:
 
-- cron:
-    name: Daily automatic allowed preconf lists for filling
-    special_time: 'daily'
-    job: 'bash /opt/plexguide/menu/traktarr/traktarr-list/traktarr.sh >/dev/null 2>&1'
-    state: present
+   - name: Daily automatic add preconf lists for filling
+     cron:
+       special_time: 'daily'
+       job: 'bash /opt/plexguide/menu/traktarr/traktarr-list/traktarr.sh >/dev/null 2>&1'
+       state: present
+
