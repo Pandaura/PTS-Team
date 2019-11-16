@@ -196,7 +196,7 @@ EOF
 [8]  PTS-Vault      : Backup & Restore
 [9]  PTS-Cloud      : GCE & Virtual Instances
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[10] Traktarr       : ( old PGTrakt )
+[10] Traktarr       : Fill Sonarr/Radarr over Trakt lists.
 [11] Plex Patrol    : Kick transcodes (audio or video or both)
 [12] Settings 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
