@@ -427,7 +427,7 @@ $chk
 
 #########################################################################
 # Author:   l3uddz                                                      #
-# URL:      https://github.com/l3uddz/traktarr                   #
+# URL:      https://github.com/l3uddz/traktarr                          #
 # Coder of l3uddz/traktarr                                              #
 # --                                                                    #
 # Author(s):     l3uddz, desimaniac                                     #
@@ -494,7 +494,41 @@ badinput() {
   question1
 }
 
-# FIRST QUESTION
+endbanner() {
+clear
+chk=$(figlet traktarr | lolcat )
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 traktarr Comamnds
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+$chk
+
+traktarr [COMMAND] [ARGS]...
+
+Commands:
+  movie                 Add a single movie to Radarr.
+  movies                Add multiple movies to Radarr.
+  run                   Run Traktarr in automatic mode.
+  show                  Add a single show to Sonarr.
+  shows                 Add multiple shows to Sonarr.
+
+Args:
+  -t, --list-type TEXT               Trakt list to process. For example, 'anticipated', 'trending',
+                                     'popular', 'person', 'watched', 'played', 'recommended',
+                                     'watchlist', or any URL to a list.  [required]
+  -l, --add-limit INTEGER            Limit number of movies added to Radarr.
+  -d, --add-delay FLOAT              Seconds between each add request to Radarr.  [default: 2.5]
+  -s, --sort [rating|release|votes]  Sort list to process.  [default: votes]
+ 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+ echo
+  read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+  question1
+}
+
 question1() {
 
   api=$(cat /var/plexguide/pgtrak.secret)
@@ -525,6 +559,7 @@ NOTE: Changes Made? Must Redeploy Traktarr when Complete!
 [7] Deploy Traktarr                     [ $dstatus ]
 
 [8] traktarr prefilling the system
+[9] traktarr commands
 
 [C] Credits
 
@@ -622,6 +657,11 @@ EOF
 	;;
   8)
 	prefill
+	clear
+	question1
+	;;
+  9)
+	endbanner
 	clear
 	question1
 	;;
