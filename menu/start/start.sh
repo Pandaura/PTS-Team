@@ -33,7 +33,7 @@ variable() {
 primestart() {
   pcloadletter
   varstart
-  menuprime
+  gcetest
 }
 wisword=$(/usr/games/fortune -as | sed "s/^/ /")
 
@@ -143,7 +143,134 @@ varstart() {
   echo "$capacity" >$filevg/pg.capacity
 }
 
-menuprime() {
+gcetest(){
+gce=$(cat /var/plexguide/pg.server.deploy)
+
+if [[ $gce == "feeder" ]]; then
+menuprime1
+else menuprime2; fi
+}
+
+menuprime1() {
+  transport=$(cat /var/plexguide/pg.transport)
+
+  # Menu Interface
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🌎 $transport | Version: $pgnumber | ID: $serverid
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌵 Disk Used Space: $used of $capacity | $percentage Used Capacity
+EOF
+
+  # Displays Second Drive If GCE
+  edition=$(cat /var/plexguide/pg.server.deploy)
+  if [ "$edition" == "feeder" ]; then
+    used_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $3}')
+    capacity_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $2}')
+    percentage_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $5}')
+    echo " GCE Disk Used Space: $used_gce of $capacity_gce | $percentage_gce Used Capacity"
+  fi
+
+  disktwo=$(cat "/var/plexguide/server.hd.path")
+  if [ "$edition" != "feeder" ]; then
+    used_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $3}')
+    capacity_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $2}')
+    percentage_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $5}')
+
+    if [[ "$disktwo" != "/mnt" ]]; then
+      echo " 2nd Disk Used Space: $used_gce2 of $capacity_gce2 | $percentage_gce2 Used Capacity"
+    fi
+  fi
+
+  # Declare Ports State
+  ports=$(cat /var/plexguide/server.ports)
+
+  if [ "$ports" == "" ]; then
+    ports="OPEN"
+  else ports="CLOSED"; fi
+
+  tee <<-EOF
+>-- ###GCE optimized surface### --<
+
+[1]  PTS-Traefik    : Reverse Proxy
+[2]  Port Guard     : [$ports] Protects the Server Ports
+[3]  PTS-Shield     : Enable Google's OAuthentication Protection
+[4]  PTS-Clone      : Mount Transport
+[5]  PTS-Apps       : Apps
+[6]  PTS-Vault      : Backup & Restore
+[7]  Traktarr       : Fill Sonarr/Radarr over Trakt lists.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[Z]  Exit
+
+"$wisword"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  # Standby
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
+  case $typed in
+  1)
+    clear
+    bash /opt/plexguide/menu/pgcloner/traefik.sh
+	clear
+    primestart
+    ;;
+  2)
+    clear
+    bash /opt/plexguide/menu/portguard/portguard.sh
+    clear
+	primestart
+    ;;
+  3)
+    clear
+    bash /opt/plexguide/menu/pgcloner/pgshield.sh
+    clear
+	primestart
+    ;;
+  4)
+    clear
+    bash /opt/plexguide/menu/pgcloner/pgclone.sh
+    clear
+	primestart
+    ;;
+  5)
+    clear
+    bash /opt/plexguide/menu/pgbox/select.sh
+    clear
+	primestart
+    ;;
+  6)
+    clear
+    bash /opt/plexguide/menu/pgcloner/pgvault.sh
+    clear
+	primestart
+    ;;
+  7)
+    clear
+    bash /opt/plexguide/menu/traktarr/traktarr.sh
+    clear
+	primestart
+	;;
+  z)
+    clear
+    bash /opt/plexguide/menu/interface/ending.sh
+    exit
+    ;;
+  Z)
+    clear
+    bash /opt/plexguide/menu/interface/ending.sh
+    exit
+    ;;
+  *)
+    primestart
+    ;;
+  esac
+}
+
+menuprime2() {
   transport=$(cat /var/plexguide/pg.transport)
 
   # Menu Interface
@@ -236,7 +363,7 @@ EOF
     ;;
   5)
     clear
-    bash /opt/plexguide/menu/pgbox/pgboxselect.sh
+    bash /opt/plexguide/menu/pgbox/select.sh
     clear
 	primestart
     ;;

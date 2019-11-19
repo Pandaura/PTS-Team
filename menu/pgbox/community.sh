@@ -51,8 +51,8 @@ initial() {
   mkdir -p /opt/communityapps
 
   if [ "$boxversion" == "official" ]; then
-    ansible-playbook /opt/plexguide/menu/pgbox/pgboxcommunity.yml
-  else ansible-playbook /opt/plexguide/menu/pgbox/pgbox_communitypersonal.yml; fi
+    ansible-playbook /opt/plexguide/menu/pgbox/community.yml
+  else ansible-playbook /opt/plexguide/menu/pgbox/communitypersonal.yml; fi
 
   echo ""
   echo "💬  Pulling Update Files - Please Wait"
@@ -244,17 +244,21 @@ EOF
 }
 
 pinterface() {
-
-  boxuser=$(cat /var/plexguide/boxcommunity.user)
-  boxbranch=$(cat /var/plexguide/boxcommunity.branch)
-
+  boxuser=$(cat /var/plexguide/boxcom.user)
+  boxrepo=$(cat /var/plexguide/boxcom.repo)
+  boxbranch=$(cat /var/plexguide/boxcom.branch)
+  
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Community Box Edition!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💬 User: $boxuser | Branch: $boxbranch
+💬	
+User:	$boxuser 
+Repo:	$boxrepo
+Branch: $boxbranch
+
 
 [1] Change User Name & Branch
 [2] Deploy Community Box - Personal (Forked)
@@ -281,13 +285,15 @@ Username & Branch are both case sensitive!
 
 EOF
     read -p 'Username | Press [ENTER]: ' boxuser </dev/tty
+	read -p 'REPO     | Press [ENTER]: ' boxrepo </dev/tty
     read -p 'Branch   | Press [ENTER]: ' boxbranch </dev/tty
-    echo "$boxuser" >/var/plexguide/boxcommunity.user
-    echo "$boxbranch" >/var/plexguide/boxcommunity.branch
+    echo "$boxuser" >/var/plexguide/boxcom.user
+    echo "$boxrepo" >/var/plexguide/boxcom.repo
+    echo "$boxbranch" >/var/plexguide/boxcom.branch
     pinterface
     ;;
   2)
-    existcheck=$(git ls-remote --exit-code -h "https://github.com/$boxuser/Apps-Community" | grep "$boxbranch")
+    existcheck=$(git ls-remote --exit-code -h "https://github.com/$boxuser/$boxrepo" | grep "$boxbranch")
     if [ "$existcheck" == "" ]; then
       echo
       read -p '💬 Exiting! Forked Version Does Not Exist! | Press [ENTER]: ' typed </dev/tty
@@ -342,8 +348,9 @@ EOF
     question1
     ;;
   2)
-    variable /var/plexguide/boxcommunity.user "NOT-SET"
-    variable /var/plexguide/boxcommunity.branch "NOT-SET"
+    variable /var/plexguide/boxcom.user "NOT-SET"
+    variable /var/plexguide/boxcom.repo "NOT-SET"
+	variable /var/plexguide/boxcom.branch "NOT-SET"
     pinterface
     ;;
   z)

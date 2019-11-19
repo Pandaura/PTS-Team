@@ -50,8 +50,8 @@ initial() {
   mkdir -p /opt/coreapps
 
   if [ "$boxversion" == "official" ]; then
-    ansible-playbook /opt/plexguide/menu/pgbox/gcecore.yml
-  else ansible-playbook /opt/plexguide/menu/pgbox/pgboxcore.yml; fi
+    ansible-playbook /opt/plexguide/menu/pgbox/gcecore.yml >/dev/null 2>&1
+  else ansible-playbook /opt/plexguide/menu/pgbox/core.yml >/dev/null 2>&1; fi
 
   echo ""
   echo "💬  Pulling Update Files - Please Wait"
