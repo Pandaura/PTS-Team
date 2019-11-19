@@ -16,6 +16,9 @@ domain=$(cat /var/plexguide/server.domain)
 port=$(cat /tmp/program_port)
 ip=$(cat /var/plexguide/server.ip)
 ports=$(cat /var/plexguide/server.ports)
+hdpath=$(cat /var/plexguide/server.hd.path)
+cclean=$(cat /var/plexguide/cloneclean)
+tclean=$(($cclean*2))
 
 if [ "$program" == "plex" ]; then extra="/web"; else extra=""; fi
 
@@ -75,7 +78,7 @@ if [[ "$program" == *"sonarr"* ]] || [[ "$program" == *"radarr"* ]] || [[ "$prog
       
   $program requires additional manual configuration!
 EOF
-  if [[ "$program" == *"sonarr"* ]] || [[ "$program" == *"radarr"* ]] || [[ "$program" == *"lidarr"* ]]; then
+  if [[ "$program" == *"sonarr"* ]] || [[ "$program" == *"radarr"* ]] || [[ "$program" == *"lidarr"* ]] || [[ "$program" == *"qbittorrent"* ]]; then
     tee <<-EOF
 
   $program requires "downloader mappings" to enable hardlinking and rapid importing.
@@ -101,6 +104,40 @@ EOF
 EOF
 fi
 
+####--------
+
+
+if [[ "$program" == *"sabnzbd"* ]] || [[ "$program" == *"nzbget"* ]]  ; then
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💬 NOTE / INFO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  for incomplete download the $program  used the folder $hdpath/incomplete/nzb
+  for finished downloads the $program used the folder $hdpath/downloads/nzb
+  
+  beware the cloneclean is set to $cclean min
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  fi
+
+if [[ "$program" == *"rutorrent"* ]] || [[ "$program" == *"qbittorrent"* ]] || [[ "$program" == *"deluge"* ]]; then
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💬 NOTE / INFO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  for incomplete download the $program used the folder $hdpath/incomplete/torrent
+  for finished downloads the $program used the folder $hdpath/downloads/torrent
+  
+  beware the cloneclean is set to $tclean min
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  fi
 if [ "$program" == "plex" ]; then
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
