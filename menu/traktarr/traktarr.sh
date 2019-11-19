@@ -510,7 +510,6 @@ traktarr [COMMAND] [ARGS]...
 Commands:
   movie                 Add a single movie to Radarr.
   movies                Add multiple movies to Radarr.
-  run                   Run Traktarr in automatic mode.
   show                  Add a single show to Sonarr.
   shows                 Add multiple shows to Sonarr.
 
