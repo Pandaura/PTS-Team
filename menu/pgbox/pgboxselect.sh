@@ -6,7 +6,15 @@
 # GNU:        General Public License v3.0
 ################################################################################
 
-mainstart() {
+GCEtest(){
+gce=$(cat /var/plexguide/pg.server.deploy)
+
+if [[ $gce == "feeder" ]]; then
+mainstart2
+else mainstart1; fi
+}
+
+mainstart1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -18,7 +26,6 @@ mainstart() {
 [1] PTS          : Core
 [2] PTS          : Community
 [3] Apps         : Removal
-
 
 [Z] Exit
 
@@ -37,8 +44,37 @@ EOF
   elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
     exit
   else
-    mainstart
+    GCEtest
+  fi
+}
+mainstart2() {
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 GCE APPS optimized Apps    
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1] PTS GCE optimized Apps : GCE APPS
+
+[2] Apps                   : Removal
+
+[Z] Exit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+
+  # Standby
+  read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
+
+  if [ "$typed" == "1" ]; then
+    bash /opt/plexguide/menu/pgbox/gcecore.sh
+  elif [ "$typed" == "2" ]; then
+    bash /opt/plexguide/menu/removal/removal.sh
+  elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
+    exit
+  else
+    GCEtest
   fi
 }
 
-mainstart
+GCEtest
