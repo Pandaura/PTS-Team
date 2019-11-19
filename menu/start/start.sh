@@ -192,7 +192,7 @@ EOF
   else ports="CLOSED"; fi
 
   tee <<-EOF
->-- ###GCE optimized surface### --<
+     -- GCE optimized surface --
 
 [1]  PTS-Traefik    : Reverse Proxy
 [2]  Port Guard     : [$ports] Protects the Server Ports
