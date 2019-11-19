@@ -114,7 +114,7 @@ if [[ "$program" == *"sabnzbd"* ]] || [[ "$program" == *"nzbget"* ]]  ; then
 💬 NOTE / INFO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  for incomplete download the $program  used the folder $hdpath/incomplete/nzb
+  for incomplete downloads the $program  used the folder $hdpath/incomplete/nzb
   for finished downloads the $program used the folder $hdpath/downloads/nzb
   
   beware the cloneclean is set to $cclean min
@@ -130,7 +130,7 @@ if [[ "$program" == *"rutorrent"* ]] || [[ "$program" == *"qbittorrent"* ]] || [
 💬 NOTE / INFO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  for incomplete download the $program used the folder $hdpath/incomplete/torrent
+  for incomplete downloads the $program used the folder $hdpath/incomplete/torrent
   for finished downloads the $program used the folder $hdpath/downloads/torrent
   
   beware the cloneclean is set to $tclean min
