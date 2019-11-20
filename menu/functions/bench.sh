@@ -6,18 +6,16 @@
 
 about () {
 	echo ""
-	echo "  ============================================================ "
-	echo "  \                PlexGuide Benchmark Script                / "
-	echo "  \        System Benchmark & Information & Speedtest        / "
-	echo "  \                  V 1.0.1  (09 Jan 2018)                  / "
-	echo "  \          Current Verson Created & Maintained by:         / "
-	echo "	\                                                          / "
-	echo "	\            TheCreatorzOne, Deiteq, Admin9705             / "
-	echo "	\         BestBuy-GeekSquad, Low-Class Tech-Support        / "
-	echo "	\                                                          / "
-	echo "  \        Original Github Creation by Sayem Chowdhury       / "
-	echo "  ============================================================ "
+	echo "  ========================================================= "
+	echo "  \             Serverreview Benchmark Script             / "
+	echo "  \       Basic system info, I/O test and speedtest       / "
+	echo "  \               V 3.0.3  (13 Sep 2019)                  / "
+	echo "  \             Created by Sayem Chowdhury                / "
+	echo "  ========================================================= "
 	echo ""
+	echo "  This script is based on bench.sh by camarg from akamaras.com"
+	echo "  Later it was modified by dmmcintyre3 on FreeVPS.us"
+	echo "  Thanks to Hidden_Refuge for the update of this script"
 	echo ""
 }
 
@@ -36,7 +34,7 @@ prms () {
 	echo "    $(tput setaf 3)-about$(tput sgr0)        - Check about this script"
 	echo ""
 	echo "  Parameters"
-	echo "    $(tput setaf 3)-share$(tput sgr0)         - upload results (default to ubuntu paste)"
+	echo "    $(tput setaf 3)share$(tput sgr0)         - upload results (default to ubuntu paste)"
 	echo "    Available option for share:"
 	echo "      ubuntu # upload results to ubuntu paste (default)"
 	echo "      haste # upload results to hastebin"
@@ -46,8 +44,8 @@ prms () {
 
 howto () {
 	echo ""
-	echo "  Wrong parameters. Use $(tput setaf 3)bash $BASH_SOURCE help$(tput sgr0) to see parameters"
-	echo "  ex: $(tput setaf 3)bash $BASH_SOURCE info$(tput sgr0) (without quotes) for system information"
+	echo "  Wrong parameters. Use $(tput setaf 3)bash $BASH_SOURCE -help$(tput sgr0) to see parameters"
+	echo "  ex: $(tput setaf 3)bash $BASH_SOURCE -info$(tput sgr0) (without quotes) for system information"
 	echo ""
 }
 
@@ -273,12 +271,26 @@ speed() {
 	printf "%s\n" "$(FormatBytes $C_DL) $(pingtest $2)" | tee -a $log
 }
 
-# 3 location (300MB)
+# 2 location (200MB)
 cdnspeedtest () {
 	echo "" | tee -a $log
 	echostyle "## CDN Speedtest"
 	echo "" | tee -a $log
 	speed "CacheFly :" "http://cachefly.cachefly.net/100mb.test"
+
+	# google drive speed test
+	TMP_COOKIES="/tmp/cookies.txt"
+	TMP_FILE="/tmp/gdrive"
+	DRIVE="drive.google.com"
+	FILE_ID="0B1MVW1mFO2zmdGhyaUJESWROQkE"
+
+	printf " Gdrive   :"  | tee -a $log
+	curl -c $TMP_COOKIES -o $TMP_FILE -s "https://$DRIVE/uc?id=$FILE_ID&export=download"
+	D_ID=$( grep "confirm=" < $TMP_FILE | awk -F "confirm=" '{ print $NF }' | awk -F "&amp" '{ print $1 }' )
+	C_DL=$( curl -m 4 -Lb $TMP_COOKIES -w '%{speed_download}\n' -o $NULL \
+		-s "https://$DRIVE/uc?export=download&confirm=$D_ID&id=$FILE_ID" )
+	printf "%s\n" "$(FormatBytes $C_DL) $(pingtest $DRIVE)" | tee -a $log
+	echo "" | tee -a $log
 }
 
 # 10 location (1GB)
@@ -286,7 +298,7 @@ northamerciaspeedtest () {
 	echo "" | tee -a $log
 	echostyle "## North America Speedtest"
 	echo "" | tee -a $log
-	speed "Softlayer, Washington, USA :" "http://speedtest.wdc01.softlayer.com/downloads/test100.zip"
+	speed "Softlayer, Washington, USA :" "http://speedtest.wdc04.softlayer.com/downloads/test100.zip"
 	speed "SoftLayer, San Jose, USA   :" "http://speedtest.sjc01.softlayer.com/downloads/test100.zip"
 	speed "SoftLayer, Dallas, USA     :" "http://speedtest.dal01.softlayer.com/downloads/test100.zip"
 	speed "Vultr, New Jersey, USA     :" "http://nj-us-ping.vultr.com/vultr.com.100MB.bin"
@@ -334,7 +346,7 @@ asiaspeedtest () {
 	echostyle "## Asia Speedtest"
 	echo "" | tee -a $log
 	speed "SoftLayer, Singapore :" "http://speedtest.sng01.softlayer.com/downloads/test100.zip"
-	speed "Linode, Tokyo, Japan :" "http://speedtest.tokyo.linode.com/100MB-tokyo.bin"
+	speed "Linode, Tokyo, Japan :" "http://speedtest.tokyo2.linode.com/100MB-tokyo2.bin"
 	speed "Linode, Singapore    :" "http://speedtest.singapore.linode.com/100MB-singapore.bin"
 	speed "Vultr, Tokyo, Japan  :" "http://hnd-jp-ping.vultr.com/vultr.com.100MB.bin"
 	echo "" | tee -a $log
@@ -399,7 +411,7 @@ iotest () {
 	# CPU Speed test
 	printf " CPU Speed:\n" | tee -a $log
 	printf "    bzip2 %s -" "$writemb_size" | tee -a $log
-	printf "%s\n" "$( cpubench bzip2 $writemb_cpu )" | tee -a $log
+	printf "%s\n" "$( cpubench bzip2 $writemb_cpu )" | tee -a $log 
 	printf "   sha256 %s -" "$writemb_size" | tee -a $log
 	printf "%s\n" "$( cpubench sha256sum $writemb_cpu )" | tee -a $log
 	printf "   md5sum %s -" "$writemb_size" | tee -a $log
@@ -499,8 +511,8 @@ case $CMD in
 		systeminfo;;
 	'-io'|'-drivespeed'|'--io'|'--drivespeed' )
 		iotest;;
-	'-northamerica'|'-na'|'--northamerica'|'--na' )
-		benchinit; northamericaspeedtest;;
+	'-northamercia'|'-na'|'--northamercia'|'--na' )
+		benchinit; northamerciaspeedtest;;
 	'-europe'|'-eu'|'--europe'|'--eu' )
 		benchinit; europespeedtest;;
 	'-exotic'|'--exotic' )
