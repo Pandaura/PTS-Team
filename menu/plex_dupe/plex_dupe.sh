@@ -19,15 +19,15 @@ variable() {
 deploycheck() {
 file="/opt/plex_dupefinder/config.json"
   if [[ "$file" == "config.json" ]]; then
-    dstatus="✅ DEPLOYED"
-  else dstatus="⚠️ NOT DEPLOYED"; fi
+    dstatus="✅  DEPLOYED"
+  else dstatus="⚠️  NOT DEPLOYED"; fi
 }
 
 userstatus() {
   userdep=$(cat /var/plex_dupe/plex.pw)
   if [ "$userdep" != "" ]; then
-    ustatus="✅ DEPLOYED"
-  else ustatus="⚠️ NOT DEPLOYED"; fi
+    ustatus="✅  DEPLOYED"
+  else ustatus="⚠️  NOT DEPLOYED"; fi
 }
 
 tokenstatus() {
@@ -35,11 +35,11 @@ tokenstatus() {
   if [ "$ptokendep" != "" ]; then
   PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(cat /var/plex_dupe/plex.token)" -o /dev/null -w '%{http_code}\n' -s)
   	if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then
-  	  pstatus="✅ DEPLOYED"
+  	  pstatus="✅  DEPLOYED"
 	  else
-	  pstatus="❌ DEPLOYED BUT Plex_Dupefinder FAILED"
+	  pstatus="❌  DEPLOYED BUT Plex_Dupefinder FAILED"
 	fi
-  else pstatus="⚠️ NOT DEPLOYED"; fi
+  else pstatus="⚠️  NOT DEPLOYED"; fi
 }
 
 plexcheck() {
@@ -79,7 +79,7 @@ token() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-      read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+      read -p ' Confirm Info | PRESS [ENTER] ' typed </dev/tty
       exit
     fi
   fi
@@ -88,13 +88,13 @@ EOF
 # BAD INPUT
 badinput() {
   echo
-  read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
+  read -p '⛔️  ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
   question1
 }
 
 works(){
  echo
-  read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+  read -p ' Confirm Info | PRESS [ENTER] ' typed </dev/tty
   question1
 }
 
