@@ -229,7 +229,7 @@ EOF
 	bash /opt/plexguide/menu/plex_dupe/scripts/plex_token.sh
 	question1 
     ;;
-  2)
+  3)
 	authdel
 	question1 
     ;;
