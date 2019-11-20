@@ -21,7 +21,7 @@ variable() {
 
 deploycheck() {
 file="/opt/plex_dupefinder/config.json"
-  if [[ "$file" == "config.json" ]]; then
+  if [[ -f $file ]]; then
     dstatus="✅  DEPLOYED"
   else dstatus="⚠️  NOT DEPLOYED"; fi
 }
