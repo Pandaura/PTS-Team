@@ -27,3 +27,4 @@ if [ -z "$X_PLEX_TOKEN" ]; then
     >&2 echo 'Failed to retrieve the X-Plex-Token.'
     exit 1
 fi
+echo $X_PLEX_TOKEN >/var/plex_dupe/plex.token

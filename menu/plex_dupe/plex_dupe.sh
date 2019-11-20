@@ -11,8 +11,7 @@ touch /var/plex_dupe/plex.pw
 touch /var/plex_dupe/plex.user
 touch /var/plex_dupe/plex.token
 touch /var/plex_dupe/plex.authdel
-
-variable /var/plex_dupe/plex.authdel false
+echo -e "1" >/var/plex_dupe/plex.authdel
 
 # FUNCTIONS START ##############################################################
 variable() {
@@ -163,11 +162,11 @@ EOF
 
   case $typed in
   1)
-	echo "true" >/var/plex_dupe/plex.authdel
+	echo -e "true" >/var/plex_dupe/plex.authdel
 	question1 
     ;;
   2)
-	echo "false" >/var/plex_dupe/plex.authdel
+	echo -e "false" >/var/plex_dupe/plex.authdel
 	question1 
 	;;
   z)
