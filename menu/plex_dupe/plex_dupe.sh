@@ -145,6 +145,12 @@ doneenter(){
   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
   question1
 }
+endbanner() {
+bash /opt/plexguide/menu/plex_dupe/scripts/endbanner.sh
+ echo
+  read -p ' Confirm Info | PRESS [ENTER] ' typed </dev/tty
+  question1
+}
 
 authdel(){
 clear
@@ -227,9 +233,9 @@ EOF
   3)
 	authdel && clear && question1 ;;
   A)
-	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && question1 ;;
+	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner ;;
   a)
-	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && question1 ;;
+	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner ;;
   C)
 	credits && clear && question1 ;;
   c)		

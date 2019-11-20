@@ -35,6 +35,9 @@
 - name: Import Services Task
   import_tasks: "subtasks/services.yml"
 
+- name: Remove old Install
+  shell: 'sudo rm -rf /opt/plex_autoscan'
+
 - name: Create plex_autoscan directories
   file: "path={{ item }} state=directory mode=0775 owner=1000 group=1000 recurse=yes"
   with_items:

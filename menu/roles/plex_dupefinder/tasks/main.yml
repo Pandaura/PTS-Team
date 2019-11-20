@@ -33,6 +33,14 @@
   with_items:
     - /opt/plex_dupefinder
 
+- name: Remove old Install
+  shell: 'sudo rm -rf /opt/plex_dupefinder'
+
+- name: Create plex_dupefinder directories
+  file: "path={{ item }} state=directory mode=0775 owner=1000 group=1000 recurse=yes"
+  with_items:
+    - /opt/plex_dupefinder
+
 - name: Clone plex_dupefinder == HEAD
   git:
     repo: https://github.com/l3uddz/plex_dupefinder.git
@@ -41,7 +49,6 @@
     version: HEAD
     force: yes
   ignore_errors: yes
-  register: plex_dupefinder_clone_status
 
 - name: Clone plex_dupefinder repo == master
   git:
@@ -50,9 +57,7 @@
     clone: yes
     version: master
     force: yes
-  become: yes
-  become_user: "1000"
-  when: plex_dupefinder_status is failed
+  ignore_errors: yes
 
 - name: Install pip requirements
   pip:
@@ -86,3 +91,19 @@
     src: "/opt/plex_dupefinder/plex_dupefinder.py"
     dest: "/usr/local/bin/plex_dupefinder"
     state: link
+    
+# scripts permissions
+- name: 'Setting permissions on scripts'
+  shell: 'chown -cR 1000:1000 /opt/plex_dupefinder'
+
+# scripts permissions
+- name: 'Setting permissions on scripts'
+  shell: 'chmod -cR 775 /opt/plex_dupefinder'
+
+- name: Remove .githube folder and .git files
+  file: "path={{ item }} state=absent"
+  with_items:
+    - '/opt/plex_dupefinder/.git'
+    - '/opt/plex_dupefinder/.github'
+    - '/opt/plex_dupefinder/assets'
+    - '/opt/plex_dupefinder/.gitignore'
