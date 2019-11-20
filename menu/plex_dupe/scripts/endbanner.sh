@@ -14,42 +14,36 @@ tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 1.) Go to Plex and get all the names of your Plex Libraries you want to find duplicates in.
-2.) Under PLEX_LIBRARIES, type in the Plex Library Name (exactly) 
+2.) sudo nano /opt/plex_dupefinder/config.json
+
+Under PLEX_LIBRARIES, type in the Plex Library Name (exactly) 
 and specify the Library Type: 1 for movies or 2 for TV shows.
 Note: 'Library Type' is not the same as the 'Section ID' of a library.
 
 Format:
-
 "PLEX_LIBRARIES": {
   "LIBRARY_NAME_1": #,
   "LIBRARY_NAME_2": #
 },
-
 For basic libraries, this will look like:
-
 "PLEX_LIBRARIES": {
   "Movies": 1,
   "TV": 2
 },
-
 For more advanced libraries, it can look like this:
-
 "PLEX_LIBRARIES": {
    "4K Movies": 1,
    "Kids Movies": 1,
    "TV": 2
 },
-
+3.) SAVE it
+4.) plexdupes and following the output
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 You will need to make sure that Allow media deletion is enabled in Plex.
-
 In Plex, click the Settings icon -> Server -> Library.
-
-Set the following:
-
+Set the following: --> 
 Allow media deletion: enabled
-
 Click SAVE CHANGES.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
