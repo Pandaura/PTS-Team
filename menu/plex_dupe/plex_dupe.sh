@@ -47,9 +47,9 @@ tokenstatus() {
 automodestatus() {
   adep=$(cat /var/plex_dupe/plex.authdel)
   if [ "$adep" == "true" ]; then
-    astatus="✅ AUTO_DELETE = true"
+    astatus="✅  AUTO_DELETE = true"
  elif [ "$adep" == "false" ]; then
-   astatus="✅ AUTO_DELETE = false"
+   astatus="✅  AUTO_DELETE = false"
  else astatus="⚠️  NOT DEPLOYED"; fi
 }
 
