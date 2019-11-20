@@ -194,7 +194,23 @@ gcloud() {
 }
 
 mergerfsupdate() {
+mgversion="$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
+mgstored="$(mergerfs -v | grep 'mergerfs version:' | awk '{print $3}')"
+if [[ "$mgversion" == "$mgstored" ]]; then
+  echo "✅ mergerfs latest stable version check "
+  clear
+elif [[ "$mgversion" != "$mgstored" ]]; then
   ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsupdate
+  bash /opt/plexguide/menu/pgui/templates/check.sh
+  sleep 2
+  clear
+  tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+↘️  mergerfs updated to version $mgstored
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+sleep 3s
+fi
 }
 
 mergerfsinstall() {
@@ -212,6 +228,7 @@ if [[ "$rcversion" == "$rcstored" ]]; then
 elif [[ "$rcversion" != "$rcstored" ]]; then
   ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
   bash /opt/plexguide/menu/pgui/templates/check.sh
+  sleep 2
   clear
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
