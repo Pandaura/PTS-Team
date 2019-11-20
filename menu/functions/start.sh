@@ -60,11 +60,6 @@ EOF
   fi
 }
 
-owned() {
-  chown -cR 1000:1000 /opt/plexguide 1>/dev/null 2>&1
-  chmod -R 775 /opt/plexguide 1>/dev/null 2>&1
-}
-
 exitcheck() {
   bash /opt/plexguide/menu/version/file.sh
   file="/var/plexguide/exited.upgrade"
