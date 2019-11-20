@@ -1,3 +1,14 @@
+#!/bin/bash
+#
+# Title:          PTS Emergency Log Gen
+# org.Author(s):  Admin9705
+# Mod:            MrDoob MainDev from PTS
+# GNU:        General Public License v3.0
+################################################################################
+source /opt/plexguide/menu/functions/functions.sh
+
+
+  abc="/var/plexguide"
   mkdir -p /opt/appdata/plexguide/emergency
   variable ${abc}/emergency.display "On"
   if [[ $(ls /opt/appdata/plexguide/emergency) != "" ]]; then
@@ -6,10 +17,12 @@
     if [[ $(cat /var/plexguide/emergency.display) == "On" ]]; then
 
       tee <<-EOF
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⛔️  Emergency & Warning Log Generator 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 NOTE: This can be turned [On] or Off in Settings!
+
 EOF
 
       countmessage=0
