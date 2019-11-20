@@ -37,7 +37,7 @@ tokenstatus() {
   	if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then
   	  pstatus="✅ DEPLOYED"
 	  else
-	  pstatus="❌ DEPLOYED BUT PAS TOKEN FAILED"
+	  pstatus="❌ DEPLOYED BUT Plex_Dupefinder FAILED"
 	fi
   else pstatus="⚠️ NOT DEPLOYED"; fi
 }
