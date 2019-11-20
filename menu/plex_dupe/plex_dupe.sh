@@ -229,6 +229,10 @@ EOF
 	bash /opt/plexguide/menu/plex_dupe/scripts/plex_token.sh
 	question1 
     ;;
+  2)
+	authdel
+	question1 
+    ;;
   A)
 	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder
 	question1
