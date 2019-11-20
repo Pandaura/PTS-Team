@@ -137,20 +137,21 @@ doneenter(){
 
 authdel(){
 clear
-chk=$(figlet Plex Dupe finder | lolcat )
+status=$(cat /var/plex_dupe/plex.authdel)
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Plex Dupefinder 
+🚀 Plex Dupefinder  
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Set it to auto mode
+Set it to AUTO_DELETE  [ $status ]
 
-[ 1 ] Automode on
-[ 2 ] Automode off
+[ 1 ] AUTO_DELETE      : on
+[ 2 ] AUTO_DELETE      : off
 
- "AUTO_DELETE": false,
-
+NOTE / Info
+"AUTO_DELETE": true,  - Plex DupeFinder will run in automatic mode.
+"AUTO_DELETE": false, - Plex DupeFinder will run in interactive mode. (Default)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
