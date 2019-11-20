@@ -323,7 +323,7 @@ EOF
 [8]  PTS-Vault      : Backup & Restore
 [9]  PTS-Cloud      : GCE & Virtual Instances
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[10] CBOX-PDUPE     : Find and delete duplicate files in Plex
+
 [11] Traktarr       : Fill Sonarr/Radarr over Trakt lists.
 [12] Plex Patrol    : Kick transcodes (audio or video or both)
 [13] Settings 
