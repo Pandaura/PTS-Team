@@ -29,7 +29,7 @@ question1() {
 🌎 Plex User Name Store
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] - Generate stored details for PTS - PAS - Scan
+[1] - Generate stored details for Plex Dupefinder
 
 [Z] - Exit
 

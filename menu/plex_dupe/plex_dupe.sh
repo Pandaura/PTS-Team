@@ -45,6 +45,15 @@ tokenstatus() {
   else pstatus="⚠️  NOT DEPLOYED"; fi
 }
 
+adel() {
+  adep=$(cat /var/plex_dupe/plex.authdel)
+  if [ "$adep" == "true" ]; then
+    astatus="✅ AUTO_DELETE = true"
+ elif [ "$adep" == "false" ]; then
+   astatus="✅ AUTO_DELETE = false"
+ else astatus="⚠️  NOT DEPLOYED"; fi
+}
+
 plexcheck() {
   pcheck=$(docker ps | grep "\<plex\>")
   if [ "$pcheck" == "" ]; then
@@ -194,6 +203,7 @@ NOTE : Plex Dupefinder are located  in /opt/plex_dupefinder
 
 [1] Deploy Plex Username & Plex Passwort  [ $ustatus ]
 [2] Deploy Plex Token                     [ $pstatus ]
+[3] Deploy AUTO_DELETE                    [ $astatus ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -247,6 +257,7 @@ EOF
 # FUNCTIONS END ##############################################################
 plexcheck
 userstatus
+adel
 tokenstatus
 deploycheck
 question1
