@@ -11,7 +11,6 @@ touch /var/plex_dupe/plex.pw
 touch /var/plex_dupe/plex.user
 touch /var/plex_dupe/plex.token
 touch /var/plex_dupe/plex.authdel
-echo -e "1" >/var/plex_dupe/plex.authdel
 
 # FUNCTIONS START ##############################################################
 variable() {
@@ -45,7 +44,7 @@ tokenstatus() {
   else pstatus="⚠️  NOT DEPLOYED"; fi
 }
 
-adel() {
+automodestatus() {
   adep=$(cat /var/plex_dupe/plex.authdel)
   if [ "$adep" == "true" ]; then
     astatus="✅ AUTO_DELETE = true"
@@ -192,6 +191,10 @@ EOF
 
 # FIRST QUESTION
 question1() {
+userstatus
+automodestatus
+tokenstatus
+deploycheck
 
   tee <<-EOF
 
@@ -261,7 +264,7 @@ EOF
 # FUNCTIONS END ##############################################################
 plexcheck
 userstatus
-adel
+automodestatus
 tokenstatus
 deploycheck
 question1

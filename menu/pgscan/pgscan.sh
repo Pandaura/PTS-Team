@@ -156,7 +156,9 @@ EOF
 
 # FIRST QUESTION
 question1() {
-
+userstatus
+tokenstatus
+deploycheck
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -169,11 +171,10 @@ NOTE : Plex_AutoScan are located  in /opt/plex_autoscan
 [2] Deploy Plex Token                     [ $pstatus ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 [A] Deploy Scan                           [ $dstatus ]
+
 [D] PlexAutoScan Domain
 [S] Show last 50 lines of log
-
 [C] Credits
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
