@@ -7,6 +7,10 @@
 
 # KEY VARIABLE RECALL & EXECUTION
 mkdir -p /var/plex_dupe
+touch /var/plex_dupe/plex.pw
+touch /var/plex_dupe/plex.user
+touch /var/plex_dupe/plex.token
+touch /var/plex_dupe/plex.authdel
 
 variable /var/plex_dupe/plex.authdel false
 
