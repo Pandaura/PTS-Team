@@ -136,9 +136,9 @@ alias() {
 
 templatespart2() {
   ansible-playbook /opt/plexguide/menu/alias/alias.yml >/dev/null 2>&1
-  ansible-playbook /opt/plexguide/menu/prune/main.yml >/dev/null 2>&1
+  #ansible-playbook /opt/plexguide/menu/prune/main.yml >/dev/null 2>&1
   ansible-playbook /opt/plexguide/menu/pg.yml --tags journal >/dev/null 2>&1
-  ansible-playbook /opt/plexguide/menu/motd/motd.yml >/dev/null 2>&1
+  #ansible-playbook /opt/plexguide/menu/motd/motd.yml >/dev/null 2>&1
 }
 
 aptupdate() {
@@ -152,10 +152,7 @@ customcontainers() {
 }
 
 cleaner() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete &>/dev/null &
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags clean &>/dev/null &
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags clean-encrypt &>/dev/null &
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags journal >/dev/null 2>&1
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete,clean,journal &>/dev/null &
 }
 
 dependency() {
@@ -172,37 +169,7 @@ docstart() {
 }
 
 emergency() {
-  abc="/var/plexguide"
-  mkdir -p /opt/appdata/plexguide/emergency
-  variable ${abc}/emergency.display "On"
-  if [[ $(ls /opt/appdata/plexguide/emergency) != "" ]]; then
-
-    # If not on, do not display emergency logs
-    if [[ $(cat /var/plexguide/emergency.display) == "On" ]]; then
-
-      tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  Emergency & Warning Log Generator 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-NOTE: This can be turned [On] or Off in Settings!
-
-EOF
-
-      countmessage=0
-      while read p; do
-        let countmessage++
-        echo -n "${countmessage}. " && cat /opt/appdata/plexguide/emergency/$p
-      done <<<"$(ls /opt/appdata/plexguide/emergency)"
-
-      echo
-      read -n 1 -s -r -p "Acknowledge Info | Press [ENTER]"
-      echo
-    else
-      touch ${abc}/emergency.log
-    fi
-  fi
-
+  bash /opt/plexguide/menu/functions/emergency.sh
 }
 
 folders() {
@@ -244,7 +211,14 @@ if [[ "$rcversion" == "$rcstored" ]]; then
   clear
 elif [[ "$rcversion" != "$rcstored" ]]; then
   ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
+  bash /opt/plexguide/menu/pgui/templates/check.sh
   clear
+  tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+↘️  rclone updated to version $rcstored
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+sleep 3s
 fi
 }
 
@@ -292,15 +266,15 @@ portainer() {
 }
 
 # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
-pgcore() { if [ ! -e "/opt/coreapps/place.holder" ]; then ansible-playbook /opt/plexguide/menu/pgbox/pgboxcore.yml; fi; }
-pgcommunity() { if [ ! -e "/opt/communityapps/place.holder" ]; then ansible-playbook /opt/plexguide/menu/pgbox/pgboxcommunity.yml; fi; }
-pgshield() { if [ ! -e "/opt/pgshield/place.holder" ]; then
-  echo 'pgshield' >${abc}/pgcloner.rolename
-  echo 'PGShield' >${abc}/pgcloner.roleproper
-  echo 'PGShield' >${abc}/pgcloner.projectname
-  echo 'v8.6' >${abc}/pgcloner.projectversion
-  echo 'pgshield.sh' >${abc}/pgcloner.startlink
-  ansible-playbook "/opt/plexguide/menu/pgcloner/corev2/primary.yml"
+pgcore() { if [ ! -e "/opt/coreapps/place.holder" ]; then ansible-playbook /opt/plexguide/menu/pgbox/boxcore.yml; fi; }
+pgcommunity() { if [ ! -e "/opt/communityapps/place.holder" ]; then ansible-playbook /opt/plexguide/menu/pgbox/boxcommunity.yml; fi; }
+pgshield() { if [ ! -e "/opt/pgshield/place.holder" ];
+     echo 'pgshield' >/var/plexguide/pgcloner.rolename
+     echo 'PTS-Shield' >${abc}/pgcloner.roleproper
+     echo 'PTS-Shield' >${abc}/pgcloner.projectname
+     echo 'master' >${abc}/pgcloner.projectversion
+     echo 'pgshield.sh' >${abc}/pgcloner.startlink
+     ansible-playbook "/opt/plexguide/menu/pgcloner/corev2/primary.yml"
 fi; }
 
 pythonstart() {
