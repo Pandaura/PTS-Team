@@ -114,7 +114,7 @@ EOF
 question3() {
   echo "$pw" >/var/plex_dupe/plex.pw
   echo "$user" >/var/plex_dupe/plex.user
-  ansible-playbook /opt/plexguide/menu/plex/token.yml
+  ansible-playbook /opt/plexguide/menu/plex_dupe/token.yml
   token=$(cat /var/plex_dupe/plex.token)
   if [ "$token" != "" ]; then
     tee <<-EOF

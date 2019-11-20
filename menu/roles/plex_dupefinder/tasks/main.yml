@@ -17,7 +17,7 @@
   register: plexpass
 
 - name: Set plex.user fact | token
-  shell: 'cat /var/plexguide/plex.token'
+  shell: 'cat /var/plex_dupe/plex.token'
   register: plex_auth_token
 
 - name: Set plex_dupe in automode 
