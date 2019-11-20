@@ -170,13 +170,9 @@ EOF
 
   case $typed in
   1)
-	echo -e "true" >/var/plex_dupe/plex.authdel
-	question1 
-    ;;
+	echo -e "true" >/var/plex_dupe/plex.authdel && clear && question1 ;;
   2)
-	echo -e "false" >/var/plex_dupe/plex.authdel
-	question1 
-	;;
+	echo -e "false" >/var/plex_dupe/plex.authdel && clear && question1 ;;
   z)
     exit
     ;;
@@ -225,31 +221,19 @@ EOF
 
   case $typed in
   1)
-	bash /opt/plexguide/menu/plex_dupe/scripts/plex_pw.sh
-	question1 
-    ;;
+	bash /opt/plexguide/menu/plex_dupe/scripts/plex_pw.sh && clear && question1 ;;
   2)
-	bash /opt/plexguide/menu/plex_dupe/scripts/plex_token.sh
-	question1 
-    ;;
+	bash /opt/plexguide/menu/plex_dupe/scripts/plex_token.sh && clear && question1 ;;
   3)
-	authdel
-	question1 
-    ;;
+	authdel && clear && question1 ;;
   A)
-	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder
-	question1
-	;;
+	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && question1 ;;
   a)
-	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder
-	question1
-	;;
+	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && question1 ;;
   C)
-	credits
-	;;
+	credits && clear && question1 ;;
   c)		
-	credits
-	;;
+	credits && clear && question1 ;;
   z)
     exit
     ;;

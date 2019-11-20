@@ -188,41 +188,25 @@ EOF
 
   case $typed in
   1)
-	bash /opt/plexguide/menu/pgscan/scripts/plex_pw.sh
-	question1 
-    ;;
+	bash /opt/plexguide/menu/pgscan/scripts/plex_pw.sh && clear && question1 ;;
   2)
-	bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh
-	question1 
-    ;;
+	bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh && clear && question1 ;;
   A)
-	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
-	question1
-	;;
+	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && clear && question1 ;;
   a)
-	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan
-	question1
-	;;
+	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan&& clear && question1 ;;
   D)
-	showupdomain
-	;;
+	showupdomain && clear && question1 ;;
   d)
-	showupdomain
-	;;
+	showupdomain && clear && question1 ;;
   S)
-	tail -n 50 /opt/plex_autoscan/plex_autoscan.log
-	doneenter
-	;;
+	tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter ;;
   s)
-	tail -n 50 /opt/plex_autoscan/plex_autoscan.log
-	doneenter
-	;;
+	tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter;;
   C)
-	credits
-	;;
+	credits && clear && question1 ;;
   c)		
-	credits
-	;;
+	credits && clear && question1 ;;
   z)
     exit
     ;;
