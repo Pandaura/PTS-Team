@@ -131,14 +131,25 @@ core() {
 
 ############################################################ INSTALLER FUNCTIONS
 alias() {
-  ansible-playbook /opt/plexguide/menu/alias/alias.yml
+  ansible-playbook /opt/plexguide/menu/alias/alias.yml 
+}
+
+check(){
+file="/opt/plexguide/menu/pg.yml"
+  if [[ -f $file ]]; then
+  clear && echo "✅ All files Valid" 
+ else ansible-playbook opt/plexguide/menu/version/missing_pull.yml; fi
 }
 
 templatespart2() {
-  ansible-playbook /opt/plexguide/menu/alias/alias.yml >/dev/null 2>&1
-  #ansible-playbook /opt/plexguide/menu/prune/main.yml >/dev/null 2>&1
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags journal >/dev/null 2>&1
-  #ansible-playbook /opt/plexguide/menu/motd/motd.yml >/dev/null 2>&1
+  alias 1>/dev/null 2>&1
+  owned 1>/dev/null 2>&1
+  check 
+}
+
+owned() {
+  chown -cR 1000:1000 /opt/plexguide 1>/dev/null 2>&1
+  chmod -R 775 /opt/plexguide 1>/dev/null 2>&1
 }
 
 aptupdate() {
