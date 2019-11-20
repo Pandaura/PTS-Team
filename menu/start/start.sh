@@ -323,10 +323,13 @@ EOF
 [8]  PTS-Vault      : Backup & Restore
 [9]  PTS-Cloud      : GCE & Virtual Instances
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[10] Traktarr       : Fill Sonarr/Radarr over Trakt lists.
-[11] Plex Patrol    : Kick transcodes (audio or video or both)
-[12] Settings 
+[10] CBOX-PDUPE     : Find and delete duplicate files in Plex
+[11] Traktarr       : Fill Sonarr/Radarr over Trakt lists.
+[12] Plex Patrol    : Kick transcodes (audio or video or both)
+[13] Settings 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[[ ALPHA LEVEL ]]
+[10] CBOX-PDUPE     : Find and delete duplicate files in Plex
 
 [Z]  Exit
 
@@ -393,17 +396,23 @@ EOF
     ;;
   10)
     clear
-    bash /opt/plexguide/menu/traktarr/traktarr.sh
+    bash /opt/plexguide/menu/plex_dupe/plex_dupe.sh
     clear
 	primestart
 	;;
   11)
     clear
-	bash /opt/plexguide/menu/pgcloner/pgpatrol.sh
+    bash /opt/plexguide/menu/traktarr/traktarr.sh
     clear
 	primestart
 	;;
   12)
+    clear
+	bash /opt/plexguide/menu/pgcloner/pgpatrol.sh
+    clear
+	primestart
+	;;
+  13)
     clear
     bash /opt/plexguide/menu/interface/settings.sh
     clear
