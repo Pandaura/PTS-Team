@@ -8,7 +8,6 @@
     - { role: docstart, tags: ['docstart'] }
     - { role: autodelete, tags: ['autodelete'] }
     - { role: clean, tags: ['clean'] }
-    - { role: clean-encrypt, tags: ['clean-encrypt'] }
     - { role: update, tags: ['update'] }
     - { role: rcloneinstall, tags: ['rcloneinstall'] }
     - { role: mergerfsinstall, tags: ['mergerfsinstall'] }
