@@ -176,9 +176,17 @@ EOF
 
   case $typed in
   1)
-	echo -e "true" >/var/plex_dupe/plex.authdel && clear && question1 ;;
+	file="/opt/plex_dupefinder/config.json"
+	if [[ -f $file ]]; then
+	  echo -e "true" >/var/plex_dupe/plex.authdel
+	  ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder >/dev/null 2>&1
+	else echo -e "true" >/var/plex_dupe/plex.authdel ; fi && clear && question1 ;;
   2)
-	echo -e "false" >/var/plex_dupe/plex.authdel && clear && question1 ;;
+	file="/opt/plex_dupefinder/config.json"
+	if [[ -f $file ]]; then
+	  echo -e "false" >/var/plex_dupe/plex.authdel
+	  ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder >/dev/null 2>&1
+	else echo -e "false" >/var/plex_dupe/plex.authdel ; fi && clear && question1 ;;
   z)
     exit
     ;;
@@ -238,7 +246,7 @@ EOF
 	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner ;;
   C)
 	credits && clear && question1 ;;
-  c)		
+  c)
 	credits && clear && question1 ;;
   z)
     exit
