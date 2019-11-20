@@ -33,7 +33,7 @@
   with_items:
     - /opt/plex_dupefinder
 
-- name: Clone plex_dupefinder | HEAD
+- name: Clone plex_dupefinder == HEAD
   git:
     repo: https://github.com/l3uddz/plex_dupefinder.git
     dest: /opt/plex_dupefinder
@@ -41,8 +41,9 @@
     version: HEAD
     force: yes
   ignore_errors: yes
+  register: plex_dupefinder_clone_status
 
-- name: Clone plex_dupefinder repo | 'master'
+- name: Clone plex_dupefinder repo == master
   git:
     repo: https://github.com/l3uddz/plex_dupefinder.git
     dest: /opt/plex_dupefinder
@@ -51,7 +52,7 @@
     force: yes
   become: yes
   become_user: "1000"
-  when: plex_autoscan_clone_status is failed
+  when: plex_dupefinder_status is failed
 
 - name: Install pip requirements
   pip:
