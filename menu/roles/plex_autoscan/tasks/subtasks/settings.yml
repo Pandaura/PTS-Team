@@ -37,7 +37,7 @@
     register: plex_auth_token
 
   - name: Register IP
-    shell: 'cat /var/plexguide/pgscan/server.ip'
+    shell: 'cat /var/plexguide/server.ip'
     register: ipaddress
 
   - name: plex_auto_scan server pass 
