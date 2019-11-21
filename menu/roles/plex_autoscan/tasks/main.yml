@@ -28,6 +28,9 @@
   shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
   register: plex_autoscan_server_pass
 
+- name: Register mounted.bin for trash
+  shell: 'touch /mnt/unionfs/mounted.bin'
+
 - name: Display Plex Auth Token
   debug:
     msg: "Plex Auth Token: {{ plex_auth_token }}"
