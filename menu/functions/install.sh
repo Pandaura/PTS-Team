@@ -142,7 +142,7 @@ file="/opt/plexguide/menu/pg.yml"
 }
 
 remove(){
-  ansible-playbook /opt/plexguide/menu/pg.yml --tag remove
+  ansible-playbook /opt/plexguide/menu/pg.yml --tag remove 1>/dev/null 2>&1
 }
 
 templatespart2() {
