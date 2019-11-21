@@ -24,7 +24,7 @@ userstatus() {
 tokenstatus() {
   ptokendep=$(cat /var/plexguide/plex.token)
   if [ "$ptokendep" != "" ]; then
-  PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(cat /var/plexguide/plex.token)"  -o /dev/null -w '%{http_code}\n' -s)
+  PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(/opt/plex_autoscan/config/config.json | jq .PLEX_TOKEN | sed 's/"//g' )"  -o /dev/null -w '%{http_code}\n' -s))
   	if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then
   	  pstatus="✅ DEPLOYED"
 	  else
@@ -169,7 +169,6 @@ EOF
 # FIRST QUESTION
 question1() {
 userstatus
-tokenstatus
 deploycheck
   tee <<-EOF
 
