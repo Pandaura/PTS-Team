@@ -23,7 +23,6 @@ userstatus() {
   else ustatus="⚠️ NOT DEPLOYED"; fi
 }
 tokenstatus() {
-touch  $ptokendep
   ptokendep=$(cat /var/plexguide/pgscan/plex.token)
   if [ "$ptokendep" != "" ]; then
   PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(cat /opt/plex_autoscan/config/config.json | jq .PLEX_TOKEN | sed 's/"//g')"  -o /dev/null -w '%{http_code}\n' -s)
