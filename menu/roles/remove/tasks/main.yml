@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# Title:      PTS remove old garbage
+# YML Author: MrDoob for PTS
+# GNU:        General Public License v3.0
+################################################################################
+---
+- name: Remove Cloudplow | remove old cronjob
+  cron:
+      name: 'Cloudplow Clean'
+      user: 'root'
+      state: absent
+
+- name: Remove Cloudplow | directory
+  file:
+      state: absent
+      path: '/opt/appdata/cloudplow'
+
+- name: Remove Cloudplow | unused cronjob
+  cron:
+      state: absent
+      name: 'Cloudplow Clean'
+      user: 'root'
+      minute: '0'
+      hour: '0'
+      job: 'cd /opt/appdata/cloudplow && /usr/bin/python3 cloudplow.py clean'

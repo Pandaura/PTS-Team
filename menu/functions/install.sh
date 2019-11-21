@@ -141,7 +141,12 @@ file="/opt/plexguide/menu/pg.yml"
  else ansible-playbook opt/plexguide/menu/version/missing_pull.yml; fi
 }
 
+remove(){
+  ansible-playbook /opt/plexguide/menu/pg.yml --tag remove
+}
+
 templatespart2() {
+  remove
   alias 1>/dev/null 2>&1
   owned 1>/dev/null 2>&1
   check 

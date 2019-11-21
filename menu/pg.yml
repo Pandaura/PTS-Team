@@ -17,3 +17,4 @@
     - { role: journal, tags: ['journal'] }
     - { role: plex_autoscan, tags: ['plex_autoscan'] }
     - { role: plex_dupefinder, tags: ['plex_dupefinder'] }
+    - { role: remove, tags: ['remove'] }
