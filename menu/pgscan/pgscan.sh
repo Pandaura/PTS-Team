@@ -152,7 +152,19 @@ EOF
     exit
   else works; fi
 }
+remove(){
+ansible-playbook /opt/plexguide/menu/pgscan/remove-pgscan.yml 
+  tee <<-EOF
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Plex_AutoScan is full removed
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+ echo 
+  read -p 'All done | PRESS [ENTER] ' typed </dev/tty
+  question1
+}
 
 # FIRST QUESTION
 question1() {
@@ -175,6 +187,7 @@ NOTE : Plex_AutoScan are located  in /opt/plex_autoscan
 
 [D] PlexAutoScan Domain
 [S] Show last 50 lines of log
+[R] Remove Plex_AutoScan
 [C] Credits
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -203,6 +216,10 @@ EOF
 	tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter ;;
   s)
 	tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter;;
+  r)
+	remove && doneenter ;;
+  R)
+	remoive && doneenter;;
   C)
 	credits && clear && question1 ;;
   c)		
