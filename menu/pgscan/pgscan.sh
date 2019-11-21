@@ -172,6 +172,7 @@ EOF
 # FIRST QUESTION
 question1() {
 userstatus
+tokenstatus
 deploycheck
   tee <<-EOF
 
