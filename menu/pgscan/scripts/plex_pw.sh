@@ -62,8 +62,8 @@ EOF
     sleep 3
   question 2
 
-pw=$(cat /var/plexguide/plex.pw)
-user=$(cat /var/plexguide/plex.user)
+pw=$(cat /var/plexguide/pgscan/plex.pw)
+user=$(cat /var/plexguide/pgscan/plex.user)
 
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
     exit
@@ -113,10 +113,10 @@ EOF
 }
 
 question3() {
-  echo "$pw" >/var/plexguide/plex.pw
-  echo "$user" >/var/plexguide/plex.user
-  ansible-playbook /opt/plexguide/menu/plex/token.yml
-  token=$(cat /var/plexguide/plex.token)
+  echo "$pw" >/var/plexguide/pgscan/plex.pw
+  echo "$user" >/var/plexguide/pgscan/plex.user
+  bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh
+  token=$(cat /var/plexguide/pgscan/plex.token)
   if [ "$token" != "" ]; then
     tee <<-EOF
 

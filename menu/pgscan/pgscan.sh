@@ -1,7 +1,8 @@
 # KEY VARIABLE RECALL & EXECUTION
 mkdir -p /var/plexguide/pgscan
-mkdir -p /opt/appdata/pgscan
-
+touch /var/plexguide/pgscan/plex.token
+touch /var/plexguide/pgscan/plex.pw
+touch /var/plexguide/pgscan/plex.user
 # FUNCTIONS START ##############################################################
 # FIRST FUNCTION
 variable() {
@@ -16,15 +17,16 @@ deploycheck() {
   else dstatus="⚠️ NOT DEPLOYED"; fi
 }
 userstatus() {
-  userdep=$(cat /var/plexguide/plex.pw)
+  userdep=$(cat /var/plexguide/pgscan/plex.pw)
   if [ "$userdep" != "" ]; then
     ustatus="✅ DEPLOYED"
   else ustatus="⚠️ NOT DEPLOYED"; fi
 }
 tokenstatus() {
-  ptokendep=$(cat /var/plexguide/plex.token)
+touch  $ptokendep
+  ptokendep=$(cat /var/plexguide/pgscan/plex.token)
   if [ "$ptokendep" != "" ]; then
-  PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(cat /opt/plex_autoscan/config/config.json | jq .PLEX_TOKEN | sed 's/"//g' )"  -o /dev/null -w '%{http_code}\n' -s)
+  PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(cat /opt/plex_autoscan/config/config.json | jq .PLEX_TOKEN | sed 's/"//g')"  -o /dev/null -w '%{http_code}\n' -s)
   	if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then
   	  pstatus="✅ DEPLOYED"
 	  else
@@ -50,18 +52,19 @@ EOF
 }
 
 user() {
-  touch /var/plexguide/plex.pw
-  user=$(cat /var/plexguide/plex.pw)
+  touch /var/plexguide/pgscan/plex.pw
+  user=$(cat /var/plexguide/pgscan/plex.pw)
   if [ "$user" == "" ]; then
     bash /opt/plexguide/menu/pgscan/scripts/plex_pw.sh
   fi
 }
 token() {
-  touch /opt/appdata/pgscan/plex.token
-  ptoken=$(cat /opt/appdata/pgscan/plex.token)
+  touch /var/plexguide/pgscan/plex.token
+  ptoken=$(cat /var/plexguide/pgscan/plex.token)
   if [ "$ptoken" == "" ]; then
-    bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh
-    ptoken=$(cat /opt/appdata/pgscan/plex.token)
+    bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh 1>/dev/null 2>&1
+	sleep 2
+    ptoken=$(cat /var/plexguide/pgscan/plex.token)
     if [ "$ptoken" == "" ]; then
       tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -178,7 +181,7 @@ deploycheck
 
 NOTE : Plex_AutoScan are located  in /opt/plex_autoscan
 
-[1] Deploy Plex Username & Plex Passwort  [ $ustatus ]
+[1] Deploy Plex Username & Plex Password  [ $ustatus ]
 [2] Deploy Plex Token                     [ $pstatus ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

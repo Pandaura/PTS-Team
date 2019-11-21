@@ -9,15 +9,15 @@
 #########################################################################
 ---
 - name: Set plex.user fact | username
-  shell: 'cat /var/plexguide/plex.user'
+  shell: 'cat /var/plexguide/pgscan/plex.user'
   register: plexuser
 
 - name: Set plex.user fact | passwort
-  shell: 'cat /var/plexguide/plex.pw'
+  shell: 'cat /var/plexguide/pgscan/plex.pw'
   register: plexpass
 
 - name: Set plex.user fact | token
-  shell: 'cat /var/plexguide/plex.token'
+  shell: 'cat /var/plexguide/pgscan/plex.token'
   register: plex_auth_token
 
 - name: Register IP
@@ -25,7 +25,7 @@
   register: ipaddress
 
 - name: Register ServerPass
-  shell: 'cat /var/plexguide/pgscan.serverpass'
+  shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
   register: plex_autoscan_server_pass
 
 - name: Display Plex Auth Token

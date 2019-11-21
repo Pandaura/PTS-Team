@@ -33,15 +33,15 @@
       force: yes
 
   - name: Token Recall
-    shell: 'cat /var/plexguide/plex.token'
+    shell: 'cat /var/plexguide/pgscan/plex.token'
     register: plex_auth_token
 
   - name: Register IP
-    shell: 'cat /var/plexguide/server.ip'
+    shell: 'cat /var/plexguide/pgscan/server.ip'
     register: ipaddress
 
   - name: plex_auto_scan server pass 
-    shell: 'cat /var/plexguide/pgscan.serverpass'
+    shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
     register: plex_autoscan_server_pass
 
   when: not plex_autoscan_config.stat.exists
