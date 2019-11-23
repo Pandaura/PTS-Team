@@ -139,7 +139,7 @@ file="/opt/plexguide/menu/pg.yml"
   if [[ -f $file ]]; then
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ All files Valid"
+✅ All files Valid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
  else ansible-playbook opt/plexguide/menu/version/missing_pull.yml; fi
