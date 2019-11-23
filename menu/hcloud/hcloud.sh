@@ -5,6 +5,26 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
+source /opt/plexguide/menu/functions/install.sh
+
+installtest(){
+file="/bin/hcloud"
+  if [[ -f $file ]]; then
+  tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ Hetzner's Cloud install check
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+ else   
+  version="$(curl -s https://api.github.com/repos/hetznercloud/cli/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
+  wget -P /tmp "https://github.com/hetznercloud/cli/releases/download/$version/hcloud-linux-amd64-$version.tar.gz"
+  tar -xvf "/tmp/hcloud-linux-amd64-$version.tar.gz" -C /tmp
+  mv "/tmp/hcloud-linux-amd64-$version/bin/hcloud" /bin/
+  rm -rf /tmp/hcloud-linux-amd64-$version.tar.gz
+  rm -rf /tmp/hcloud-linux-amd64-$version; fi
+}
+
+testhcloud(){
 test=$(hcloud server list)
 if [ "$test" == "" ]; then
 
@@ -17,11 +37,11 @@ if [ "$test" == "" ]; then
 [ 1 } Activate a Hetzner Cloud Account 
 [ 2 ] Create a Project
 [ 3 ] Click Access (left hand side)
-[ 4 ]click API Tokens
-[ 5 ]Create a Token and Save It (and paste below here)
+[ 4 ] click API Tokens
+[ 5 ] Create a Token and Save It (and paste below here)
 
 * Not Ready? Just type something & Press [ENTER]
-
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   hcloud context create plexguide
 
@@ -32,7 +52,9 @@ EOF
   fi
 
 fi
-
+}
+#--------------------------------------------------------------------
+main(){
 # Start Process
 tee <<-EOF
 
@@ -51,9 +73,31 @@ tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
-if [ "$typed" == "1" ]; then
+  case $typed in
+  1) 
+  create && clear && main ;;
+  2) 
+  destroy && clear && main ;;
+  A) 
+  list && clear && main ;;
+  a) 
+  list && clear && main ;;
+  B) 
+  display && clear && main ;;
+  b) 
+  display && clear && main ;;
+  Z) 
+  exit ;;
+  z) 
+  exit ;;
+  *) 
+  main ;;
+  esac
+}
+#-----------------------------------------------------------------
+create(){
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -70,8 +114,8 @@ EOF
 
 [1] Ubuntu 18.04              [ PTS works ]
 [2] Ubuntu 16.04              [ PTS works ]
-[3] Debian 9                  [ PTS works ]
 
+[3] Debian 9                  [ only for testing | PTS dont works ]
 [4] Debian 10                 [ only for testing | PTS dont works ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -80,19 +124,19 @@ EOF
 
 EOF
 
-  read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
+  # Standby
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
-  if [ "$typed" == "1" ]; then
-    os="ubuntu-18.04"
-  elif [ "$typed" == "2" ]; then
-    os="ubuntu-16.04"
-  elif [ "$typed" == "3" ]; then
-    os="debian-9"
-  elif [ "$typed" == "4" ]; then
-    os="debian-10"
-  elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
-    exit
-  fi
+  case $typed in
+  1) os="ubuntu-18.04" ;; 
+  2) os="ubuntu-16.04" ;;
+  3) os="debian-9" ;; 
+  4) os="debian-10" ;;
+  z) exit ;;
+  Z) exit ;;
+  *) main ;;
+  esac
+
 
   tee <<-EOF
 
@@ -146,11 +190,11 @@ EOF
   echo "ssh root@$serverip" >>/bin/pg-$name
   chmod -R 777 /bin/pg-$name
   chown -R 1000:1000 /bin/pg-$name
+}
 
-  bash /opt/plexguide/menu/hcloud/hcloud.sh
-  exit
+#------------------------------------
 
-elif [ "$typed" == "A" ] || [ "$typed" == "a" ]; then
+list(){
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -164,11 +208,11 @@ EOF
   hcloud server list | tail -n +2 | cut -d " " -f2- | cut -d " " -f2- | cut -d " " -f2-
   echo
   read -p 'Press [ENTER] to Continue! ' typed </dev/tty
+}
 
-  bash /opt/plexguide/menu/hcloud/hcloud.sh
-  exit
+#------------------------------------
 
-elif [ "$typed" == "2" ]; then
+destroy(){
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -184,7 +228,7 @@ EOF
   echo "[Z] Exit"
   read -p 'Type a Server to Destroy | Press [ENTER]: ' destroy </dev/tty
   if [[ "$destroy" == "exit" || "$destroy" == "Exit" || "$destroy" == "EXIT" || "$destroy" == "z" || "$destroy" == "Z" ]]; then
-    bash /opt/plexguide/menu/hcloud/hcloud.sh
+    main
     exit
   else
     check=$(hcloud server list | tail -n +2 | cut -d " " -f2- | cut -d " " -f2- | cut -d " " -f2-)
@@ -198,8 +242,7 @@ EOF
 
 EOF
       read -p 'Press [ENTER] to Continue! ' typed </dev/tty
-      bash /opt/plexguide/menu/hcloud/hcloud.sh
-      exit
+		main
     fi
     echo
     hcloud server delete $destroy
@@ -212,11 +255,10 @@ EOF
 EOF
     read -p 'Press [ENTER] to Continue! ' typed </dev/tty
     rm -rf /bin/pg-$destroy
-    bash /opt/plexguide/menu/hcloud/hcloud.sh
-    exit
   fi
-
-elif [ "$typed" == "B" ] || [ "$typed" == "b" ]; then
+}
+#------------------------------------
+display(){
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -235,13 +277,8 @@ EOF
   echo "" &
   echo ""
   read -p 'Press [ENTER] to Continue! ' corn </dev/tty
-
-  bash /opt/plexguide/menu/hcloud/hcloud.sh
-  exit
-
-elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
-  exit
-else
-  bash /opt/plexguide/menu/hcloud/hcloud.sh
-  exit
-fi
+}
+##############################################################
+installtest
+testhcloud
+main

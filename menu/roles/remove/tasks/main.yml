@@ -24,3 +24,10 @@
       minute: '0'
       hour: '0'
       job: 'cd /opt/appdata/cloudplow && /usr/bin/python3 cloudplow.py clean'
+
+- name: Remove pgfork | not needed | never worked
+  file:
+      state: absent
+      path: '/bin/pgfork'
+
+

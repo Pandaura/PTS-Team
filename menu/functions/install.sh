@@ -137,7 +137,11 @@ alias() {
 check(){
 file="/opt/plexguide/menu/pg.yml"
   if [[ -f $file ]]; then
-  clear && echo "✅ All files Valid" 
+  tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ All files Valid"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
  else ansible-playbook opt/plexguide/menu/version/missing_pull.yml; fi
 }
 
@@ -194,15 +198,6 @@ folders() {
 
 prune() {
   ansible-playbook /opt/plexguide/menu/prune/main.yml
-}
-
-hetzner() {
-  version="$(curl -s https://api.github.com/repos/hetznercloud/cli/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
-  wget -P /tmp "https://github.com/hetznercloud/cli/releases/download/$version/hcloud-linux-amd64-$version.tar.gz"
-  tar -xvf "/tmp/hcloud-linux-amd64-$version.tar.gz" -C /tmp
-  mv "/tmp/hcloud-linux-amd64-$version/bin/hcloud" /bin/
-  rm -rf /tmp/hcloud-linux-amd64-$version.tar.gz
-  rm -rf /tmp/hcloud-linux-amd64-$version
 }
 
 gcloud() {

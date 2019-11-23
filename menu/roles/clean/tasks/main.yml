@@ -20,7 +20,7 @@
     state: absent
     path: '/mnt/move/.unionfs-fuse'
 
-- name: Install gdriveclean; cronjob
+- name: remove gdriveclean; cronjob
   cron:
     name: 'gdriveclean'
     state: absent
