@@ -8,6 +8,10 @@
 
 # FUNCTIONS START ##############################################################
 source /opt/plexguide/menu/functions/functions.sh
+variable /var/plexguide/boxpersonal.user NON-SET
+variable /var/plexguide/boxpersonal.repo NON-SET
+variable /var/plexguide/boxpersonal.branch NON-SET
+
 
 queued() {
   echo
@@ -28,12 +32,12 @@ exists() {
 }
 
 cronexe() {
-  croncheck=$(cat /opt/coreapps/apps/_cron.list | grep -c "\<$p\>")
+  croncheck=$(cat /opt/mycontainers/apps/_cron.list | grep -c "\<$p\>")
   if [ "$croncheck" == "0" ]; then bash /opt/plexguide/menu/cron/cron.sh; fi
 }
 
 cronmass() {
-  croncheck=$(cat /opt/coreapps/apps/_cron.list | grep -c "\<$p\>")
+  croncheck=$(cat /opt/mycontainers/apps/_cron.list | grep -c "\<$p\>")
   if [ "$croncheck" == "0" ]; then bash /opt/plexguide/menu/cron/cron.sh; fi
 }
 
@@ -47,15 +51,15 @@ initial() {
   touch /var/plexguide/app.list
   touch /var/plexguide/pgbox.buildup
 
-  mkdir -p /opt/coreapps
+  mkdir -p /opt/mycontainers
 
-  if [ "$boxversion" == "official" ]; then
-    ansible-playbook /opt/plexguide/menu/pgbox/gcecore.yml >/dev/null 2>&1
-  else ansible-playbook /opt/plexguide/menu/pgbox/core.yml >/dev/null 2>&1; fi
+  if [ "$boxversion" == "personal" ]; then
+    ansible-playbook /opt/plexguide/menu/pgbox/personal.yml >/dev/null 2>&1
+  else question1; fi
 
   echo ""
   echo "💬  Pulling Update Files - Please Wait"
-  file="/opt/coreapps/place.holder"
+  file="/opt/mycontainers/place.holder"
   waitvar=0
   while [ "$waitvar" == "0" ]; do
     sleep .5
@@ -73,27 +77,27 @@ question1() {
 
   cp /var/plexguide/app.list /var/plexguide/app.list2
 
-  file="/var/plexguide/core.app"
+  file="/var/plexguide/personal.app"
   #if [ ! -e "$file" ]; then
-  ls -la /opt/coreapps/apps | sed -e 's/.yml//g' |
+  ls -la /opt/mycontainers/apps | sed -e 's/.yml//g' |
     awk '{print $9}' | tail -n +4 >/var/plexguide/app.list
   while read p; do
-    echo "" >>/opt/coreapps/apps/$p.yml
-    echo "##PG-Core" >>/opt/coreapps/apps/$p.yml
+    echo "" >>/opt/mycontainers/apps/$p.yml
+    echo "##PG-personal" >>/opt/mycontainers/apps/$p.yml
 
     mkdir -p /opt/mycontainers
     touch /opt/appdata/plexguide/rclone.conf
   done </var/plexguide/app.list
-  touch /var/plexguide/core.app
+  touch /var/plexguide/personal.app
   #fi
 
-  #bash /opt/coreapps/apps/_appsgen.sh
+  #bash /opt/mycontainers/apps/_appsgen.sh
   docker ps | awk '{print $NF}' | tail -n +2 >/var/plexguide/pgbox.running
 
   ### Remove Official Apps
   while read p; do
     # reminder, need one for custom apps
-    baseline=$(cat /opt/coreapps/apps/$p.yml | grep "##PG-Core")
+    baseline=$(cat /opt/mycontainers/apps/$p.yml | grep "##PG-personal")
     if [ "$baseline" == "" ]; then sed -i -e "/$p/d" /var/plexguide/app.list; fi
   done </var/plexguide/app.list
 
@@ -123,18 +127,19 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PTS ~ Multi-App Installer for GCE
+🚀 PTS ~ Multi-App Installer  || Personal Versions
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📂 Potential Apps to Install for GCE
+📂 Potential Apps to Install
 
 $notrun
 
-💾 Apps Queued for Installation for GCE
+💾 Apps Queued for Installation
 
 $buildup
 
 [A] Install
+
 [Z] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -192,7 +197,7 @@ question2() {
 
     echo "$p" >/tmp/program_var
 
-    bash /opt/coreapps/apps/image/_image.sh
+    bash /opt/mycontainers/apps/image/_image.sh
 
     # CName & Port Execution
     bash /opt/plexguide/menu/pgbox/cname.sh
@@ -226,7 +231,7 @@ EOF
     # Store Used Program
     echo "$p" >/tmp/program_var
     # Execute Main Program
-    ansible-playbook /opt/coreapps/apps/$p.yml
+    ansible-playbook /opt/mycontainers/apps/$p.yml
 
     if [[ "$edition" == "PG Edition - HD Solo" ]]; then
       a=b
@@ -242,9 +247,81 @@ EOF
   final
 }
 
+mainbanner() {
+
+  boxuser=$(cat /var/plexguide/boxpersonal.user)
+  boxrepo=$(cat /var/plexguide/boxrepo.repo)
+  boxbranch=$(cat /var/plexguide/boxpersonal.branch)
+ 
+
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 PTS personal Box Edition!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💬	
+User:	$boxuser 
+Repo:	$boxrepo
+Branch: $boxbranch
+
+[1] Change User Name & Branch
+[2] Deploy personal Box - Personal (Forked)
+
+[Z] Exit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+
+  read -p 'Type a Selection | Press [ENTER]: ' typed </dev/tty
+
+  case $typed in
+  1)
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💬 IMPORTANT MESSAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Username / Branch & Repo are both case sensitive!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+    read -p 'Username | Press [ENTER]: ' boxuser </dev/tty
+	read -p 'REPO     | Press [ENTER]: ' boxrepo </dev/tty
+    read -p 'Branch   | Press [ENTER]: ' boxbranch </dev/tty
+    echo "$boxuser" >/var/plexguide/boxpersonal.user
+    echo "$boxrepo" >/var/plexguide/boxpersonal.repo
+    echo "$boxbranch" >/var/plexguide/boxpersonal.branch
+    pinterface
+    ;;
+  2)
+    existcheck=$(git ls-remote --exit-code -h "https://github.com/$boxuser/$boxrepo" | grep "$boxbranch")
+    if [ "$existcheck" == "" ]; then
+      echo
+      read -p '💬 Exiting! Forked Version Does Not Exist! | Press [ENTER]: ' typed </dev/tty
+      mainbanner
+    fi
+
+    boxversion="personal"
+    initial
+    question1
+    ;;
+  z)
+    exit
+    ;;
+  Z)
+    exit
+    ;;
+  *)
+    mainbanner
+    ;;
+  esac
+}
 
 # FUNCTIONS END ##############################################################
+ 
 echo "" >/tmp/output.info
-boxversion="official"
-initial
-question1
+mainbanner

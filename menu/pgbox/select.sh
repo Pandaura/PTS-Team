@@ -25,7 +25,9 @@ mainstart1() {
 
 [1] PTS          : Core
 [2] PTS          : Community
-[3] Apps         : Removal
+--------------------------------
+[3] Apps         : Personal Forks
+[4] Apps         : Removal
 
 [Z] Exit
 
@@ -33,20 +35,29 @@ mainstart1() {
 EOF
 
   # Standby
-  read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
-  if [ "$typed" == "1" ]; then
-    bash /opt/plexguide/menu/pgbox/core.sh
-  elif [ "$typed" == "2" ]; then
-    bash /opt/plexguide/menu/pgbox/community.sh
-  elif [ "$typed" == "3" ]; then
-    bash /opt/plexguide/menu/removal/removal.sh
-  elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
+  case $typed in
+  1)
+    bash /opt/plexguide/menu/pgbox/core/core.sh ;;
+  2)
+    bash /opt/plexguide/menu/pgbox/community/community.sh ;;
+  3)
+    bash /opt/plexguide/menu/pgbox/personal/personal.sh ;;
+  3)
+    bash /opt/plexguide/menu/pgbox/remove/removal.sh ;;
+  z)
     exit
-  else
+    ;;
+  Z)
+    exit
+    ;;
+  *)
     GCEtest
-  fi
+    ;;
+  esac
 }
+
 mainstart2() {
   tee <<-EOF
 
@@ -63,18 +74,23 @@ mainstart2() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
-  # Standby
-  read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
-  if [ "$typed" == "1" ]; then
-    bash /opt/plexguide/menu/pgbox/gcecore.sh
-  elif [ "$typed" == "2" ]; then
-    bash /opt/plexguide/menu/removal/removal.sh
-  elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
+  case $typed in
+  1)
+    bash /opt/plexguide/menu/pgbox/gce/gcecore.sh ;;
+  2)
+    bash /opt/plexguide/menu/pgbox/removal/removal.sh ;;
+  z)
     exit
-  else
+    ;;
+  Z)
+    exit
+    ;;
+  *)
     GCEtest
-  fi
+    ;;
+  esac
 }
 
 GCEtest

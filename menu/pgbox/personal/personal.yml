@@ -4,29 +4,29 @@
   tasks:
     - name: Check if Image Variable Exists
       stat:
-        path: '/opt/coreapps'
+        path: '/opt/mycontainers'
       register: pathcheck
 
     - name: 'Transfer Image Variable'
-      shell: 'rm -rf /opt/coreapps'
+      shell: 'rm -rf /opt/mycontainers'
       when: pathcheck.stat.exists
   
-    - name: Register User
-      shell: 'cat /var/plexguide/boxcore.user'
+    - name: Register User for Personal Repo
+      shell: 'cat /var/plexguide/boxpersonal.user'
       register: boxuser
 
-    - name: Register Repo
-      shell: 'cat /var/plexguide/boxrepo.repo'
+    - name: Register Personal Repo
+      shell: 'cat /var/plexguide/boxpersonal.repo'
       register: boxrepo
 
-    - name: Register Branch
-      shell: 'cat /var/plexguide/boxcore.branch'
+    - name: Register Personal Branch
+      shell: 'cat /var/plexguide/boxpersonal.branch'
       register: boxbranch
 
     - name: 'Cloning {{boxuser.stdout}} Apps'
       git:
         repo: 'https://github.com/{{boxuser.stdout}}/{{boxrepo.stdout}}'
-        dest: '/opt/coreapps'
+        dest: '/opt/mycontainers'
         clone: yes
         version: '{{boxbranch.stdout}}'
         force: yes

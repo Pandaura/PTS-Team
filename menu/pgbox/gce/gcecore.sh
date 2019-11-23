@@ -50,8 +50,8 @@ initial() {
   mkdir -p /opt/coreapps
 
   if [ "$boxversion" == "official" ]; then
-    ansible-playbook /opt/plexguide/menu/pgbox/core.yml
-  else ansible-playbook /opt/plexguide/menu/pgbox/corepersonal.yml; fi
+    ansible-playbook /opt/plexguide/menu/pgbox/gce/gcecore.yml >/dev/null 2>&1
+  else question1; fi
 
   echo ""
   echo "💬  Pulling Update Files - Please Wait"
@@ -123,18 +123,19 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PTS ~ Multi-App Installer 
+🚀 PTS ~ Multi-App Installer || GCE APPS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📂 Potential Apps to Install
+📂 Potential Apps to Install for GCE
 
 $notrun
 
-💾 Apps Queued for Installation
+💾 Apps Queued for Installation for GCE
 
 $buildup
 
 [A] Install
+
 [Z] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -241,129 +242,8 @@ EOF
   cat /tmp/output.info
   final
 }
-
-pinterface() {
-
-  boxuser=$(cat /var/plexguide/boxcore.user)
-  boxrepo=$(cat /var/plexguide/boxrepo.repo)
-  boxbranch=$(cat /var/plexguide/boxcore.branch)
- 
-
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PTS Core Box Edition!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-💬	
-User:	$boxuser 
-Repo:	$boxrepo
-Branch: $boxbranch
-
-[1] Change User Name & Branch
-[2] Deploy Core Box - Personal (Forked)
-
-[Z] Exit
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-
-  read -p 'Type a Selection | Press [ENTER]: ' typed </dev/tty
-
-  case $typed in
-  1)
-    tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💬 IMPORTANT MESSAGE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Username / Branch & Repo are both case sensitive!
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-    read -p 'Username | Press [ENTER]: ' boxuser </dev/tty
-	read -p 'REPO     | Press [ENTER]: ' boxrepo </dev/tty
-    read -p 'Branch   | Press [ENTER]: ' boxbranch </dev/tty
-    echo "$boxuser" >/var/plexguide/boxcore.user
-    echo "$boxrepo" >/var/plexguide/boxrepo.repo
-    echo "$boxbranch" >/var/plexguide/boxcore.branch
-    pinterface
-    ;;
-  2)
-    existcheck=$(git ls-remote --exit-code -h "https://github.com/$boxuser/$boxrepo" | grep "$boxbranch")
-    if [ "$existcheck" == "" ]; then
-      echo
-      read -p '💬 Exiting! Forked Version Does Not Exist! | Press [ENTER]: ' typed </dev/tty
-      mainbanner
-    fi
-
-    boxversion="personal"
-    initial
-    question1
-    ;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    mainbanner
-    ;;
-  esac
-}
-
-mainbanner() {
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PTS APP Box Edition! 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-💬 PTS Core Box apps simplify their usage within PTS! 
-PTS provides more focused support and development based on core usage.
-
-💬 The Personal Forked option will install your version of Core Box. Good
-for testing or for personal mods! Ensure that it exist prior to use!
-
-[1] Utilize Core Box 
-[2] Utilize Core Box - Personal (Forked)
-
-[Z] Exit
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-
-  read -p 'Type a Selection | Press [ENTER]: ' typed </dev/tty
-
-  case $typed in
-  1)
-    boxversion="official"
-    initial
-    question1
-    ;;
-  2)
-    variable /var/plexguide/boxcore.user "NOT-SET"
-    variable /var/plexguide/boxrepo.repo "NOT-SET"
-    variable /var/plexguide/boxcore.branch "NOT-SET"
-    pinterface
-    ;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    mainbanner
-    ;;
-  esac
-}
-
 # FUNCTIONS END ##############################################################
 echo "" >/tmp/output.info
-mainbanner
+boxversion="official"
+initial
+question1

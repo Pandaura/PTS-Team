@@ -8,17 +8,16 @@
 
 # FUNCTIONS START ##############################################################
 source /opt/plexguide/menu/functions/functions.sh
-source /opt/plexguide/menu/functions/install.sh
 
 queued() {
   echo
-  read -p "⛔️ ERROR - $typed already queued! | Press [ENTER] " typed </dev/tty
+  read -p "⛔️ ERROR - $typed Already Queued! | Press [ENTER] " typed </dev/tty
   question1
 }
 
 exists() {
   echo ""
-  echo "⛔️ ERROR - $typed already installed!"
+  echo "⛔️ ERROR - $typed Already Installed!"
   read -p '⚠️  Reinstall? [Y/N] | Press [ENTER] ' foo </dev/tty
 
   if [[ "$foo" == "y" || "$foo" == "Y" ]]; then
@@ -29,12 +28,12 @@ exists() {
 }
 
 cronexe() {
-  croncheck=$(cat /opt/communityapps/apps/_cron.list | grep -c "\<$p\>")
+  croncheck=$(cat /opt/coreapps/apps/_cron.list | grep -c "\<$p\>")
   if [ "$croncheck" == "0" ]; then bash /opt/plexguide/menu/cron/cron.sh; fi
 }
 
 cronmass() {
-  croncheck=$(cat /opt/communityapps/apps/_cron.list | grep -c "\<$p\>")
+  croncheck=$(cat /opt/coreapps/apps/_cron.list | grep -c "\<$p\>")
   if [ "$croncheck" == "0" ]; then bash /opt/plexguide/menu/cron/cron.sh; fi
 }
 
@@ -48,21 +47,21 @@ initial() {
   touch /var/plexguide/app.list
   touch /var/plexguide/pgbox.buildup
 
-  mkdir -p /opt/communityapps
+  mkdir -p /opt/coreapps
 
   if [ "$boxversion" == "official" ]; then
-    ansible-playbook /opt/plexguide/menu/pgbox/community.yml
-  else ansible-playbook /opt/plexguide/menu/pgbox/communitypersonal.yml; fi
+    ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml >/dev/null 2>&1
+  else question1; fi
 
   echo ""
   echo "💬  Pulling Update Files - Please Wait"
-  file="/opt/communityapps/place.holder"
+  file="/opt/coreapps/place.holder"
   waitvar=0
   while [ "$waitvar" == "0" ]; do
     sleep .5
     if [ -e "$file" ]; then waitvar=1; fi
   done
-  customcontainers
+
 }
 
 question1() {
@@ -74,27 +73,27 @@ question1() {
 
   cp /var/plexguide/app.list /var/plexguide/app.list2
 
-  file="/var/plexguide/community.app"
+  file="/var/plexguide/core.app"
   #if [ ! -e "$file" ]; then
-  ls -la /opt/communityapps/apps | sed -e 's/.yml//g' |
+  ls -la /opt/coreapps/apps | sed -e 's/.yml//g' |
     awk '{print $9}' | tail -n +4 >/var/plexguide/app.list
   while read p; do
-    echo "" >>/opt/communityapps/apps/$p.yml
-    echo "##PG-Community" >>/opt/communityapps/apps/$p.yml
+    echo "" >>/opt/coreapps/apps/$p.yml
+    echo "##PG-Core" >>/opt/coreapps/apps/$p.yml
 
     mkdir -p /opt/mycontainers
     touch /opt/appdata/plexguide/rclone.conf
   done </var/plexguide/app.list
-  touch /var/plexguide/community.app
+  touch /var/plexguide/core.app
   #fi
 
-  #bash /opt/communityapps/apps/_appsgen.sh
+  #bash /opt/coreapps/apps/_appsgen.sh
   docker ps | awk '{print $NF}' | tail -n +2 >/var/plexguide/pgbox.running
 
   ### Remove Official Apps
   while read p; do
     # reminder, need one for custom apps
-    baseline=$(cat /opt/communityapps/apps/$p.yml | grep "##PG-Community")
+    baseline=$(cat /opt/coreapps/apps/$p.yml | grep "##PG-Core")
     if [ "$baseline" == "" ]; then sed -i -e "/$p/d" /var/plexguide/app.list; fi
   done </var/plexguide/app.list
 
@@ -102,10 +101,11 @@ question1() {
   rm -rf /var/plexguide/program.temp && touch /var/plexguide/program.temp
 
   ### List Out Apps In Readable Order (One's Not Installed)
+  num=0
   sed -i -e "/templates/d" /var/plexguide/app.list
   sed -i -e "/image/d" /var/plexguide/app.list
+  sed -i -e "/watchtower/d" /var/plexguide/app.list
   sed -i -e "/_/d" /var/plexguide/app.list
-  num=0
   while read p; do
     echo -n $p >>/var/plexguide/program.temp
     echo -n " " >>/var/plexguide/program.temp
@@ -123,7 +123,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Multi-App Installer 
+🚀 PTS ~ Multi-App Installer  || CORE APPS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📂 Potential Apps to Install
@@ -135,6 +135,7 @@ $notrun
 $buildup
 
 [A] Install
+
 [Z] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -192,21 +193,21 @@ question2() {
 
     echo "$p" >/tmp/program_var
 
-    bash /opt/communityapps/apps/image/_image.sh
+    bash /opt/coreapps/apps/image/_image.sh
+
+    # CName & Port Execution
+    bash /opt/plexguide/menu/pgbox/cname.sh
   done </var/plexguide/pgbox.buildup
 
   # Cron Execution
   edition=$(cat /var/plexguide/pg.edition)
-  if [[ "$edition" == "PG Edition - HD Solo" ]]; then
+  if [[ "$edition" == "Edition - HD Solo" ]]; then
     a=b
   else
     croncount=$(sed -n '$=' /var/plexguide/pgbox.buildup)
     echo "false" >/var/plexguide/cron.count
     if [ "$croncount" -ge 2 ]; then bash /opt/plexguide/menu/cron/mass.sh; fi
   fi
-
-  # CName & Port Execution
-  bash /opt/plexguide/menu/pgbox/cname.sh
 
   while read p; do
     tee <<-EOF
@@ -225,9 +226,8 @@ EOF
 
     # Store Used Program
     echo "$p" >/tmp/program_var
-
     # Execute Main Program
-    ansible-playbook /opt/communityapps/apps/$p.yml
+    ansible-playbook /opt/coreapps/apps/$p.yml
 
     if [[ "$edition" == "PG Edition - HD Solo" ]]; then
       a=b
@@ -242,129 +242,8 @@ EOF
   cat /tmp/output.info
   final
 }
-
-pinterface() {
-  boxuser=$(cat /var/plexguide/boxcom.user)
-  boxrepo=$(cat /var/plexguide/boxcom.repo)
-  boxbranch=$(cat /var/plexguide/boxcom.branch)
-  
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Community Box Edition!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-💬	
-User:	$boxuser 
-Repo:	$boxrepo
-Branch: $boxbranch
-
-
-[1] Change User Name & Branch
-[2] Deploy Community Box - Personal (Forked)
-
-[Z] Exit
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-
-  read -p 'Type a Selection | Press [ENTER]: ' typed </dev/tty
-
-  case $typed in
-  1)
-    tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💬 IMPORTANT MESSAGE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Username & Branch are both case sensitive!
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-    read -p 'Username | Press [ENTER]: ' boxuser </dev/tty
-	read -p 'REPO     | Press [ENTER]: ' boxrepo </dev/tty
-    read -p 'Branch   | Press [ENTER]: ' boxbranch </dev/tty
-    echo "$boxuser" >/var/plexguide/boxcom.user
-    echo "$boxrepo" >/var/plexguide/boxcom.repo
-    echo "$boxbranch" >/var/plexguide/boxcom.branch
-    pinterface
-    ;;
-  2)
-    existcheck=$(git ls-remote --exit-code -h "https://github.com/$boxuser/$boxrepo" | grep "$boxbranch")
-    if [ "$existcheck" == "" ]; then
-      echo
-      read -p '💬 Exiting! Forked Version Does Not Exist! | Press [ENTER]: ' typed </dev/tty
-      mainbanner
-    fi
-
-    boxversion="personal"
-    initial
-    question1
-    ;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    mainbanner
-    ;;
-  esac
-}
-
-mainbanner() {
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Community Box Edition! 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-💬 Community Box apps simplify their usage within PGBlitz! 
-PG provides more
-focused support and development based on community usage.
-
-💬 The Personal Forked option will install your version of Community Box. Good
-for testing or for personal mods! Ensure that it exist prior to use!
-
-[1] Utilize Community Box
-[2] Utilize Community Box - Personal (Forked)
-
-[Z] Exit
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-
-  read -p 'Type a Selection | Press [ENTER]: ' typed </dev/tty
-
-  case $typed in
-  1)
-    boxversion="official"
-    initial
-    question1
-    ;;
-  2)
-    variable /var/plexguide/boxcom.user "NOT-SET"
-    variable /var/plexguide/boxcom.repo "NOT-SET"
-	variable /var/plexguide/boxcom.branch "NOT-SET"
-    pinterface
-    ;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    mainbanner
-    ;;
-  esac
-}
-
 # FUNCTIONS END ##############################################################
 echo "" >/tmp/output.info
-mainbanner
+boxversion="official"
+initial
+question1
