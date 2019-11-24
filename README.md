@@ -29,7 +29,7 @@ If you have an encrypted drive and have forgotten, not documented or not backed 
 
 Type or paste the following to backup your keys:
 ```
-sudo wget -N https://raw.githubusercontent.com/PTS-Team/PTS-Clone/dev/functions/backup-keys.sh
+sudo wget -N https://raw.githubusercontent.com/PTS-Team/PTS-Clone/final/functions/backup-keys.sh
 ```  
   
     
