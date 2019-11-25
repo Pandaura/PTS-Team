@@ -117,13 +117,6 @@
         mode: 0775
         owner: root
 
-    - name: Install PGFork
-      template:
-        src: pgfork
-        dest: /bin/pgfork
-        force: yes
-        mode: 0775
-
     - name: Install PTS-User ADD
       template:
         src: ptsadd

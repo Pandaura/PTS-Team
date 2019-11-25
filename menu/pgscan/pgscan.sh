@@ -24,7 +24,6 @@ userstatus() {
 }
 
 tokenstatus() {
-
   ptokendep=$(cat /var/plexguide/pgscan/plex.token)
   if [ "$ptokendep" != "" ]; then
         if [[ ! -f "/opt/plex_autoscan/config/config.json" ]]; then
@@ -35,7 +34,6 @@ tokenstatus() {
                 else pstatus="❌ DEPLOYED BUT PAS TOKEN FAILED"; fi
         fi
   else pstatus="⚠️ NOT DEPLOYED"; fi
-
 }
 
 plexcheck() {
