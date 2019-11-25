@@ -37,7 +37,7 @@ tokenstatus() {
 }
 
 plexcheck() {
-  pcheck=$(docker ps | grep "\<plex\>")
+  pcheck=$(docker ps --format {{.Names}} | grep "plex")
   if [ "$pcheck" == "" ]; then
 
     tee <<-EOF
