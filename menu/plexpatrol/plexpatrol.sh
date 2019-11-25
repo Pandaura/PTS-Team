@@ -58,12 +58,14 @@ token() {
         if [[ ! -f "/opt/appdata/plexpatrol/settings.ini" ]]; then
                 pstatus="❌ DEPLOYED BUT PAPTROL CONFIG MISSING";
         else
-                PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(cat /opt/appdata/plexpatrol/settings.ini | jq .SERVER_TOKEN | sed 's/"//g')" -o /dev/null -w '%{http_code}\n' -s)
+                PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(cat /opt/appdata/plexpatrol/settings.ini | grep "SERVER_TOKEN" | awk '{print $3}')" -o /dev/null -w '%{http_code}\n' -s)
                 if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then  pstatus="✅ DEPLOYED"
                 else pstatus="❌ DEPLOYED BUT PATROL TOKEN FAILED"; fi
         fi
   else pstatus="⚠️ NOT DEPLOYED"; fi
 }
+
+cat /opt/appdata/plexpatrol/settings.ini | grep "SERVER_TOKEN" | awk '{print $3}'
 
 # BAD INPUT
 badinput() {

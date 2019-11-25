@@ -6,6 +6,7 @@
 # GNU:        General Public License v3.0
 ################################################################################
 # Menu Interface
+question1(){
 tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -21,24 +22,11 @@ tee <<-EOF
 EOF
 
 # Standby
-read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
-
-if [ "$typed" == "1" ]; then
-  echo gce >/var/plexguide/type.choice
-  bash /opt/plexguide/menu/pgcloner/blitzgce.sh
-elif [ "$typed" == "2" ]; then
-  bash /opt/plexguide/menu/hcloud/hcloud.sh
-elif [ "$typed" == "Z" ] || [ "$typed" == "z" ]; then
-  exit
-else
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - Please Make a Valid Selection!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-
-  bash /opt/plexguide/menu/cloudselect/cloudselect.sh
-  exit
-fi
+  case $typed in
+  1) echo gce >/var/plexguide/type.choice && bash /opt/plexguide/menu/pgcloner/blitzgce.sh ;;
+  2) bash /opt/plexguide/menu/hcloud/hcloud.sh ;; 
+  z) exit ;;
+  Z) exit ;;
+  *) question1 ;;
+  esac
+}

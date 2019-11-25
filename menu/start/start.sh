@@ -405,7 +405,7 @@ EOF
 	;;
   12)
     clear
-	bash /opt/plexguide/menu/pgcloner/pgpatrol.sh
+	bash /opt/plexguide/menu/plexpatrol/plexpatrol.sh
     clear
 	primestart
 	;;
