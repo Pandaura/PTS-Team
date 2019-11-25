@@ -195,7 +195,7 @@ EOF
      -- GCE optimized surface --
 
 [1]  PTS-Traefik    : Reverse Proxy
-[2]  Port Guard     : [$ports] Protects the Server Ports
+[2]  Port Guard     : [$ports] Protects the Server App Ports
 [3]  PTS-Shield     : Enable Google's OAuthentication Protection
 [4]  PTS-Clone      : Mount Transport
 [5]  PTS-Apps       : Apps
@@ -268,7 +268,7 @@ EOF
   tee <<-EOF
 
 [1]  PTS-Traefik    : Reverse Proxy
-[2]  Port Guard     : [$ports] Protects the Server Ports
+[2]  Port Guard     : [$ports] Protects the Server App Ports
 [3]  PTS-Shield     : Enable Google's OAuthentication Protection
 [4]  PTS-Clone      : Mount Transport
 [5]  PTS-Apps       : Apps ~ Core, Community & Removal
