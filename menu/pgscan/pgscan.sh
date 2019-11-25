@@ -189,7 +189,7 @@ NOTE : Plex_AutoScan are located  in /opt/plex_autoscan
 [2] Deploy Plex Token                     [ $pstatus ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[A] Deploy Scan                           [ $dstatus ]
+[A] Deploy Plex-Auto-Scan                 [ $dstatus ]
 
 [D] PlexAutoScan Domain
 [S] Show last 50 lines of log
@@ -206,39 +206,21 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
-  1)
-	bash /opt/plexguide/menu/pgscan/scripts/plex_pw.sh && clear && question1 ;;
-  2)
-	bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh && clear && question1 ;;
-  A)
-	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && clear && question1 ;;
-  a)
-	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan&& clear && question1 ;;
-  D)
-	showupdomain && clear && question1 ;;
-  d)
-	showupdomain && clear && question1 ;;
-  S)
-	tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter ;;
-  s)
-	tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter;;
-  r)
-	remove && doneenter ;;
-  R)
-	remoive && doneenter;;
-  C)
-	credits && clear && question1 ;;
-  c)		
-	credits && clear && question1 ;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    question1
-    ;;
+  1) bash /opt/plexguide/menu/pgscan/scripts/plex_pw.sh && clear && question1 ;;
+  2) bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh && clear && question1 ;;
+  A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && clear && question1 ;;
+  a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan&& clear && question1 ;;
+  D) showupdomain && clear && question1 ;;
+  d) showupdomain && clear && question1 ;;
+  S) tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter ;;
+  s) tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter;;
+  r) remove && doneenter ;;
+  R) remoive && doneenter;;
+  C) credits && clear && question1 ;;
+  c) credits && clear && question1 ;;
+  z) exit ;;
+  Z) exit ;;
+  *) question1 ;;
   esac
 }
 # FUNCTIONS END ##############################################################
