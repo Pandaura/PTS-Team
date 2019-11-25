@@ -21,18 +21,6 @@ badinput2() {
   question2
 }
 
-tokenstatus() {
-  ptokendep=$(cat /var/plexguide/plexpatrol/plex.token)
-  if [ "$ptokendep" != "" ]; then
-  PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(cat /var/plexguide/plexpatrol/plex.token)"  -o /dev/null -w '%{http_code}\n' -s)
-  	if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then
-  	  pstatus="✅ DEPLOYED"
-	  else
-	  pstatus="❌ DEPLOYED BUT TOKEN FAILED"
-	fi
-  else pstatus="⚠️ NOT DEPLOYED"; fi
-}
-
 question1() {
   tee <<-EOF
 
@@ -40,9 +28,7 @@ question1() {
 🌎 PlexToken Generator
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Token Status				: [$pstatus]
-
-[ 1 ] - Generate new Token for Plex Patrol
+Generate new Token for Plex Patrol
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
@@ -130,7 +116,7 @@ if [ -z "$X_PLEX_TOKEN" ]; then
 fi
 echo $X_PLEX_TOKEN >/var/plexguide/plexpatrol/plex.token
 
-  token=$(cat /var/plexguide/plex.token)
+  token=$(cat /var/plexguide/plexpatrol/plex.token)
   if [ "$token" != "" ]; then
     tee <<-EOF
 
@@ -155,5 +141,4 @@ EOF
 }
 
 # FUNCTIONS END ##############################################################
-tokenstatus
 question1

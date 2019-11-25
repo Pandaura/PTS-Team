@@ -72,12 +72,14 @@ badinput() {
   question1
 }
 
+#######################################################################################
+### Remove old folder and create first layout for token
 section0(){
 sect0="/var/plexguide/plexpatrol/plex.token"
   if [[ ! -f $sect0 ]]; then
-  bash /opt/plexguide/menu/plexpatrol/token.sh 
-  else question1 ; fi
-}  
+  bash /opt/plexguide/menu/plexpatrol/token.sh  && oldvalue ; fi
+}
+#########################################################################################
 
 selection1() {
   tee <<-EOF
@@ -240,7 +242,7 @@ EOF
 }
 # FIRST QUESTION
 question1() {
-
+deploycheck
   video=$(cat /var/plexguide/plexpatrol/video.transcodes)
   video4k=$(cat /var/plexguide/plexpatrol/video.transcodes4k)
   ips=$(cat /var/plexguide/plexpatrol/multiple.ips)
@@ -254,6 +256,9 @@ question1() {
 🚀 Plex - Patrol Interface || l3uddz/plex_patrol
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+Plex Token  							  [ $pstatus ]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] Instantly Kick Video Transcodes?      [ $video ]
 [2] Instantly Kick Video 4k Transcodes?   [ $video4k ]
@@ -304,3 +309,4 @@ variable /var/plexguide/plexpatrol/check.interval "NON-SET"
 variable /var/plexguide/plexpatrol/multiple.ips "NON-SET"
 variable /var/plexguide/plexpatrol/kick.minutes "NON-SET"
 deploycheck
+question1
