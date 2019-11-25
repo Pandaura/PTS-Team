@@ -65,8 +65,6 @@ token() {
   else pstatus="⚠️ NOT DEPLOYED"; fi
 }
 
-cat /opt/appdata/plexpatrol/settings.ini | grep "SERVER_TOKEN" | awk '{print $3}'
-
 # BAD INPUT
 badinput() {
   echo
