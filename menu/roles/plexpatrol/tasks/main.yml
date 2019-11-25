@@ -19,9 +19,11 @@
     name: pgpatrol
     state: stopped
   when: pgp.stat.exists
+  ignore_errors: yes
 
 - name: Daemon-PTS-Patrol stop
   systemd: state=stopped name=pgpatrol daemon_reload=yes enabled=no
+  ignore_errors: yes
 
 - name: Remove old Basic Directories
   file: 'path={{item}} state=absent mode=0775 owner=1000 group=1000'
@@ -30,6 +32,7 @@
     - '/var/plexguide/pgpatrol'
     - '/etc/systemd/system/pgpatrol.service'
   when: pgp.stat.exists == true
+  ignore_errors: yes
 
 - name: Check  Folder Existance
   stat:
@@ -93,7 +96,7 @@
 
 - name: Clone plexpatrol == HEAD
   git:
-    repo: https://github.com/l3uddz/plexpatrol.git
+    repo: https://github.com/l3uddz/plex_patrol.git
     dest: /opt/appdata/plexpatrol
     clone: yes
     version: HEAD
@@ -102,7 +105,7 @@
 
 - name: Clone plexpatrol repo == master
   git:
-    repo: https://github.com/l3uddz/plexpatrol.git
+    repo: https://github.com/l3uddz/plex_patrol.git
     dest: /opt/appdata/plexpatrol
     clone: yes
     version: master
