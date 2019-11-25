@@ -167,7 +167,6 @@ ansible-playbook /opt/plexguide/menu/pgscan/remove-pgscan.yml
 EOF
  echo 
   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
-  question1
 }
 
 # FIRST QUESTION
@@ -212,8 +211,8 @@ EOF
   d) showupdomain && clear && question1 ;;
   S) tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter ;;
   s) tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter;;
-  r) remove && doneenter ;;
-  R) remoive && doneenter;;
+  r) remove && doneenter  && sleep 5 && clear &&  exit ;;
+  R) remove && doneenter && sleep 5 && clear &&  exit ;;
   C) credits && clear && question1 ;;
   c) credits && clear && question1 ;;
   z) exit ;;

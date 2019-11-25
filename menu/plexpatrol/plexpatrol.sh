@@ -287,7 +287,7 @@ EOF
   4) selection4 && clear && question1 ;;
   5) selection5 && clear && question1 ;;
   6) selection6 && clear && question1 ;;
-  7) ansible-playbook /opt/plexguide/menu/pg.yml --tags plexpatrol && sleep 5 && clear && question1 ;;
+  7) ansible-playbook /opt/plexguide/menu/pg.yml --tags plexpatrol && sleep 5 && clear &&  exit ;;
   8) selection7 && question1 ;;
   C) credits && clear && question1 ;;
   c) credits && clear && question1 ;;
