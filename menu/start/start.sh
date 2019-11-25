@@ -212,61 +212,16 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
-  1)
-    clear
-    bash /opt/plexguide/menu/pgcloner/traefik.sh
-	clear
-    primestart
-    ;;
-  2)
-    clear
-    bash /opt/plexguide/menu/portguard/portguard.sh
-    clear
-	primestart
-    ;;
-  3)
-    clear
-    bash /opt/plexguide/menu/pgcloner/pgshield.sh
-    clear
-	primestart
-    ;;
-  4)
-    clear
-    bash /opt/plexguide/menu/pgcloner/pgclone.sh
-    clear
-	primestart
-    ;;
-  5)
-    clear
-    bash /opt/plexguide/menu/pgbox/select.sh
-    clear
-	primestart
-    ;;
-  6)
-    clear
-    bash /opt/plexguide/menu/pgcloner/pgvault.sh
-    clear
-	primestart
-    ;;
-  7)
-    clear
-    bash /opt/plexguide/menu/traktarr/traktarr.sh
-    clear
-	primestart
-	;;
-  z)
-    clear
-    bash /opt/plexguide/menu/interface/ending.sh
-    exit
-    ;;
-  Z)
-    clear
-    bash /opt/plexguide/menu/interface/ending.sh
-    exit
-    ;;
-  *)
-    primestart
-    ;;
+  1) clear && bash /opt/plexguide/menu/pgcloner/traefik.sh && clear && primestart ;;
+  2) clear && bash /opt/plexguide/menu/portguard/portguard.sh && clear && primestart ;;
+  3) clear && bash /opt/plexguide/menu/pgcloner/pgshield.sh && clear && primestart ;;
+  4) clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart ;;
+  5) clear && bash /opt/plexguide/menu/pgbox/select.sh  && clear && primestart ;;
+  6) clear && bash /opt/plexguide/menu/pgcloner/pgvault.sh  && clear && primestart ;;
+  7) clear && bash /opt/plexguide/menu/traktarr/traktarr.sh  && clear && primestart ;;
+  z) clear && bash /opt/plexguide/menu/interface/ending.sh &&  exit ;;
+  Z) clear && bash /opt/plexguide/menu/interface/ending.sh && exit ;;
+  *) primestart ;;
   esac
 }
 
@@ -337,97 +292,22 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
-  1)
-    clear
-    bash /opt/plexguide/menu/pgcloner/traefik.sh
-	clear
-    primestart
-    ;;
-  2)
-    clear
-    bash /opt/plexguide/menu/portguard/portguard.sh
-    clear
-	primestart
-    ;;
-  3)
-    clear
-    bash /opt/plexguide/menu/pgcloner/pgshield.sh
-    clear
-	primestart
-    ;;
-  4)
-    clear
-    bash /opt/plexguide/menu/pgcloner/pgclone.sh
-    clear
-	primestart
-    ;;
-  5)
-    clear
-    bash /opt/plexguide/menu/pgbox/select.sh
-    clear
-	primestart
-    ;;
-  6)
-    clear
-    bash /opt/plexguide/menu/pgscan/pgscan.sh
-    clear
-	primestart
-    ;;
-  7)
-    clear
-    bash /opt/plexguide/menu/pgcloner/pgpress.sh
-    clear
-	primestart
-    ;;
-  8)
-    clear
-    bash /opt/plexguide/menu/pgcloner/pgvault.sh
-    clear
-	primestart
-    ;;
-  9)
-    clear
-    bash /opt/plexguide/menu/interface/cloudselect.sh
-    clear
-	primestart
-    ;;
-  10)
-    clear
-    bash /opt/plexguide/menu/plex_dupe/plex_dupe.sh
-    clear
-	primestart
-	;;
-  11)
-    clear
-    bash /opt/plexguide/menu/traktarr/traktarr.sh
-    clear
-	primestart
-	;;
-  12)
-    clear
-	bash /opt/plexguide/menu/plexpatrol/plexpatrol.sh
-    clear
-	primestart
-	;;
-  13)
-    clear
-    bash /opt/plexguide/menu/interface/settings.sh
-    clear
-	primestart
-     ;;
-  z)
-    clear
-    bash /opt/plexguide/menu/interface/ending.sh
-    exit
-    ;;
-  Z)
-    clear
-    bash /opt/plexguide/menu/interface/ending.sh
-    exit
-    ;;
-  *)
-    primestart
-    ;;
+  1) clear && bash /opt/plexguide/menu/pgcloner/traefik.sh && clear && primestart ;;
+  2) clear && bash /opt/plexguide/menu/portguard/portguard.sh && clear && primestart ;;
+  3) clear && bash /opt/plexguide/menu/pgcloner/pgshield.sh && clear && primestart ;;
+  4) clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart ;;
+  5) clear && bash /opt/plexguide/menu/pgbox/select.sh && clear && primestart ;;
+  6) clear && bash /opt/plexguide/menu/pgscan/pgscan.sh && clear && primestart ;;
+  7) clear && bash /opt/plexguide/menu/pgcloner/pgpress.sh && clear && primestart ;;
+  8) clear && bash /opt/plexguide/menu/pgcloner/pgvault.sh && clear && primestart ;;
+  9) clear && bash /opt/plexguide/menu/interface/cloudselect.sh && clear && primestart ;;
+  10) clear && bash /opt/plexguide/menu/plex_dupe/plex_dupe.sh && clear && primestart ;;
+  11) clear && bash /opt/plexguide/menu/traktarr/traktarr.sh && clear && primestart ;;
+  12) clear && bash /opt/plexguide/menu/plexpatrol/plexpatrol.sh && clear && primestart ;;
+  13) clear && bash /opt/plexguide/menu/interface/settings.sh && clear && primestart ;;
+  z) clear && bash /opt/plexguide/menu/interface/ending.sh  && exit ;;
+  Z) clear&& bash /opt/plexguide/menu/interface/ending.sh && exit ;;
+  *) primestart ;;
   esac
 }
 
