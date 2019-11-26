@@ -152,6 +152,9 @@
 
 - name: Set directory permissions
   file: "path=/opt/appdata/traktarr state=directory owner=1000 group=1000 recurse=yes"
+  
+- name: "Remove old symlink /usr/local/bin/traktarr"
+  shell: 'rm -rf /usr/local/bin/traktarr'
 
 - name: "Create /usr/local/bin symlink"
   file:
