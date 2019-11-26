@@ -97,10 +97,6 @@
   register: year
   ignore_errors: True
 
-- name: Display Plex Auth Token
-  debug:
-    msg: "Plex Auth Token: {{ plex_auth_token.stdout }}"
-
 - name: Remove old Install
   shell: 'sudo rm -rf /opt/appdata/traktarr'
 
