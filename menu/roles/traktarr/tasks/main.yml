@@ -45,6 +45,9 @@
   shell: 'cat /var/plexguide/pg.serverid'
   register: serverid
 
+- name: Clone Server IP
+  shell: 'cp -rv /var/plexguide/server.ip /var/plexguide/traktarr/server.ip'
+
 - name: Register IP
   shell: 'cat /var/plexguide/traktarr/server.ip'
   register: ipaddress
