@@ -41,7 +41,7 @@ EOF
   1) bash /opt/plexguide/menu/pgbox/core/core.sh ;;
   2) bash /opt/plexguide/menu/pgbox/community/community.sh ;;
   3) bash /opt/plexguide/menu/pgbox/personal/personal.sh ;;
-  3) bash /opt/plexguide/menu/pgbox/remove/removal.sh ;;
+  4) bash /opt/plexguide/menu/pgbox/remove/removal.sh ;;
   z) exit ;;
   Z) exit ;;
   *) GCEtest ;;
@@ -67,19 +67,11 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
-  1)
-    bash /opt/plexguide/menu/pgbox/gce/gcecore.sh ;;
-  2)
-    bash /opt/plexguide/menu/pgbox/removal/removal.sh ;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    GCEtest
-    ;;
+  1) bash /opt/plexguide/menu/pgbox/gce/gcecore.sh ;;
+  2) bash /opt/plexguide/menu/pgbox/removal/removal.sh ;;
+  z) exit ;;
+  Z) exit ;;
+  *) GCEtest ;;
   esac
 }
 
