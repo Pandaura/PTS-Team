@@ -18,14 +18,14 @@ variable() {
 }
 
 deploycheck() {
-  dcheck=$(systemctl is-active traktarr)
+  dcheck=$(systemctl is-active traktarr.service)
   if [ "$dcheck" == "active" ]; then
     dstatus="✅ DEPLOYED"
   else dstatus="⚠️ NOT DEPLOYED"; fi
 }
 
 sonarrcheck() {
-  pcheck=$(docker ps | grep "\<sonarr\>")
+  pcheck=$(docker ps --format '{{.Names}}' | grep "sonarr")
   if [ "$pcheck" == "" ]; then
 
     tee <<-EOF
@@ -41,7 +41,7 @@ EOF
 }
 
 radarrcheck() {
-  pcheck=$(docker ps | grep "\<radarr\>")
+  pcheck=$(docker ps --format '{{.Names}}' | grep "radarr")
   if [ "$pcheck" == "" ]; then
 
     tee <<-EOF
@@ -200,7 +200,7 @@ EOF
 
 spath() {
 hdpath=$(cat /var/plexguide/server.hd.path)
-tvfolderprint=$(ls $hdpath/unionfs/ | grep -E 'TV*|tv')
+tvfolderprint=$(ls -ah $hdpath/unionfs/ | grep -E 'TV*|tv')
   sonarrcheck
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -209,8 +209,6 @@ tvfolderprint=$(ls $hdpath/unionfs/ | grep -E 'TV*|tv')
 
 NOTE: In order for this to work, you must set the PATH to where Sonarr is
 actively scanning your tv shows.
-
-Examples:
 
 Possible TV folder
 
@@ -302,7 +300,7 @@ EOF
 
 rpath() {
 hdpath=$(cat /var/plexguide/server.hd.path)
-moviefolderprint=$(ls $hdpath/unionfs/ | grep -E  'Movi*|movi*')
+moviefolderprint=$(ls -ah $hdpath/unionfs/ | grep -E  'Movi*|movi*')
 
   radarrcheck
   tee <<-EOF
@@ -341,12 +339,12 @@ EOF
     ##################################################### TYPED CHECKERS - START
     typed2=$typed
     bonehead=no
-    ##### If BONEHEAD forgot to add a / in the beginning, we fix for them
+    ##### If user forgot to add a / in the beginning, we fix for them
     initial="$(echo $typed | head -c 1)"
     if [ "$initial" != "/" ]; then
       typed="/$typed"
     fi
-    ##### If BONEHEAD added a / at the end, we fix for them
+    ##### If user added a / at the end, we fix for them
     initial="${typed: -1}"
     if [ "$initial" == "/" ]; then
       typed=${typed::-1}
@@ -468,25 +466,15 @@ EOF
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
 
   case $typed in
-  1)
-    ansible-playbook /opt/plexguide/menu/traktarr/traktarr-list/prefillallow.yml
-	question1
-	;;
-  2)
-    ansible-playbook /opt/plexguide/menu/traktarr/traktarr-list/prefillremove.yml
-	question1
-	;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    question1
-    ;;
+  
+  1) ansible-playbook /opt/plexguide/menu/traktarr/traktarr-list/prefillallow.yml && question1 ;;
+  2) ansible-playbook /opt/plexguide/menu/traktarr/traktarr-list/prefillremove.yml && question1 ;;
+  z) exit ;;
+  Z) exit ;;
+  *) question1 ;;
   esac
 }
+
 # BAD INPUT
 badinput() {
   echo
@@ -570,41 +558,15 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
-  1)
-    api
-	question1
-	;;
-  2)
-    spath
-	question1
-	;;
-  3)
-    rpath
-	question1
-	;;
-  4)
-    squality
-	question1
-	;;
-  5)
-    rquality
-	question1
-	;;
-  6)
-    maxyear
-	question1
-	;;
+  1) api && question1 ;; 
+  2) spath && question1 ;; 
+  3) rpath  && question1 ;; 
+  4) squality  && question1 ;; 
+  5) rquality  && question1 ;; 
+  6) maxyear  && question1 ;; 
   7)
-<<<<<<< HEAD
     sonarr=$(docker ps --format '{{.Names}}' | grep "sonarr")
     radarr=$(docker ps --format '{{.Names}}' | grep "radarr")
-	
-	# sonarr=$(docker ps | grep "sonarr")
-    # radarr=$(docker ps | grep "radarr")
-=======
-    sonarr=$(docker ps | grep "sonarr")
-    radarr=$(docker ps | grep "radarr")
->>>>>>> parent of fefb308... traktarr role added
 
     if [ "$radarr" == "" ] && [ "$sonarr" == "" ]; then
       tee <<-EOF
@@ -671,8 +633,8 @@ EOF
         echo "$info2" >/var/plexguide/pgtrak.sapi
       fi
     fi
-<<<<<<< HEAD
-    ansible-playbook /opt/plexguide/menu/pg.yml --tags traktarr && question1 ;;
+	
+    ansible-playbook /opt/plexguide/menu/traktarr/traktarr.yml && endbanner && question1  ;;
 	
   8) prefill && clear && question1  ;;
   9) endbanner  && clear && question1  ;;
@@ -681,40 +643,6 @@ EOF
   z) exit ;;
   Z) exit ;;
   *) question1 ;;
-=======
-    ansible-playbook /opt/plexguide/menu/traktarr/traktarr.yml
-	question1
-	;;
-  8)
-	prefill
-	clear
-	question1
-	;;
-  9)
-	endbanner
-	clear
-	question1
-	;;
-  C)
-	credits
-	clear
-	question1
-	;;
-  c)
-	credits
-	clear
-	question1
-	;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    question1
-    ;;
->>>>>>> parent of fefb308... traktarr role added
   esac
 }
 
