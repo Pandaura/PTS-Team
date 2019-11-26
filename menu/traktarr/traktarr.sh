@@ -515,7 +515,7 @@ EOF
 
 question1() {
 
-  api=$(cat /var/plexguide/pgtrak.secret)
+  api=$(cat /var/plexguide/traktarr/pgtrak.secret)
   if [ "$api" == "NOT-SET" ]; then api="NOT-SET"; else api="SET"; fi
 
   rpath=$(cat /var/plexguide/traktarr/pgtrak.rpath)
