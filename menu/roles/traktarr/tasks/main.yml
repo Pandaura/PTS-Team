@@ -116,7 +116,7 @@
 
 - name: Clone l3uddz/traktarr repo == master
   git:
-    repo: https://github.com/l3uddz/plex_patrol.git
+    repo: https://github.com/l3uddz/traktarr.git
     dest: /opt/appdata/traktarr
     clone: yes
     version: master
