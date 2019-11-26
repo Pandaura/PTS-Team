@@ -564,6 +564,9 @@ EOF
   7)
     sonarr=$(docker ps --format '{{.Names}}' | grep "sonarr")
     radarr=$(docker ps --format '{{.Names}}' | grep "radarr")
+	
+	# sonarr=$(docker ps | grep "sonarr")
+    # radarr=$(docker ps | grep "radarr")
 
     if [ "$radarr" == "" ] && [ "$sonarr" == "" ]; then
       tee <<-EOF
@@ -578,7 +581,7 @@ EOF
       question1
     else
 
-      if [ "$sonarr" = "" ]; then
+      if [ "$sonarr" = "sonarr" ]; then
         tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -590,7 +593,7 @@ EOF
         echo
       fi
 
-      if [ "$radarr" = "" ]; then
+      if [ "$radarr" = "radarr" ]; then
         tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
