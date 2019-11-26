@@ -75,7 +75,8 @@ varstart() {
 
   hostname -I | awk '{print $1}' >$filevg/server.ip
   ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - END
-  echo "export NCURSES_NO_UTF8_ACS=1" >>/etc/bash.bashrc.local
+  value="/etc/bash.bashrc.local"
+  rm -rf $value && echo -e "export NCURSES_NO_UTF8_ACS=1" >>$value
 
   # run pg main
   file="/var/plexguide/update.failed"
