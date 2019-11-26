@@ -518,11 +518,11 @@ question1() {
   api=$(cat /var/plexguide/pgtrak.secret)
   if [ "$api" == "NOT-SET" ]; then api="NOT-SET"; else api="SET"; fi
 
-  rpath=$(cat /var/plexguide/pgtrak.rpath)
-  spath=$(cat /var/plexguide/pgtrak.spath)
-  rprofile=$(cat /var/plexguide/pgtrak.rprofile)
-  sprofile=$(cat /var/plexguide/pgtrak.sprofile)
-  mxyear=$(cat /var/plexguide/pgtrakyear.max)
+  rpath=$(cat /var/plexguide/traktarr/pgtrak.rpath)
+  spath=$(cat /var/plexguide/traktarr/pgtrak.spath)
+  rprofile=$(cat /var/plexguide/traktarr/pgtrak.rprofile)
+  sprofile=$(cat /var/plexguide/traktarr/pgtrak.sprofile)
+  mxyear=$(cat /var/plexguide/traktarr/pgtrakyear.max)
   deploycheck
 
   tee <<-EOF
@@ -618,7 +618,8 @@ EOF
         echo "$info2" >/var/plexguide/traktarr/pgtrak.sapi
       fi
     fi
-    ansible-playbook /opt/plexguide/menu/pg.yml --tags traktarr question1 ;;
+    ansible-playbook /opt/plexguide/menu/pg.yml --tags traktarr && question1 ;;
+	
   8) prefill && clear && question1  ;;
   9) endbanner  && clear && question1  ;;
   C) credits  && clear && question1  ;;
