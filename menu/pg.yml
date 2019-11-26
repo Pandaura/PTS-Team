@@ -19,3 +19,4 @@
     - { role: plex_dupefinder, tags: ['plex_dupefinder'] }
     - { role: plexpatrol, tags: ['plexpatrol'] }
     - { role: remove, tags: ['remove'] }
+    - { role: traktarr, tags: ['traktarr'] }
