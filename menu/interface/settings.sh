@@ -21,14 +21,11 @@ touch /var/plexguide/pgui.switch
   fi
 
   # Declare Ports State
-  touch /var/plexguide/http.ports
-  ports2=$(cat /var/plexguide/server.ports)
+  udisplay=$(cat /var/plexguide/emergency.display)
 
-  if [[ $ports2 == "127.0.0.1:" ]]; then
-     echo -e "CLOSED" >/var/plexguide/http.ports
-  else
-    echo -e "8555" >/var/plexguide/http.ports
-  fi
+    if [[ "$udisplay" == "On" ]]; then
+     echo "CLOSED" >/var/plexguide/http.ports
+    else echo "8555" >/var/plexguide/http.ports; fi
 
 ### read Variables
   emdisplay=$(cat /var/plexguide/emergency.display)
@@ -61,20 +58,10 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
-  1)
-    bash /opt/plexguide/menu/dlpath/dlpath.sh
-    setstart
-    ;;
-  2)
-    bash /opt/plexguide/menu/multihd/multihd.sh
-    ;;
-  3)
-    watchtower
-    clear
-    setstart
-    ;;
+  1) bash /opt/plexguide/menu/dlpath/dlpath.sh && setstart ;;
+  2) bash /opt/plexguide/menu/multihd/multihd.sh ;;
+  3) watchtower && clear && setstart ;;
   4)
-
     if [[ "$switchcheck" == "On" ]]; then
       echo "Off" >/var/plexguide/pgui.switch
       docker stop pgui &>/dev/null &
@@ -112,30 +99,13 @@ EOF
     if [[ "$emdisplay" == "On" ]]; then
       echo "Off" >/var/plexguide/emergency.display
     else echo "On" >/var/plexguide/emergency.display; fi
-    setstart
-    ;;
-  6)
-	bash /opt/plexguide/menu/functions/network.sh
-    clear
-    setstart
-    ;;
-	
-  99)
-	bash /opt/plexguide/menu/functions/tshoot.sh
-    clear
-    setstart
-    ;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    setstart
-    ;;
+    setstart ;;
+  6) bash /opt/plexguide/menu/functions/network.sh && clear && setstart ;;
+  99) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
+  z) exit ;;
+  Z) exit ;;
+  *) setstart ;;
   esac
-
 }
 
 setstart

@@ -5,7 +5,7 @@
 # URL:        https://PTS.com - http://github.PTS.com
 # GNU:        General Public License v3.0
 ################################################################################
-
+main(){
 # Menu Interface
 tee <<-EOF
 
@@ -23,9 +23,10 @@ tee <<-EOF
 EOF
 
 # Standby
-read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
-if [ "$typed" == "1" ]; then
+  case $typed in
+  1) 
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -51,8 +52,9 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   sleep 5
+;; 
 
-elif [ "$typed" == "2" ]; then
+2) 
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -62,7 +64,7 @@ EOF
   sleep 3
 
   rm -rf /etc/docker
-  apt-get purge docker-ce
+  apt-get purge docker-ce && apt-get autoremove -yqq
   rm -rf /var/lib/docker
   rm -rf /var/plexguide/dep*
   echo "0" >/var/plexguide/pg.preinstall.stored
@@ -82,7 +84,8 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   sleep 5
-elif [ "$typed" == "3" ]; then
+;; 
+3) 
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -90,14 +93,12 @@ elif [ "$typed" == "3" ]; then
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   sleep 3
+  echo "uninstall" >/var/plexguide/type.choice && bash /opt/plexguide/menu/core/scripts/main.sh ;; 
+  z) exit ;;
+  Z) exit ;;
+  esac
+}
 
-  echo "uninstall" >/var/plexguide/type.choice && bash /opt/plexguide/menu/core/scripts/main.sh
-elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
-  exit
-else
-  bash /opt/plexguide/menu/tshoot/tshoot.sh
-  exit
-fi
+#### function start 
 
-bash /opt/plexguide/menu/tshoot/tshoot.sh
-exit
+main
