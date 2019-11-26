@@ -16,13 +16,15 @@ tee <<-EOF
 [ 1 ] Cloud Instance: Google   [ Blitz ~ GCE Edition ]
 [ 2 ] Cloud Instance: Hetzner
 
-[Z] - Exit
+[ Z ] - Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
-# Standby
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
   case $typed in
+
   1) echo gce >/var/plexguide/type.choice && bash /opt/plexguide/menu/pgcloner/blitzgce.sh ;;
   2) bash /opt/plexguide/menu/hcloud/hcloud.sh ;; 
   z) exit ;;
