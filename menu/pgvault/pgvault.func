@@ -355,7 +355,7 @@ EOF
     echo $p >/tmp/program_var
     # Execute Main Program
     restore_process
-
+    redeploy
     sleep 2
   done </var/plexguide/pgvault.apprecall
   final
@@ -379,10 +379,33 @@ EOF
     echo $p >/tmp/program_var
     # Execute Main Program
     restore_process
-
+    redeploy
     sleep 2
   done </var/plexguide/pgvault.buildup
   final
+}
+
+
+redeploy(){
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+↘️ Redeploy for $program_var | please wait
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+
+app=$(cat /tmp/program_var)
+  ##rebuild app after restore
+    if [ ! -e "/opt/coreapps/apps/"$app".yml" ]; then ansible-playbook /opt/coreapps/apps/$app.yml >/dev/null 2>&1; fi
+    if [ ! -e "/opt/communityapps/"$app".yml" ]; then ansible-playbook /opt/communityapps/apps/$app.yml >/dev/null 2>&1; fi
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+↘️ Redeploy for $program_var | done
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
 }
 
 restore_process() {
@@ -553,12 +576,12 @@ EOF
     queued
     vaultrestore
   fi
-
-  cat /var/plexguide/pgvault.buildup >/tmp/appcheck.5
-  cat /var/plexguide/pgvault.apprecall >>/tmp/appcheck.5
-  current1=$(cat /tmp/appcheck.5 | grep "\<$typed\>")
-  if [ "$current1" == "" ]; then badinput && vaultrestore; fi
-
+	cat /var/plexguide/pgvault.buildup >/tmp/appcheck.5
+	cat /var/plexguide/pgvault.apprecall >>/tmp/appcheck.5
+	current2=$(cat /tmp/appcheck.5 | grep "\<$typed\>")
+	echo $current2 >/var/plexguide/app_rebuild
+	#Rebuild Depending on Location
+	if [ "$current2" == "" ]; then badinput && vaultrestore; fi
   buildup2
 }
 ##################################################### START Primary Interface
