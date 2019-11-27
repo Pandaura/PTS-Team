@@ -166,9 +166,7 @@ aptupdate() {
 }
 
 customcontainers() {
-  mkdir -p /opt/{coreapps,communityapps/apps,pgshield}
-  touch /opt/appdata/plexguide/rclone.conf
-  rclone --config /opt/appdata/plexguide/rclone.conf copy /opt/mycontainers/ /opt/communityapps/apps
+  mkdir -p /opt/{coreapps,communityapps/apps,pgshield,mycontainers}
 }
 
 cleaner() {
