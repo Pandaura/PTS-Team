@@ -7,7 +7,7 @@
 ################################################################################
 
 # KEY VARIABLE RECALL & EXECUTION
-mkdir -p /var/plexguide/traktarr/
+mkdir -p /var/plexguide/pgtrakt
 
 # FUNCTIONS START ##############################################################
 
@@ -96,7 +96,7 @@ Quality Set Is: $typed
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
-    echo "$typed" >/var/plexguide/traktarr/pgtrak.sprofile
+    echo "$typed" >/var/plexguide/pgtrak.sprofile
     read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
     question1
   fi
@@ -142,7 +142,7 @@ Quality Set Is: $typed
 
 EOF
 
-    echo "$typed" >/var/plexguide/traktarr/pgtrak.rprofile
+    echo "$typed" >/var/plexguide/pgtrak.rprofile
     read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
     question1
   fi
@@ -172,9 +172,9 @@ Go Back? Type > exit
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   read -p '↘️ Type API Client | Press [ENTER]: ' typed </dev/tty
-  echo $typed >/var/plexguide/traktarr/pgtrak.client
+  echo $typed >/var/plexguide/pgtrak.client
   read -p '↘️ Type API Secret | Press [ENTER]: ' typed </dev/tty
-  echo $typed >/var/plexguide/traktarr/pgtrak.secret
+  echo $typed >/var/plexguide/pgtrak.secret
 
   if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
     question1
@@ -235,12 +235,12 @@ EOF
     ##################################################### TYPED CHECKERS - START
     typed2=$typed
     bonehead=no
-    ##### If user forgot to add a / in the beginning, we fix for them
+    ##### If BONEHEAD forgot to add a / in the beginning, we fix for them
     initial="$(echo $typed | head -c 1)"
     if [ "$initial" != "/" ]; then
       typed="/$typed"
     fi
-    ##### If user added a / at the end, we fix for them
+    ##### If BONEHEAD added a / at the end, we fix for them
     initial="${typed: -1}"
     if [ "$initial" == "/" ]; then
       typed=${typed::-1}
@@ -274,7 +274,7 @@ EOF
       #typed=${typed:4}
       #fi
 
-      echo "$typed" >/var/plexguide/traktarr/pgtrak.spath
+      echo "$typed" >/var/plexguide/pgtrak.spath
       read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
       echo ""
       question1
@@ -317,6 +317,7 @@ Possible Movie folder
 $hdpath/unionfs/ +
 
 $moviefolderprint
+
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Go Back? Type > exit
@@ -370,7 +371,7 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-      echo "$typed" >/var/plexguide/traktarr/pgtrak.rpath
+      echo "$typed" >/var/plexguide/pgtrak.rpath
       read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
       echo ""
       question1
@@ -407,7 +408,7 @@ Set a Number from [ 1900 ] - [ 2100 ]
 EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
   if [[ "$typed" -ge "1900" && "$typed" -le "2100" ]]; then
-    echo "$typed" >/var/plexguide/traktarr/pgtrakyear.max && question1
+    echo "$typed" >/var/plexguide/pgtrakyear.max && question1
   else badinput; fi
 }
 
@@ -465,6 +466,7 @@ EOF
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
 
   case $typed in
+  
   1) ansible-playbook /opt/plexguide/menu/traktarr/traktarr-list/prefillallow.yml && question1 ;;
   2) ansible-playbook /opt/plexguide/menu/traktarr/traktarr-list/prefillremove.yml && question1 ;;
   z) exit ;;
@@ -472,6 +474,7 @@ EOF
   *) question1 ;;
   esac
 }
+
 # BAD INPUT
 badinput() {
   echo
@@ -564,9 +567,6 @@ EOF
   7)
     sonarr=$(docker ps --format '{{.Names}}' | grep "sonarr")
     radarr=$(docker ps --format '{{.Names}}' | grep "radarr")
-	
-	# sonarr=$(docker ps | grep "sonarr")
-    # radarr=$(docker ps | grep "radarr")
 
     if [ "$radarr" == "" ] && [ "$sonarr" == "" ]; then
       tee <<-EOF
@@ -622,7 +622,7 @@ EOF
         info=$(cat /opt/appdata/radarr/config.xml)
         info=${info#*<ApiKey>} 1>/dev/null 2>&1
         info1=$(echo ${info:0:32}) 1>/dev/null 2>&1
-        echo "$info1" >/var/plexguide/traktarr/pgtrak.rapi
+        echo "$info1" >/var/plexguide/pgtrak.rapi
       fi
 
       file="/opt/appdata/sonarr/config.xml"
@@ -630,10 +630,11 @@ EOF
         info=$(cat /opt/appdata/sonarr/config.xml)
         info=${info#*<ApiKey>} 1>/dev/null 2>&1
         info2=$(echo ${info:0:32}) 1>/dev/null 2>&1
-        echo "$info2" >/var/plexguide/traktarr/pgtrak.sapi
+        echo "$info2" >/var/plexguide/pgtrak.sapi
       fi
     fi
-    ansible-playbook /opt/plexguide/menu/pg.yml --tags traktarr && question1 ;;
+	
+    ansible-playbook /opt/plexguide/menu/traktarr/traktarr.yml && endbanner && question1  ;;
 	
   8) prefill && clear && question1  ;;
   9) endbanner  && clear && question1  ;;
@@ -647,14 +648,14 @@ EOF
 
 # FUNCTIONS END ##############################################################
 
-variable /var/plexguide/traktarr/pgtrak.client "NOT-SET"
-variable /var/plexguide/traktarr/pgtrak.secret "NOT-SET"
-variable /var/plexguide/traktarr/pgtrak.rpath "NOT-SET"
-variable /var/plexguide/traktarr/pgtrak.spath "NOT-SET"
-variable /var/plexguide/traktarr/pgtrak.sprofile "NOT-SET"
-variable /var/plexguide/traktarr/pgtrak.rprofile "NOT-SET"
-variable /var/plexguide/traktarr/pgtrak.rprofile "NOT-SET"
-variable /var/plexguide/traktarr/pgtrakyear.max "NOT-SET"
+variable /var/plexguide/pgtrak.client "NOT-SET"
+variable /var/plexguide/pgtrak.secret "NOT-SET"
+variable /var/plexguide/pgtrak.rpath "NOT-SET"
+variable /var/plexguide/pgtrak.spath "NOT-SET"
+variable /var/plexguide/pgtrak.sprofile "NOT-SET"
+variable /var/plexguide/pgtrak.rprofile "NOT-SET"
+variable /var/plexguide/pgtrak.rprofile "NOT-SET"
+variable /var/plexguide/pgtrakyear.max "NOT-SET"
 
 deploycheck
 question1
