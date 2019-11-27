@@ -45,6 +45,7 @@ touch /var/plexguide/pgui.switch
 [4] Comm UI                  :  [ $switchcheck ] | Port [ $ports ] | pgui.$domain
 [5] Emergency Display        :  [ $emdisplay ]
 [6] System & Network Auditor
+[7] Server ID change		 : Change your ServerID
 
 [99] TroubleShoot            : PreInstaller
 
@@ -101,6 +102,7 @@ EOF
     else echo "On" >/var/plexguide/emergency.display; fi
     setstart ;;
   6) bash /opt/plexguide/menu/functions/network.sh && clear && setstart ;;
+  7) serverid && clear && setstart ;; 
   99) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
   z) exit ;;
   Z) exit ;;
