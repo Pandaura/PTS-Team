@@ -102,7 +102,7 @@ EOF
     else echo "On" >/var/plexguide/emergency.display; fi
     setstart ;;
   6) bash /opt/plexguide/menu/functions/network.sh && clear && setstart ;;
-  7) serverid && clear && setstart ;; z
+  7) serverid && clear && setstart ;;
   
   99) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
   z) exit ;;
