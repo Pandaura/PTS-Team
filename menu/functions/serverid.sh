@@ -7,7 +7,9 @@
 ################################################################################
 touch /var/plexguide/server.id.stored
 source /opt/plexguide/menu/functions/functions.sh
-abc="/var/plexguide"
+start=$(cat /var/plexguide/server.id)
+stored=$(cat /var/plexguide/server.id.stored)
+
 
 serverid() {
 
@@ -27,7 +29,7 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
     sleep 3
-    bash /opt/plexguide/menu/interface/serverid.sh
+    serverid
     exit
   else
     tee <<-EOF
@@ -37,9 +39,8 @@ EOF
 EOF
 
     # Prevents From Repeating
-    echo "$typed" >/var/plexguide/server.id
-    cat /var/plexguide/server.id >/var/plexguide/server.id.stored
-
+    echo "$typed" >${abc}/server.id
+    cat ${abc}/server.id >${abc}/server.id.stored
     sleep 3
   fi
 
