@@ -63,16 +63,6 @@ EOF
 	echo "Watchtower Removed"
     echo "3" >${abc}/watchtower.wcheck
   elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
-    if [ "$wexit" == "0" ]; then
-      tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️   WatchTower Preference Must be Set Once!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-      sleep 3
-      watchtower
-    fi
     exit
   else
     badinput
