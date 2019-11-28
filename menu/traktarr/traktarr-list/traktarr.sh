@@ -20,6 +20,8 @@ traktarr movies -t https://trakt.tv/users/enormoz/lists/netflix-movies
 sleep 30s
 traktarr movies -t https://trakt.tv/users/theultimatec0der/lists/all-movies-2019
 sleep 30s
+traktarr movies -t https://trakt.tv/users/theultimatec0der/lists/all-movies-2018
+sleep 30s
 traktarr shows -t https://trakt.tv/users/theultimatec0der/lists/all-shows-2019
 sleep 30s
 traktarr shows -t https://trakt.tv/users/theultimatec0der/lists/all-shows-2018
