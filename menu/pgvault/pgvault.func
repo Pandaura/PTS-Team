@@ -439,6 +439,7 @@ EOF
     -v --checksum --drive-chunk-size=64M --transfers=8
 
   ##### Stop Docker Container if Running
+  redeploy
   runningcheck
   if [ "$running" == "1" ]; then
     tee <<-EOF
