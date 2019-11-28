@@ -71,16 +71,11 @@ Configuring PTS fork is the same as configuring PGBlitz.
 Type the following to run the PTS menu: `sudo pts`    
 
 * Set up and deploy Traefik (see here)  
-_Reboot_  
-* Close ports using Port Guard (see here)  
-_Reboot_  
-* Deploy PTS Shield (GOAuth - all apps supported) (see here)   
-_Reboot_  
+* Close ports using Port Guard (see here)   
+* Deploy PTS Shield (GOAuth - all apps supported) (see here)    
 * Set up and deploy rClone. You can restore you backup keys at this stage. (see here)  
-_Reboot_   
 * (Optional) Restore PGBlitz backup (created in step 1) using [7]PTS Vault.  
 * Install desired core/community applications (Do this regardless of whether it is a fresh install with restore or overwrite)  
-_Reboot_  
 * (Optional) If overwriting/restoring, you will need to change 2 remote path mappings in applications (NZB clients / Torrent clients / radarr / sonarr / lidarr etc)    
   
   
