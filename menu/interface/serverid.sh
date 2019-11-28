@@ -12,9 +12,11 @@ source /opt/plexguide/menu/functions/functions.sh
 abc="/var/plexguide"
 
 serverid() {
+if [ "$start" != "$stored" ]; then
+
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️   Establishing Server ID     💬  Use One Word & Keep it Simple
+↘️   Establishing Server ID               💬  Use One Word & Keep it Simple
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   read -p '🌏  TYPE Server ID | Press [ENTER]: ' typed </dev/tty
@@ -34,6 +36,10 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
     echo "$typed" >${abc}/server.id
+    cat ${abc}/server.id >${abc}/server.id.stored
     sleep 1
   fi
 }
+
+####functions start
+serverid
