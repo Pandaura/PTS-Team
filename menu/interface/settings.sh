@@ -1,7 +1,8 @@
-+#!/bin/bash
+#!/bin/bash
 #
-# Title:      PGBlitz (Reference Title File)
+# Title:      PTS Settings Layout
 # Author(s):  Admin9705 - Deiteq
+# Mode from MrDoob for PTS
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
