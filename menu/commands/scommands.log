@@ -71,5 +71,11 @@
 
     - name: automatic backup /opt/appdata/[app names to gdrive]
       command: autobackup
-      Info: remove old log files from /var/log for your security
+      Info: automatic backup for [app name to gdrive]
+
+    - name: automatic speedtest over speedtest.net
+      command: ptsspeed
+      Info: automatic speedtest over speedtest.net
+
+
 

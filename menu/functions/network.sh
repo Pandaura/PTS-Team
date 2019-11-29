@@ -38,30 +38,19 @@ EOF
   2)
     clear
     echo ""
-    chmod +x /opt/plexguide/menu/functions/bench.sh
-    chmod +x /opt/plexguide/menu/functions/bench.sh
-    bash /opt/plexguide/menu/functions/bench.sh -a
+	curl -LsO git.io/bench.sh; chmod +x bench.sh && ./bench.sh -a
     echo ""
     read -p '🌍 Process Complete | Press [ENTER] ' typed </dev/tty
     question1
     ;;
   3)
-    pip install speedtest-cli
-    echo ""
-    speedtest-cli
+	curl -LsO git.io/bench.sh; chmod +x bench.sh && ./bench.sh -speed
     echo ""
     read -p '🌍 Process Complete | Press [ENTER] ' typed </dev/tty
-	question1
-    ;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    question1
-    ;;
+	question1 ;;
+  z)  exit ;;
+  Z) exit ;;
+  *) question1 ;;
   esac
 }
 

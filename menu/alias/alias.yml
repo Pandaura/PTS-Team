@@ -172,3 +172,10 @@
         dest: /bin/autobackup
         force: yes
         mode: 0775
+
+    - name: automatic speedtest over speedtest.net
+      template:
+        src: ptsspeed
+        dest: /bin/ptsspeed
+        force: yes
+        mode: 0775

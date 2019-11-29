@@ -6,8 +6,6 @@
 # GNU:        General Public License v3.0
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
-source /opt/plexguide/menu/functions/install.sh
-source /opt/plexguide/menu/functions/ending.sh
 
 sudocheck() {
   if [[ $EUID -ne 0 ]]; then
@@ -21,54 +19,64 @@ EOF
     exit 1
   fi
 }
+mergerfsupdate() {
+mgversion="$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
+mgstored="$(mergerfs -v | grep 'mergerfs version:' | awk '{print $3}')"
 
-downloadpg() {
-  rm -rf /opt/plexguide
-  git clone --single-branch https://github.com/PTS-Team/PTS-Team.git /opt/plexguide  1>/dev/null 2>&1
-  ansible-playbook /opt/plexguide/menu/version/missing_pull.yml
-  ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
-  rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
-  rm -rf /opt/plexguide/.git* >/dev/null 2>&1
+tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ mergerfs Update Panel  --local version $mgstored
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+mergerfs installed version = 		$mgstored
+mergerfs latest version    = 		$mgversion
+
+[Y] UPDATE to lateste version
+
+[Z] Exit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
+  case $typed in
+
+  Y) ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsupdate ;;
+  y) ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsupdate ;;
+  z) clear && exit ;;
+  Z) clear && exit ;;
+  *) badinput ;;
+  esac
 }
 
-missingpull() {
-  file="/opt/plexguide/menu/functions/install.sh"
-  if [ ! -e "$file" ]; then
-    tee <<-EOF
+rcloneupdate(){
+check=$(bash /opt/plexguide/menu/pgui/templates/check.sh >/dev/null 2>&1)
+rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
+rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1)"
+      tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  Base folder went missing!
+ rClone Update Panel  			$rcstored
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+rclone installed version = 		$rcstored
+rclone latest version 	 = 		$rcversion
+
+[Y] UPDATE to lateste version
+
+[Z] Exit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    sleep 2
-    tee <<-EOF
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- 🍖  NOM NOM - Re-Downloading PTS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-    sleep 2
-    downloadpg
-    tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅️  Repair Complete! Standby!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-    sleep 2
-  fi
+  case $typed in
+  Y) ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall && $check ;;
+  y) ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall && $check ;;
+  z) clear && exit ;;
+  Z) clear && exit ;;
+  *) badinput ;;
+  esac
 }
 
 exitcheck() {
-  bash /opt/plexguide/menu/version/file.sh
-  file="/var/plexguide/exited.upgrade"
-  if [ ! -e "$file" ]; then
-    ending
-  else
-    rm -rf /var/plexguide/exited.upgrade 1>/dev/null 2>&1
-    echo ""
-    ending
-  fi
+  bash /opt/plexguide/menu/interface/ending.sh
 }
