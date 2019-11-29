@@ -8,6 +8,8 @@
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/watchtower.sh
 source /opt/plexguide/menu/functions/install.sh
+#source /opt/plexguide/menu/functions/serverid.sh
+
 # Menu Interface
 setstart() {
 ### executed parts 
