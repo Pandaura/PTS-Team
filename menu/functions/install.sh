@@ -7,6 +7,8 @@
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/serverid.sh
+source /opt/plexguide/menu/functions/emergency.sh
+source /opt/plexguide/menu/functions/serverid.sh
 
 updateprime() {
   abc="/var/plexguide"
@@ -187,10 +189,6 @@ docstart() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags docstart
 }
 
-emergency() {
-  bash /opt/plexguide/menu/functions/emergency.sh
-}
-
 folders() {
   ansible-playbook /opt/plexguide/menu/installer/folders.yml
 }
@@ -203,49 +201,24 @@ gcloud() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags gcloud_sdk
 }
 
-mergerfsupdate() {
-mgversion="$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
-mgstored="$(mergerfs -v | grep 'mergerfs version:' | awk '{print $3}')"
-if [[ "$mgversion" == "$mgstored" ]]; then
-  echo "✅ mergerfs latest stable version check "
-  clear
-elif [[ "$mgversion" != "$mgstored" ]]; then
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsupdate
-  bash /opt/plexguide/menu/pgui/templates/check.sh
-  sleep 2
-  clear
-  tee <<-EOF
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  mergerfs updated to version $mgstored
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-sleep 3s
-fi
-}
-
 mergerfsinstall() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsinstall
 }
 
 rcloneinstall() {
-# ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
 rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
 rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1 )"
 
 if [[ "$rcversion" == "$rcstored" ]]; then
-  echo "✅ rclone latest stable version check "
   clear
-elif [[ "$rcversion" != "$rcstored" ]]; then
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags rcloneinstall
-  bash /opt/plexguide/menu/pgui/templates/check.sh
-  sleep 2
+else [[ "$rcversion" != "$rcstored" ]]
   clear
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  rclone updated to version $rcstored
+↘️  rclone can be updatet to version $rcstored
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-sleep 3s
+sleep 15s
 fi
 }
 
@@ -311,6 +284,6 @@ dockerinstall() {
     ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
 }
 
-#serverid() {
-#   bash /opt/plexguide/menu/functions/serverid.sh
-#}
+folderroleback(){
+    ansible-playbook /opt/plexguide/menu/installer/folderroleback.yml >/dev/null 2>&1
+}

@@ -1,42 +1,8 @@
-#!/bin/bash
-#
 # Title:      mergerfs updater
 # GNU:        General Public License v3.0
 ################################################################################
+source /opt/plexguide/menu/functions/update.sh
 
-mgversion="$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
-mgstored="$(mergerfs -v | grep 'mergerfs version:' | awk '{print $3}')"
-
-tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- mergerfs Update Panel  --local version $mgstored
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-mergerfs installed version = 		$mgstored
-mergerfs latest version    = 		$mgversion
-
-[Y] UPDATE to lateste version
-
-[Z] Exit
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-
-read -p 'Type  Y or Z | Press [ENTER]: ' typed </dev/tty
-
-
-    case $typed in
-
-    Y)  
-        ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsupdate
-        ;;
-    y)  
-	    ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsupdate
-	    ;;
-    z)
-        exit
-        ;;
-    Z)
-        exit
-        ;;
-esac
+sudocheck
+mergerfsupdate
+exitcheck

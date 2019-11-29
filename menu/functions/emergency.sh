@@ -8,6 +8,7 @@
 source /opt/plexguide/menu/functions/functions.sh
 abc="/var/plexguide"
 
+emergency(){
   mkdir -p /opt/appdata/plexguide/emergency
   variable ${abc}/emergency.display "On"
   if [[ $(ls /opt/appdata/plexguide/emergency) != "" ]]; then
@@ -37,3 +38,4 @@ EOF
       touch ${abc}/emergency.log
     fi
   fi
+}

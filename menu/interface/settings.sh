@@ -1,4 +1,4 @@
-#!/bin/bash
++#!/bin/bash
 #
 # Title:      PGBlitz (Reference Title File)
 # Author(s):  Admin9705 - Deiteq
@@ -8,7 +8,7 @@
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/watchtower.sh
 source /opt/plexguide/menu/functions/install.sh
-#source /opt/plexguide/menu/functions/serverid.sh
+source /opt/plexguide/menu/functions/serverid.sh
 
 # Menu Interface
 setstart() {
@@ -104,8 +104,8 @@ EOF
     else echo "On" >/var/plexguide/emergency.display; fi
     setstart ;;
   6) bash /opt/plexguide/menu/functions/network.sh && clear && setstart ;;
-  7) serverid && clear && setstart ;;
-  
+  7) setupnew && clear && setstart ;;
+###########################################################################
   99) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
   z) exit ;;
   Z) exit ;;
