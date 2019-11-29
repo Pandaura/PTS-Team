@@ -8,6 +8,7 @@
 source /opt/plexguide/menu/functions/install.sh
 emergency
 
+ending(){
 #
 clear 
 echo ""
@@ -30,13 +31,14 @@ cat <<"EOF"
 │ ClownFused, MrDoob, Sub7Seven,      │
 │ TimeKills, The_Creator, Desimaniac, │
 │ l3uddz, RXWatcher,Calmcacil, Porkie │
+│                                     │
 └─────────────────────────────────────┘
 
 EOF
-
-if [[ ! -e "/bin/pts" ]]; then
-  cp /opt/plexguide/menu/alias/templates/pts /bin
+####################
+file="/bin/pts"
+if [[ -f $file ]]; then
+  alias 1>/dev/null 2>&1
+  owned 1>/dev/null 2>&1
 fi
-
-chown 1000:1000 /bin/pts &>/dev/null &
-chmod 0755 /bin/pts &>/dev/null &
+}
