@@ -37,7 +37,7 @@ For more advanced libraries, it can look like this:
    "TV": 2
 },
 3.) SAVE it
-4.) plex_dupefinder and following the output
+4.) plexdupes and following the output
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 You will need to make sure that Allow media deletion is enabled in Plex.

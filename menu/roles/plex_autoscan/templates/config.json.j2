@@ -37,11 +37,22 @@
    "PLEX_EMPTY_TRASH_CONTROL_FILES":[
       "/mnt/unionfs/mounted.bin"
    ],
-   "PLEX_EMPTY_TRASH_MAX_FILES":50,
+   "PLEX_EMPTY_TRASH_MAX_FILES":100,
    "PLEX_EMPTY_TRASH_ZERO_DELETED":false,
    "PLEX_LD_LIBRARY_PATH":"/usr/lib/plexmediaserver/lib",
    "PLEX_LOCAL_URL": "http://localhost:32400",
    "PLEX_SCANNER":"/usr/lib/plexmediaserver/Plex\\ Media\\ Scanner",
+   "PLEX_SECTION_PATH_MAPPINGS":{
+      "1":[
+         "/Movies/"
+      ],
+      "2":[
+         "/TV/"
+      ],
+      "3":[
+         "/Music/"
+      ]
+   },
    "PLEX_SUPPORT_DIR":"/var/lib/plexmediaserver/Library/Application\\ Support",
    "PLEX_USER":"plex",
    "PLEX_TOKEN":"{{plex_auth_token.stdout}}",
@@ -49,14 +60,14 @@
    "PLEX_WAIT_FOR_EXTERNAL_SCANNERS":false,
    "RCLONE": {
     "BINARY": "/usr/bin/rclone",
-    "CONFIG": "/opt/appdata/plexguide/rclone.conf",
+    "CONFIG": "/home/user/.config/rclone/rclone.conf",
     "CRYPT_MAPPINGS": {
     },
     "RC_CACHE_REFRESH": {
       "ENABLED": false,
       "FILE_EXISTS_TO_REMOTE_MAPPINGS": {
       "Media/": [
-          "/mnt/unionfs/"
+          "/mnt/rclone/Media/"
       ]
       },
       "RC_URL": "http://localhost:5572"
@@ -89,7 +100,7 @@
    "SERVER_SCAN_FOLDER_ON_FILE_EXISTS_EXHAUSTION":true,
    "SERVER_SCAN_PRIORITIES":{
       "0":[
-         "/tv/"
+         "/TV/"
       ],
       "1":[
          "/Movies/"

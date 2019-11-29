@@ -7,36 +7,44 @@
 ################################################################################
 touch /var/plexguide/server.id.stored
 source /opt/plexguide/menu/functions/functions.sh
-#start=$(cat /var/plexguide/server.id)
-#stored=$(cat /var/plexguide/server.id.stored)
+start=$(cat /var/plexguide/server.id)
+stored=$(cat /var/plexguide/server.id.stored)
 
 
 serverid() {
-  tee <<-EOF
 
+if [ "$start" != "$stored" ]; then
+
+ tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️   Establishing Server ID               💬  Use One Word & Keep it Simple
+↘️   Establishing New Server ID    💬  Use One Word & Keep it Simple
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   read -p '🌏  TYPE Server ID | Press [ENTER]: ' typed </dev/tty
 
   if [ "$typed" == "" ]; then
     tee <<-EOF
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⛔️  WARNING! - The Server ID Cannot Be Blank!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    sleep 1
+    sleep 3
     serverid
+    exit
   else
     tee <<-EOF
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅️  PASS: Server ID $typed Established
+✅️  PASS: New ServerID Set
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
+
+    # Prevents From Repeating
     echo "$typed" >${abc}/server.id
-    sleep 1
+    cat ${abc}/server.id >${abc}/server.id.stored
+    sleep 3
   fi
+
+fi
 }
+####
+serverid

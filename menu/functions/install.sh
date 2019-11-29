@@ -6,7 +6,6 @@
 # GNU:        General Public License v3.0
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
-source /opt/plexguide/menu/functions/serverid.sh
 
 updateprime() {
   abc="/var/plexguide"
@@ -311,6 +310,6 @@ dockerinstall() {
     ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
 }
 
-#serverid() {
-#   bash /opt/plexguide/menu/functions/serverid.sh
-#}
+serverid() {
+   bash /opt/plexguide/menu/functions/serverid.sh
+}
