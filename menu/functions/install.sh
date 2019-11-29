@@ -145,7 +145,7 @@ file="/opt/plexguide/menu/pg.yml"
 ✅ All files Valid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
- else ansible-playbook opt/plexguide/menu/version/missing_pull.yml; fi
+ else ansible-playbook /opt/plexguide/menu/version/missing_pull.yml; fi
 }
 
 remove(){
@@ -284,6 +284,4 @@ dockerinstall() {
     ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
 }
 
-folderroleback(){
-    ansible-playbook /opt/plexguide/menu/installer/folderroleback.yml >/dev/null 2>&1
-}
+####EOF###

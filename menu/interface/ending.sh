@@ -7,7 +7,9 @@
 ################################################################################
 source /opt/plexguide/menu/functions/install.sh
 emergency
-
+file="/bin/pts"
+if [[ ! -f "/bin/pts" ]]; then
+  cp /opt/plexguide/menu/alias/templates/pts /bin &&  chown 1000:1000 /bin/pts && chmod 0755 /bin/pts; fi
 #
 clear 
 echo ""
@@ -34,8 +36,4 @@ cat <<"EOF"
 
 EOF
 
-file="/bin/pts"
-if [[ -f $file ]]; then
-  alias 1>/dev/null 2>&1
-  owned 1>/dev/null 2>&1
-fi
+

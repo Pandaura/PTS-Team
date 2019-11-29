@@ -198,5 +198,6 @@
         - '{{path.stdout}}/torrent'
         - '{{path.stdout}}/torrent/watch'
         - '{{path.stdout}}/move'
-        - '/opt/var'
+        - '/opt/plexguide/log'
+        - '/opt/plexguide/roles/log'
       ignore_errors: yes

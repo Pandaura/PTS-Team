@@ -1,7 +1,8 @@
 #!/bin/bash
 #
-# Title:      Missing Pull Checker
-# Author(s):  MrDoobPG
+# Title:      PTS Updater
+# Author(s):  Admin9705 - Deiteq
+# URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
 ---
@@ -18,6 +19,12 @@
       register: stat_result
     - debug:
         msg: "PTS Check for missing pull"
+
+    - name: 'Setting preownership on PTS Folder | part 1'
+      shell: 'chown -cR 1000:1000 /opt/plexguide 1>/dev/null 2>&1'
+
+    - name: 'Setting prepermissions on PTS Folder | part 2'
+      shell: 'chmod -cR 775 /opt/plexguide 1>/dev/null 2>&1'
 
     - name: 'Installing Version {{serverid.stdout}}'
       git:
@@ -43,6 +50,12 @@
       with_items:
         - '/opt/plexguide/LICENSE'
         - '/opt/plexguide/README.md'
+
+    - name: 'Setting ownership on PTS Folder'
+      shell: 'chown -cR 1000:1000 /opt/plexguide 1>/dev/null 2>&1'
+
+    - name: 'Setting permissions on PTS Folder'
+      shell: 'chmod -cR 775 /opt/plexguide 1>/dev/null 2>&1'
 
     - name: 'Stops First Time Run'
       shell: 'touch /var/plexguide/ask.yes'
