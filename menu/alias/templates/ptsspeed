@@ -1,5 +1,0 @@
-#!/bin/bash
-
-#### automatic speedtest
-
-curl -LsO git.io/bench.sh; chmod +x bench.sh && ./bench.sh -speed

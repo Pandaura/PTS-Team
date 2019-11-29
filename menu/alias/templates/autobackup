@@ -1,5 +1,0 @@
-#!/bin/bash
-
-#### automatic backup apps
-
-bash /opt/plexguide/menu/pgvault/autobackup.sh
