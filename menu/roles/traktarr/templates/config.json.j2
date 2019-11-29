@@ -1,0 +1,136 @@
+{
+  "automatic": {
+    "movies": {
+      "anticipated": 12,
+      "boxoffice": 20,
+      "interval": 12,
+      "popular": 15,
+      "trending": 30,
+	  "watched": 10,
+	  "played_all": 10
+    },
+    "shows": {
+      "anticipated": 20,
+      "interval": 12,
+      "popular": 4,
+      "trending": 5,
+	  "played": 10,
+	  "watched_monthly": 3
+    }
+  },
+  "core": {
+    "debug": false
+  },
+  "filters": {
+    "movies": {
+      "disabled_for": [],
+      "allowed_countries": [
+        "en",
+        "us",
+        "gb",
+        "ca",
+		"de",
+		"es",
+		"fr"
+      ],
+      "allowed_languages": [
+        "en",
+        "us",
+        "gb",
+        "ca",
+		"de"
+      ],
+      "blacklisted_genres": [
+        "documentary",
+        "music"
+      ],
+      "blacklisted_max_runtime": 0,
+      "blacklisted_max_year": {{year.stdout}},
+      "blacklisted_min_runtime": 10,
+      "blacklisted_min_year": 1980,
+      "blacklisted_title_keywords": [
+        "untitled",
+        "barbie",
+        "ufc"
+      ],
+      "blacklisted_tmdb_ids": [],
+      "disabled_for": [],
+      "rotten_tomatoes": ""
+    },
+    "shows": {
+      "disabled_for": [],
+      "allowed_countries": [
+        "en",
+        "us",
+        "gb",
+        "ca",
+		"de",
+		"es",
+		"fr"
+      ],
+      "allowed_languages": [
+        "en",
+        "us",
+        "gb",
+        "ca",
+		"de"
+      ],
+      "blacklisted_genres": [
+        "game-show",
+        "talk-show",
+        "home-and-garden",
+        "children",
+        "reality",
+        "news",
+        "special-interest"
+      ],
+      "blacklisted_networks": [
+        "twitch",
+        "youtube",
+        "nickelodeon",
+        "hallmark",
+        "reelzchannel",
+        "disney",
+        "cnn",
+        "cbbc",
+        "the movie network",
+        "teletoon",
+        "cartoon network",
+        "espn",
+        "yahoo!",
+        "fox sports"
+      ],
+      "blacklisted_max_runtime": 0,
+      "blacklisted_min_runtime": 10,
+      "blacklisted_min_year": 1980,
+      "blacklisted_max_year": {{year.stdout}},
+      "blacklisted_title_keywords": [],
+      "blacklisted_tvdb_ids": []
+    }
+  },
+  "notifications": {
+    "verbose": true
+  },
+  "omdb": {
+    "api_key": ""
+  },
+  "radarr": {
+    "api_key": "{{rapi.stdout}}",
+    "minimum_availability": "announced",
+    "quality": "{{rprofile.stdout}}",
+    "root_folder": "{{rpath.stdout}}",
+    "url": "http://localhost:7878/"
+  },
+  "sonarr": {
+    "api_key": "{{sapi.stdout}}",
+    "language": "English",
+    "quality": "{{sprofile.stdout}}",
+    "root_folder":"{{spath.stdout}}",
+    "tags": {},
+    "url": "http://localhost:8989/"
+  },
+  "trakt": {
+    "client_id": "{{client.stdout}}",
+    "client_secret": "{{secret.stdout}}"
+  }
+}

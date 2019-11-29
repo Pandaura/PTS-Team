@@ -1,0 +1,6 @@
+
+#!/bin/bash
+# Title:      PTS List commands
+# Author(s):  MrDoobPG
+##############################################################
+cat /opt/plexguide/menu/commands/scommands.log

@@ -1,0 +1,17 @@
+[Unit]
+Description='Traktarr'
+After=multi-user.target network-online.target
+
+[Service]
+User=0
+Group=0
+Type=simple
+Environment="LC_ALL=C.UTF-8"
+Environment="LANG=C.UTF-8"
+WorkingDirectory=/opt/appdata/traktarr/
+ExecStart=/usr/bin/python3 /opt/appdata/traktarr/traktarr.py run
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target

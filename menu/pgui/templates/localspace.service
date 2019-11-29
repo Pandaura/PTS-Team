@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Title:      PGBlitz (G/TDrive used space)
+# Author(s):  Admin9705
+# Coder: 	  MrDoob
+# URL:        https://pgblitz.com - http://github.pgblitz.com
+# GNU:        General Public License v3.0
+################################################################################
+[Unit]
+Description=Used space | localspace 
+After=multi-user.target
+
+[Service]
+Type=simple
+User=0
+Group=0
+ExecStart=/bin/bash /opt/plexguide/menu/pgui/templates/localspace.sh
+TimeoutStopSec=20
+KillMode=process
+RemainAfterExit=yes
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

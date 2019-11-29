@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Check if Image Variable Exists
+      stat:
+        path: '/opt/communityapps'
+      register: pathcheck
+
+    - name: 'Transfer Image Variable'
+      shell: 'rm -rf /opt/communityapps'
+      when: pathcheck.stat.exists
+
+    - name: Cloning Community Apps
+      git:
+        repo: 'https://github.com/PTS-Team/Apps-Community'
+        dest: /opt/communityapps
+        version: 'master'
+        force: yes

@@ -1,0 +1,179 @@
+#########################################################################
+# Title:         Cloudbox: plexpatrol Role                             #
+# Author(s):     l3uddz                                                 #
+# URL:           https://github.com/cloudbox/cloudbox                   #
+# YML creator : MrDoob for PTS                                          #
+# --                                                                    #
+#         Part of the Cloudbox project: https://cloudbox.works          #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Check old Service's Existance
+  stat:
+    path: '/etc/systemd/system/pgpatrol.service'
+  register: pgp
+
+- name: Stop service 
+  service:
+    name: pgpatrol
+    state: stopped
+  when: pgp.stat.exists
+  ignore_errors: yes
+
+- name: Daemon-PTS-Patrol stop
+  systemd: state=stopped name=pgpatrol daemon_reload=yes enabled=no
+  ignore_errors: yes
+
+- name: Remove old Basic Directories
+  file: 'path={{item}} state=absent mode=0775 owner=1000 group=1000'
+  with_items:
+    - '/opt/appdata/pgpatrol/'
+    - '/var/plexguide/pgpatrol'
+    - '/etc/systemd/system/pgpatrol.service'
+  when: pgp.stat.exists == true
+  ignore_errors: yes
+
+- name: Check  Folder Existance
+  stat:
+    path: '/opt/appdata/pgpatrol/'
+  register: pgpatrol
+
+- debug: msg="Final Notes  PG/PTSPatrol is now removed"
+  when: pgpatrol.stat.exists == False
+
+- name: Server ID
+  shell: 'cat /var/plexguide/pg.serverid'
+  register: serverid
+
+- name: Set plex.user fact | token
+  shell: 'cat /var/plexguide/plexpatrol/plex.token'
+  register: plex_auth_token
+
+- name: Recall User
+  shell: 'cat /var/plexguide/plexpatrol/plex.user'
+  register: user
+
+- name: Register IP
+  shell: 'cat /var/plexguide/server.ip'
+  register: ipaddress
+
+- name: Multiple IPs Info
+  shell: 'cat /var/plexguide/plexpatrol/multiple.ips'
+  register: multipleips
+
+- name: Kick Video Transcodes
+  shell: 'cat /var/plexguide/plexpatrol/video.transcodes'
+  register: videotranscodes
+  
+- name: Kick 4k Transcodes
+  shell: 'cat /var/plexguide/plexpatrol/video.transcodes4k'
+  register: video4k
+
+- name: Kick Audio Transcodes
+  shell: 'cat /var/plexguide/plexpatrol/audio.transcodes'
+  register: audiotranscodes
+
+- name: check interval
+  shell: 'cat /var/plexguide/plexpatrol/check.interval'
+  register: checkinterval
+
+- name: Paused Info
+  shell: 'cat /var/plexguide/plexpatrol/kick.minutes'
+  register: kickminutes
+
+- name: Display Plex Auth Token
+  debug:
+    msg: "Plex Auth Token: {{ plex_auth_token.stdout }}"
+
+- name: Remove old Install
+  shell: 'sudo rm -rf /opt/appdata/plexpatrol'
+
+- name: Create plexpatrol directories
+  file: "path={{ item }} state=directory mode=0775 owner=1000 group=1000 recurse=yes"
+  with_items:
+    - /opt/appdata/plexpatrol
+
+- name: Clone plexpatrol == HEAD
+  git:
+    repo: https://github.com/l3uddz/plex_patrol.git
+    dest: /opt/appdata/plexpatrol
+    clone: yes
+    version: HEAD
+    force: yes
+  ignore_errors: yes
+
+- name: Clone plexpatrol repo == master
+  git:
+    repo: https://github.com/l3uddz/plex_patrol.git
+    dest: /opt/appdata/plexpatrol
+    clone: yes
+    version: master
+    force: yes
+  ignore_errors: yes
+
+- name: Install pip requirements
+  pip:
+    requirements: /opt/appdata/plexpatrol/requirements.txt
+    executable: pip3
+
+- name: Check config exists
+  stat:
+    path: "/opt/appdata/plexpatrol/settings.ini"
+  register: plexpatrol_config
+
+- name: Import default config
+  template:
+    src: settings.ini.j2
+    dest: /opt/appdata/plexpatrol/settings.ini
+    owner: '1000'
+    group: '1000'
+    mode: 0775
+    force: no
+  when: not plexpatrol_config.stat.exists
+
+- name: Set patrol.py as executable
+  file:
+    path: /opt/appdata/plexpatrol/patrol.py
+    owner: '1000'
+    group: '1000'
+    mode: a+x
+
+- name: Check Service's Existance
+  stat:
+    path: '/etc/systemd/system/plexpatrol.service'
+  register: pgp
+
+- name: Stop service
+  service:
+    name: plexpatrol
+    state: stopped
+  when: pgp.stat.exists
+
+- name: Plex Patrol Service
+  template:
+    src: plexpatrol.service.j2
+    dest: /etc/systemd/system/plexpatrol.service
+    force: yes
+
+- name: Daemon-Reload
+  systemd: state=stopped name=plexpatrol daemon_reload=yes enabled=no
+
+- name: Start Plex Patrol
+  systemd: state=started name=plexpatrol enabled=yes
+    
+# scripts permissions
+- name: 'Setting permissions on scripts'
+  shell: 'chown -cR 1000:1000 /opt/appdata/plexpatrol'
+
+# scripts permissions
+- name: 'Setting permissions on scripts'
+  shell: 'chmod -cR 775 /opt/appdata/plexpatrol'
+
+- name: Remove .githube folder and .git files
+  file: "path={{ item }} state=absent"
+  with_items:
+    - '/opt/appdata/plexpatrol/.git'
+    - '/opt/appdata/plexpatrol/.github'
+    - '/opt/appdata/plexpatrol/assets'
+    - '/opt/appdata/plexpatrol/.gitignore'

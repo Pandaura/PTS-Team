@@ -1,0 +1,65 @@
+#########################################################################
+# Title:         Cloudbox: Plex Autoscan | Settings Task                #
+# Author(s):     desimaniac                                             #
+# URL:           https://github.com/cloudbox/cloudbox                   #
+# --                                                                    #
+#         Part of the Cloudbox project: https://cloudbox.works          #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Settings | Install required packages
+  apt:
+    state: present
+    name:
+      - jq
+      - moreutils
+
+- name: Settings | Check if 'config.json' exists
+  stat:
+    path: "/opt/plex_autoscan/config/config.json"
+  register: plex_autoscan_config
+
+- name: Settings | New 'config.json' tasks
+  block:
+
+  - name: Settings | Import default 'config.json'
+    template:
+      src: /opt/plexguide/menu/roles/plex_autoscan/templates/config.json.j2
+      dest: /opt/plex_autoscan/config/config.json
+      owner: '1000'
+      group: '1000'
+      mode: 0775
+      force: yes
+
+  - name: Token Recall
+    shell: 'cat /var/plexguide/pgscan/plex.token'
+    register: plex_auth_token
+
+  - name: Register IP
+    shell: 'cat /var/plexguide/server.ip'
+    register: ipaddress
+
+  - name: plex_auto_scan server pass 
+    shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
+    register: plex_autoscan_server_pass
+
+  when: not plex_autoscan_config.stat.exists
+
+- name: Settings | Existing 'config.json' tasks
+  block:
+
+  - name: Settings | Update 'PLEX_LD_LIBRARY_PATH' in 'config.json'
+    shell: |
+      CONFIG_PATH="/opt/plex_autoscan/config/config.json"
+      jq '.PLEX_LD_LIBRARY_PATH = "/usr/lib/plexmediaserver/lib"' ${CONFIG_PATH} | sponge ${CONFIG_PATH}
+    become: yes
+
+  when: plex_autoscan_config.stat.exists
+
+# Update 'config.json' for new and existing setups
+
+- name: Settings | Upgrade 'config.json'
+  shell: "/opt/plex_autoscan/scan.py update_config"
+  ignore_errors: yes
+  tags: plex-autoscan-update-sections

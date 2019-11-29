@@ -1,0 +1,153 @@
+#!/bin/bash
+#
+# Title:      Community UI
+# original Author(s):  Admin9705
+# moded from MrDoob for ptSCOMM
+# GNU:        General Public License v3.0
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    # FACTS #######################################################################
+    - name: 'Set Known Facts'
+      set_fact:
+        pgrole: 'pgui'
+        intport: '80'
+        extport: '8555'
+        image: 'mrdoob/dngele:latest'
+
+    # CORE (MANDATORY) ############################################################
+    - name: 'Including cron job'
+      include_tasks: '/opt/plexguide/menu/pgui/templates/_core.yml'
+
+    - name: 'Including cron job'
+      include_tasks: '/opt/plexguide/menu/pgui/templates/_cron.yml'
+
+    - name: 'Including Tasks'
+      include_tasks: '/opt/plexguide/menu/pgui/tasks/dynamic.yml'
+
+    # refix the UI     ############################################################
+
+    - name: 'Install File new UI'
+      template:
+        src: /opt/plexguide/menu/pgui/templates/index.php
+        dest: /opt/appdata/pgui/index.php
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+    - name: 'Install File Check mergerfs / rClone'
+      template:
+        src: /opt/plexguide/menu/pgui/templates/check.sh
+        dest: /opt/appdata/pgui/check.sh
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+    - name: 'Install File GTused'
+      template:
+        src: /opt/plexguide/menu/pgui/templates/gtused.sh
+        dest: /opt/appdata/pgui/gtused.sh
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+    - name: 'Install File Mountcheck file'
+      copy:
+        src: /opt/plexguide/menu/pgui/templates/mountcheck.sh
+        dest: /opt/plexguide/menu/pgui/mountcheck.sh
+        force: yes
+
+    - name: 'Install File Check mergerfs / rClone'
+      template:
+        src: /opt/plexguide/menu/pgui/templates/check.sh
+        dest: /opt/appdata/pgui/check.sh
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+    - name: 'Install File GTused'
+      template:
+        src: /opt/plexguide/menu/pgui/templates/gtused.sh
+        dest: /opt/appdata/pgui/gtused.sh
+        force: yes
+        owner: '1000'
+        group: '1000'
+
+     ### mountcheck replace
+ 
+    - name: replacing MountCheck Service
+      template:
+        src: /opt/plexguide/menu/pgui/templates/mountcheck.service
+        dest: /etc/systemd/system/mountcheck.service
+        force: yes
+
+    - name: Daemon-Reload
+      systemd: state=stopped name=mountcheck daemon_reload=yes enabled=no
+
+    - name: Start pgscan
+      systemd: state=started name=mountcheck enabled=yes
+
+     ### localspace replace
+ 
+    - name: replacing localspace Service
+      template:
+        src: /opt/plexguide/menu/pgui/templates/localspace.service
+        dest: /etc/systemd/system/localspace.service
+        force: yes
+
+    - name: Daemon-Reload
+      systemd: state=stopped name=localspace daemon_reload=yes enabled=no
+
+    - name: Start pgscan
+      systemd: state=started name=localspace enabled=yes
+
+    # LABELS ######################################################################
+    - name: 'Adding Traefik'
+      set_fact:
+        pg_labels:
+          traefik.enable: 'true'
+          traefik.port: '{{intport}}'
+          traefik.frontend.auth.forward.address: '{{gauth}}'
+          traefik.frontend.rule: 'Host:{{pgrole}}.{{domain.stdout}}{{tldset}}{{cname}}'
+          traefik.frontend.headers.SSLHost: '{{domain.stdout}}'
+          traefik.frontend.headers.SSLRedirect: 'true'
+          traefik.frontend.headers.STSIncludeSubdomains: 'true'
+          traefik.frontend.headers.STSPreload: 'true'
+          traefik.frontend.headers.STSSeconds: '315360000'
+          traefik.frontend.headers.browserXSSFilter: 'true'
+          traefik.frontend.headers.contentTypeNosniff: 'true'
+          traefik.frontend.headers.customResponseHeaders: 'X-Robots-Tag:noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex'
+          traefik.frontend.headers.forceSTSHeader: 'true'
+
+    - name: 'Setting PG Volumes'
+      set_fact:
+        pg_volumes:
+          - '/opt/appdata/pgui/index.php:/var/www/html/index.php'
+          - '/var/plexguide:/plexguide'
+          - '/opt/appdata/plexguide:/log'
+
+    - name: 'Setting PG ENV'
+      set_fact:
+        pg_env:
+          PUID: '1000'
+          PGID: '1000'
+
+    # MAIN DEPLOYMENT #############################################################
+    - name: 'Deploying {{pgrole}}'
+      docker_container:
+        name: '{{pgrole}}'
+        image: '{{image}}'
+        pull: yes
+        published_ports:
+          - '{{ports.stdout}}{{extport}}:{{intport}}'
+        volumes: '{{pg_volumes}}'
+        env: '{{pg_env}}'
+        restart_policy: unless-stopped
+        networks:
+          - name: plexguide
+            aliases:
+              - '{{pgrole}}'
+        state: started
+        labels: '{{pg_labels}}'

@@ -1,0 +1,57 @@
+#########################################################################
+# Title:         System: APT Tasks                                      #
+# Author(s):     l3uddz, desimaniac                                     #
+# URL:           https://github.com/cloudbox/cloudbox                   #
+# --                                                                    #
+#         Part of the Cloudbox project: https://cloudbox.works          #
+# --                                                                    #
+# Mod:          MrDoob                                                  #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Set env variables
+  set_fact:
+    env_vars:
+      DEBIAN_FRONTEND: noninteractive
+      DEBIAN_PRIORITY: critical
+
+- name: Fix any potential dpkg issues
+  shell: dpkg --configure --pending
+
+- name: Kill existing apt and apt-get
+  shell: "killall apt apt-get >/dev/null 2>&1 || :"
+  ignore_errors: yes
+
+- name: Fix any potential apt issues
+  shell: apt-get install --fix-broken --quiet --yes
+  environment: "{{ env_vars }}"
+  ignore_errors: yes
+
+- name: Install required packages
+  apt:
+    state: latest
+    update_cache: yes
+    allow_unauthenticated: yes
+    force_apt_get: yes
+    force: yes
+    name:
+      - apt-utils
+      - byobu
+
+- name: Update APT package cache
+  apt: update_cache=yes cache_valid_time=600
+
+- name: Upgrade APT to the latest packages
+  apt: upgrade=dist
+  register: apt_result
+
+- name: Autoremove unused packages
+  command: apt-get -y autoremove
+  register: apt_result
+  changed_when: "'packages will be REMOVED' in apt_result.stdout"
+
+- name: Purge residual kernel packages
+  shell: apt-get remove -y --purge $(dpkg -l | grep "^rc\s*linux-image-" | awk '{print $2}' | tr '\n' ' ')
+  register: apt_result
+  changed_when: "'packages will be REMOVED' in apt_result.stdout"

@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Check if Image Variable Exists
+      stat:
+        path: '/opt/coreapps'
+      register: pathcheck
+
+    - name: 'Transfer Image Variable'
+      shell: 'rm -rf /opt/coreapps'
+      when: pathcheck.stat.exists
+
+    - name: Cloning Core Apps
+      git:
+        repo: 'https://github.com/PTS-Team/Apps-Core'
+        dest: /opt/coreapps
+        version: 'master'
+        force: yes

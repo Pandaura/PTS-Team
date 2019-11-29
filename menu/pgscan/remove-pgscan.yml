@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# Title:      Plex_Autoscan remover
+# YML Author: MrDoob
+# GNU:        General Public License v3.0
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    # FACTS ######################################################################
+      #when: not config.stat.exists
+    - name: Check Service's Existance
+      stat:
+        path: '/etc/systemd/system/plex_autoscan.service'
+      register: pgp
+
+    - name: Stop service
+      service:
+        name: plex_autoscan
+        state: stopped
+      when: pgp.stat.exists
+
+    - name: Daemon-PTS-Patrol stop
+      systemd: state=stopped name=plex_autoscan daemon_reload=yes enabled=no
+
+    - name: Remove Basic Directories
+      file: 'path={{item}} state=absent mode=0775 owner=1000 group=1000'
+      with_items:
+        - '/opt/plex_autoscan/'
+        - '/etc/systemd/system/plex_autoscan.service'

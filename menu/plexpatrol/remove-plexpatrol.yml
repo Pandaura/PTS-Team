@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# Title:      PGBlitz (Reference Title File)
+# YML Author: Admin9705
+# URL:        https://pgblitz.com - http://github.pgblitz.com
+# GNU:        General Public License v3.0
+# Origin:     https://github.com/l3uddz/plex_patrol
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    # FACTS ######################################################################
+    - name: Check Service's Existance
+      stat:
+        path: '/etc/systemd/system/plexpatrol.service'
+      register: pgp
+      ignore_errors: yes
+
+    - name: Stop service
+      service:
+        name: plexpatrol
+        state: stopped
+      when: pgp.stat.exists
+      ignore_errors: yes
+
+    - name: Daemon-Plex-Patrol stop
+      systemd: state=stopped name=plexpatrol daemon_reload=yes enabled=no
+      ignore_errors: yes
+
+    - name: Remove old and new  Basic Directories
+      file: 'path={{item}} state=absent mode=0775 owner=1000 group=1000'
+      with_items:
+        - '/opt/pgpatrol/'
+        - '/opt/appdata/pgpatrol/'
+        - '/var/plexguide/pgpatrol'
+        - '/var/plexguide/plexpatrol'
+        - '/etc/systemd/system/plexpatrol.service'
+        - '/etc/systemd/system/pgpatrol.service'

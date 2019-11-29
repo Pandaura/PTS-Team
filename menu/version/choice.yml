@@ -1,0 +1,46 @@
+#!/bin/bash
+#
+# Title:      PTS Updater
+# Author(s):  Admin9705 - Deiteq
+# URL:        https://pgblitz.com - http://github.pgblitz.com
+# GNU:        General Public License v3.0
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Register Project
+      shell: 'cat /var/plexguide/pg.number'
+      register: serverid
+
+    - name: 'Setting ownership on PTS Folder'
+      shell: 'chown -cR 1000:1000 /opt/plexguide 1>/dev/null 2>&1'
+
+    - name: 'Setting permissions on PTS Folder'
+      shell: 'chmod -cR 775 /opt/plexguide 1>/dev/null 2>&1'
+
+    - name: 'Installing Version {{serverid.stdout}}'
+      git:
+        repo: 'https://github.com/PTS-Team/PTS-Team'
+        dest: '/opt/plexguide'
+        version: '{{serverid.stdout}}'
+        force: yes
+      when: not serverid.stdout == "edge"
+      ignore_errors: True
+
+    - stat:
+        path: /opt/plexguide
+      register: p
+    - debug:
+        msg: "Path exists and PTS folder exists"
+      when: p.stat.isdir is defined and p.stat.isdir
+
+    - name: 'Setting ownership on PTS Folder'
+      shell: 'chown -cR 1000:1000 /opt/plexguide 1>/dev/null 2>&1'
+
+    - name: 'Setting permissions on PTS Folder'
+      shell: 'chmod -cR 775 /opt/plexguide 1>/dev/null 2>&1'
+
+    - name: 'Stops First Time Run'
+      shell: 'touch /var/plexguide/ask.yes'
+      register: program

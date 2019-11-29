@@ -1,0 +1,75 @@
+# Title:      PTS List commands
+# Author(s):  MrDoobPG
+##############################################################
+    - name: PTSUpdate 
+      command: ptsupdate
+      Info : Update PTS-Edition
+
+    - name: PTS
+      command: plexguide 
+      Info: Open PTS Interface
+
+    - name: server reboot
+      command: reboot
+      Info : Reboot the Server
+      
+    - name: list systemd services
+      command: slist
+      Info: List all running services
+      
+    - name: list pts commands
+      command: scommands
+      Info: open short command info
+      
+    - name: update server
+      command: update
+      Info: update server to the latest packages / remove old apt-cache
+      
+    - name: upgrade server
+      command: upgrade
+      Info: upgrade server to the latest packages / remove old apt-cache
+      
+    - name: install appname
+      command: install [[ name of app ]]
+      Info: Install [[ name of app ]] automatic 
+
+    - name: autoremove unused packages after app install
+      command: autoremove
+      Info: automatic removing old [[ not used software ]]
+
+    - name: Prune docker containers appname
+      command: prune
+      Info : docker autoprune unused docker / volumes
+
+    - name: Install PTS-User ADD
+      command: ptsadd
+      Info: create a user with UID 1000 with all permissions
+
+    - name: Install rclone updater
+      command: rcupdate
+      Info: Open rClone update interface
+
+    - name: Install mergerfes updater
+      command: mgupdate
+      Info: Open mergerfs update interface    
+    
+    - name: Install Backup & Restore
+      command: backup
+      Info: open Backup & Restore ( short command )
+
+    - name: GCE
+      command: gce
+      Info: open Google Cloud Engine ( short command )
+
+    - name: purge old Journal files
+      command: jpurge
+      Info: cleanup old Journal files
+
+    - name: purge old log files
+      command: kill_logs
+      Info: remove old log files from /var/log for your security
+
+    - name: automatic backup /opt/appdata/[app names to gdrive]
+      command: autobackup
+      Info: remove old log files from /var/log for your security
+

@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+# Title:      PTS Plex Token
+# Author(s):  MrDoob
+# GNU:        General Public License v3.0
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Recall User | Plex Username 
+      shell: 'cat /var/plex_dupe/plex.user'
+      register: user
+
+    - name: Recall PW | Plex Password
+      shell: 'cat /var/plex_dupe/plex.pw'
+      register: pw
+
+    - name: Blank Out Token 
+      shell: "echo '' >/var/plex_dupe/plex.token"
+      ignore_errors: yes
+
+    - name: Token Generation  | Plex  Token
+      uri:
+        url: https://plex.tv/users/sign_in.json
+        method: POST
+        status_code: 201
+        headers:
+          X-Plex-Product: 'plexguide'
+          X-Plex-Version: '1.0.0'
+          X-Plex-Client-Identifier: 'XXX'
+          Content-Type: 'application/x-www-form-urlencoded; charset=utf-8'
+        password: '{{pw.stdout}}'
+        user: '{{user.stdout}}'
+      register: plextoken
+
+    - name: Set Token | Plex Token
+      set_fact:
+        plexauth: "{{plextoken.json.user.authToken | regex_replace('\n', '') }}"
+
+    - name: Save Token | Plex Token
+      shell: 'echo {{plexauth}} > /var/plex_dupe/plex.token'
+      ignore_errors: yes
