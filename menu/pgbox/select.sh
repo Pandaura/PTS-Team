@@ -68,7 +68,7 @@ EOF
 
   case $typed in
   1) bash /opt/plexguide/menu/pgbox/gce/gcecore.sh ;;
-  2) bash /opt/plexguide/menu/pgbox/removal/removal.sh ;;
+  2) bash /opt/plexguide/menu/pgbox/remove/removal.sh ;;
   z) exit ;;
   Z) exit ;;
   *) GCEtest ;;
