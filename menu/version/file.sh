@@ -81,7 +81,12 @@ EOF
   fi
 }
 
-rm -rf /opt/pgstage
-mkdir -p /opt/pgstage
+base(){
+rm -rf /opt/pgstage && mkdir -p /opt/pgstage
 ansible-playbook /opt/plexguide/menu/pgstage/pgstage.yml #&>/de v/null &
+}
+
+##$functionsstart
+
+base
 mainstart
