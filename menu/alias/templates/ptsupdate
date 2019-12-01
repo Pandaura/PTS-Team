@@ -5,10 +5,13 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-source /opt/plexguide/menu/functions/functions.sh
-source /opt/plexguide/menu/functions/start.sh
+source /opt/ptsupdate/functions/functions.sh
+source /opt/ptsupdate/functions/start.sh
 
 sudocheck
 missingpull
 exitcheck
-templatespart2
+remove
+redit
+owned
+check
