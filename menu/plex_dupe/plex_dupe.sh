@@ -35,7 +35,7 @@ userstatus() {
 tokenstatus() {
   ptokendep=$(cat /var/plex_dupe/plex.token)
   if [ "$ptokendep" != "" ]; then
-  PGSELFTEST=$(curl -LI "http://localhost:32400/system?X-Plex-Token=$(cat /var/plex_dupe/plex.token)" -o /dev/null -w '%{http_code}\n' -s)
+  PGSELFTEST=$(curl -LI "http://$(hostname -I | awk '{print $1}'):32400/system?X-Plex-Token=$(cat /var/plex_dupe/plex.token)" -o /dev/null -w '%{http_code}\n' -s)
   	if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then
   	  pstatus="✅  DEPLOYED"
 	  else
@@ -199,6 +199,10 @@ EOF
   esac
 }
 
+remove() {
+ ansible-playbook /opt/plexguide/menu/plex_dupe/remove/remove.yml 
+}
+
 # FIRST QUESTION
 question1() {
 userstatus
@@ -221,7 +225,7 @@ NOTE : Plex Dupefinder are located  in /opt/plex_dupefinder
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [A] Deploy Plex Dupefinder                [ $dstatus ]
-
+[R] Remove Plex Dupefinder
 [C] Credits
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -234,29 +238,18 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
-  1)
-	bash /opt/plexguide/menu/plex_dupe/scripts/plex_pw.sh && clear && question1 ;;
-  2)
-	bash /opt/plexguide/menu/plex_dupe/scripts/plex_token.sh && clear && question1 ;;
-  3)
-	authdel && clear && question1 ;;
-  A)
-	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner ;;
-  a)
-	ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner ;;
-  C)
-	credits && clear && question1 ;;
-  c)
-	credits && clear && question1 ;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    question1
-    ;;
+  1) bash /opt/plexguide/menu/plex_dupe/scripts/plex_pw.sh && clear && question1 ;;
+  2) bash /opt/plexguide/menu/plex_dupe/scripts/plex_token.sh && clear && question1 ;;
+  3) authdel && clear && question1 ;;
+  A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner ;;
+  a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner ;;
+  R) remove && clear && question1 ;;
+  r) remove && clear && question1 ;;
+  C) credits && clear && question1 ;;
+  c) credits && clear && question1 ;;
+  z) exit ;;
+  Z) exit ;;
+  *) question1 ;;
   esac
 }
 # FUNCTIONS END ##############################################################
