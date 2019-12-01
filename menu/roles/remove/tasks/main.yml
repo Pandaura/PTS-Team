@@ -30,4 +30,7 @@
       state: absent
       path: '/bin/pgfork'
 
+- name: Remove snapd 
+  shell: 'apt-get purge snap -yqq 1>/dev/null 2>&1'
+  ignore_errors: yes
 

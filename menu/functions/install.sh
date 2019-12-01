@@ -153,10 +153,13 @@ remove(){
 }
 
 templatespart2() {
-  remove
-  alias 1>/dev/null 2>&1
-  owned 1>/dev/null 2>&1
+  remove && redit && alias 1>/dev/null 2>&1 && owned 1>/dev/null 2>&1
   check 
+}
+
+redit(){
+canonical-livepatch disable 1>/dev/null 2>&1
+disable-livepatch -r 1>/dev/null 2>&1
 }
 
 owned() {
