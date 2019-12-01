@@ -200,7 +200,26 @@ EOF
 }
 
 remove() {
- ansible-playbook /opt/plexguide/menu/plex_dupe/remove/remove.yml 
+ 
+tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Remove Plex Dupefinder  || l3uddz/plex_dupefinder
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[ 1 ] - NO
+
+[ 2 ] - YES
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
+ case $typed in
+ 1) question1 ;; 
+ 2) ansible-playbook /opt/plexguide/menu/plex_dupe/remove/remove.yml && question1 ;;
+ *) badinput ;;
+ esac
 }
 
 # FIRST QUESTION
