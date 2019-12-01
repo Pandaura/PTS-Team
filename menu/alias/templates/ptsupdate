@@ -8,6 +8,7 @@
 source /opt/ptsupdate/functions/functions.sh
 source /opt/ptsupdate/functions/start.sh
 
+
 sudocheck
 missingpull
 exitcheck
