@@ -25,7 +25,7 @@
 
   - name: Settings | Import default 'config.json'
     template:
-      src: /opt/plexguide/menu/roles/plex_autoscan/templates/config.json.j2
+      src: config.json.j2
       dest: /opt/plex_autoscan/config/config.json
       owner: '1000'
       group: '1000'
