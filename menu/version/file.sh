@@ -6,87 +6,27 @@
 # GNU:        General Public License v3.0
 ################################################################################
 mainstart() {
-  echo ""
-  echo "💬  Pulling Update Files - Please Wait"
-  file="/opt/pgstage/place.holder"
-  waitvar=0
-  while [ "$waitvar" == "0" ]; do
-    sleep .5
-    if [ -e "$file" ]; then waitvar=1; fi
-  done
+mkdir -p /opt/ptsupdate 1>/dev/null 2>&1
+git clone --single-branch https://github.com/PTS-Team/PTS-Update.git /opt/ptsupdate 1>/dev/null 2>&1
+chown -cR 100:1000 /opt/ptsupdate 1>/dev/null 2>&1 
+chmod -cR 775 /opt/ptsupdate 1>/dev/null 2>&1
+apt-get install dos2unix -yqq && dos2unix /opt/ptsupdate/update.sh 1>/dev/null 2>&1
+ansible-playbook /opt/plexguide/menu/alias/alias.yml 1>/dev/null 2>&1
+}
 
-  pgnumber=$(cat /var/plexguide/pg.number)
-  # latest=$(cat /opt/pgstage/versions.sh | head -n1)
-  versions=$(cat /opt/pgstage/versions.sh)
-  # dev=$(cat /opt/pgstage/versions.sh | sed -n 2p)
-  release="$(curl -s https://api.github.com/repos/PTS-Team/PTS-Team/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
-
+endline() {
   tee <<-EOF
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📂  Update Interface
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Hey Guys we build up a new update panel 
+if yousee this , please do follow 
 
-$versions
+1.) read this part please
+2.) do ptsupdate again
+3.) have fun ^^
 
-Installed : $pgnumber
-
-[Z] Exit
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-
-  break=no
-  read -p '🌍  TYPE master | dev or preview | PRESS ENTER: ' typed
-  storage=$(grep $typed /opt/pgstage/versions.sh)
-
-  parttwo
-}
-
-parttwo() {
-  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
-    echo ""
-    touch /var/plexguide/exited.upgrade
-    exit
-  fi
-
-  if [ "$storage" != "" ]; then
-    break=yes
-    echo -e $storage >/var/plexguide/pg.number
-    ansible-playbook /opt/plexguide/menu/version/choice.yml
-
-    tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅️  SYSTEM MESSAGE: Installing Version - $typed - Standby!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    sleep 2
-    touch /var/plexguide/new.install
-
-    file="/var/plexguide/community.app"
-    if [ -e "$file" ]; then rm -rf /var/plexguide/community.app; fi
-
-    exit
-  else
-    tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  SYSTEM MESSAGE: Version $typed does not exist! - Standby!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-    sleep 2
-    mainstart
-  fi
 }
 
-base(){
-rm -rf /opt/pgstage && mkdir -p /opt/pgstage
-ansible-playbook /opt/plexguide/menu/pgstage/pgstage.yml #&>/de v/null &
-}
-
-##$functionsstart
-
-base
 mainstart
+endline
