@@ -34,7 +34,6 @@
       src: plex_autoscan.service.j2
       dest: /etc/systemd/system/plex_autoscan.service
       force: yes
-
   when: plex_autoscan_service.stat.exists
 
 - name: Services | New 'plex_autoscan.service' Tasks
@@ -45,5 +44,4 @@
       src: plex_autoscan.service.j2
       dest: /etc/systemd/system/plex_autoscan.service
       force: yes
-
   when: not plex_autoscan_service.stat.exists
