@@ -10,19 +10,13 @@
 # Starting Actions
 
 startscript() {
-
         while [ 1 ]; do
-
                 rm -rf /var/plexguide/spaceused.log
-
                 # move and downloads for the UI
-
                 du -sh /mnt/move | awk '{print $1}' >>/var/plexguide/spaceused.log
                 du -sh /mnt/downloads | awk '{print $1}' >>/var/plexguide/spaceused.log
-
                 sleep 60
         done
-
 }
 
 # keeps the function in a loop

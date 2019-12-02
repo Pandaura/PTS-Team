@@ -7,10 +7,6 @@
 
 # KEY VARIABLE RECALL & EXECUTION
 mkdir -p /var/plex_dupe
-touch /var/plex_dupe/plex.pw
-touch /var/plex_dupe/plex.user
-touch /var/plex_dupe/plex.token
-touch /var/plex_dupe/plex.authdel
 
 # FUNCTIONS START ##############################################################
 variable() {
@@ -187,15 +183,9 @@ EOF
 	  echo -e "false" >/var/plex_dupe/plex.authdel
 	  ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder >/dev/null 2>&1
 	else echo -e "false" >/var/plex_dupe/plex.authdel ; fi && clear && question1 ;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    question1
-    ;;
+  z) exit ;;
+  Z) exit ;;
+  *) question1 ;;
   esac
 }
 
@@ -216,7 +206,7 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
  case $typed in
- 1) question1 ;; 
+ 1) clear && question1 ;; 
  2) ansible-playbook /opt/plexguide/menu/plex_dupe/remove/remove.yml && question1 ;;
  *) badinput ;;
  esac

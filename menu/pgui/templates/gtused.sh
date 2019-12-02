@@ -1,9 +1,7 @@
 #!/bin/bash
 #
-# Title:      PGBlitz (G/TDrive used space)
-# Author(s):  Admin9705
+# Title:      G/TDrive used space
 # Coder: 	  MrDoob
-# URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
 #functions
@@ -14,6 +12,7 @@ useragent="$(cat /var/plexguide/uagent)"
 #if else loop for checking what is running
 
 if grep -q "gdrive:" $config; then
+    rm -f $log/gduncrypt.log && touch $log/gduncrypt.log
     rclone size gdrive: \
         --verbose=1 \
         --fast-list \
@@ -24,9 +23,11 @@ if grep -q "gdrive:" $config; then
         --exclude="**encrypt**" \
         --config /opt/appdata/plexguide/rclone.conf | awk '{print $3,$4}' >>$log/gduncrypt.log
     sed -i 's/Total size: / /g' $log/gduncrypt.log
-fi
+else echo "🔴 NOT DEPLOYED" $log/gduncrypt.log; fi
+
 sleep 2
 if grep -q "tdrive:" $config; then
+    rm -f $log/tduncrypt.log && touch $log/tduncrypt.log
     rclone size tdrive: \
         --verbose=1 \
         --fast-list \
@@ -37,9 +38,11 @@ if grep -q "tdrive:" $config; then
         --exclude="**encrypt**" \
         --config /opt/appdata/plexguide/rclone.conf | awk '{print $3,$4}' >>$log/tduncrypt.log
     sed -i 's/Total size: / /g' $log/tduncrypt.log
-fi
+else echo "🔴 NOT DEPLOYED" $log/tduncrypt.log; fi
+
 sleep 2
 if grep -q "gcrypt:" $config; then
+    rm -f $log/gdcrypt.log && touch $log/gdcrypt.log
     rclone size gcrypt: \
         --verbose=1 \
         --fast-list \
@@ -49,9 +52,10 @@ if grep -q "gcrypt:" $config; then
         --timeout=30m \
         --config /opt/appdata/plexguide/rclone.conf | awk '{print $3,$4}' >>$log/gdcrypt.log
     sed -i 's/Total size: / /g' $log/gdcrypt.log
-fi
+else echo "🔴 NOT DEPLOYED" $log/gdcrypt.log; fi
 sleep 2
 if grep -q "tcrypt:" $config; then
+    rm -f $log/tdcrypt.log && touch $log/tdcrypt.log
     rclone size tcrypt: \
         --verbose=1 \
         --fast-list \
@@ -61,4 +65,4 @@ if grep -q "tcrypt:" $config; then
         --timeout=30m \
         --config /opt/appdata/plexguide/rclone.conf | awk '{print $3,$4}' >>$log/tdcrypt.log
     sed -i 's/Total size: / /g' $log/tdcrypt.log
-fi
+else echo "🔴 NOT DEPLOYED" $log/tdcrypt.log; fi

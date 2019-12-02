@@ -57,32 +57,41 @@ while true; do
             echo " 🔴 Not Operational UPLOADER" >>/var/plexguide/pg.blitz
         fi
 
-  # Todo remove the dupes or change to crypt once PGUI is updated
+	
+config="/opt/appdata/plexguide/rclone.conf"
+if grep -q "gdrive" $config; then
+	  if [[ "$gdrivecheck" != "active" ]]; then
+		echo " 🔴 Not Operational" >/var/plexguide/pg.gdrive
+	  else echo " ✅ Operational" >/var/plexguide/pg.gdrive; fi
+else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.gdrive; fi
 
-  if [[ "$gdrivecheck" != "active" ]]; then
-    echo " 🔴 Not Operational" >/var/plexguide/pg.gdrive
-  else echo " ✅ Operational" >/var/plexguide/pg.gdrive; fi
+if grep -q "gcrypt" $config; then
+	  if [[ "$gcryptcheck" != "active" ]]; then
+		echo " 🔴 Not Operational" >/var/plexguide/pg.gcrypt
+	  else echo " ✅ Operational" >/var/plexguide/pg.gcrypt; fi
+else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.gcrypt; fi
 
-  if [[ "$gcryptcheck" != "active" ]]; then
-    echo " 🔴 Not Operational" >/var/plexguide/pg.gcrypt
-  else echo " ✅ Operational" >/var/plexguide/pg.gcrypt; fi
+if grep -q "tdrive" $config; then
+	  if [[ "$tdrivecheck" != "active" ]]; then
+		echo " 🔴 Not Operational " >/var/plexguide/pg.tdrive
+	  else echo " ✅ Operational" >/var/plexguide/pg.tdrive; fi
+else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.tdrive; fi
 
-  if [[ "$tdrivecheck" != "active" ]]; then
-    echo " 🔴 Not Operational " >/var/plexguide/pg.tdrive
-  else echo " ✅ Operational" >/var/plexguide/pg.tdrive; fi
+if grep -q "tcrypt" $config; then
+	  if [[ "$tcryptcheck" != "active" ]]; then
+		echo " 🔴 Not Operational " >/var/plexguide/pg.tcrypt
+	  else echo " ✅ Operational" >/var/plexguide/pg.tcrypt; fi
+else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.tcrypt; fi
 
-  if [[ "$tcryptcheck" != "active" ]]; then
-    echo " 🔴 Not Operational " >/var/plexguide/pg.tcrypt
-  else echo " ✅ Operational" >/var/plexguide/pg.tcrypt; fi
-
-  if [[ "$pgunioncheck" != "active" ]]; then
-    echo " 🔴 Not Operational " >/var/plexguide/pg.union
-  else echo " ✅ Operational " >/var/plexguide/pg.union; fi
-
+if grep -q "pgunion" $config; then
+	  if [[ "$pgunioncheck" != "active" ]]; then
+		echo " 🔴 Not Operational " >/var/plexguide/pg.union
+	  else echo " ✅ Operational " >/var/plexguide/pg.union; fi
+else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.union; fi
 
   # Disk Calculations - 5000000 = 5GB
 
-  leftover=$(df /opt/appdata/plexguide | tail -n +2 | awk '{print $4}')
+  leftover=$(df / --local | tail -n +2 | awk '{print $4}')
 
   if [[ "$leftover" -lt "5000000" ]]; then
     diskspace27=1
