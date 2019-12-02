@@ -18,14 +18,14 @@
         image: 'mrdoob/dngele:latest'
 
     # CORE (MANDATORY) ############################################################
-    - name: 'Including cron job'
+    - name: 'Including core job'
       include_tasks: '/opt/plexguide/menu/pgui/templates/_core.yml'
 
     - name: 'Including cron job'
       include_tasks: '/opt/plexguide/menu/pgui/templates/_cron.yml'
 
-    - name: 'Including Tasks'
-      include_tasks: '/opt/plexguide/menu/pgui/tasks/dynamic.yml'
+    - name: 'Including major task'
+      include_tasks: '/opt/coreapps/apps/templates/tasks/dynamic.yml'
 
     # refix the UI     ############################################################
 
@@ -58,50 +58,8 @@
         src: /opt/plexguide/menu/pgui/templates/mountcheck.sh
         dest: /opt/plexguide/menu/pgui/mountcheck.sh
         force: yes
-
-    - name: 'Install File Check mergerfs / rClone'
-      template:
-        src: /opt/plexguide/menu/pgui/templates/check.sh
-        dest: /opt/appdata/pgui/check.sh
-        force: yes
         owner: '1000'
         group: '1000'
-
-    - name: 'Install File GTused'
-      template:
-        src: /opt/plexguide/menu/pgui/templates/gtused.sh
-        dest: /opt/appdata/pgui/gtused.sh
-        force: yes
-        owner: '1000'
-        group: '1000'
-
-     ### mountcheck replace
- 
-    - name: replacing MountCheck Service
-      template:
-        src: /opt/plexguide/menu/pgui/templates/mountcheck.service
-        dest: /etc/systemd/system/mountcheck.service
-        force: yes
-
-    - name: Daemon-Reload
-      systemd: state=stopped name=mountcheck daemon_reload=yes enabled=no
-
-    - name: Start pgscan
-      systemd: state=started name=mountcheck enabled=yes
-
-     ### localspace replace
- 
-    - name: replacing localspace Service
-      template:
-        src: /opt/plexguide/menu/pgui/templates/localspace.service
-        dest: /etc/systemd/system/localspace.service
-        force: yes
-
-    - name: Daemon-Reload
-      systemd: state=stopped name=localspace daemon_reload=yes enabled=no
-
-    - name: Start pgscan
-      systemd: state=started name=localspace enabled=yes
 
     # LABELS ######################################################################
     - name: 'Adding Traefik'
@@ -121,18 +79,23 @@
           traefik.frontend.headers.customResponseHeaders: 'X-Robots-Tag:noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex'
           traefik.frontend.headers.forceSTSHeader: 'true'
 
-    - name: 'Setting PG Volumes'
+    - name: 'Setting {{pgrole}} Volumes'
       set_fact:
         pg_volumes:
           - '/opt/appdata/pgui/index.php:/var/www/html/index.php'
           - '/var/plexguide:/plexguide'
           - '/opt/appdata/plexguide:/log'
 
-    - name: 'Setting PG ENV'
+    - name: 'Setting {{pgrole}} ENV'
       set_fact:
         pg_env:
           PUID: '1000'
           PGID: '1000'
+
+    # first catchup data ##########################################################
+
+    - name: Please wait mergerfs | rclone check is running
+      shell: 'bash /opt/plexguide/menu/pgui/templates/check.sh'
 
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'

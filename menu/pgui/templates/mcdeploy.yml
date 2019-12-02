@@ -6,9 +6,6 @@
 # GNU:        General Public License v3.0
 ################################################################################
 ---
-- hosts: localhost
-  gather_facts: false
-  tasks:
     - name: Check Service's Existance
       stat:
         path: '/etc/systemd/systemd/mountcheck.service'

@@ -1,3 +1,23 @@
+---
+  - cron:
+    name: Daily G/TDrive used space check | file checker
+    special_time: 'daily'
+    job: 'bash /opt/appdata/pgui/gtused.sh'
+    state: absent
+    ignore_errors: yes
+
+  - cron:
+    name: Daily check for mgerfs / rclone new version
+    special_time: 'daily'
+    job: 'bash /opt/appdata/pgui/ckeck.sh'
+    state: present
+
+  - cron:
+    name: Daily G/TDrive used space checker | file & folder
+    special_time: 'daily'
+    job: 'bash /opt/appdata/pgui/gtused.sh'
+    state: present
+
   - name: Update APT package cache
     apt: update_cache=yes cache_valid_time=600
 
@@ -19,3 +39,49 @@
     shell: apt-get remove -y --purge $(dpkg -l | grep "^rc\s*linux-image-" | awk '{print $2}' | tr '\n' ' ')
     register: apt_result
     changed_when: "'packages will be REMOVED' in apt_result.stdout"
+
+  - name: Check Service's Existance
+    stat:
+      path: '/etc/systemd/systemd/localspace.service'
+    register: pgp
+
+  - name: Stop service
+    service:
+      name: localspace
+      state: stopped
+    when: pgp.stat.exists
+
+  - name: localspace Service
+    template:
+      src: /opt/plexguide/menu/pgui/templates/localspace.service
+      dest: /etc/systemd/system/localspace.service
+      force: yes
+
+  - name: Daemon-Reload
+    systemd: state=stopped name=localspace daemon_reload=yes enabled=no
+
+  - name: Start pgscan
+    systemd: state=started name=localspace enabled=yes
+
+  - name: Check Service's Existance
+    stat:
+     path: '/etc/systemd/systemd/mountcheck.service'
+    register: pgp
+
+  - name: Stop service
+    service:
+     name: mountcheck
+     state: stopped
+    when: pgp.stat.exists
+
+  - name: MountCheck Service
+    template:
+      src: /opt/plexguide/menu/pgui/mountcheck.service
+      dest: /etc/systemd/system/mountcheck.service
+      force: yes
+
+  - name: Daemon-Reload
+    systemd: state=stopped name=mountcheck daemon_reload=yes enabled=no
+
+  - name: Start pgscan
+    systemd: state=started name=mountcheck enabled=yes
