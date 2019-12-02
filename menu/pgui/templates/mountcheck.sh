@@ -30,6 +30,7 @@ while true; do
         pgmove=$(systemctl list-unit-files | grep pgmove.service | awk '{ print $2 }')
 
         touch /var/plexguide/status.mounts
+		touch /var/plexguide/pg.blitz
 
         status=$(tail -n 1 /var/plexguide/status.mounts)
 
