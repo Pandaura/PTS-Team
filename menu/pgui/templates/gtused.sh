@@ -26,6 +26,7 @@ if grep -q "gdrive:" $config; then
 else echo "🔴 NOT DEPLOYED" $log/gduncrypt.log; fi
 
 sleep 2
+
 if grep -q "tdrive:" $config; then
     rm -f $log/tduncrypt.log && touch $log/tduncrypt.log
     rclone size tdrive: \
@@ -41,6 +42,7 @@ if grep -q "tdrive:" $config; then
 else echo "🔴 NOT DEPLOYED" $log/tduncrypt.log; fi
 
 sleep 2
+
 if grep -q "gcrypt:" $config; then
     rm -f $log/gdcrypt.log && touch $log/gdcrypt.log
     rclone size gcrypt: \
@@ -53,7 +55,9 @@ if grep -q "gcrypt:" $config; then
         --config /opt/appdata/plexguide/rclone.conf | awk '{print $3,$4}' >>$log/gdcrypt.log
     sed -i 's/Total size: / /g' $log/gdcrypt.log
 else echo "🔴 NOT DEPLOYED" $log/gdcrypt.log; fi
+
 sleep 2
+
 if grep -q "tcrypt:" $config; then
     rm -f $log/tdcrypt.log && touch $log/tdcrypt.log
     rclone size tcrypt: \
