@@ -43,7 +43,7 @@ while true; do
 
         if [[ "$status" == "1" ]] ; then
                 if [[ "$pgmovecheck" != "active" ]]; then
-                        echo -e " 🔴 Not Operational MOVE" >>/var/plexguide/pg.blitz
+                        echo -e " 🔴 Not Operational MOVE" >/var/plexguide/pg.blitz
                 else
 						echo -e " ✅ Operational MOVE" >/var/plexguide/pg.blitz
                 fi
@@ -60,38 +60,38 @@ while true; do
             echo " 🔴 Not Operational UPLOADER" >/var/plexguide/pg.blitz
         fi
 
+########################## UI 
 
+		config="/opt/appdata/plexguide/rclone.conf"
+		if grep -q "gdrive" $config; then
+			  if [[ "$gdrivecheck" != "active" ]]; then
+				echo " 🔴 Not Operational" >/var/plexguide/pg.gdrive
+			  else echo " ✅ Operational" >/var/plexguide/pg.gdrive; fi
+		else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.gdrive; fi
 
-config="/opt/appdata/plexguide/rclone.conf"
-if grep -q "gdrive" $config; then
-	  if [[ "$gdrivecheck" != "active" ]]; then
-		echo " 🔴 Not Operational" >/var/plexguide/pg.gdrive
-	  else echo " ✅ Operational" >/var/plexguide/pg.gdrive; fi
-else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.gdrive; fi
+		if grep -q "gcrypt" $config; then
+			  if [[ "$gcryptcheck" != "active" ]]; then
+				echo " 🔴 Not Operational" >/var/plexguide/pg.gcrypt
+			  else echo " ✅ Operational" >/var/plexguide/pg.gcrypt; fi
+		else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.gcrypt; fi
 
-if grep -q "gcrypt" $config; then
-	  if [[ "$gcryptcheck" != "active" ]]; then
-		echo " 🔴 Not Operational" >/var/plexguide/pg.gcrypt
-	  else echo " ✅ Operational" >/var/plexguide/pg.gcrypt; fi
-else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.gcrypt; fi
+		if grep -q "tdrive" $config; then
+			  if [[ "$tdrivecheck" != "active" ]]; then
+				echo " 🔴 Not Operational " >/var/plexguide/pg.tdrive
+			  else echo " ✅ Operational" >/var/plexguide/pg.tdrive; fi
+		else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.tdrive; fi
 
-if grep -q "tdrive" $config; then
-	  if [[ "$tdrivecheck" != "active" ]]; then
-		echo " 🔴 Not Operational " >/var/plexguide/pg.tdrive
-	  else echo " ✅ Operational" >/var/plexguide/pg.tdrive; fi
-else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.tdrive; fi
+		if grep -q "tcrypt" $config; then
+			  if [[ "$tcryptcheck" != "active" ]]; then
+				echo " 🔴 Not Operational " >/var/plexguide/pg.tcrypt
+			  else echo " ✅ Operational" >/var/plexguide/pg.tcrypt; fi
+		else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.tcrypt; fi
 
-if grep -q "tcrypt" $config; then
-	  if [[ "$tcryptcheck" != "active" ]]; then
-		echo " 🔴 Not Operational " >/var/plexguide/pg.tcrypt
-	  else echo " ✅ Operational" >/var/plexguide/pg.tcrypt; fi
-else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.tcrypt; fi
-
-if grep -q "pgunion" $config; then
-	  if [[ "$pgunioncheck" != "active" ]]; then
-		echo " 🔴 Not Operational " >/var/plexguide/pg.union
-	  else echo " ✅ Operational " >/var/plexguide/pg.union; fi
-else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.union; fi
+		if grep -q "pgunion" $config; then
+			  if [[ "$pgunioncheck" != "active" ]]; then
+				echo " 🔴 Not Operational " >/var/plexguide/pg.union
+			  else echo " ✅ Operational " >/var/plexguide/pg.union; fi
+		else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.union; fi
 
   # Disk Calculations - 5000000 = 5GB
 
