@@ -25,7 +25,7 @@
       include_tasks: '/opt/plexguide/menu/pgui/templates/_cron.yml'
 
     - name: 'Including major task'
-      include_tasks: '/opt/coreapps/apps/templates/tasks/dynamic.yml'
+      include_tasks: '/opt/plexguide/menu/pgui/templates/dynamic.yml'
 
     # LABELS ######################################################################
     - name: 'Adding Traefik'
