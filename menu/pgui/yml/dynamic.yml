@@ -33,7 +33,7 @@
 
   - name: Comm UI | localspace Service
     template:
-      src: /opt/plexguide/menu/pgui/templates/templates/localspace.service
+      src: /opt/plexguide/menu/pgui/templates/localspace.service
       dest: /etc/systemd/system/localspace.service
       force: yes
 
@@ -68,7 +68,7 @@
 
   - name: Comm UI | 'Install File new UI'
     template:
-      src: /opt/plexguide/menu/pgui/templates/templates/index.php
+      src: /opt/plexguide/menu/pgui/templates/index.php
       dest: /opt/appdata/pgui/index.php
       force: yes
       owner: '1000'
@@ -76,7 +76,7 @@
 
   - name: Comm UI | 'Install File Check mergerfs / rClone'
     template:
-      src: /opt/plexguide/menu/pgui/templates/templates/check.sh
+      src: /opt/plexguide/menu/pgui/templates/check.sh
       dest: /opt/appdata/pgui/check.sh
       force: yes
       owner: '1000'
@@ -84,7 +84,7 @@
 
   - name: Comm UI | 'Install File GTused'
     template:
-      src: /opt/plexguide/menu/pgui/templates/templates/gtused.sh
+      src: /opt/plexguide/menu/pgui/templates/gtused.sh
       dest: /opt/appdata/pgui/gtused.sh
       force: yes
       owner: '1000'

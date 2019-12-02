@@ -19,13 +19,13 @@
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including core job'
-      include_tasks: '/opt/plexguide/menu/pgui/templates/_core.yml'
+      include_tasks: '/opt/plexguide/menu/pgui/yml/_core.yml'
 
     - name: 'Including cron job'
-      include_tasks: '/opt/plexguide/menu/pgui/templates/_cron.yml'
+      include_tasks: '/opt/plexguide/menu/pgui/yml/_cron.yml'
 
     - name: 'Including major task'
-      include_tasks: '/opt/plexguide/menu/pgui/templates/dynamic.yml'
+      include_tasks: '/opt/plexguide/menu/pgui/yml/dynamic.yml'
 
     # LABELS ######################################################################
     - name: 'Adding Traefik'

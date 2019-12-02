@@ -85,7 +85,7 @@ EOF
 
     else
       echo "On" >/var/plexguide/pgui.switch
-      ansible-playbook /opt/coreapps/apps/pgui.yml
+      ansible-playbook /opt/plexguide/menu/pgui/pgui.yml
       systemctl daemon-reload
       service localspace start
 	  clear

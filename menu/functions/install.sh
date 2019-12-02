@@ -137,36 +137,6 @@ alias() {
   ansible-playbook /opt/plexguide/menu/alias/alias.yml 
 }
 
-# check(){
-# file="/opt/plexguide/menu/pg.yml"
-  # if [[ -f $file ]]; then
-  # tee <<-EOF
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# ✅ All files Valid
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# EOF
- # else ansible-playbook /opt/plexguide/menu/version/missing_pull.yml; fi
-# }
-
-# remove(){
-  # ansible-playbook /opt/plexguide/menu/pg.yml --tag remove 1>/dev/null 2>&1
-# }
-
-# templatespart2() {
-  # remove && redit && alias 1>/dev/null 2>&1 && owned 1>/dev/null 2>&1
-  # check 
-# }
-
-# redit(){
-# canonical-livepatch disable 1>/dev/null 2>&1
-# disable-livepatch -r 1>/dev/null 2>&1
-# }
-
-# owned() {
-  # chown -cR 1000:1000 /opt/plexguide 1>/dev/null 2>&1
-  # chmod -R 775 /opt/plexguide 1>/dev/null 2>&1
-# }
-
 aptupdate() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags update
 }
@@ -230,7 +200,7 @@ motd() {
 }
 
 mountcheck() {
-  ansible-playbook /opt/plexguide/menu/pgui/mcdeploy.yml
+  ansible-playbook /opt/plexguide/menu/installer/mcdeploy.yml
 }
 
 newinstall() {
