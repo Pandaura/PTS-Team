@@ -14,6 +14,9 @@ diskspace27=0
 rm -rf /var/plexguide/status.mounts
 while true; do
 
+	rm -rf /var/plexguide/pg.blitz
+	rm -rf /var/plexguide/status.mounts
+
 	gdrivecheck=$(systemctl is-active gdrive)
 	gcryptcheck=$(systemctl is-active gcrypt)
 	tdrivecheck=$(systemctl is-active tdrive)
@@ -31,33 +34,34 @@ while true; do
         status=$(tail -n 1 /var/plexguide/status.mounts)
 
         if [[ "$pgmove" == "enabled" ]]; then
-                echo "1" >> /var/plexguide/status.mounts
+                echo -e "1" >/var/plexguide/status.mounts
         elif [[ "$pgblitz" == "enabled" ]]; then
-                echo "2" >> /var/plexguide/status.mounts
+                echo -e "2" >/var/plexguide/status.mounts
         else
-                echo "3" >> /var/plexguide/status.mounts
+                echo -e "3" >/var/plexguide/status.mounts
         fi
 
         if [[ "$status" == "1" ]] ; then
                 if [[ "$pgmovecheck" != "active" ]]; then
-                        echo " 🔴 Not Operational MOVE" >>/var/plexguide/pg.blitz
+                        echo -e " 🔴 Not Operational MOVE" >>/var/plexguide/pg.blitz
                 else
-                        echo " ✅ Operational MOVE" >>/var/plexguide/pg.blitz
+						echo -e " ✅ Operational MOVE" >/var/plexguide/pg.blitz
                 fi
         fi
         if [[ "$status" == "2" ]] ; then
                 if [[ "$pgblitzcheck" != "active" ]]; then
-                        echo " 🔴 Not Operational BLITZ" >>/var/plexguide/pg.blitz
+				    echo -e " 🔴 Not Operational BLITZ" >/var/plexguide/pg.blitz
                 else
-                        echo " ✅ Operational BLITZ" >>/var/plexguide/pg.blitz
+					echo -e " ✅ Operational BLITZ" >/var/plexguide/pg.blitz
                 fi
         fi
 
         if [[ "$status" == "3" ]] ; then
-            echo " 🔴 Not Operational UPLOADER" >>/var/plexguide/pg.blitz
+            echo " 🔴 Not Operational UPLOADER" >/var/plexguide/pg.blitz
         fi
 
-	
+
+
 config="/opt/appdata/plexguide/rclone.conf"
 if grep -q "gdrive" $config; then
 	  if [[ "$gdrivecheck" != "active" ]]; then
