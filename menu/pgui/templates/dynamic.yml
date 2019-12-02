@@ -85,3 +85,35 @@
 
   - name: Start pgscan
     systemd: state=started name=mountcheck enabled=yes
+
+  - name: 'Install File new UI'
+    template:
+      src: /opt/plexguide/menu/pgui/templates/index.php
+      dest: /opt/appdata/pgui/index.php
+      force: yes
+      owner: '1000'
+      group: '1000'
+
+  - name: 'Install File Check mergerfs / rClone'
+    template:
+      src: /opt/plexguide/menu/pgui/templates/check.sh
+      dest: /opt/appdata/pgui/check.sh
+      force: yes
+      owner: '1000'
+      group: '1000'
+
+  - name: 'Install File GTused'
+    template:
+      src: /opt/plexguide/menu/pgui/templates/gtused.sh
+      dest: /opt/appdata/pgui/gtused.sh
+      force: yes
+      owner: '1000'
+      group: '1000'
+
+  - name: 'Install File Mountcheck file'
+    copy:
+      src: /opt/plexguide/menu/pgui/templates/mountcheck.sh
+      dest: /opt/plexguide/menu/pgui/mountcheck.sh
+      force: yes
+      owner: '1000'
+      group: '1000'

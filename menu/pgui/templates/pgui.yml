@@ -24,51 +24,8 @@
     - name: 'Including cron job'
       include_tasks: '/opt/plexguide/menu/pgui/templates/_cron.yml'
 
-    - name: 'Including Update'
+    - name: 'Including major task'
       include_tasks: '/opt/coreapps/apps/templates/tasks/dynamic.yml'
-
-    - name: 'Including GDrive Used Space'
-      include_tasks: '/opt/plexguide/menu/pgui/templates/gtused.yml'
-
-    - name: 'Including MounteCheck Service'
-      include_tasks: '/opt/plexguide/menu/pgui/templates/mcdeploy.yml'
-
-    - name: 'Including MounteCheck Service'
-      include_tasks: '/opt/plexguide/menu/pgui/templates/localspace.yml'
-
-    # refix the UI     ############################################################
-
-    - name: 'Install File new UI'
-      template:
-        src: /opt/plexguide/menu/pgui/templates/index.php
-        dest: /opt/appdata/pgui/index.php
-        force: yes
-        owner: '1000'
-        group: '1000'
-
-    - name: 'Install File Check mergerfs / rClone'
-      template:
-        src: /opt/plexguide/menu/pgui/templates/check.sh
-        dest: /opt/appdata/pgui/check.sh
-        force: yes
-        owner: '1000'
-        group: '1000'
-
-    - name: 'Install File GTused'
-      template:
-        src: /opt/plexguide/menu/pgui/templates/gtused.sh
-        dest: /opt/appdata/pgui/gtused.sh
-        force: yes
-        owner: '1000'
-        group: '1000'
-
-    - name: 'Install File Mountcheck file'
-      copy:
-        src: /opt/plexguide/menu/pgui/templates/mountcheck.sh
-        dest: /opt/plexguide/menu/pgui/mountcheck.sh
-        force: yes
-        owner: '1000'
-        group: '1000'
 
     # LABELS ######################################################################
     - name: 'Adding Traefik'
