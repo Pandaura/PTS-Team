@@ -33,7 +33,7 @@
 
   - name: Comm UI | localspace Service
     template:
-      src: /opt/plexguide/menu/pgui/templates/templates/localspace.service
+      src: /opt/plexguide/menu/pgui/templates/localspace.service
       dest: /etc/systemd/system/localspace.service
       force: yes
 
@@ -86,14 +86,6 @@
     template:
       src: /opt/plexguide/menu/pgui/templates/templates/gtused.sh
       dest: /opt/appdata/pgui/gtused.sh
-      force: yes
-      owner: '1000'
-      group: '1000'
-
-  - name: Comm UI | 'Install File Mountcheck file'
-    copy:
-      src: /opt/plexguide/menu/pgui/templates/templates/mountcheck.sh
-      dest: /opt/plexguide/menu/pgui/templates/mountcheck.sh
       force: yes
       owner: '1000'
       group: '1000'

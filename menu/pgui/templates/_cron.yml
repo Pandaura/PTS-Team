@@ -23,11 +23,11 @@
 - cron:
     name: Daily check for mgerfs / rclone new version
     special_time: 'daily'
-    job: 'bash /opt/appdata/pgui/check.sh >/dev/null 2>&1'
+    job: 'bash /opt/plexguide/menu/pgui/templates/check.sh >/dev/null 2>&1'
     state: present
 
 - cron:
     name: Daily G/TDrive used space checker | file & folder
     special_time: 'daily'
-    job: 'bash /opt/appdata/pgui/gtused.sh >/dev/null 2>&1'
+    job: 'bash /opt/plexguide/menu/pgui/templates/gtused.sh >/dev/null 2>&1'
     state: present

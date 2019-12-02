@@ -73,27 +73,4 @@
       force: yes
       owner: '1000'
       group: '1000'
-
-  - name: Comm UI | 'Install File Check mergerfs / rClone'
-    template:
-      src: /opt/plexguide/menu/pgui/templates/check.sh
-      dest: /opt/appdata/pgui/check.sh
-      force: yes
-      owner: '1000'
-      group: '1000'
-
-  - name: Comm UI | 'Install File GTused'
-    template:
-      src: /opt/plexguide/menu/pgui/templates/gtused.sh
-      dest: /opt/appdata/pgui/gtused.sh
-      force: yes
-      owner: '1000'
-      group: '1000'
-
-  - name: Comm UI | 'Install File Mountcheck file'
-    copy:
-      src: /opt/plexguide/menu/pgui/templates/templates/mountcheck.sh
-      dest: /opt/plexguide/menu/pgui/templates/mountcheck.sh
-      force: yes
-      owner: '1000'
-      group: '1000'
+ 
