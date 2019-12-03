@@ -49,6 +49,9 @@ initial() {
 
   mkdir -p /opt/coreapps
 
+  echo "" >/tmp/output.info
+  boxversion="official"
+
   if [ "$boxversion" == "official" ]; then
     ansible-playbook /opt/plexguide/menu/pgbox/gce/gcecore.yml >/dev/null 2>&1
   else question1; fi
@@ -243,7 +246,5 @@ EOF
   final
 }
 # FUNCTIONS END ##############################################################
-echo "" >/tmp/output.info
-boxversion="official"
 initial
 question1
