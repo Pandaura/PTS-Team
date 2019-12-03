@@ -30,3 +30,6 @@
         clone: yes
         version: '{{boxbranch.stdout}}'
         force: yes
+
+    - name: Set Permission and Owner 
+      shell: 'chown -R 1000:1000 /opt/coreapps && chmod -R 775 /opt/coreapps'
