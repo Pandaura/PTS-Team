@@ -49,12 +49,9 @@ initial() {
 
   mkdir -p /opt/coreapps
 
-  echo "" >/tmp/output.info
-  boxversion="official"
-
   if [ "$boxversion" == "official" ]; then
-    ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml >/dev/null 2>&1
-  else question1; fi
+    ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml
+  else ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml; fi
 
   echo ""
   echo "💬  Pulling Update Files - Please Wait"
@@ -126,7 +123,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 PTS ~ Multi-App Installer  || CORE APPS
+🚀 Multi-App Installer | Core Edition
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📂 Potential Apps to Install
@@ -138,7 +135,6 @@ $notrun
 $buildup
 
 [A] Install
-
 [Z] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -204,7 +200,7 @@ question2() {
 
   # Cron Execution
   edition=$(cat /var/plexguide/pg.edition)
-  if [[ "$edition" == "Edition - HD Solo" ]]; then
+  if [[ "$edition" == "PG Edition - HD Solo" ]]; then
     a=b
   else
     croncount=$(sed -n '$=' /var/plexguide/pgbox.buildup)
@@ -245,6 +241,14 @@ EOF
   cat /tmp/output.info
   final
 }
+
+
+start() {
+    boxversion="official"
+    initial
+    question1
+}
+
 # FUNCTIONS END ##############################################################
-initial
-question1
+echo "" >/tmp/output.info
+start
