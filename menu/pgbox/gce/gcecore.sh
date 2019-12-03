@@ -47,21 +47,14 @@ initial() {
   touch /var/plexguide/app.list
   touch /var/plexguide/pgbox.buildup
 
-  mkdir -p /opt/coreapps
+  folder && ansible-playbook /opt/plexguide/menu/pgbox/gce/gcecore.yml >/dev/null 2>&1
 
-  if [ "$boxversion" == "official" ]; then
-    ansible-playbook /opt/plexguide/menu/pgbox/gce/gcecore.yml
-  else ansible-playbook /opt/plexguide/menu/pgbox/gce/gcecore.yml; fi
-
-  echo ""
-  echo "💬  Pulling Update Files - Please Wait"
   file="/opt/coreapps/place.holder"
   waitvar=0
   while [ "$waitvar" == "0" ]; do
     sleep .5
     if [ -e "$file" ]; then waitvar=1; fi
   done
-
 }
 
 question1() {
@@ -81,7 +74,6 @@ question1() {
     echo "" >>/opt/coreapps/apps/$p.yml
     echo "##PG-Core" >>/opt/coreapps/apps/$p.yml
 
-    mkdir -p /opt/mycontainers
     touch /opt/appdata/plexguide/rclone.conf
   done </var/plexguide/app.list
   touch /var/plexguide/core.app
@@ -135,6 +127,7 @@ $notrun
 $buildup
 
 [A] Install
+
 [Z] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -247,6 +240,10 @@ start() {
     boxversion="official"
     initial
     question1
+}
+
+folder() {
+mkdir -p /opt/coreapps
 }
 
 # FUNCTIONS END ##############################################################
