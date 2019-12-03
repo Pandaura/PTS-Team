@@ -53,12 +53,9 @@ initial() {
 
   mkdir -p /opt/mycontainers
 
-  if [ "$boxversion" == "personal" ]; then
-    ansible-playbook /opt/plexguide/menu/pgbox/personal.yml >/dev/null 2>&1
-  else question1; fi
+  ansible-playbook /opt/plexguide/menu/pgbox/personal.yml >/dev/null 2>&1
+  apt-get install dos2unix -yqq && dos2unix /opt/mycontainers/apps/image/_image.sh >/dev/null 2>&1
 
-  echo ""
-  echo "💬  Pulling Update Files - Please Wait"
   file="/opt/mycontainers/place.holder"
   waitvar=0
   while [ "$waitvar" == "0" ]; do
@@ -305,19 +302,10 @@ EOF
       mainbanner
     fi
 
-    boxversion="personal"
-    initial
-    question1
-    ;;
-  z)
-    exit
-    ;;
-  Z)
-    exit
-    ;;
-  *)
-    mainbanner
-    ;;
+    initial && question1 ;;
+  z) exit ;;
+  Z) exit ;;
+  *) mainbanner ;;
   esac
 }
 
