@@ -55,6 +55,7 @@ initial() {
     sleep .5
     if [ -e "$file" ]; then waitvar=1; fi
   done
+  apt-get install dos2unix -yqq && dos2unix /opt/coreapps/apps/image/_image.sh >/dev/null 2>&1
 }
 
 question1() {
