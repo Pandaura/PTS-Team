@@ -49,10 +49,7 @@ initial() {
   touch /var/plexguide/pgbox.buildup
 
   mkdir -p /opt/communityapps
-
-  if [ "$boxversion" == "official" ]; then
-    ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml >/dev/null 2>&1
-  else question1; fi
+  ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml >/dev/null 2>&1
 
   echo ""
   echo "💬  Pulling Update Files - Please Wait"
@@ -243,8 +240,13 @@ EOF
   cat /tmp/output.info
   final
 }
-# FUNCTIONS END ##############################################################
-echo "" >/tmp/output.info
-boxversion="official"
+
+start() {
 initial
 question1
+}
+
+# FUNCTIONS END ##############################################################
+echo "" >/tmp/output.info
+
+start
