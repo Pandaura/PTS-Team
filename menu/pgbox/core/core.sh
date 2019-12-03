@@ -47,8 +47,9 @@ initial() {
   touch /var/plexguide/app.list
   touch /var/plexguide/pgbox.buildup
 
-  mkdir -p /opt/coreapps
-  ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml
+  folder
+
+  ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml >/dev/null 2>&1
 
   echo ""
   echo "💬  Pulling Update Files - Please Wait"
@@ -246,6 +247,11 @@ start() {
     initial
     question1
 }
+
+folder() {
+mkdir -p /opt/coreapps
+}
+
 
 # FUNCTIONS END ##############################################################
 echo "" >/tmp/output.info
