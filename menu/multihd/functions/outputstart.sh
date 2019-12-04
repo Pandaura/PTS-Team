@@ -31,12 +31,8 @@ EOF
 
 multihdstartinput() {
     case $typed in
-    1)
-        addpoint
-        ;;
-    2)
-        removepoint
-        ;;
+    1) addpoint ;;
+    2) removepoint ;;
     3)
         tee <<-EOF
 
@@ -60,15 +56,9 @@ EOF
 
         multihdstart
         ;;
-    z)
-        exit
-        ;;
-    Z)
-        exit
-        ;;
-    *)
-        multihdstart
-        ;;
+    z) exit ;;
+    Z) exit ;;
+    *) multihdstart ;;
     esac
     multihdstart
 }

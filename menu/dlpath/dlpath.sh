@@ -60,7 +60,7 @@ elif [ "$typed" == "2" ]; then
 
 🌵  Current Processing Disk : $pgpath
 
-☑️   Type the path as show in the examples below! PG will then attempt
+☑️   Type the path as show in the examples below! PTS will then attempt
 to see if your path exists!
 
 Examples:

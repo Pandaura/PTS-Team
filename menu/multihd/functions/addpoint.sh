@@ -76,7 +76,6 @@ EOF
     addpoint
   fi
 
-  # Checks to Make Sure BoneHead doesn't store the same path twice
   checkcheck3=$(cat /var/plexguide/multihd.paths | grep "$addpath")
   if [[ "$checkcheck3" != "" ]]; then
     tee <<-EOF
