@@ -227,7 +227,7 @@ deploycheck
 
 NOTE : Plex Dupefinder are located  in /opt/plex_dupefinder
 
-[1] Deploy Plex Username & Plex Passwort  [ $ustatus ]
+[1] Deploy Plex Username & Plex Password  [ $ustatus ]
 [2] Deploy Plex Token                     [ $pstatus ]
 [3] Deploy AUTO_DELETE                    [ $astatus ]
 
