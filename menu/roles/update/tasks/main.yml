@@ -81,3 +81,23 @@
   shell: apt-get remove -y --purge $(dpkg -l | grep "^rc\s*linux-image-" | awk '{print $2}' | tr '\n' ' ')
   register: apt_result
   changed_when: "'packages will be REMOVED' in apt_result.stdout"
+
+- name: updates $(hostname)
+  apt:
+    update_cache: yes
+    autoclean: yes
+    force_apt_get: yes
+
+- name: upgrade $(hostname)
+  apt:
+    upgrade: dist
+    state: present
+    force_apt_get: yes
+
+- name: Check if a reboot is required for $(hostname)
+  register: file
+  stat: path=/var/run/reboot-required get_md5=no
+
+- name: Reboot the server $(hostname)
+  command: /sbin/reboot
+  when: file.stat.exists == true
