@@ -31,7 +31,11 @@ cat <<"EOF"
 │ Davaz, Deiteq, FlickerRate,         │
 │ ClownFused, MrDoob, Sub7Seven,      │
 │ TimeKills, The_Creator, Desimaniac, │
-│ l3uddz, RXWatcher,Calmcacil, Porkie │
+│ l3uddz, RXWatcher, Calmcacil,       │
+│ ΔLPHΔ , Maikash , Porkie            │
+│ CDN_RAGE , hawkinzzz , ΔLPHΔ        │
+│ BugHunter : Krallenkiller           │
+│                                     │
 └─────────────────────────────────────┘
 
 EOF
