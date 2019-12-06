@@ -101,21 +101,20 @@ pginstall() {
   # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
   if [[ $(cat /var/plexguide/install.roles) != "$rolenumber" ]]; then
     rm -rf /opt/{coreapps,communityapps,pgshield} 
-
     pgcore
     pgcommunity
     pgshield
     echo "$rolenumber" >${abc}/install.roles
   fi
+
   rcloneinstall
   portainer
-  core motd &>/dev/null &
-  core hetzner &>/dev/null &
+  core motd 1>/dev/null 2>&1
+  core hetzner 1>/dev/null 2>&1
   core gcloud
-  core cleaner &>/dev/null &
+  core cleaner 1>/dev/null 2>&1
   core serverid
   core prune
-  customcontainers &>/dev/null &
   pgedition
   core mountcheck
   emergency
@@ -141,12 +140,12 @@ aptupdate() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags update
 }
 
-customcontainers() {
-  mkdir -p /opt/{coreapps,communityapps/apps,pgshield,mycontainers}
-}
+#customcontainers() {
+#  mkdir -p /opt/{coreapps,communityapps/apps,pgshield,mycontainers}
+#}
 
 cleaner() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete,clean,journal &>/dev/null &
+  ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete,clean,journal
 }
 
 dependency() {
@@ -233,7 +232,7 @@ pgedition() {
 portainer() {
   dstatus=$(docker ps --format '{{.Names}}' | grep "portainer")
   if [ "$dstatus" != "portainer" ]; then
-    ansible-playbook /opt/coreapps/apps/portainer.yml &>/dev/null &
+    ansible-playbook /opt/coreapps/apps/portainer.yml
   fi
 }
 
