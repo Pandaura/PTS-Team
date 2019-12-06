@@ -1,17 +1,4 @@
 ---
-- name: for {{ansible_hostname}} || check for old reboot is needed
-  stat: path=/var/run/reboot-required
-  register: file_reboot_before
-
-- debug:
-    msg:
-    - "There is the possibility that an older reboot is already necessary for {{ansible_hostname}}"
-    - "This is needed to process all updates and upgrades of the system."
-  when: file_reboot_before.stat.exists == True
-  
-- meta: end_play
-  when: file_reboot_before.stat.exists
-
 - name: for {{ansible_hostname}} || Update packages to latest versions on {{ansible_hostname}}
   apt:
     update_cache: yes
