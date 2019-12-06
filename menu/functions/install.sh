@@ -187,7 +187,7 @@ else [[ "$rcversion" != "$rcstored" ]]
   clear
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  rclone can be updatet to version $rcstored
+↘️  rclone can be updated to version $rcstored
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 sleep 15s
