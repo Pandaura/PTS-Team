@@ -152,10 +152,10 @@ that does not put a lot of pressure on the API of your Google Account.
 EOF
 fi
 
-if [ "$hdpath" == "/mnt" ]; then
+if [ "$hdpath" != "/mnt" ]; then
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-You must /mnt self to the docker container again
+You must add /mnt self to the docker container again
 Your $hdpath is not /mnt
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
