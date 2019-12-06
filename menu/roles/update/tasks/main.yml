@@ -10,7 +10,7 @@
 
 - name: Upgrade Distrubution to the latest stable version
   apt:
-    upgrade: full
+    upgrade: dist
     state: present
     force_apt_get: yes
   register: apt_result
