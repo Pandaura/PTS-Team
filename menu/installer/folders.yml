@@ -174,7 +174,7 @@
         - '/opt/appdata/plexguide/keys/unprocessed'
         - '/opt/appdata/plexguide/keys/processed'
         - '/opt/appdata/plexguide/keys/badjson'
-        - '{{path.stdout}}/downloads
+        - '{{path.stdout}}/downloads'
         - '{{path.stdout}}/nzb'
         - '{{path.stdout}}/torrent'
         - '{{path.stdout}}/move'
