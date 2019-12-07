@@ -5,11 +5,11 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-source /opt/blitzgce/functions/main.sh
-source /opt/blitzgce/functions/interface.sh
-source /opt/blitzgce/functions/ip.sh
-source /opt/blitzgce/functions/deploy.sh
-source /opt/blitzgce/functions/destroy.sh
+source /opt/plexguide/menu/gce/functions/main.sh
+source /opt/plexguide/menu/gce/functions/interface.sh
+source /opt/plexguide/menu/gce/functions/ip.sh
+source /opt/plexguide/menu/gce/functions/deploy.sh
+source /opt/plexguide/menu/gce/functions/destroy.sh
 
 # BAD INPUT
 badinput() {

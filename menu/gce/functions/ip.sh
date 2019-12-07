@@ -5,7 +5,7 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-source /opt/blitzgce/functions/main.sh
+source /opt/plexguide/menu/gce/functions/main.sh
 ##note remove duplicate ips / regions 
 ##rm -rf /var/plexguide/project.ipregion
 ##rm -rf /var/plexguide/project.ipaddress

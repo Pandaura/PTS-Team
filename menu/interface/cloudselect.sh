@@ -25,7 +25,7 @@ EOF
 
   case $typed in
 
-  1) echo gce >/var/plexguide/type.choice && bash /opt/plexguide/menu/pgcloner/blitzgce.sh ;;
+  1) bash /opt/plexguide/menu/gce/blitzgce.sh ;;
   2) bash /opt/plexguide/menu/hcloud/hcloud.sh ;; 
   z) exit ;;
   Z) exit ;;
