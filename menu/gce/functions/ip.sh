@@ -6,6 +6,9 @@
 # GNU:        General Public License v3.0
 ################################################################################
 source /opt/blitzgce/functions/main.sh
+##note remove duplicate ips / regions 
+##rm -rf /var/plexguide/project.ipregion
+##rm -rf /var/plexguide/project.ipaddress
 
 regioncenter() {
 

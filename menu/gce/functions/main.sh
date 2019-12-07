@@ -20,9 +20,11 @@ variablepull() {
   variable /var/plexguide/project.ipaddress NOT-SET
   variable /var/plexguide/project.ipregion NOT-SET
   variable /var/plexguide/project.ipzone NOT-SET
-  variable /var/plexguide/project.processor 2
-  variable /var/plexguide/project.ram 8
-  variable /var/plexguide/project.nvme 1
+  variable /var/plexguide/project.processor NOT-SET
+  variable /var/plexguide/project.ram NOT-SET
+  variable /var/plexguide/project.nvme NOT-SET
+  variable /var/plexguide/project.imagecount NOT-SET
+  variable /var/plexguide/project.image NOT-SET
   variable /var/plexguide/project.id NOT-SET
   variable /var/plexguide/project.switch off
 
@@ -38,6 +40,8 @@ variablepull() {
   nvmecount=$(cat /var/plexguide/project.nvme)
   ramcount=$(cat /var/plexguide/project.ram)
   processor=$(cat /var/plexguide/project.processor)
+  imagecount=$(cat /var/plexguide/project.imagecount)
+  osdrive=$(cat /var/plexguide/project.image)
 
   # if user switches usernames, this turns on. turns of when user sets project again
   switchcheck=$(cat /var/plexguide/project.switch)

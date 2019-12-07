@@ -75,10 +75,10 @@ EOF
   ### Recalls Variables
   variablepull
 
-  ### Deploys the PG Template
+  ### Deploys the PTS Template
   gcloud compute instance-templates create pg-gce-blueprint \
     --custom-cpu $processor --custom-memory $ramcount \
-    --image-family ubuntu-1804-lts --image-project ubuntu-os-cloud \
+    --image-family $osdrive --image-project $imagecount \
     --boot-disk-auto-delete --boot-disk-size 200GB \
     $(tail /var/plexguide/deploy.nvme)
 
@@ -87,6 +87,9 @@ EOF
   # --custom-cpu $processor --custom-memory $ramcount \
   # --image-family ubuntu-1804-lts --image-project ubuntu-os-cloud \
   # --boot-disk-auto-delete --boot-disk-size 200GB \
+####note --image-family ubuntu-1804-lts --image-project gce-uefi-images
+#### for shielded vms with ram/drive secure boot
+
 
   ### Deploy the GCE Server
   echo

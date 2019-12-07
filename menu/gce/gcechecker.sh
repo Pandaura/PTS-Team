@@ -5,20 +5,39 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-
+touch /var/plexguide/gce.done
 ### NOTE THIS IS JUST A COPY - MAIN ONE SITE IN MAIN REPO - THIS IS JUST FOR INFO
-#file1="/dev/nvme0n1"
-#file2="/var/plexguide/gce.check"
 gcheck=$(dnsdomainname | tail -c 10)
+file1="/dev/nvme0n1"
+file2="/var/plexguide/gce.check"
+
+  if [[ $EUID -ne 0 ]]; then
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⛔️  You Must Execute as a SUDO USER (with sudo) or as ROOT!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+    exit 1
+  fi
 
 file3="$(tail -n 1 /var/plexguide/gce.done)"
 file3b="/var/plexguide/gce.done"
 
 if [[ "$file3" == "1" ]]; then
+		  tee <<-EOF
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	📂  Google Cloud Feeder Edition SET!
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	
+     NVME already mounted on /mnt with size $(df -h /mnt/ --total --local -x tmpfs | grep 'total' | awk '{print $2}')
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	EOF
  exit
-elif [[ -e "$file3b" ]]; then
+ 
+elif [[ "$file3b" != "1" ]]; then
 
-	###if [ -e "$file1" ] && [ ! -e "$file2" ] && 
 	if [ "$gcheck" == ".internal" ]; then
 		  tee <<-EOF
 
@@ -91,12 +110,11 @@ elif [[ -e "$file3b" ]]; then
 				mount -o discard,defaults,nobarrier /dev/nvme0n1 /mnt
 				chmod a+w /mnt 1>/dev/null 2>&1
 				echo UUID=$(blkid | grep nvme0n1 | cut -f2 -d'"') /mnt ext4 discard,defaults,nobarrier,nofail 0 2 | tee -a /etc/fstab
-
-				mkdir -p /nvme1 1>/dev/null 2>&1
-				mkfs.ext4 -F /dev/nvme0n1
-				mount -o discard,defaults,nobarrier /dev/nvme0n1 /nvme1
-				chmod a+w /nvme1 1>/dev/null 2>&1
-				echo UUID=$(blkid | grep nvme0n1 | cut -f2 -d'"') /nvme1 ext4 discard,defaults,nobarrier,nofail 0 2 | tee -a /etc/fstab
+				echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+				echo "✅ PASSED ! NVME formated and setup is done"
+				echo "✅ PASSED ! HDD Space now :" $(df -h /mnt/ --total --local -x tmpfs | grep 'total' | awk '{print $2}')
+				echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+				echo -e "1" >/var/plexguide/gce.done
 		  else
 				echo "nothing to do"
 		  fi
@@ -145,10 +163,11 @@ elif [[ -e "$file3b" ]]; then
 		  rm -rf /var/plexguide/gce.failed 1>/dev/null 2>&1
 		  rm -rf /var/plexguide/gce.false 1>/dev/null 2>&1
 		  rm -rf /var/plexguide/nvme.log 1>/dev/null 2>&1
-		  rm -rf /var/plexguide/nvmeraid.log1 >/dev/null 2>&1
+		  rm -rf /var/plexguide/nvmeraid.log >/dev/null 2>&1
 	else
 		  touch /var/plexguide/gce.false
     fi
 else 
 echo "beware of this stupid lines"
+
 fi

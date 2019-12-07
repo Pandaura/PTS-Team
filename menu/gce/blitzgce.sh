@@ -11,6 +11,25 @@ source /opt/blitzgce/functions/ip.sh
 source /opt/blitzgce/functions/deploy.sh
 source /opt/blitzgce/functions/destroy.sh
 
+# BAD INPUT
+badinput() {
+  echo
+  read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
+  gcestart
+}
+sudocheck() {
+  if [[ $EUID -ne 0 ]]; then
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⛔️  You Must Execute as a SUDO USER (with sudo) or as ROOT!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+    exit 1
+  fi
+}
+
 ### the primary interface for GCE
 gcestart() {
 
@@ -45,9 +64,13 @@ gcestart() {
 [ 3 } Processor Count       : [ $processor ]
 [ 4 ] Ram Count             : [ $ramcount ]
 [ 5 ] NVME Count            : [ $nvmecount ]
-[ 6 ] Set IP Region / Server: [ $ipaddress ] | [ $ipregion ]
-[ 7 ] Deploy GCE Server     : [ $gcedeployedcheck ]
-[ 8 ] SSH into the GCE Box
+[ 6 ] OS Image              : [ $imagecount ] | [ $osdrive ]
+[ 7 ] Set IP Region / Server: [ $ipaddress ]  | [ $ipregion ]
+[ 8 ] Deploy GCE Server     : [ $gcedeployedcheck ]
+
+[ 9 ] SSH into the GCE Box
+
+[ C ] Calculator
 
 [ A ] Destroy Server
 
@@ -91,15 +114,20 @@ EOF
         ;;
     6)
         projectdeny
-        regioncenter
+        imagecount
         gcestart
         ;;
     7)
         projectdeny
-        deployserver
+        regioncenter
         gcestart
         ;;
     8)
+        projectdeny
+        deployserver
+        gcestart
+        ;;
+    9)
         projectdeny
         if [[ "$gcedeployedcheck" == "DEPLOYED" ]]; then
             sshdeploy
@@ -117,6 +145,14 @@ EOF
         destroyserver
         gcestart
         ;;
+    c)
+	    calculator
+        gcestart
+        ;;
+    C)
+		calculator
+        gcestart
+        ;;
     z)
         exit
         ;;
@@ -128,5 +164,5 @@ EOF
         ;;
     esac
 }
-
+sudocheck
 gcestart

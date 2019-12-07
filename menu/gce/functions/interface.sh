@@ -33,6 +33,12 @@ EOF
 
 }
 
+badinput() {
+  echo
+  read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
+  projectinterface
+}
+
 deployfail() {
 
   gcefail="off"
@@ -41,8 +47,10 @@ deployfail() {
   fail2=$(cat /var/plexguide/project.processor)
   fail3=$(cat /var/plexguide/project.account)
   fail4=$(cat /var/plexguide/project.nvme)
+  fail5=$(cat /var/plexguide/project.ram)
+  fail6=$(cat /var/plexguide/project.imagecount)
 
-  if [[ "$fail1" == "NOT-SET" || "$fail2" == "NOT-SET" || "$fail3" == "NOT-SET" || "$fail4" == "NOT-SET" ]]; then
+  if [[ "$fail1" == "NOT-SET" || "$fail2" == "NOT-SET" || "$fail3" == "NOT-SET" || "$fail4" == "NOT-SET" || "$fail5" == "NOT-SET" || "$fail6" == "NOT-SET"  ]]; then
     gcefail="on"
   fi
 
@@ -53,20 +61,46 @@ deployfail() {
 🌎  Deployment Checks Failed!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Failed to set the processer/nvme or ram count, log in, and/or set your server
-location! Ensure that everything is set before deploying the GCE Server!
+Unfortunately, the deploy failed, 
+some variables have probably not been changed, please check it
 
-INSTRUCTIONS: 
+possible mistakes are
 
-Quit Being a BoneHead and Read!
+NVME / CPU / RAM / OS image / IP Region / Project Account
+
+were not changed to desire
+
+Ensure that everything is set before deploying the GCE Server!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-    read -p '↘️  Acknowledge Being a BoneHead | Press [ENTER] ' typed </dev/tty
+    read -p '↘️  Acknowledge | Press [ENTER] ' typed </dev/tty
 
     gcestart
   fi
+}
+
+calculator () {
+clear
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 GCE Calculaor
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+if they want to know what an instance would cost them; click on this link,
+
+https://cloud.google.com/products/calculator/
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+
+ echo
+  read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+  clear
+
+  gcestart
 }
 
 nvmecount() {
@@ -80,9 +114,9 @@ Most users will only need to utilize 1 - 2 NVME Drives.
 The more, the faster the processing, but the faster your credits drain. 
 If intent is to be in beast mode during the GCEs duration.
 
-INSTRUCTIONS: Set the NVME Count ~ 1 / 2 / 3 / 4
+INSTRUCTIONS: Set the NVME Count ~ 1 - 4
 
-NOTE : if you use 1- 3 Nvmes you will get a swraid0
+NOTE : if you use 1 - 3 Nvmes you will get a swraid0
 NOTE : if you use 4 Nvmes you will get a swraid5
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -96,21 +130,19 @@ EOF
   touch $nvmedeploy
 
   if [[ "$typed" == "1" ]]; then
-    echo "$typed" >/var/plexguide/project.nvme
+    echo -e "$typed" >/var/plexguide/project.nvme
     echo -e "--local-ssd interface=nvme" >$nvmedeploy
   elif [[ "$typed" == "2" ]]; then
-    echo "$typed" >/var/plexguide/project.nvme
+    echo -e "$typed" >/var/plexguide/project.nvme
     echo -e "--local-ssd interface=nvme \\n--local-ssd interface=nvme" >$nvmedeploy
   elif [[ "$typed" == "3" ]]; then
-    echo "$typed" >/var/plexguide/project.nvme
+    echo -e "$typed" >/var/plexguide/project.nvme
     echo -e "--local-ssd interface=nvme \\n--local-ssd interface=nvme \\n--local-ssd interface=nvme" >$nvmedeploy
   elif [[ "$typed" == "4" ]]; then
-    echo "$typed" >/var/plexguide/project.nvme
+    echo -e "$typed" >/var/plexguide/project.nvme
     echo -e "--local-ssd interface=nvme \\n--local-ssd interface=nvme \\n--local-ssd interface=nvme \\n--local-ssd interface=nvme" >$nvmedeploy
   elif [[ "$typed" -gt "4" ]]; then
     echo "more then 4 NVME's is not possible" && sleep 5 && nvmecount
-  elif [[ "$typed" == "Z" || "z" || "q" || "Q" || "c" || "C" ]]; then
-    echo "no changes" #fi
   else nvmecount; fi
 }
 ramcount() {
@@ -124,19 +156,44 @@ Most users will only need to utilize 8 Gb Ram.
 Then more, the faster the processing, but the faster your credits drain. 
 If intent is to be in beast mode during the GCEs duration.
 
-INSTRUCTIONS: Set the RAM Count ~ 8 / 12 / 16 GB
+INSTRUCTIONS: Set the RAM Count ~ 8 - 64 GB
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
   read -p 'Type Number | Press [ENTER]: ' typed </dev/tty
 
-  if [[ "$typed" == "8" || "$typed" == "12" || "$typed" == "16" ]]; then
-    echo "$typed""$suffix" >/var/plexguide/project.ram
-  elif [[ "$typed" -gt "16" ]]; then
-    echo "more then 16 Gb Ram is not possible" && sleep 5 && ramcount
-  elif [[ "$typed" == "Z" || "z" || "q" || "Q" || "c" || "C" ]]; then
-    echo "no changes" #fi
-  else ramcount; fi
+  if [[ "$typed" -lt "8" || "$typed" -gt "64" ]]; then ramcount; fi
+
+  echo -e "$typed""$suffix" >/var/plexguide/project.ram
+}
+
+imagecount() {
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🌎 OS Image
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[ 1 ] Ubuntu 1804 = Public OS Image
+[ 2 ] Ubuntu 1804 = Shielded OS Image
+
+if dont know what this means klick the link below
+
+https://cloud.google.com/compute/docs/images
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+  read -p 'Type Number | Press [ENTER]: ' typed </dev/tty
+
+  if [[ "$typed" == "1" ]]; then
+    echo -e "ubuntu-os-cloud" >/var/plexguide/project.imagecount
+  	echo -e "ubuntu-minimal-1804-lts" >/var/plexguide/project.image
+  elif [[ "$typed" == "2" ]]; then
+    echo -e "gce-uefi-images" >/var/plexguide/project.imagecount
+	echo -e "ubuntu-1804-lts" >/var/plexguide/project.image
+  else imagecount; fi
 }
 
 processorcount() {
@@ -153,20 +210,16 @@ If usage is light, select 4.
 If for average use, 4 or 6 is fine.
 Only utilize 8 if the GCE will be used heavily!
 
-INSTRUCTIONS: Set the Processor Count ~ 4 / 6 / 8
+INSTRUCTIONS: Set the Processor Count ~ 4 - 16 vCores
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
   read -p 'Type Number | Press [ENTER]: ' typed </dev/tty
 
-  if [[ "$typed" == "4" || "$typed" == "6" || "$typed" == "8" ]]; then
-    echo "$typed" >/var/plexguide/project.processor
-  elif [[ "$typed" -gt "8" ]]; then
-    echo "more then 8 CPU's is not possible" && sleep 5 && processorcount
-  elif [[ "$typed" == "Z" || "z" || "q" || "Q" || "c" || "C" ]]; then
-    echo "no changes" #fi
-  else processorcount; fi
+  if [[ "$typed" -lt "4" || "$typed" -gt "16" ]]; then processorcount; fi
+  
+  echo -e "$typed" >/var/plexguide/project.processor
 }
 
 projectinterface() {
@@ -412,8 +465,6 @@ EOF
     gcestart
     ;;
   *)
-    processorcount
-    nvmecount
     ;;
   esac
 
