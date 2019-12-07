@@ -5,6 +5,13 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
+#remove old direction  if exist
+old="/opt/blitzgce/blitzgce.sh"
+
+if [[ -e $old ]]; then
+ rm -rf /opt/blitzgce/ >/dev/null 2>&1
+fi
+
 source /opt/plexguide/menu/gce/functions/main.sh
 source /opt/plexguide/menu/gce/functions/interface.sh
 source /opt/plexguide/menu/gce/functions/ip.sh
