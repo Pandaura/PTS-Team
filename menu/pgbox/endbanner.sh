@@ -17,6 +17,7 @@ port=$(cat /tmp/program_port)
 ip=$(cat /var/plexguide/server.ip)
 ports=$(cat /var/plexguide/server.ports)
 hdpath=$(cat /var/plexguide/server.hd.path)
+sbakey=$(cat /opt/appdata/sabnzbd/sabnzbd.ini | grep "api_key" | head -n 1 | awk '{print $3}')
 cclean=$(cat /var/plexguide/cloneclean)
 tclean=$(($cclean*2))
 
@@ -123,6 +124,15 @@ if [[ "$program" == *"sabnzbd"* ]] || [[ "$program" == *"nzbget"* ]]  ; then
 EOF
   fi
 
+if [[ "$program" == *"sabnzbd"* ]] ; then
+
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💬 sabnzbd api_key = $sbakey
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  fi
 if [[ "$program" == *"rutorrent"* ]] || [[ "$program" == *"qbittorrent"* ]] || [[ "$program" == *"deluge"* ]]; then
   tee <<-EOF
 
