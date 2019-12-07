@@ -1,4 +1,20 @@
 ---
+- name: for {{ansible_hostname}} || check for old reboot is needed
+  stat: path=/var/run/reboot-required
+  register: file_reboot_before
+
+- name: Handle the Note for User if reboot required
+  block:
+    - debug:
+        msg:
+        - "There is the possibility that an older reboot is already necessary for {{ansible_hostname}}"
+        - "This is needed to process all updates and upgrades of the system."
+        when: file_reboot_before.stat.islnk is defined
+        any_errors_fatal: true
+
+  when: file_reboot_before.stat.islnk is defined
+
+
 - name: for {{ansible_hostname}} || Update packages to latest versions on {{ansible_hostname}}
   apt:
     update_cache: yes
@@ -147,8 +163,10 @@
   stat: path=/var/run/reboot-required
   register: file_reboot_required
 
-- debug:
-    msg:
-    - "It is necessary for {{ansible_hostname}}"
-    - "This is needed to process all updates and upgrades of the system."
-  when: file_reboot_required.stat.exists == True
+- name: Handle the Note for User if reboot required
+  block:
+    - debug:
+        msg:
+        - "It is necessary for {{ansible_hostname}}"
+        - "This is needed to process all updates and upgrades of the system."
+  when: file_reboot_requiredstat.islnk is defined
