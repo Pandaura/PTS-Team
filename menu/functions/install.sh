@@ -207,7 +207,6 @@ newinstall() {
   file="${abc}/new.install"
   if [ ! -e "$file" ]; then
     touch ${abc}/pg.number && echo off >/tmp/program_source
-    bash /opt/plexguide/menu/version/file.sh
     file="${abc}/new.install"
     if [ ! -e "$file" ]; then exit; fi
   fi
