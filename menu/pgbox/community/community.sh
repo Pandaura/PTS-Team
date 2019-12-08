@@ -59,7 +59,6 @@ initial() {
     sleep .5
     if [ -e "$file" ]; then waitvar=1; fi
   done
-  customcontainers
   apt-get install dos2unix -yqq && dos2unix /opt/communityapps/apps/image/_image.sh >/dev/null 2>&1
 }
 
