@@ -39,7 +39,7 @@
     path: '/opt/appdata/pgpatrol/'
   register: pgpatrol
 
-- debug: msg="Final Notes  PG/PTSPatrol is now removed"
+- debug: msg="Final Notes PG/PTSPatrol is now removed"
   when: pgpatrol.stat.exists == False
 
 - name: Server ID
