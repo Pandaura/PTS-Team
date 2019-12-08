@@ -36,7 +36,7 @@ if [[ "$file3" == "1" ]]; then
 	EOF
  exit
  
-elif [[ "$file3b" != "1" ]]; then
+elif [[ "$file3" != "1" ]]; then
 
 	if [ "$gcheck" == ".internal" ]; then
 		  tee <<-EOF
