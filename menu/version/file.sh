@@ -26,6 +26,8 @@ if yousee this , please do follow
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
+
+read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
 }
 
 mainstart
