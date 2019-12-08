@@ -86,7 +86,8 @@ ospgversion=$(cat /etc/*-release | grep Debian | grep -E '9|10')
 
 pginstall() {
   updateprime
-  bash /opt/plexguide/menu/pggce/gcechecker.sh
+  # bash /opt/plexguide/menu/pggce/gcechecker.sh
+  gcecheck
   core pythonstart
   core aptupdate
   core alias
@@ -132,6 +133,28 @@ core() {
 }
 
 ############################################################ INSTALLER FUNCTIONS
+gcecheck() {
+gcheck=$(dnsdomainname | tail -c 10)
+	if [ "$gcheck" == ".internal" ]; then
+	file3="$(tail -n 1 /var/plexguide/gce.done)"
+		if [[ "$file3" == "1" ]]; then
+				  tee <<-EOF
+			━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+			📂  Google Cloud Feeder Edition SET!
+			━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+			
+			 NVME already mounted on /mnt with size $(df -h /mnt/ --total --local -x tmpfs | grep 'total' | awk '{print $2}')
+			━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+			EOF
+	 
+			elif [[ "$file3" != "1" ]]; then
+				bash /opt/plexguide/menu/pggce/gcechecker.sh
+			else 
+				echo "beware of this stupid lines"
+		fi
+	fi
+}
+
 alias() {
   ansible-playbook /opt/plexguide/menu/alias/alias.yml 
 }
