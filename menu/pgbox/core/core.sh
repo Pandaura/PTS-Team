@@ -47,12 +47,8 @@ initial() {
   touch /var/plexguide/app.list
   touch /var/plexguide/pgbox.buildup
 
-  folder
+  folder && ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml >/dev/null 2>&1
 
-  ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml >/dev/null 2>&1
-
-  echo ""
-  echo "💬  Pulling Update Files - Please Wait"
   file="/opt/coreapps/place.holder"
   waitvar=0
   while [ "$waitvar" == "0" ]; do

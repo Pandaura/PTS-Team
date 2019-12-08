@@ -8,7 +8,6 @@
 
 # FUNCTIONS START ##############################################################
 source /opt/plexguide/menu/functions/functions.sh
-source /opt/plexguide/menu/functions/install.sh
 
 queued() {
   echo
@@ -48,18 +47,14 @@ initial() {
   touch /var/plexguide/app.list
   touch /var/plexguide/pgbox.buildup
 
-  mkdir -p /opt/communityapps
-  ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml >/dev/null 2>&1
+  folder && ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml >/dev/null 2>&1
 
-  echo ""
-  echo "💬  Pulling Update Files - Please Wait"
   file="/opt/communityapps/place.holder"
   waitvar=0
   while [ "$waitvar" == "0" ]; do
     sleep .5
     if [ -e "$file" ]; then waitvar=1; fi
   done
-  customcontainers
   apt-get install dos2unix -yqq && dos2unix /opt/communityapps/apps/image/_image.sh >/dev/null 2>&1
 }
 
@@ -121,7 +116,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Multi-App Installer  || Community APPS
+🚀 Multi-App Installer | Community APPS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📂 Potential Apps to Install
@@ -245,6 +240,10 @@ EOF
 start() {
 initial
 question1
+}
+
+folder() {
+mkdir -p /opt/communityapps
 }
 
 # FUNCTIONS END ##############################################################
