@@ -11,10 +11,14 @@ source /opt/plexguide/menu/functions/install.sh
 mkdir -p /var/plexguide/plexpatrol
 
 # FUNCTIONS START ##############################################################
-oldvalue(){
+oldvalue() {
 value="/var/plexguide/pgpatrol"
 if [[ ! -f $value ]]; then
 rm -rf /var/plexguide/pgpatrol; fi
+}
+
+newvalue() {
+mkdir -p /var/plexguide/plexpatrol
 }
 
 # FIRST FUNCTION
@@ -23,7 +27,7 @@ variable() {
   if [ ! -e "$file" ]; then echo "$2" >$1; fi
 }
 
-doneenter(){
+doneenter() {
  echo
   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
   question1
@@ -74,10 +78,10 @@ badinput() {
 
 #######################################################################################
 ### Remove old folder and create first layout for token
-section0(){
+section0() {
 sect0="/var/plexguide/plexpatrol/plex.token"
   if [[ ! -f $sect0 ]]; then
-  bash /opt/plexguide/menu/plexpatrol/token.sh  && oldvalue ; fi
+  bash /opt/plexguide/menu/plexpatrol/token.sh ; fi
 }
 #########################################################################################
 
@@ -299,6 +303,7 @@ EOF
 
 # FUNCTIONS END ##############################################################
 oldvalue
+newvalue
 section0
 plexcheck
 token
