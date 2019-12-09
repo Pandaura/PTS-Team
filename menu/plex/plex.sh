@@ -24,11 +24,14 @@ if [ $local == "Local" ]; then
 }
 
 localpart() {
-setserver && updateplex
+setserver
+updateplex
 }
 
 remotepart() {
-setserver && claim && updateplex
+setserver
+claim
+updateplex
 }
  
 # FUNCTIONS END  #############################################################
@@ -119,6 +122,7 @@ EOF
   3) echo "public" >/var/plexguide/plex.updaterole ;;
   *) badinput && updateplex ;;
   esac
+ fi
 }
 
 # SETVALUE END ##############################################################
