@@ -28,8 +28,14 @@
   shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
   register: plex_autoscan_server_pass
 
-- name: Register mounted.bin for trash
+- name: Create mounted.bin for trash
   shell: 'touch /mnt/unionfs/mounted.bin'
+
+- name: Set User Permission  for Plex Folder | part 1
+  shell: 'sudo chown 1000:1000 "/opt/appdata/plex/database/Library/Application Support/" '
+
+- name: Set User Permission  for Plex Folder | part 2
+  shell: 'sudo chown 1000:1000 "/opt/appdata/plex/database/Library/"'
 
 - name: Display Plex Auth Token
   debug:
