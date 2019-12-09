@@ -17,23 +17,11 @@ badinput() {
 }
 
 start0() {
-local=(cat /var/plexguide/pg.transport)
-if [ $local == "Local" ]; then
- localpart
-  else remotepart; fi
-}
-
-localpart() {
-setserver
-updateplex
-}
-
-remotepart() {
 setserver
 claim
 updateplex
 }
- 
+
 # FUNCTIONS END  #############################################################
 
 # SETVALUE START #############################################################
@@ -88,10 +76,7 @@ EOF
 
 updateplex() {
 touch /var/plexguide/plex.updaterole
-pupdat=$(cat /var/plexguide/plex.updaterole)
-if [ $pupdat == $pupdat ]; then
-	exit 0 
-else 
+
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🌎 Update Plex Server Edition
@@ -122,12 +107,8 @@ EOF
   3) echo "public" >/var/plexguide/plex.updaterole ;;
   *) badinput && updateplex ;;
   esac
- fi
 }
 
 # SETVALUE END ##############################################################
-
 start0
-
-
 #ansible-playbook /opt/coreapps/apps/plex.yml
