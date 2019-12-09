@@ -113,7 +113,6 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
-  echo ""
   1) echo "docker" >/var/plexguide/plex.updaterole ;;
   2) echo "latest" >/var/plexguide/plex.updaterole ;;
   3) echo "public" >/var/plexguide/plex.updaterole ;;
