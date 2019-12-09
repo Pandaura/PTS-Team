@@ -35,6 +35,7 @@ primestart() {
   varstart
   gcetest
 }
+
 wisword=$(/usr/games/fortune -as | sed "s/^/ /")
 
 varstart() {
