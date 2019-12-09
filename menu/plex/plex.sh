@@ -16,7 +16,7 @@ badinput() {
   read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
 }
 
-strart0 () {
+start0 () {
 local=(cat /var/plexguide/pg.transport)
 if [ $local == "Local" ]; then
  localpart
