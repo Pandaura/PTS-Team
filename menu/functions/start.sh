@@ -11,13 +11,11 @@ source /opt/plexguide/menu/functions/install.sh
 sudocheck() {
   if [[ $EUID -ne 0 ]]; then
     tee <<-EOF
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⛔️  You Must Execute as a SUDO USER (with sudo) or as ROOT!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 EOF
-    exit 1
+    exit 0
   fi
 }
 

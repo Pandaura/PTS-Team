@@ -90,7 +90,7 @@ updateplex() {
 touch /var/plexguide/plex.updaterole
 pupdat=$(cat /var/plexguide/plex.updaterole)
 if [ $pupdat == $pupdat ]; then
-	exit 
+	exit 0 
 else 
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

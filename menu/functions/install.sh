@@ -86,7 +86,6 @@ ospgversion=$(cat /etc/*-release | grep Debian | grep -E '9|10')
 
 pginstall() {
   updateprime
-  # bash /opt/plexguide/menu/pggce/gcechecker.sh
   gcecheck
   core pythonstart
   core aptupdate
@@ -161,10 +160,6 @@ alias() {
 aptupdate() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags update
 }
-
-#customcontainers() {
-#  mkdir -p /opt/{coreapps,communityapps/apps,pgshield,mycontainers}
-#}
 
 cleaner() {
   ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete,clean,journal
