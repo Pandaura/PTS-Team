@@ -32,10 +32,10 @@
   shell: 'touch /mnt/unionfs/mounted.bin'
 
 - name: Set User Permission  for Plex Folder | part 1
-  shell: 'sudo chown 1000:1000 "/opt/appdata/plex/database/Library/Application Support/" '
+  shell: 'sudo chown 1000:1000 /opt/appdata/plex/database/Library/Application Support/'
 
 - name: Set User Permission  for Plex Folder | part 2
-  shell: 'sudo chown 1000:1000 "/opt/appdata/plex/database/Library/"'
+  shell: 'sudo chown 1000:1000 /opt/appdata/plex/database/Library/'
 
 - name: Display Plex Auth Token
   debug:
