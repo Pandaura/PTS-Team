@@ -452,7 +452,9 @@ chk=$(figlet traktarr | lolcat )
 🚀 traktarr prefilling the system
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Prefilling allowed
+[1] Prefilling allowed (Runs a daily job that grabs up to 50 shows and
+      movies from multiple sources (porkie16 / mrdoob / enormoz / others)
+      Warning - this will fill up your queue quickly.
 
 [2] Prefilling disable
 
@@ -538,7 +540,7 @@ NOTE: Changes Made? Must Redeploy Traktarr when Complete!
 [3] Raddar Path                         [ $rpath ]
 [4] Sonarr Profile                      [ $sprofile ]
 [5] Radarr Profile                      [ $rprofile ]
-{6] Max Year allowed                    [ $mxyear ]
+[6] Max Year allowed                    [ $mxyear ]
 
 [7] Deploy Traktarr                     [ $dstatus ]
 
@@ -652,7 +654,6 @@ variable /var/plexguide/traktarr/pgtrak.secret "NOT-SET"
 variable /var/plexguide/traktarr/pgtrak.rpath "NOT-SET"
 variable /var/plexguide/traktarr/pgtrak.spath "NOT-SET"
 variable /var/plexguide/traktarr/pgtrak.sprofile "NOT-SET"
-variable /var/plexguide/traktarr/pgtrak.rprofile "NOT-SET"
 variable /var/plexguide/traktarr/pgtrak.rprofile "NOT-SET"
 variable /var/plexguide/traktarr/pgtrakyear.max "NOT-SET"
 
