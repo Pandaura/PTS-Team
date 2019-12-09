@@ -54,6 +54,7 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
+  
   1) echo "remote" >/var/plexguide/plex.server ;;
   2) echo "local" >/var/plexguide/plex.server ;;
   *) badinput && setserver ;;
@@ -86,7 +87,7 @@ updateplex() {
 touch /var/plexguide/plex.updaterole
 pupdat=$(cat /var/plexguide/plex.updaterole)
 if [ $pupdat == $pupdat ]; then
-exit 
+	exit 
 else 
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
