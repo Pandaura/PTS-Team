@@ -19,7 +19,7 @@ badinput() {
 start0() {
 setserver
 claim
-updateplex
+dockertag
 }
 
 # FUNCTIONS END  #############################################################
@@ -74,11 +74,26 @@ EOF
 	  fi
 }
 
-updateplex() {
+######## flex docker part / switch between LSIO and PLEX
 
+dockertag() {
+plexcontainerversion=$(cat /var/plexguide/image/plex)
+if [[ $plexcontainerversion == "linuxserver/plex" ]]; then
+updateplexlsio
+else updatenotset ; fi
+}
+
+### for PlexINC docker 
+
+updatenotset() {
+echo "PLEXINC" >/var/plexguide/plex.updaterole
+}
+
+### for LSIO UPDATE ROLE docker 
+updateplexlsio() {
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌎 Update Plex Server Edition
+🌎 Update Plex Server Automatic Update for Linuxserver.io
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [ 1 ] docker: 
