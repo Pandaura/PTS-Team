@@ -36,6 +36,13 @@ tokenstatus() {
   else pstatus="⚠️ NOT DEPLOYED"; fi
 }
 
+plexdockeruser() {
+plexdocker=$(cat /var/plexguide/image/plex)
+if [[ $plexdocker == "linuxserver/plex" ]];then
+ echo "abc" >/var/plexguide/pgscan/plex.docker
+ else echo "plex" >/var/plexguide/pgscan/plex.docker ; fi
+}
+
 plexcheck() {
   pcheck=$(docker ps --format {{.Names}} | grep "plex")
   if [ "$pcheck" == "" ]; then
@@ -48,7 +55,7 @@ plexcheck() {
 
 EOF
     read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-    exit
+    exit 0
   fi
 }
 
@@ -69,12 +76,13 @@ token() {
     if [ "$ptoken" == "" ]; then
       tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - Failed to Generate a Valid Plex Token! Exiting Deployment!
+⛔️  WARNING!   Failed to Generate a Valid Plex Token! 
+⛔️  WARNING!   Exiting Deployment!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
       read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-      exit
+      exit 0
     fi
   fi
 }
@@ -222,6 +230,7 @@ EOF
 }
 # FUNCTIONS END ##############################################################
 plexcheck
+plexdockeruser
 userstatus
 tokenstatus
 deploycheck

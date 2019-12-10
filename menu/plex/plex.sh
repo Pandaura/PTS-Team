@@ -75,7 +75,6 @@ EOF
 }
 
 updateplex() {
-touch /var/plexguide/plex.updaterole
 
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

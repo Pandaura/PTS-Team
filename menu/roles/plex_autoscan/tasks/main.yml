@@ -28,6 +28,10 @@
   shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
   register: plex_autoscan_server_pass
 
+- name: Register Plex Docker User
+  shell: 'cat /var/plexguide/pgscan/plex.docker'
+  register: plex_docker_user
+
 - name: Create mounted.bin for trash
   shell: 'touch /mnt/unionfs/mounted.bin'
 
