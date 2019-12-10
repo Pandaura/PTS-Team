@@ -10,10 +10,17 @@
   tasks:
     ###### Install PTSupdate
 
-    - name: PTSupdate
+    - name: PTSupdate | part 1
       template:
         src: ptsupdate
         dest: /bin/ptsupdate
+        force: yes
+        mode: 0775
+
+    - name: PTSupdate | part 2
+      template:
+        src: autoupdatepts
+        dest: /bin/autoupdatepts
         force: yes
         mode: 0775
 
