@@ -16,3 +16,10 @@
        special_time: 'daily'
        job: 'bash /opt/plexguide/menu/traktarr/traktarr-list/traktarr.sh >/dev/null 2>&1'
        state: absent
+
+   - name: Remove Traktarr prefilling list @ daily
+     cron:
+       name: "Traktarr prefilling list @ daily"
+       special_time: 'daily'
+       job: 'bash /opt/plexguide/menu/traktarr/traktarr-list/traktarr.sh 1>/dev/null 2>&1'
+       state: absent
