@@ -41,7 +41,7 @@
   when: updates.0 is defined
 
 - pause:
-    seconds: 10s
+    seconds: 10
 
 - name: for {{ansible_hostname}} || autoremove unused packages 
   command: apt-get -y autoremove
