@@ -14,7 +14,6 @@
 
   when: file_reboot_before.stat.islnk is defined
 
-
 - name: for {{ansible_hostname}} || Update packages to latest versions on {{ansible_hostname}}
   apt:
     update_cache: yes
@@ -42,7 +41,7 @@
   when: updates.0 is defined
 
 - pause:
-  when: updates.0 is defined
+    seconds: 10s
 
 - name: for {{ansible_hostname}} || autoremove unused packages 
   command: apt-get -y autoremove
