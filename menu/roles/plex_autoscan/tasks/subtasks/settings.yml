@@ -46,17 +46,6 @@
 
   when: not plex_autoscan_config.stat.exists
 
-- name: Settings | Existing 'config.json' tasks
-  block:
-
-  - name: Settings | Update 'PLEX_LD_LIBRARY_PATH' in 'config.json'
-    shell: |
-      CONFIG_PATH="/opt/plex_autoscan/config/config.json"
-      jq '.PLEX_LD_LIBRARY_PATH = "/usr/lib/plexmediaserver/lib"' ${CONFIG_PATH} | sponge ${CONFIG_PATH}
-    become: yes
-
-  when: plex_autoscan_config.stat.exists
-
 # Update 'config.json' for new and existing setups
 
 - name: Settings | Upgrade 'config.json'
