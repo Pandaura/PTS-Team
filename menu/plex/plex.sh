@@ -19,7 +19,7 @@ badinput() {
 start0() {
 setserver
 claim
-dockertag
+updateplexlsio
 }
 
 # FUNCTIONS END  #############################################################
@@ -77,21 +77,6 @@ EOF
 	  fi
 }
 
-######## Plex docker part / switch between LSIO and PLEX
-
-dockertag() {
-plexcontainerversion=$(cat /var/plexguide/image/plex)
-if [[ $plexcontainerversion == "linuxserver/plex:latest" ]]; then
-updateplexlsio
-else updatenotset ; fi
-}
-
-### for PlexINC docker 
-
-updatenotset() {
-echo "PLEXINC" >/var/plexguide/plex.updaterole
-}
-
 ### for LSIO UPDATE ROLE docker 
 updateplexlsio() {
   tee <<-EOF
@@ -122,7 +107,7 @@ EOF
   1) echo "docker" >/var/plexguide/plex.updaterole ;;
   2) echo "latest" >/var/plexguide/plex.updaterole ;;
   3) echo "public" >/var/plexguide/plex.updaterole ;;
-  *) badinput && updateplex ;;
+  *) badinput ;;
   esac
 }
 

@@ -9,7 +9,11 @@
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/watchtower.sh
 source /opt/plexguide/menu/functions/install.sh
+################################################################################
 source /opt/plexguide/menu/functions/serverid.sh
+source /opt/plexguide/menu/functions/nvidia.sh
+source /opt/plexguide/menu/functions/uichange.sh
+
 
 # Menu Interface
 setstart() {
@@ -49,6 +53,7 @@ touch /var/plexguide/pgui.switch
 [5] Emergency Display        :  [ $emdisplay ]
 [6] System & Network Auditor
 [7] Server ID change         : Change your ServerID
+[8] NVIDIA Docker Role       : NVIDIA Docker
 
 [99] TroubleShoot            : PreInstaller
 
@@ -65,40 +70,7 @@ EOF
   1) bash /opt/plexguide/menu/dlpath/dlpath.sh && setstart ;;
   2) bash /opt/plexguide/menu/multihd/multihd.sh ;;
   3) watchtower && clear && setstart ;;
-  4)
-    if [[ "$switchcheck" == "On" ]]; then
-      echo "Off" >/var/plexguide/pgui.switch
-      docker stop pgui &>/dev/null &
-      docker rm pgui &>/dev/null &
-      service localspace stop
-	  systemctl daemon-reload
-      rm -f /etc/systemd/system/localspace.servive
-      rm -f /etc/systemd/system/mountcheck.service
-	  clear
-    tee <<-EOF
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅️   WOOT WOOT: Process Complete!
-✅️   WOOT WOOT: UI Removed
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-
-    else
-      echo "On" >/var/plexguide/pgui.switch
-      ansible-playbook /opt/plexguide/menu/pgui/pgui.yml
-      systemctl daemon-reload
-      service localspace start
-	  clear
-    tee <<-EOF
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅️   WOOT WOOT: Process Complete!
-✅️   WOOT WOOT: UI installed
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-    fi
-    setstart
-    ;;
+  4) uichange && clear && setstart ;;
   5)
     if [[ "$emdisplay" == "On" ]]; then
       echo "Off" >/var/plexguide/emergency.display
@@ -106,6 +78,7 @@ EOF
     setstart ;;
   6) bash /opt/plexguide/menu/functions/network.sh && clear && setstart ;;
   7) setupnew && clear && setstart ;;
+  8) nvidia && clear && setstart ;;
 ###########################################################################
   99) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
   z) exit ;;

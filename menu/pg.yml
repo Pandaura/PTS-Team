@@ -20,3 +20,4 @@
     - { role: plexpatrol, tags: ['plexpatrol'] }
     - { role: remove, tags: ['remove'] }
     - { role: traktarr, tags: ['traktarr'] }
+    - { role: nvidia, tags: ['nvidia'] }
