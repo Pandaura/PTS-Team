@@ -48,7 +48,7 @@ EOF
   
   1) echo "remote" >/var/plexguide/plex.server ;;
   2) echo "local" >/var/plexguide/plex.server ;;
-  *) badinput && setserver ;;
+  *) badinput ;;
   esac
 }
 
@@ -70,13 +70,14 @@ EOF
   read -p 'Plex Server Claim Number | Press [ENTER]: ' typed </dev/tty
   echo $typed >/var/plexguide/plex.claim 
 
-  plexcontainerversion=$(cat /var/plexguide/image/plex)
-	  if [[ $plexcontainerversion == == "linuxserver/plex:latest" ]]; then
+#####LSIO part
+	plexcontainerversion=$(cat /var/plexguide/image/plex)
+	  if [[ $plexcontainerversion == "linuxserver/plex:latest" ]]; then
 		bash /opt/plexguide/menu/plex/lsio-plex-claim.sh $(cat /var/plexguide/plex.claim) 
 	  fi
 }
 
-######## flex docker part / switch between LSIO and PLEX
+######## Plex docker part / switch between LSIO and PLEX
 
 dockertag() {
 plexcontainerversion=$(cat /var/plexguide/image/plex)
