@@ -69,7 +69,9 @@ EOF
 
   read -p 'Plex Server Claim Number | Press [ENTER]: ' typed </dev/tty
   echo $typed >/var/plexguide/plex.claim 
-	  if [ $(cat /var/plexguide/image/plex) == linuxserver/plex ];then
+
+  plexcontainerversion=$(cat /var/plexguide/image/plex)
+	  if [[ $plexcontainerversion == == "linuxserver/plex:latest" ]]; then
 		bash /opt/plexguide/menu/plex/lsio-plex-claim.sh $(cat /var/plexguide/plex.claim) 
 	  fi
 }
@@ -78,7 +80,7 @@ EOF
 
 dockertag() {
 plexcontainerversion=$(cat /var/plexguide/image/plex)
-if [[ $plexcontainerversion == "linuxserver/plex" ]]; then
+if [[ $plexcontainerversion == "linuxserver/plex:latest" ]]; then
 updateplexlsio
 else updatenotset ; fi
 }
