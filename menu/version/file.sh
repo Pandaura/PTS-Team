@@ -8,7 +8,7 @@
 mainstart() {
 mkdir -p /opt/ptsupdate 1>/dev/null 2>&1
 git clone --single-branch https://github.com/PTS-Team/PTS-Update.git /opt/ptsupdate 1>/dev/null 2>&1
-chown -cR 100:1000 /opt/ptsupdate 1>/dev/null 2>&1 
+chown -cR 100:1000 /opt/ptsupdate 1>/dev/null 2>&1
 chmod -cR 775 /opt/ptsupdate 1>/dev/null 2>&1
 apt-get install dos2unix -yqq && dos2unix /opt/ptsupdate/update.sh 1>/dev/null 2>&1
 ansible-playbook /opt/plexguide/menu/alias/alias.yml 1>/dev/null 2>&1
@@ -17,12 +17,12 @@ ansible-playbook /opt/plexguide/menu/alias/alias.yml 1>/dev/null 2>&1
 endline() {
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Hey Guys we build up a new update panel 
-if yousee this , please do follow 
+PTS Now has a new update panel!
+If you're seing this all you need to do is the follwing,
 
-1.) read this part please
-2.) do ptsupdate again
-3.) have fun ^^
+1.) Read below
+2.) Type, "sudo ptsupdate" once more!
+3.) That's it!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
