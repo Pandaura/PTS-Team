@@ -287,12 +287,12 @@ Username / Branch & Repo are both case sensitive!
 
 EOF
     read -p 'Username | Press [ENTER]: ' boxuser </dev/tty
-	read -p 'REPO     | Press [ENTER]: ' boxrepo </dev/tty
+    read -p 'REPO     | Press [ENTER]: ' boxrepo </dev/tty
     read -p 'Branch   | Press [ENTER]: ' boxbranch </dev/tty
     echo "$boxuser" >/var/plexguide/boxpersonal.user
     echo "$boxrepo" >/var/plexguide/boxpersonal.repo
     echo "$boxbranch" >/var/plexguide/boxpersonal.branch
-    pinterface
+    question1
     ;;
   2)
     existcheck=$(git ls-remote --exit-code -h "https://github.com/$boxuser/$boxrepo" | grep "$boxbranch")
