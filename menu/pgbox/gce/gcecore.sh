@@ -27,6 +27,13 @@ exists() {
   else exists; fi
 }
 
+badinputgce() {
+  echo ""
+  echo "⛔️ ERROR - Bad Input! $typed not exist"
+  echo ""
+  read -p 'PRESS [ENTER] ' typed </dev/tty
+}
+
 cronexe() {
   croncheck=$(cat /opt/coreapps/apps/_cron.list | grep -c "\<$p\>")
   if [ "$croncheck" == "0" ]; then bash /opt/plexguide/menu/cron/cron.sh; fi
@@ -149,7 +156,7 @@ EOF
   if [ "$current" != "" ]; then exists && question1; fi
 
   current=$(cat /var/plexguide/program.temp | grep "\<$typed\>")
-  if [ "$current" == "" ]; then badinput1 && question1; fi
+  if [ "$current" == "" ]; then badinputgce && question1; fi
 
   part1
 }
