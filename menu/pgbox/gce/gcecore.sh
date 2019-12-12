@@ -99,6 +99,8 @@ question1() {
   sed -i -e "/image/d" /var/plexguide/app.list
   sed -i -e "/watchtower/d" /var/plexguide/app.list
   sed -i -e "/_/d" /var/plexguide/app.list
+  sed -i -e "/plex/d" /var/plexguide/app.list
+
   while read p; do
     echo -n $p >>/var/plexguide/program.temp
     echo -n " " >>/var/plexguide/program.temp
@@ -212,10 +214,6 @@ $p - Now Installing!
 EOF
 
     sleep 1
-
-    if [ "$p" == "plex" ]; then
-      bash /opt/plexguide/menu/plex/plex.sh
-    elif [ "$p" == "nzbthrottle" ]; then nzbt; fi
 
     # Store Used Program
     echo "$p" >/tmp/program_var
