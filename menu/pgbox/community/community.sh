@@ -25,6 +25,14 @@ exists() {
   elif [[ "$foo" == "n" || "$foo" == "N" ]]; then
     question1
   else exists; fi
+
+}
+
+badinputcom() {
+  echo ""
+  echo "⛔️ ERROR - Bad Input! $typed not exist"
+  echo ""
+  read -p 'PRESS [ENTER] ' typed </dev/tty
 }
 
 cronexe() {
@@ -141,13 +149,13 @@ EOF
   if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then exit; fi
 
   current=$(cat /var/plexguide/pgbox.buildup | grep "\<$typed\>")
-  if [ "$current" != "" ]; then queued && question1; fi
+  if [ "$current" != "" ]; then queued && question1 ; fi
 
   current=$(cat /var/plexguide/pgbox.running | grep "\<$typed\>")
-  if [ "$current" != "" ]; then exists && question1; fi
+  if [ "$current" != "" ]; then exists && question1 ; fi
 
   current=$(cat /var/plexguide/program.temp | grep "\<$typed\>")
-  if [ "$current" == "" ]; then badinput1 && question1; fi
+  if [ "$current" == "" ]; then badinputcom && question1 ; fi
 
   part1
 }
