@@ -68,10 +68,6 @@ After the install has completed, you will need to **rerun** the above command ag
   
 Configuring PTS fork is the same as configuring PG / PlexGuide.
   
-First, type the following to get the latest version of PTS: `sudo ptsupdate`
-
-Choose the `master` version.
-
 Then type the following to run the PTS menu: `sudo pts`    
 
 * Set up and deploy Traefik ([see here](https://github.com/PTS-Team/PTS-Team/wiki/Traefik))   
@@ -112,7 +108,7 @@ PTS  is a **fork ** of PG / Plexguide, an all-in-one media solution that deploys
 
 # 4. Testimonials
 
-
+..... 
 
 
 # 5. Recommended Reading
