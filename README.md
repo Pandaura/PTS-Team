@@ -21,29 +21,38 @@ Your PTS backup can be used to restore your applications in PTS fork after insta
 Type the following to access your current build's menu: `sudo pgblitz`    
 Select  `[7] PG vault [Backup & Restore]`  then  
 Select  `[1] Utlizie PG Vault`  then  
-Select  `[1] Data Backup`  - At this stage you can either type `all` (to backup all apps) OR `appname` (to queue/stack apps which you would like to backup) followed by typing `A`.  
+Select  `[1] Data Backup`  - 
+
+At this stage you can either type `all` (to backup all apps) OR `appname` (to queue/stack apps which you would like to backup) followed by typing `A`.  
   
 
 **IMPORTANT**
-If you have an encrypted drive and have forgotten, not documented or not backed up your SALT/password for PTS Clone, you should at this stage also backup your keys/rclone.config to gdrive. This can be done by the following:  
+If you have an encrypted drive and have forgotten, not documented or not backed up your SALT/password for PG Clone, you should at this stage also backup your keys/rclone.config to gdrive. This can be done by the following:  
 
 Type or paste the following to backup your keys:
 ```
 sudo wget -N https://raw.githubusercontent.com/PTS-Team/PTS-Clone/final/functions/backup-keys.sh
+
 ```  
   
     
 ## (ii) Installing PTS
 
 **NOTE**
-The ideal method of installing the PTS fork is to delete your current build and install PTS fork on a clean system. PTS fork works best on **ubuntu 18.XX** and this tutorial will assume you are using ubuntu 18.XX. If you are unsure on how to do this, please refer to the documentation provided by your server provider.  
+The ideal method of installing the PTS fork is to delete your current build and install PTS fork on a clean system. 
+PTS fork works best on **ubuntu 18.XX** and this tutorial will assume you are using ubuntu 18.XX. 
+If you are unsure on how to do this, please refer to the documentation provided by your server provider.  
 
 Once your server has an OS installed, login to your server using SSH.  
     
 Type or paste the following to install PTS fork:  
 
 ```
-sudo rm -rf /opt/plexguide && sudo rm -rf /var/plexguide && sudo apt-get install wget -y && sudo wget -qO- https://raw.githubusercontent.com/PTS-Team/Install/master/install.sh | sudo bash
+sudo apt-get update -yqq
+sudo apt-get upgrade -yqq
+sudo apt-get autoclean -yqq
+sudo apt-get install wget -y 
+sudo wget -qO- https://raw.githubusercontent.com/PTS-Team/Install/master/install.sh | sudo bash
 
 ```
   
@@ -57,7 +66,11 @@ The installation will then take you through the setup which is self-explanatory.
 Type or paste the following:
  
 ```
-sudo rm -rf /opt/plexguide && sudo rm -rf /var/plexguide && sudo apt-get install wget -y && sudo wget -qO- https://raw.githubusercontent.com/PTS-Team/Install/master/install.sh | sudo bash
+sudo apt-get update -yqq
+sudo apt-get upgrade -yqq
+sudo apt-get autoclean -yqq
+sudo apt-get install wget -y 
+sudo wget -qO- https://raw.githubusercontent.com/PTS-Team/Install/master/install.sh | sudo bash
 
 ```  
   
@@ -68,7 +81,7 @@ After the install has completed, you will need to **rerun** the above command ag
   
 Configuring PTS fork is the same as configuring PG / PlexGuide.
   
-Type the following to run the PTS menu: `sudo pts`    
+Then type the following to run the PTS menu: `sudo pts`
 
 * Set up and deploy Traefik ([see here](https://github.com/PTS-Team/PTS-Team/wiki/Traefik))   
 
