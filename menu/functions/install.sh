@@ -26,6 +26,7 @@ updateprime() {
   variable ${abc}/pg.number "New-Install"
   variable ${abc}/emergency.log ""
   variable ${abc}/pgbox.running ""
+  variable ${abc}/data.location "/mnt/backup"
   pgnumber=$(cat /var/plexguide/pg.number)
 
   hostname -I | awk '{print $1}' >${abc}/server.ip
