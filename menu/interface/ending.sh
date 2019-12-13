@@ -9,12 +9,10 @@ source /opt/plexguide/menu/functions/install.sh
 emergency
 file="/bin/pts"
 if [[ ! -f "/bin/pts" ]]; then
-  cp /opt/plexguide/menu/alias/templates/pts /bin &&  chown 1000:1000 /bin/pts && chmod 0755 /bin/pts; fi
+  cp /opt/plexguide/menu/alias/templates/pts /bin && chown 1000:1000 /bin/pts && chmod 0755 /bin/pts; fi
 #
 clear 
-echo ""
-
-cat <<"EOF"
+ printf '
 ┌─────────────────────────────────────┐
 │         -==   Team PTS  ==-         │
 │ ————————————————————————————————————│
@@ -37,7 +35,7 @@ cat <<"EOF"
 │ BugHunter : Krallenkiller           │
 │                                     │
 └─────────────────────────────────────┘
+'
 
-EOF
 
 
