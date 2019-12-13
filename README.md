@@ -43,7 +43,7 @@ Once your server has an OS installed, login to your server using SSH.
 Type or paste the following to install PTS fork:  
 
 ```
-sudo rm -rf /opt/plexguide && sudo rm -rf /var/plexguide && sudo apt-get install wget -y && sudo wget -qO - https://raw.githubusercontent.com/PTS-Team/Install/master/install.sh | sudo bash
+sudo rm -rf /opt/plexguide && sudo rm -rf /var/plexguide && sudo apt-get install wget -y && sudo wget -qO- https://raw.githubusercontent.com/PTS-Team/Install/master/install.sh | sudo bash
 
 ```
   
@@ -57,7 +57,7 @@ The installation will then take you through the setup which is self-explanatory.
 Type or paste the following:
  
 ```
-sudo rm -rf /opt/plexguide && sudo rm -rf /var/plexguide && sudo apt-get install wget -y && sudo wget -qO - https://raw.githubusercontent.com/PTS-Team/Install/master/install.sh | sudo bash
+sudo rm -rf /opt/plexguide && sudo rm -rf /var/plexguide && sudo apt-get install wget -y && sudo wget -qO- https://raw.githubusercontent.com/PTS-Team/Install/master/install.sh | sudo bash
 
 ```  
   
