@@ -19,8 +19,8 @@ Your PTS backup can be used to restore your applications in PTS fork after insta
 **NOTE**  Tested and working for PG v8.5-8.7
   
 Type the following to access your current build's menu: `sudo pgblitz`    
-Select  `[7] PTS vault [Backup & Restore]`  then  
-Select  `[1] Utlizie PTS Vault`  then  
+Select  `[7] PG vault [Backup & Restore]`  then  
+Select  `[1] Utlizie PG Vault`  then  
 Select  `[1] Data Backup`  - At this stage you can either type `all` (to backup all apps) OR `appname` (to queue/stack apps which you would like to backup) followed by typing `A`.  
   
 
@@ -68,7 +68,7 @@ After the install has completed, you will need to **rerun** the above command ag
   
 Configuring PTS fork is the same as configuring PG / PlexGuide.
   
-Then type the following to run the PTS menu: `sudo pts`    
+Type the following to run the PTS menu: `sudo pts`    
 
 * Set up and deploy Traefik ([see here](https://github.com/PTS-Team/PTS-Team/wiki/Traefik))   
 
@@ -76,9 +76,9 @@ Then type the following to run the PTS menu: `sudo pts`
 
 * Deploy PTS Shield (GOAuth - all apps supported) [see here](https://github.com/PTS-Team/PTS-Team/wiki/PTS-Shield)
 
-* Set up and deploy rClone. You can restore you backup keys at this stage. [see here](https://github.com/PTS-Team/PTS-Team/wiki/PTS-Clone)
+* Set up and deploy PTS-Clone. You can restore you backup keys at this stage. [see here](https://github.com/PTS-Team/PTS-Team/wiki/PTS-Clone)
 
-* (Optional) Restore PTS backup (created in step 1) using PTS Vault. [see here](https://github.com/PTS-Team/PTS-Team/wiki/PTS-Vault---Data-Storage)
+* (Optional) Restore PTS backup (created in step 1) using PTS-Vault. [see here](https://github.com/PTS-Team/PTS-Team/wiki/PTS-Vault---Data-Storage)
 
 * Install desired core/community applications (Do this regardless of whether it is a fresh install with restore or overwrite)  [see here](https://github.com/PTS-Team/PTS-Team/wiki/core-apps)
 
@@ -88,13 +88,11 @@ Then type the following to run the PTS menu: `sudo pts`
 **Why do I need to change remote paths?**  
 PTS will create one download folder for completed downloads using any NZB client `/mnt/downloads/nzb` and one download folder for completed downloads using any torrent client `/mnt/downloads/torrent`. Both folder names are different to those used in previous versions of PTS. This remote paths need to be changed in your configuration settings (nzbget/radarr/sonarr etc) which you can do in either in terminal or webUI.  
   
-
-**NOTE**  PTS fork does **not** install PTSUI by default. You will need to do this through [5]APPBox. If you are overwriting your current build you and wish to continue using PGUI, you must first remove PGUI from your current build and reinstall it using [5]APPBox. You can do this by typing the following command: `sudo rm -rf  /opt/appdata/pgui/*`  
-  
+**NOTE**  PTS fork does **not** install PGUI by default.   
   
 # 2. Project Statement
 
-PTS  is a **fork ** of PG / Plexguide, an all-in-one media solution that deploys a Media Server through the use of either your local HDD or Google Drive; serving as unlimited back-end storage. PTS utilizes Ansible and Docker to streamline your Media Server while deploying multiple tools for your server operations.
+PTS  is a **fork** of PG / Plexguide, an all-in-one media solution that deploys a Media Server through the use of either your local HDD or Google Drive; serving as unlimited back-end storage. PTS utilizes Ansible and Docker to streamline your Media Server while deploying multiple tools for your server operations.
  
 # 3. Functional Use
 
