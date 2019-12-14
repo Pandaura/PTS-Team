@@ -12,7 +12,7 @@
   shell: 'cat /var/plexguide/pgscan/plex.user'
   register: plexuser
 
-- name: Set plex.user fact | passwort
+- name: Set plex.user fact | password
   shell: 'cat /var/plexguide/pgscan/plex.pw'
   register: plexpass
 
