@@ -7,26 +7,12 @@
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/install.sh
+
 # KEY VARIABLE RECALL & EXECUTION
 mkdir -p /var/plexguide/plexpatrol
+rm -rf /var/plexguide/pgpatrol
 
 # FUNCTIONS START ##############################################################
-oldvalue() {
-value="/var/plexguide/pgpatrol"
-if [[ ! -f $value ]]; then
-rm -rf /var/plexguide/pgpatrol; fi
-}
-
-newvalue() {
-mkdir -p /var/plexguide/plexpatrol
-touch /var/plexguide/plexpatrol/video.transcodes
-touch /var/plexguide/plexpatrol/video.transcodes4k
-touch /var/plexguide/plexpatrol/audio.transcodes
-touch /var/plexguide/plexpatrol/check.interval
-touch /var/plexguide/plexpatrol/multiple.ips
-touch /var/plexguide/plexpatrol/kick.minutes
-}
-
 # FIRST FUNCTION
 variable() {
   file="$1"
@@ -49,14 +35,11 @@ deploycheck() {
 plexcheck() {
   pcheck=$(docker ps --format {{.Names}} | grep "plex")
   if [ "$pcheck" == "" ]; then
-
-    tee <<-EOF
-
+printf'
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⛔️  WARNING! - Plex is Not Installed or Running! Exiting!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
+'
     read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
     exit 0
   fi
@@ -72,7 +55,11 @@ token() {
                 if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then  pstatus="✅ DEPLOYED"
                 else pstatus="❌ DEPLOYED BUT PATROL TOKEN FAILED"; fi
         fi
-  else pstatus="⚠️ NOT DEPLOYED"; fi
+  else ctoken; fi
+  #else pstatus="⚠️ NOT DEPLOYED"; fi
+}
+ctoken() {
+bash /opt/plexguide/menu/plexpatrol/token.sh && clear
 }
 
 # BAD INPUT
@@ -81,15 +68,6 @@ badinput() {
   read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
   question1
 }
-
-#######################################################################################
-### Remove old folder and create first layout for token
-section0() {
-  ptokendep=$(cat /var/plexguide/plexpatrol/plex.token)
-  if [ "$ptokendep" == "" ]; then
-  bash /opt/plexguide/menu/plexpatrol/token.sh ; fi
-}
-#########################################################################################
 
 selection1() {
   tee <<-EOF
@@ -174,12 +152,12 @@ selection5() {
 🚀 Limit How Long a User Can Pause For!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Set a Number from [ 5 ] - [ 250 ] Mintues
+Set a Number from [ 5 ] - [ 120 ] Mintues
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-  if [[ "$typed" -ge "1" && "$typed" -le "250" ]]; then
+  if [[ "$typed" -ge "5" && "$typed" -le "120" ]]; then
     echo -e "$typed" >/var/plexguide/plexpatrol/kick.minutes && question1
   else badinput; fi
 }
@@ -308,9 +286,6 @@ EOF
 }
 
 # FUNCTIONS END ##############################################################
-oldvalue
-newvalue
-section0
 plexcheck
 token
 variable /var/plexguide/plexpatrol/video.transcodes "NON-SET"
