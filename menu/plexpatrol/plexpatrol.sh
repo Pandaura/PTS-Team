@@ -86,7 +86,7 @@ badinput() {
 ### Remove old folder and create first layout for token
 section0() {
   ptokendep=$(cat /var/plexguide/plexpatrol/plex.token)
-  if [ "$ptokendep" != "" ]; then
+  if [ "$ptokendep" == "" ]; then
   bash /opt/plexguide/menu/plexpatrol/token.sh ; fi
 }
 #########################################################################################
