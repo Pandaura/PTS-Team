@@ -12,7 +12,7 @@
   shell: 'cat /var/plex_dupe/plex.user'
   register: plexuser
 
-- name: Set plex.user fact | passwort
+- name: Set plex.user fact | password
   shell: 'cat /var/plex_dupe/plex.pw'
   register: plexpass
 
