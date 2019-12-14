@@ -15,7 +15,7 @@ continuing, please follow the current steps.
 [ 1 ] Visit - https://trakt.tv/oauth/applications
 [ 2 ] Click - New Applications
 [ 3 ] Name  - plaxt
-[ 4 ] Redirect UI - http://plaxt.${domain}/authorize
+[ 4 ] Redirect UI - https://plaxt.${domain}/authorize
 [ 5 ] Permissions - Click /checkin and /scrobble
 [ 6 ] Click - Save App
 [ 7 ] Copy the Client ID & Secret for the Next Step!
