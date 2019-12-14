@@ -219,10 +219,13 @@ $p - Now Installing!
 
 EOF
 
-    sleep 1
-
+    ##### CHECK START #####
     if [ "$p" == "plaxt" ]; then
       bash /opt/plexguide/menu/functions/plaxt.sh; fi
+
+    if [ "$p" == "channelsdvr" ]; then
+       bash /opt/plexguide/menu/functions/channelsdvr.sh; fi
+    ##### CHECK EXIT #####
 
     # Store Used Program
     echo "$p" >/tmp/program_var
