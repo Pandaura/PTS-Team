@@ -37,7 +37,7 @@ EOF
   case $typed in
   *)
     read -p 'Enter the PLEX User Name      | Press [ENTER]: ' user </dev/tty
-    read -p 'Enter the PLEX User Passwort  | Press [ENTER]: ' pw </dev/tty
+    read -p 'Enter the PLEX User Password  | Press [ENTER]: ' pw </dev/tty
 
     tee <<-EOF
 
