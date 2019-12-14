@@ -222,7 +222,7 @@ EOF
     sleep 1
 
     if [ "$p" == "plaxt" ]; then
-      bash /opt/plexguide/menu/function/plaxt.sh; fi
+      bash /opt/plexguide/menu/functions/plaxt.sh; fi
 
     # Store Used Program
     echo "$p" >/tmp/program_var
