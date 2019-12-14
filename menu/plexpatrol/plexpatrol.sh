@@ -19,6 +19,12 @@ rm -rf /var/plexguide/pgpatrol; fi
 
 newvalue() {
 mkdir -p /var/plexguide/plexpatrol
+touch /var/plexguide/plexpatrol/video.transcodes
+touch /var/plexguide/plexpatrol/video.transcodes4k
+touch /var/plexguide/plexpatrol/audio.transcodes
+touch /var/plexguide/plexpatrol/check.interval
+touch /var/plexguide/plexpatrol/multiple.ips
+touch /var/plexguide/plexpatrol/kick.minutes
 }
 
 # FIRST FUNCTION
@@ -52,7 +58,7 @@ plexcheck() {
 
 EOF
     read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-    exit
+    exit 0
   fi
 }
 
@@ -79,8 +85,8 @@ badinput() {
 #######################################################################################
 ### Remove old folder and create first layout for token
 section0() {
-sect0="/var/plexguide/plexpatrol/plex.token"
-  if [[ ! -f $sect0 ]]; then
+  ptokendep=$(cat /var/plexguide/plexpatrol/plex.token)
+  if [ "$ptokendep" != "" ]; then
   bash /opt/plexguide/menu/plexpatrol/token.sh ; fi
 }
 #########################################################################################
