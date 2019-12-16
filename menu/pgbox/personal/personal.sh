@@ -19,6 +19,10 @@ queued() {
   question1
 }
 
+value() {
+bash /opt/plexguide/menu/pgbox/value.sh
+}
+
 exists() {
   echo ""
   echo "⛔️ ERROR - $typed Already Installed!"
@@ -54,8 +58,6 @@ initial() {
   mkdir -p /opt/mycontainers
 
   ansible-playbook /opt/plexguide/menu/pgbox/personal/personal.yml
-  apt-get install dos2unix -yqq && dos2unix /opt/mycontainers/apps/image/_image.sh >/dev/null 2>&1
-
   file="/opt/mycontainers/place.holder"
   waitvar=0
   while [ "$waitvar" == "0" ]; do
@@ -193,8 +195,8 @@ question2() {
   while read p; do
 
     echo "$p" >/tmp/program_var
-
-    bash /opt/mycontainers/apps/image/_image.sh
+	if [[ -d "/opt/mycontainers/apps/image/" ]]; then
+    bash /opt/mycontainers/apps/image/_image.sh ; fi
 
     # CName & Port Execution
     bash /opt/plexguide/menu/pgbox/cname.sh
@@ -221,15 +223,7 @@ EOF
 
     sleep 1
     ##### CHECK START #####
-    if [ "$p" == "plex" ]; then
-      bash /opt/plexguide/menu/plex/plex.sh
-    elif [ "$p" == "nzbthrottle" ]; then nzbt; fi
-
-    if [ "$p" == "plaxt" ]; then
-      bash /opt/plexguide/menu/functions/plaxt.sh; fi
-
-    if [ "$p" == "channelsdvr" ]; then
-       bash /opt/plexguide/menu/functions/channelsdvr.sh; fi
+    value
     ##### CHECK EXIT #####
 
     # Store Used Program

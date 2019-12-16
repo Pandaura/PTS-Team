@@ -15,6 +15,10 @@ queued() {
   question1
 }
 
+value() {
+bash /opt/plexguide/menu/pgbox/value.sh
+}
+
 exists() {
   echo ""
   echo "⛔️ ERROR - $typed Already Installed!"
@@ -222,11 +226,7 @@ $p - Now Installing!
 EOF
 
     sleep 1
-
-    if [ "$p" == "plex" ]; then
-      bash /opt/plexguide/menu/plex/plex.sh
-    elif [ "$p" == "nzbthrottle" ]; then nzbt; fi
-
+	value
     # Store Used Program
     echo "$p" >/tmp/program_var
     # Execute Main Program

@@ -15,6 +15,10 @@ queued() {
   question1
 }
 
+value() {
+bash /opt/plexguide/menu/pgbox/value.sh
+}
+
 exists() {
   echo ""
   echo "⛔️ ERROR - $typed already installed!"
@@ -220,11 +224,7 @@ $p - Now Installing!
 EOF
 
     ##### CHECK START #####
-    if [ "$p" == "plaxt" ]; then
-      bash /opt/plexguide/menu/functions/plaxt.sh; fi
-
-    if [ "$p" == "channelsdvr" ]; then
-       bash /opt/plexguide/menu/functions/channelsdvr.sh; fi
+    value
     ##### CHECK EXIT #####
 
     # Store Used Program
