@@ -29,7 +29,6 @@ exists() {
   elif [[ "$foo" == "n" || "$foo" == "N" ]]; then
     question1
   else exists; fi
-
 }
 
 badinputcom() {

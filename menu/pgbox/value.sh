@@ -13,9 +13,9 @@ if [ "$app" == "plex" ]; then
      bash /opt/plexguide/menu/plex/plex.sh ; fi
 
 if [ "$app" == "plaxt" ]; then
-     bash /opt/plexguide/menu/functions/plaxt.sh; fi
+     bash /opt/plexguide/menu/pgbox/customparts/plaxt.sh; fi
 
 if [ "$app" == "channelsdvr" ]; then
-     bash /opt/plexguide/menu/functions/channelsdvr.sh; fi
+     bash /opt/plexguide/menu/pgbox/customparts/channelsdvr.sh; fi
 
 ##### CHECK EXIT #####
