@@ -254,7 +254,7 @@ EOF
 mainbanner() {
 
   boxuser=$(cat /var/plexguide/boxpersonal.user)
-  boxrepo=$(cat /var/plexguide/boxrepo.repo)
+  boxrepo=$(cat /var/plexguide/boxpersonal.repo)
   boxbranch=$(cat /var/plexguide/boxpersonal.branch)
  
 
@@ -299,10 +299,10 @@ EOF
     echo "$boxuser" >/var/plexguide/boxpersonal.user
     echo "$boxrepo" >/var/plexguide/boxpersonal.repo
     echo "$boxbranch" >/var/plexguide/boxpersonal.branch
-    question1
+    mainbanner
     ;;
   2)
-    existcheck=$(git ls-remote --exit-code -h "https://github.com/$boxuser/$boxrepo" | grep "$boxbranch")
+    existcheck=$(git ls-remote --exit-code -h "https://github.com/$(cat /var/plexguide/boxpersonal.user)/$(cat /var/plexguide/boxpersonal.repo)" | grep "$(cat /var/plexguide/boxpersonal.branch)")
     if [ "$existcheck" == "" ]; then
       echo
       read -p '💬 Exiting! Forked Version Does Not Exist! | Press [ENTER]: ' typed </dev/tty
