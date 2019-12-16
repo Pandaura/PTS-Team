@@ -53,7 +53,7 @@ initial() {
 
   mkdir -p /opt/mycontainers
 
-  ansible-playbook /opt/plexguide/menu/pgbox/personal/personal.yml >/dev/null 2>&1
+  ansible-playbook /opt/plexguide/menu/pgbox/personal/personal.yml
   apt-get install dos2unix -yqq && dos2unix /opt/mycontainers/apps/image/_image.sh >/dev/null 2>&1
 
   file="/opt/mycontainers/place.holder"
