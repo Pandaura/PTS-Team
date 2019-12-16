@@ -48,7 +48,7 @@
     - name: 'Setting {{pgrole}} Volumes'
       set_fact:
         pg_volumes:
-          - '/opt/appdata/pgui/index.php:/var/www/html/index.php'
+          - '/opt/appdata/{{pgrole}}/:/var/www/html/'
           - '/var/plexguide:/plexguide'
           - '/opt/appdata/plexguide:/log'
 
