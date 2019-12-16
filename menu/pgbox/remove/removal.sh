@@ -73,7 +73,7 @@ if [ "$tcheck" == "" ]; then
 ⛔️  WARNING! - Type an Application Name! Case Senstive! Restarting!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  sleep t
+  sleep 3
   bash /opt/plexguide/menu/pgbox/remove/removal.sh
   exit
 fi
