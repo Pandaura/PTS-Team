@@ -395,8 +395,8 @@ EOF
 
 }
 maxyear() {
-((minyear=$(date +"%Y")-20))
-((maxyear=$(date +"%Y")+5))
+((mnyear=$(date +"%Y")-20))
+((mxyear=$(date +"%Y")+5))
 
   tee <<-EOF
 
@@ -404,12 +404,12 @@ maxyear() {
 🚀 Limit of max allowed Year
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Set a Number from [ $minyear ] - [ $maxyear ]
+Set a Number from [ $mnyear ] - [ $mxyear ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-  if [[ "$typed" -ge "1950" && "$typed" -le "2100" ]]; then
+	if [[ "$typed" -ge "$mnyear" && "$typed" -le "$mxyear" ]]; then
     echo "$typed" >/var/plexguide/traktarr/pgtrakyear.max && question1
   else badinput; fi
 }
