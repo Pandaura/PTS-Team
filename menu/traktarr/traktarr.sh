@@ -411,7 +411,7 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 	if [[ "$typed" -ge "$mnyear" && "$typed" -le "$mxyear" ]]; then
     echo "$typed" >/var/plexguide/traktarr/pgtrakyear.max && question1
-  else badinput; fi
+  else maxyear ; fi
 }
 
 credits(){
