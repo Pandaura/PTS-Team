@@ -532,6 +532,7 @@ EOF
   z) exit ;;
   Z) exit ;;
   *) question1 ;;
+    esac
 }
 ################################################################################## 
 credits() {
@@ -566,7 +567,7 @@ EOF
   question1
 }
 
-prefill(){
+prefill() {
 clear
 chk=$(figlet traktarr | lolcat )
   tee <<-EOF
