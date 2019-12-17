@@ -1,11 +1,12 @@
 <!doctype html>
 <html>
+<head>
 <meta http-equiv="refresh" content="25" charset="UTF-8"/>
-	<meta name="description" content=""> 
-	<meta name="keywords" content=""> 
-	<meta name="viewport" content="width=device-width, initial-scale=0.5">
-				<meta name="robots" content="noindex, nofollow, noarchive" />
-                <meta http-equiv="cache-control" content="no-cache" /> 
+	<meta name="description" content="" /> 
+	<meta name="keywords" content="" /> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+	<meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta http-equiv="cache-control" content="no-cache" /> 
 <title>Com-UI</title>
 <link rel="icon" type="image/png" href="https://i.imgur.com/T7OQsZz.png" sizes="32x32">
 <style type="text/css">
