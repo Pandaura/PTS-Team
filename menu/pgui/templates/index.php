@@ -40,6 +40,14 @@ width: auto;
 border: 1px solid #000;
 padding: 10px;
 }
+.autologs {
+background: #FFFFF;
+height: 150px;
+overflow: auto;
+width: auto;
+border: 1px solid #000;
+padding: 10px;
+}
 </style>
 </head>
   	<script type="text/javascript">
@@ -113,9 +121,11 @@ document.close();
 			<table width="100%" height="44" border="1" align="center" cellpadding="5" cellspacing="0">
 			  <tbody>
 				<tr>
-				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
+				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
+				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 					<div class="auto"><?php $output = shell_exec('tail -n 250 /plexguide/logs/pg*.log'); echo "<pre>$output</pre>";?></div>
-				  </span></td>
+				  </span>
+				 </td>
 				</tr>
 			  </tbody>
 			</table>
@@ -132,7 +142,7 @@ document.close();
 				<tr>
 				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
 				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<?php $output = shell_exec('tail -n 10 /plexguide/logs/rclone-*.log');echo "<pre>$output</pre>";?>
+					<div class="autologs"><?php $output = shell_exec('tail -n 100 /plexguide/logs/rclone-*.log');echo "<pre>$output</pre>";?></div>
 				  </span></td>
 				</tr>
 			  </tbody>
@@ -245,8 +255,7 @@ document.close();
 					<?php $output = shell_exec('tail -n 1 /plexguide/pg.capacity');echo "<pre>$output</pre>";?></span></td>
 				</tr>
 			  </tbody>	
-			</table>		  
-			<br>
+			</table>
 			<!--added -->
 			<!-- <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
 				  <tbody>
@@ -258,7 +267,6 @@ document.close();
 			<table width="100%" height="60" border="1" align="center" cellpadding="0" cellspacing="0">
 			<tbody>
 			</table> */ -->
-			<br>
 				<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
 				  <tbody>
 					<tr>
