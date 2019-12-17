@@ -31,23 +31,33 @@
         "ca",
 		"de",
 		"es",
-		"fr"
+		"fr",
+		"ko",
+		"hi",
+		"ja",
+		"zh"
       ],
       "allowed_languages": [
         "en",
         "us",
         "gb",
         "ca",
-		"de"
+		"de",
+		"es",
+		"fr",
+		"ko",
+		"hi",
+		"ja",
+		"zh"
       ],
       "blacklisted_genres": [
         "documentary",
         "music"
       ],
       "blacklisted_max_runtime": 0,
-      "blacklisted_max_year": {{year.stdout}},
+      "blacklisted_max_year": {{maxyear.stdout}},
       "blacklisted_min_runtime": 10,
-      "blacklisted_min_year": 1980,
+      "blacklisted_min_year": {{minyear.stdout}},
       "blacklisted_title_keywords": [
         "untitled",
         "barbie",
@@ -66,14 +76,24 @@
         "ca",
 		"de",
 		"es",
-		"fr"
+		"fr",
+		"ko",
+		"hi",
+		"ja",
+		"zh"
       ],
       "allowed_languages": [
         "en",
         "us",
         "gb",
         "ca",
-		"de"
+		"de",
+		"es",
+		"fr",
+		"ko",
+		"hi",
+		"ja",
+		"zh"
       ],
       "blacklisted_genres": [
         "game-show",
@@ -90,7 +110,6 @@
         "nickelodeon",
         "hallmark",
         "reelzchannel",
-        "disney",
         "cnn",
         "cbbc",
         "the movie network",
@@ -102,8 +121,8 @@
       ],
       "blacklisted_max_runtime": 0,
       "blacklisted_min_runtime": 10,
-      "blacklisted_min_year": 1980,
-      "blacklisted_max_year": {{year.stdout}},
+      "blacklisted_min_year": {{minyear.stdout}},
+      "blacklisted_max_year": {{maxyear.stdout}},
       "blacklisted_title_keywords": [],
       "blacklisted_tvdb_ids": []
     }
@@ -116,14 +135,14 @@
   },
   "radarr": {
     "api_key": "{{rapi.stdout}}",
-    "minimum_availability": "announced",
+    "minimum_availability": "{{minimumavailability.stdout}}",
     "quality": "{{rprofile.stdout}}",
     "root_folder": "{{rpath.stdout}}",
     "url": "http://localhost:7878/"
   },
   "sonarr": {
     "api_key": "{{sapi.stdout}}",
-    "language": "English",
+    "language": "{{lang.stdout}}",
     "quality": "{{sprofile.stdout}}",
     "root_folder":"{{spath.stdout}}",
     "tags": {},

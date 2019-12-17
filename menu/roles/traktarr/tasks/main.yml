@@ -93,9 +93,24 @@
   register: spath
   ignore_errors: True
 
-- name: Max allowed Year
+- name: Max allowed Year | Sonarr
   shell: 'cat /var/plexguide/traktarr/pgtrakyear.max'
-  register: year
+  register: maxyear
+  ignore_errors: True
+
+- name: Min allowed Year | Sonarr
+  shell: 'cat /var/plexguide/traktarr/pgtrakyear.min'
+  register: minyear
+  ignore_errors: True
+
+- name: Sonar Lang Profile | Sonarr
+  shell: 'cat /var/plexguide/traktarr/pgtrak.lang'
+  register: lang
+  ignore_errors: True
+
+- name: Sonarr minimum availability | Radarr
+  shell: 'cat /var/plexguide/traktarr/pgtrak.minimumavailability'
+  register: minimumavailability
   ignore_errors: True
 
 - name: Remove old Install
