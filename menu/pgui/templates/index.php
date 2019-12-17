@@ -83,7 +83,7 @@ document.write(decodieren(versch));
 document.close();
 </script> 
 <body text="#FFFFFF">
-<div class="image>
+<div class="image">
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
   <tbody>
     <tr>
