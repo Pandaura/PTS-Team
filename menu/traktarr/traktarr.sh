@@ -395,7 +395,7 @@ EOF
 
 }
 maxyear() {
-((mnyear=$(date +"%Y")-20))
+((mnyear=$(date +"%Y")+1))
 ((mxyear=$(date +"%Y")+5))
 
   tee <<-EOF
