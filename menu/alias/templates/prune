@@ -8,7 +8,7 @@ docker system prune --volumes -a -f >>/var/plexguide/docker-cleanup.log
 
 docker image prune -a -f >>/var/plexguide/docker-cleanup.log
 
-docker volume rm $(docker volume ls -qf dangling=true) >>/var/plexguide/docker-cleanup.log
+#docker volume rm $(docker volume ls -qf dangling=true) >>/var/plexguide/docker-cleanup.log
 
 echo "[$(date)] Docker Cleanup has completed." >>/var/plexguide/docker-cleanup.log
 #########################################
