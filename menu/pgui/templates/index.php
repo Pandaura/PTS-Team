@@ -25,6 +25,7 @@ a:link {
 }
 a:visited {
 	color: #E8DD06;
+}
 .image {
   width: 100%;
   height: 100%;
