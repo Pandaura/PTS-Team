@@ -462,6 +462,7 @@ EOF
     echo -e "English" /var/plexguide/traktarr/pgtrak.lang
     question1
   else
+  clear
   lprofil=$(cat /var/plexguide/traktarr/pgtrak.lang)
     tee <<-EOF
 
