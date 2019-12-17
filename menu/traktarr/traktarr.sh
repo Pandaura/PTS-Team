@@ -122,7 +122,6 @@ EOF
     read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
     question1
   fi
-
 }
 
 rquality() {
@@ -168,7 +167,6 @@ EOF
     read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
     question1
   fi
-
 }
 
 api() {
@@ -536,7 +534,7 @@ EOF
   *) question1 ;;
 }
 ################################################################################## 
-credits(){
+credits() {
 clear
 chk=$(figlet traktarr | lolcat )
   tee <<-EOF
