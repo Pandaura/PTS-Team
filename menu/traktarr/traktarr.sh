@@ -16,28 +16,6 @@ variable() {
   file="$1"
   if [ ! -e "$file" ]; then echo "$2" >$1; fi
 }
-###### failsafe mode ON 
-startcheck() {
-    sonarr=$(docker ps --format '{{.Names}}' | grep "sonarr")
-    radarr=$(docker ps --format '{{.Names}}' | grep "radarr")
-	if [[ "$radarr" == "" ]] && [[ "$sonarr" == "" ]]; then
-		tee <<-EOF
-
-		━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-		⛔️  WARNING! - Sonarr/Radarr is not Installed/Running!
-		━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-		EOF
-    read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-		exit 0
-	elif [[ "$sonarr" = "sonarr" ]] && [[ "$radarr" = "" ]]; then
-		echo "⛔  WARNING! - Traktarr will only work for shows! Radarr Not Running!"
-	elif [[ "$radarr" = "radarr" ]] && [[ "$sonarr" = "" ]]; then
-		echo "⛔  WARNING! - Traktarr will only work for movies! Sonarr Not Running!"
-	else [[ "$radarr" = "radarr" ]] && [[ "$sonarr" = "sonarr" ]]
-		echo "🚀 Traktarr - Radarr and Sonarr detected | it will work for both"; fi
-}
-###### failsafe mode OFF
 
 deploycheck() {
   dcheck=$(systemctl is-active traktarr.service)
@@ -642,25 +620,32 @@ EOF
   question1
 }
 #####################################################################################################################################
+checkcase() {
+    sonarr=$(docker ps --format '{{.Names}}' | grep "sonarr")
+    radarr=$(docker ps --format '{{.Names}}' | grep "radarr")
+	if [[ "$radarr" == "" ]] && [[ "$sonarr" == "" ]]; then
+		tee <<-EOF
 
+		━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+		⛔️  WARNING! - Sonarr/Radarr is not Installed/Running!
+		━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+		EOF
+    read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+		exit 0
+	elif [[ "$sonarr" = "sonarr" ]] && [[ "$radarr" = "" ]]; then
+		echo "⛔  WARNING! - Traktarr will only work for shows! Radarr Not Running!" >/var/plexguide/traktarr/docker.status
+	elif [[ "$radarr" = "radarr" ]] && [[ "$sonarr" = "" ]]; then
+		echo "⛔  WARNING! - Traktarr will only work for movies! Sonarr Not Running!" >/var/plexguide/traktarr/docker.status
+	else [[ "$radarr" = "radarr" ]] && [[ "$sonarr" = "sonarr" ]]
+		echo "🚀 Traktarr - Radarr and Sonarr detected | it will work for both" >/var/plexguide/traktarr/docker.status; fi
+}
 
 question1() {
 
   api=$(cat /var/plexguide/traktarr/pgtrak.secret)
   if [ "$api" == "NOT-SET" ]; then api="NOT-SET"; else api="SET"; fi
-  ####status check sonarr and radarr start
-    sonarr=$(docker ps --format '{{.Names}}' | grep "sonarr")
-    radarr=$(docker ps --format '{{.Names}}' | grep "radarr")
-    if [[ "$radarr" == "" ]] && [[ "$sonarr" == "" ]]; then
-        echo -e "⛔  WARNING! - Sonarr or Radarr must be Running!" >/var/plexguide/traktarr/docker.status
-    elif [[  "$sonarr" = "sonarr" ]] && [[ "$radarr" = "" ]]; then
-        echo -e "⛔  WARNING! - Traktarr will only work for shows! Radarr Not Running!">/var/plexguide/traktarr/docker.status
-    elif [[  "$radarr" = "radarr" ] && [[ "$sonarr" = "" ]]; then
-         echo -e "⛔  WARNING! - Traktarr will only work for movies! Sonarr Not Running!">/var/plexguide/traktarr/docker.status
-    else [[  "$radarr" = "radarr" ] && [[ "$sonarr" = "sonarr" ]]
-         echo -e "🚀 Traktarr - Radarr and Sonarr detected | it will work for both" >/var/plexguide/traktarr/docker.status
-    fi
-  ####status check sonarr and radarr start
+
   rpath=$(cat /var/plexguide/traktarr/pgtrak.rpath)
   spath=$(cat /var/plexguide/traktarr/pgtrak.spath)
   rprofile=$(cat /var/plexguide/traktarr/pgtrak.rprofile)
@@ -720,10 +705,6 @@ EOF
   10)
     sonarr=$(docker ps --format '{{.Names}}' | grep "sonarr")
     radarr=$(docker ps --format '{{.Names}}' | grep "radarr")
-	
-	# sonarr=$(docker ps | grep "sonarr")
-    # radarr=$(docker ps | grep "radarr")
-
     if [ "$radarr" == "" ] && [ "$sonarr" == "" ]; then
       tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -790,7 +771,7 @@ EOF
 
 # FUNCTIONS END ##############################################################
 
-startcheck
+checkcase
 
 variable /var/plexguide/traktarr/pgtrak.client "NOT-SET"
 variable /var/plexguide/traktarr/pgtrak.secret "NOT-SET"
