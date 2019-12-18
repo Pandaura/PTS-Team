@@ -122,7 +122,6 @@ padding: 10px;
     border-bottom: none;
   }
 }
-
 </style>
 </head>
 <body text="#FFFFFF">
