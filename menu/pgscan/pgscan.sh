@@ -1,5 +1,5 @@
 # KEY VARIABLE RECALL & EXECUTION
-source /var/plexguide/pgscan/endbanner.sh
+source /opt/plexguide/menu/pgscan/scripts/endbanner.sh
 
 mkdir -p /var/plexguide/pgscan
 touch /var/plexguide/pgscan/plex.token
