@@ -16,7 +16,7 @@ passtartfirst() {
 file="/opt/plex_autoscan/config/config.json"
   if [[ ! -f $file ]]; then
 	pasundeployed 
-  else plexcheck ; fi
+  else plexcheck; fi
 }
 
 deploycheck() {
@@ -231,7 +231,6 @@ EOF
 }
 # FUNCTIONS END ##############################################################
 passtartfirst
-plexcheck
 plexdockeruser
 userstatus
 tokenstatus
