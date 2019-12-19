@@ -1,4 +1,6 @@
 # KEY VARIABLE RECALL & EXECUTION
+source /var/plexguide/pgscan/endbanner.sh
+
 mkdir -p /var/plexguide/pgscan
 touch /var/plexguide/pgscan/plex.token
 touch /var/plexguide/pgscan/plex.pw
@@ -8,6 +10,13 @@ touch /var/plexguide/pgscan/plex.user
 variable() {
   file="$1"
   if [ ! -e "$file" ]; then echo "$2" >$1; fi
+}
+
+passtartfirst() {
+file="/opt/plex_autoscan/config/config.json"
+  if [[ ! -f $file ]]; then
+	pasundeployed 
+  else plexcheck ; fi
 }
 
 deploycheck() {
@@ -169,7 +178,6 @@ ansible-playbook /opt/plexguide/menu/pgscan/remove-pgscan.yml
  echo 
   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
 }
-
 # FIRST QUESTION
 question1() {
 userstatus
@@ -181,7 +189,7 @@ deploycheck
 🚀 Plex_AutoScan Interface  || l3uddz/plex_autoscan
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-NOTE : Plex_AutoScan are located  in /opt/plex_autoscan
+NOTE : Plex_AutoScan are located in /opt/plex_autoscan
 
 [1] Deploy Plex Username & Plex Password  [ $ustatus ]
 [2] Deploy Plex Token                     [ $pstatus ]
@@ -190,7 +198,7 @@ NOTE : Plex_AutoScan are located  in /opt/plex_autoscan
 [A] Deploy Plex-Auto-Scan                 [ $dstatus ]
 
 [D] PlexAutoScan Domain
-[S] Show last 50 lines of log
+[S] Show last 50 lines of Plex_AutoScan log
 [R] Remove Plex_AutoScan
 [C] Credits
 
@@ -206,22 +214,23 @@ EOF
   case $typed in
   1) bash /opt/plexguide/menu/pgscan/scripts/plex_pw.sh && clear && question1 ;;
   2) bash /opt/plexguide/menu/pgscan/scripts/plex_token.sh && clear && question1 ;;
-  A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && clear && question1 ;;
-  a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan&& clear && question1 ;;
+  A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && clear && pasdeployed && question1 ;;
+  a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && clear && pasdeployed && question1 ;;
   D) showupdomain && clear && question1 ;;
   d) showupdomain && clear && question1 ;;
   S) tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter ;;
   s) tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter;;
-  r) remove && doneenter  && sleep 5 && clear &&  exit ;;
-  R) remove && doneenter && sleep 5 && clear &&  exit ;;
+  r) remove && doneenter  && sleep 5 && clear && exit 0 ;;
+  R) remove && doneenter && sleep 5 && clear && exit 0 ;;
   C) credits && clear && question1 ;;
   c) credits && clear && question1 ;;
-  z) exit ;;
-  Z) exit ;;
+  z) exit 0 ;;
+  Z) exit 0 ;;
   *) question1 ;;
   esac
 }
 # FUNCTIONS END ##############################################################
+passtartfirst
 plexcheck
 plexdockeruser
 userstatus
