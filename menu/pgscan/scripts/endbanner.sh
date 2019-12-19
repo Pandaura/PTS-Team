@@ -32,6 +32,7 @@ SERVER_PASS=$(cat ${PAS_CONFIG} | jq -r .SERVER_PASS)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
+
   read -p '↘️  Type [ Y ] or [ N ] | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
