@@ -443,6 +443,9 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
+	
+var autoScroll = document.getElementsByClassName("auto")[0];
+autoScroll.scrollTop = autoScroll.Height;
 </script>
 </body>
 </html>
