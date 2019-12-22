@@ -443,6 +443,13 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
+	
+var autoUploadScroll = document.getElementsByClassName("auto")[0];
+var autoLogsScroll = document.getElementsByClassName("autologs")[0];
+
+autoUploadScroll.scrollTop = autoUploadScroll.scrollHeight;
+autoLogsScroll.scrollTop = autoLogsScroll.scrollHeight;
+
 </script>
 </body>
 </html>
