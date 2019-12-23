@@ -55,6 +55,7 @@ This server may not be supported due to having the incorrect OS detected!
   exit 1
   else echo "18"  >${abc}/os.version.check; fi
 }
+
 updateprime() {
   abc="/var/plexguide"
   mkdir -p ${abc}
@@ -111,6 +112,7 @@ updateprime() {
   echo "21" >${abc}/pg.mountcheck
   echo "11" >${abc}/pg.watchtower
 }
+
 gcecheck() {
 gcheck=$(dnsdomainname | tail -c 10)
 if [[ "$gcheck" == ".internal" ]]; then
@@ -125,6 +127,7 @@ if [[ "$gcheck" == ".internal" ]]; then
 	else bash /opt/plexguide/menu/pggce/gcechecker.sh; fi
 fi
 }
+
 rollingpart() {
   touch ${abc}/install.roles
   rolenumber=3
