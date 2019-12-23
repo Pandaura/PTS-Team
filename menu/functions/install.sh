@@ -148,21 +148,6 @@ core() {
   fi
 }
 
-gcecheck() {
-gcheck=$(dnsdomainname | tail -c 10)
-if [[ "$gcheck" == ".internal" ]]; then
-	if [[ "$(tail -n 1 /var/plexguide/gce.done)" == "1" ]]; then
-	tee <<-EOF
-	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-	📂  Google Cloud Feeder Edition SET!
-	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-	 NVME already mounted on /mnt with size $(df -h /mnt/ --total --local -x tmpfs | grep 'total' | awk '{print $2}')
-	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-	EOF
-	else bash /opt/plexguide/menu/pggce/gcechecker.sh; fi
-fi
-}
-
 alias() { ansible-playbook /opt/plexguide/menu/alias/alias.yml
 }
 
