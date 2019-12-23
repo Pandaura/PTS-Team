@@ -10,6 +10,51 @@ source /opt/plexguide/menu/functions/serverid.sh
 source /opt/plexguide/menu/functions/emergency.sh
 source /opt/plexguide/menu/functions/serverid.sh
 
+pginstall() {
+  versionubucheck
+  updateprime
+  gcecheck
+  core pythonstart
+  core aptupdate
+  core alias
+  core folders
+  core dependency
+  core mergerfsinstall
+  core dockerinstall
+  core docstart
+  rollingpart
+  rcloneinstall
+  portainer
+  core motd 1>/dev/null 2>&1
+  core hetzner 1>/dev/null 2>&1
+  core gcloud
+  core cleaner 1>/dev/null 2>&1
+  core serverid
+  core prune
+  pgedition
+  core mountcheck
+  emergency
+  pgdeploy
+}
+
+############################################################ INSTALLER FUNCTIONS
+versionubucheck() {
+versioncheck=$(cat /etc/*-release | grep "Ubuntu" | grep -E '19')
+  if [[ "$versioncheck" == "19" ]]; then
+printf '
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⛔ Argggggg ......  System Warning! 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Supported: UBUNTU 16.xx - 18.10 ~ LTS/SERVER and Debian 9.*
+
+This server may not be supported due to having the incorrect OS detected!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+'
+  exit 1
+  else echo "18"  >${abc}/os.version.check; fi
+}
 updateprime() {
   abc="/var/plexguide"
   mkdir -p ${abc}
@@ -36,29 +81,11 @@ updateprime() {
   file="${abc}/new.install"
   if [ ! -e "$file" ]; then newinstall; fi
 
-versioncheck=$(cat /etc/*-release | grep "Ubuntu" | grep -E '19')
-  if [ "$versioncheck" == "19" ]; then
-    tee <<-EOF
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔ Argggggg ......  System Warning! 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Supported: UBUNTU 16.xx - 18.10 ~ LTS/SERVER and Debian 9.* / 10
-
-This server may not be supported due to having the incorrect OS detected!
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-  exit 1
-  else
-    echo "18"  >${abc}/os.version.check; 
-  fi
-
-ospgversion=$(cat /etc/*-release | grep Debian | grep -E '9|10')
-  if [ "$ospgversion" != "" ]; then
-    echo "debian" >${abc}/os.version
+  ospgversion=$(lsb_release -si)
+  if [[ "$ospgversion" == "Ubuntu" ]]; then
+    echo "ubuntu" >${abc}/os.version
   else 
-    echo "ubuntu" >${abc}/os.version; 
+    echo "debian" >${abc}/os.version; 
   fi
 
   echo "3" >${abc}/pg.mergerfsinstall
@@ -84,19 +111,21 @@ ospgversion=$(cat /etc/*-release | grep Debian | grep -E '9|10')
   echo "21" >${abc}/pg.mountcheck
   echo "11" >${abc}/pg.watchtower
 }
-
-pginstall() {
-  updateprime
-  gcecheck
-  core pythonstart
-  core aptupdate
-  core alias
-  core folders
-  core dependency
-  core mergerfsinstall
-  core dockerinstall
-  core docstart
-
+gcecheck() {
+gcheck=$(dnsdomainname | tail -c 10)
+if [[ "$gcheck" == ".internal" ]]; then
+	if [[ "$(tail -n 1 /var/plexguide/gce.done)" == "1" ]]; then
+	tee <<-EOF
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	📂  Google Cloud Feeder Edition SET!
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	 NVME already mounted on /mnt with size $(df -h /mnt/ --total --local -x tmpfs | grep 'total' | awk '{print $2}')
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	EOF
+	else bash /opt/plexguide/menu/pggce/gcechecker.sh; fi
+fi
+}
+rollingpart() {
   touch ${abc}/install.roles
   rolenumber=3
   # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
@@ -107,20 +136,7 @@ pginstall() {
     pgshield
     echo "$rolenumber" >${abc}/install.roles
   fi
-
-  rcloneinstall
-  portainer
-  core motd 1>/dev/null 2>&1
-  core hetzner 1>/dev/null 2>&1
-  core gcloud
-  core cleaner 1>/dev/null 2>&1
-  core serverid
-  core prune
-  pgedition
-  core mountcheck
-  emergency
-  pgdeploy
-}
+ }
 
 core() {
   touch ${abc}/pg."${1}".stored
@@ -132,38 +148,28 @@ core() {
   fi
 }
 
-############################################################ INSTALLER FUNCTIONS
 gcecheck() {
 gcheck=$(dnsdomainname | tail -c 10)
-	if [ "$gcheck" == ".internal" ]; then
-	file3="$(tail -n 1 /var/plexguide/gce.done)"
-		if [[ "$file3" == "1" ]]; then
-				  tee <<-EOF
-			━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-			📂  Google Cloud Feeder Edition SET!
-			━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-			 NVME already mounted on /mnt with size $(df -h /mnt/ --total --local -x tmpfs | grep 'total' | awk '{print $2}')
-			━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-			EOF
-	 
-			elif [[ "$file3" != "1" ]]; then
-				bash /opt/plexguide/menu/pggce/gcechecker.sh
-			else 
-				echo "beware of this stupid lines"
-		fi
-	fi
+if [[ "$gcheck" == ".internal" ]]; then
+	if [[ "$(tail -n 1 /var/plexguide/gce.done)" == "1" ]]; then
+	tee <<-EOF
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	📂  Google Cloud Feeder Edition SET!
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	 NVME already mounted on /mnt with size $(df -h /mnt/ --total --local -x tmpfs | grep 'total' | awk '{print $2}')
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	EOF
+	else bash /opt/plexguide/menu/pggce/gcechecker.sh; fi
+fi
 }
 
-alias() {
-  ansible-playbook /opt/plexguide/menu/alias/alias.yml 
+alias() { ansible-playbook /opt/plexguide/menu/alias/alias.yml
 }
 
-aptupdate() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags update
+aptupdate() { ansible-playbook /opt/plexguide/menu/pg.yml --tags update
 }
 
-cleaner() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete,clean,journal
+cleaner() { ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete,clean,journal
 }
 
 dependency() {
@@ -175,49 +181,39 @@ dependency() {
   fi
 }
 
-docstart() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags docstart
+docstart() { ansible-playbook /opt/plexguide/menu/pg.yml --tags docstart
 }
 
-folders() {
-  ansible-playbook /opt/plexguide/menu/installer/folders.yml
+folders() { ansible-playbook /opt/plexguide/menu/installer/folders.yml
 }
 
-prune() {
-  ansible-playbook /opt/plexguide/menu/prune/main.yml
+prune() { ansible-playbook /opt/plexguide/menu/prune/main.yml
 }
 
-gcloud() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags gcloud_sdk
+gcloud() { ansible-playbook /opt/plexguide/menu/pg.yml --tags gcloud_sdk
 }
 
-mergerfsinstall() {
-  ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsinstall
+mergerfsinstall() { ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsinstall
 }
 
 rcloneinstall() {
 rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
 rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1 )"
 
-if [[ "$rcversion" == "$rcstored" ]]; then
-  clear
-else [[ "$rcversion" != "$rcstored" ]]
-  clear
-  tee <<-EOF
+if [[ "$rcversion" != "$rcstored" ]]; then
+printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ↘️  rclone can be updated to version $rcstored
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
+'
 sleep 15s
 fi
 }
 
-motd() {
-  ansible-playbook /opt/plexguide/menu/motd/motd.yml
+motd() { ansible-playbook /opt/plexguide/menu/motd/motd.yml
 }
 
-mountcheck() {
-  ansible-playbook /opt/plexguide/menu/installer/mcdeploy.yml
+mountcheck() { ansible-playbook /opt/plexguide/menu/installer/mcdeploy.yml
 }
 
 newinstall() {
@@ -230,8 +226,7 @@ newinstall() {
   fi
 }
 
-pgdeploy() {
-  touch ${abc}/pg.edition && bash /opt/plexguide/menu/start/start.sh
+pgdeploy() { touch ${abc}/pg.edition && bash /opt/plexguide/menu/start/start.sh 
 }
 
 pgedition() {
@@ -248,29 +243,27 @@ pgedition() {
 
 portainer() {
   dstatus=$(docker ps --format '{{.Names}}' | grep "portainer")
-  if [ "$dstatus" != "portainer" ]; then
+  if [[ "$dstatus" != "portainer" ]]; then
     ansible-playbook /opt/coreapps/apps/portainer.yml
   fi
 }
 
 # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
-pgcore() { if [ ! -e "/opt/coreapps/place.holder" ]; then ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml; fi; }
-pgcommunity() { if [ ! -e "/opt/communityapps/place.holder" ]; then ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml; fi; }
-pgshield() { if [ ! -e "/opt/pgshield/place.holder" ]; then
+pgcore() { if [[ ! -e "/opt/coreapps/place.holder" ]]; then ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml; fi; }
+pgcommunity() { if [[ ! -e "/opt/communityapps/place.holder" ]]; then ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml; fi; }
+pgshield() { if [[ ! -e "/opt/pgshield/place.holder" ]]; then
      echo 'pgshield' >/var/plexguide/pgcloner.rolename
      echo 'PTS-Shield' >${abc}/pgcloner.roleproper
      echo 'PTS-Shield' >${abc}/pgcloner.projectname
      echo 'master' >${abc}/pgcloner.projectversion
      echo 'pgshield.sh' >${abc}/pgcloner.startlink
-     ansible-playbook "/opt/plexguide/menu/pgcloner/corev2/primary.yml"
-fi; }
-
-pythonstart() {
-    bash /opt/plexguide/menu/roles/pythonstart/pyansible.sh >/dev/null 2>&1
+     ansible-playbook "/opt/plexguide/menu/pgcloner/corev2/primary.yml" ;fi
 }
 
-dockerinstall() {
-    ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
+pythonstart() { bash /opt/plexguide/menu/roles/pythonstart/pyansible.sh >/dev/null 2>&1
+}
+
+dockerinstall() { ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
 }
 
 ####EOF###
