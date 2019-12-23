@@ -46,9 +46,9 @@ tokenstatus() {
 }
 
 plexdockeruser() {
-plexdocker=$(cat /var/plexguide/image/plex)
+plexdocker=$(docker ps --format {{.Image}} | grep "plex")
 if [[ $plexdocker == "linuxserver/plex:latest" ]]; then
- echo -e "abc" >/var/plexguide/pgscan/plex.docker
+ echo "abc" >/var/plexguide/pgscan/plex.docker
  else echo "plex" >/var/plexguide/pgscan/plex.docker; fi
 }
 
