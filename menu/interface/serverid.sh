@@ -9,7 +9,7 @@ touch /var/plexguide/server.id.stored
 source /opt/plexguide/menu/functions/functions.sh
 start=$(cat /var/plexguide/server.id)
 stored=$(cat /var/plexguide/server.id.stored)
-
+abc="/var/plexguide"
 
 serverid() {
 
@@ -41,6 +41,11 @@ EOF
     # Prevents From Repeating
     echo "$typed" >${abc}/server.id
     cat ${abc}/server.id >${abc}/server.id.stored
+        start=$(cat /var/plexguide/server.id)
+        server_id=$(cat /var/plexguide/server.id)
+        serveridcreate=$(tree -d -L 1 /mnt/gdrive/plexguide/backup | awk '{print $2}' | tail -n +2 | head -n -2 | grep "$(cat /var/plexguide/server.id)")
+        if [[ $start != $serveridcreate ]]; then
+        rclone --config /opt/appdata/plexguide/rclone.conf mkdir gdrive:/plexguide/backup/${server_id};fi
     sleep 3
   fi
 
