@@ -10,6 +10,7 @@ PAS_CONFIG="/opt/plex_autoscan/config/config.json"
 SERVER_IP=$(ip a | grep glo | awk '{print $2}' | head -1 | cut -f1 -d/)
 SERVER_PORT=$(cat ${PAS_CONFIG} | jq -r .SERVER_PORT)
 SERVER_PASS=$(cat ${PAS_CONFIG} | jq -r .SERVER_PASS)
+domain=$(cat /var/plexguide/server.domain)
 
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -17,12 +18,27 @@ SERVER_PASS=$(cat ${PAS_CONFIG} | jq -r .SERVER_PASS)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 1.)  Link now PAS to each *arr     ( see wiki )
-"http://${SERVER_IP}:${SERVER_PORT}/${SERVER_PASS}"
+     "http://${SERVER_IP}:${SERVER_PORT}/${SERVER_PASS}"
 
 2.)  Edit Plex Scan Part           ( see wiki )
-3.)  Restart your Plex Docker
-4.)  Start Downloading again
-5.)  Have fun
+3.)  Open your PAS link in Browser ( see above )
+     type your Movie Folder or TV Folder in the field
+
+     SAMPLE :
+     /mnt/unionfs/movies
+     /mnt/unionfs/tv
+     /mnt/unionfs/musik
+
+4.)  open https://plex.${domain}/web
+5.)  check top right ->
+     -->  Settings --> Activity --> Alerts 
+     and check the running scan 
+     ( this can take a long time )
+6.)  wait until finished 
+7.)  Restart your Plex Docker
+     (  see below )
+8.)  Start Downloading again
+9.)  Have fun
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 💬 Plex Docker Restart now
@@ -38,9 +54,9 @@ EOF
   case $typed in
   Y) docker restart plex && exit ;; 
   y) docker restart plex && exit ;;
-  N) exit 0 ;;
-  n) exit 0 ;;
-  *) exit 0 ;;
+  N) exit ;;
+  n) exit ;;
+  *) exit ;;
   esac
 }
 
