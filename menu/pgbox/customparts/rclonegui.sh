@@ -23,9 +23,6 @@ create() {
 }
 
 rcwebui() {
-Usernanme : $(cat /var/plexguide/traktarr/pgtrak.client)
-Password  : $(cat /var/plexguide/rcwebui/rcpass.pass)
-
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
