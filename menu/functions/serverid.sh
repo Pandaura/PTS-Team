@@ -6,6 +6,7 @@
 # GNU:        General Public License v3.0
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
+abc="/var/plexguide"
 ################################################################################
 serverid() {
   tee <<-EOF
@@ -33,6 +34,7 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
     echo "$typed" >${abc}/server.id
+	recreatefolder
     sleep 1
   fi
 }
@@ -63,9 +65,19 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
     echo "$typed" >${abc}/server.id
+	recreatefolder
     sleep 1
   fi
 }
+
+recreatefolder() {
+        start=$(cat /var/plexguide/server.id)
+        server_id=$(cat /var/plexguide/server.id)
+        serveridcreate=$(tree -d -L 1 /mnt/gdrive/plexguide/backup | awk '{print $2}' | tail -n +2 | head -n -2 | grep "$(cat /var/plexguide/server.id)")
+        if [[ $start != $serveridcreate ]]; then
+        rclone --config /opt/appdata/plexguide/rclone.conf mkdir gdrive:/plexguide/backup/${server_id};fi
+}
+
 
 ##### set new server id  interface
 
