@@ -14,4 +14,5 @@ sudocheck
 missingpull
 
 # pg deploy contains pgdeploy at end
+clear
 pginstall
