@@ -18,4 +18,7 @@ if [ "$app" == "plaxt" ]; then
 if [ "$app" == "channelsdvr" ]; then
      bash /opt/plexguide/menu/pgbox/customparts/channelsdvr.sh; fi
 
+if [ "$app" == "rclonegui" ]; then
+     bash /opt/plexguide/menu/pgbox/customparts/rclonegui.sh; fi
+
 ##### CHECK EXIT #####
