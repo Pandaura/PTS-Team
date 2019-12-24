@@ -72,8 +72,7 @@ token() {
 tokencreate() {
 templatebackup=/opt/plexguide/menu/roles/plex_autoscan/templates/config.backup
 template=/opt/plexguide/menu/roles/plex_autoscan/templates/config.json.j2
-X_PLEX_TOKEN=$(sudo cat "/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Preferences.xml" | \ 
-sed -e 's;^.* PlexOnlineToken=";;' | sed -e 's;".*$;;' | tail -1)
+X_PLEX_TOKEN=$(sudo cat "/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Preferences.xml" | sed -e 's;^.* PlexOnlineToken=";;' | sed -e 's;".*$;;' | tail -1)
 
 cp -r $template $templatebackup
 echo $X_PLEX_TOKEN >/var/plexguide/pgscan/plex.token
@@ -183,7 +182,7 @@ deploycheck
 
 NOTE : Plex_AutoScan are located in /opt/plex_autoscan
 
-[!] Deploy Plex Token                     [ $pstatus ]
+[1] Deploy Plex Token                     [ $pstatus ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [A] Deploy Plex-Auto-Scan                 [ $dstatus ]
