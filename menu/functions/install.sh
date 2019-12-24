@@ -43,10 +43,10 @@ versioncheck=$(cat /etc/*-release | grep "Ubuntu" | grep -E '19')
   if [[ "$versioncheck" == "19" ]]; then
 printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔ Argggggg ......  System Warning! 
+⛔ WOAH! ......  System OS Warning!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Supported: UBUNTU 16.xx - 18.10 ~ LTS/SERVER and Debian 9.*
+Supported: UBUNTU 16.xx - 18.10 ~ LTS/SERVER and Debian 9.* / 10
 
 This server may not be supported due to having the incorrect OS detected!
 
