@@ -8,14 +8,6 @@
 #                   GNU General Public License v3.0                     #
 #########################################################################
 ---
-- name: Set plex.user fact | username
-  shell: 'cat /var/plex_dupe/plex.user'
-  register: plexuser
-
-- name: Set plex.user fact | password
-  shell: 'cat /var/plex_dupe/plex.pw'
-  register: plexpass
-
 - name: Set plex.user fact | token
   shell: 'cat /var/plex_dupe/plex.token'
   register: plex_auth_token

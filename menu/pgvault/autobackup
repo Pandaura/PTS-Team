@@ -2,4 +2,4 @@
 
 #### automatic backup apps
 
-bash /opt/pgvault/autobackup.sh
+bash / opt/pgvault/autobackup.sh

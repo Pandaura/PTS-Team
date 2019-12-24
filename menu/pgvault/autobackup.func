@@ -4,11 +4,10 @@
 # Author(s):  Admin9705
 # GNU:        General Public License v3.0
 ################################################################################
-
 runningcheck() {
   initial2
   runcheck5=$(docker ps | grep ${program_var})
-  if [ "$runcheck5" != "" ]; then running=1; else running=0; fi
+  if [[ "$runcheck5" != "" ]]; then running=1; else running=0; fi
 }
 
 initial() {
@@ -41,6 +40,11 @@ initial2() {
 }
 
 final() {
+  echo
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  read -p '✅ Process Complete! | PRESS [ENTER] ' typed </dev/tty
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  bash /opt/pgvault/pgvault.sh
   exit
 }
 
@@ -63,7 +67,7 @@ pgboxrecall() {
   ls -p /opt/coreapps/apps | grep -v / >/var/plexguide/pgvault.apprecall
   while read p; do
     sed -i "/^$p\b/Id" /var/plexguide/pgvault.apprecall
-  done </opt/plexguide/menu/pgvault/exempt.list
+  done </opt/pgvault/exempt.list
 
   while read p; do
     sed -i "/^$p\b/Id" /var/plexguide/pgvault.apprecall
@@ -91,7 +95,7 @@ apprecall() {
   tree -d -L 1 /opt/appdata | awk '{print $2}' | tail -n +2 | head -n -2 >/var/plexguide/pgvault.apprecall
   while read p; do
     sed -i "/^$p\b/Id" /var/plexguide/pgvault.apprecall
-  done </opt/plexguide/menu/pgvault/exempt.list
+  done </opt/pgvault/exempt.list
 
   ### Blank Out Temp List
   rm -rf /var/plexguide/program.temp && touch /var/plexguide/program.temp
@@ -139,7 +143,7 @@ serverprime() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Vault ~ Server Recall
+🚀 Vault ~ Server Recall         
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📂 Current [${server_id}] & Prior Servers Detected:
@@ -252,7 +256,7 @@ backup_process() {
   initial2
   ##### Stop Docker Container if Running
   runningcheck
-  if [ "$running" == "1" ]; then
+  if [[ "$running" == "1" ]]; then
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -279,13 +283,12 @@ EOF
 
   tar \
     --warning=no-file-changed --ignore-failed-read --absolute-names --warning=no-file-removed \
-    --exclude-from=/opt/plexguide/menu/pgvault/exclude.list \
-    -C /opt/appdata/${program_var} -cvf /opt/appdata/plexguide/${program_var}.tar ./
+    --exclude-from=/opt/pgvault/exclude.list \
+    -C /opt/appdata/${program_var} -cvf ${tarlocation}/${program_var}.tar ./
 
   ##### Restart Docker Application if was Running Prior
-  if [ "$running" == "1" ]; then
+  if [[ "$running" == "1" ]]; then
     tee <<-EOF
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ↘️  Restarting Docker Application - $program_var
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -303,7 +306,6 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-
 useragent="$(cat /var/plexguide/uagent)"
 bwlimit="$(cat /var/plexguide/blitz.bw)"
 
@@ -311,7 +313,6 @@ vfs_dcs="$(cat /var/plexguide/vfs_dcs)"
 vfs_mt="$(cat /var/plexguide/vfs_mt)"
 vfs_t="$(cat /var/plexguide/vfs_t)"
 vfs_c="$(cat /var/plexguide/vfs_c)"
-
 
   rclone --config /opt/appdata/plexguide/rclone.conf mkdir gdrive:/plexguide/backup/${server_id} 1>/dev/null 2>&1
 

@@ -7,7 +7,7 @@
 ./database/Library/Logs/Plex Media Server/
 ./database/Library/Application Support/Plex Media Server/Plug-ins
 ./transcoding-temp
-./nzbget/*.log
+./nzbget.log
 ./radarr/logs
 ./sonarr/logs
 ./lidarr/logs
@@ -22,4 +22,6 @@
 ./transcodes
 ./Transcodes
 *.bif
+*.log
+*.logs
 

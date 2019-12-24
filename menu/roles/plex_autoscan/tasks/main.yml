@@ -25,14 +25,6 @@
 - name: Remove old service
   shell: 'sudo rm -rf /etc/systemd/system/plex_autoscan.service'
 
-- name: Set plex.user fact | username
-  shell: 'cat /var/plexguide/pgscan/plex.user'
-  register: plexuser
-
-- name: Set plex.user fact | password
-  shell: 'cat /var/plexguide/pgscan/plex.pw'
-  register: plexpass
-
 - name: Set plex.user fact | token
   shell: 'cat /var/plexguide/pgscan/plex.token'
   register: plex_auth_token
