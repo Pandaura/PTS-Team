@@ -6,7 +6,7 @@ touch /var/plexguide/pgscan/plex.token
 # FIRST FUNCTION
 variable() {
   file="$1"
-  if [ ! -e "$file" ]; then echo "$2" >$1; fi
+  if [[ ! -e "$file" ]]; then echo "$2" >$1; fi
 }
 
 passtartfirst() {
@@ -18,7 +18,7 @@ file="/opt/plex_autoscan/config/config.json"
 
 deploycheck() {
   dcheck=$(systemctl is-active plex_autoscan.service)
-  if [ "$dcheck" == "active" ]; then
+  if [[ "$dcheck" == "active" ]]; then
     dstatus="✅ DEPLOYED"
   else dstatus="⚠️ NOT DEPLOYED"; fi
 }
@@ -38,7 +38,7 @@ tokenstatus() {
 
 plexcheck() {
   pcheck=$(docker ps --format {{.Names}} | grep "plex")
-  if [ "$pcheck" == "" ]; then
+  if [[ "$pcheck" == "" ]]; then
 	printf '
 	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 	⛔️  WARNING! - Plex is Not Installed or Running! Exiting!
@@ -54,8 +54,7 @@ token() {
   if [[ "$ptoken" == "" ]]; then
     tokencreate
 	sleep 2
-	X_PLEX_TOKEN=$(sudo cat "/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Preferences.xml" | \ 
-	sed -e 's;^.* PlexOnlineToken=";;' | sed -e 's;".*$;;' | tail -1)
+	X_PLEX_TOKEN=$(sudo cat "/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Preferences.xml" | sed -e 's;^.* PlexOnlineToken=";;' | sed -e 's;".*$;;' | tail -1)
     ptoken=$(cat /var/plexguide/pgscan/plex.token)
     if [[ "$ptoken" != "$X_PLEX_TOKEN" ]]; then
 	printf '

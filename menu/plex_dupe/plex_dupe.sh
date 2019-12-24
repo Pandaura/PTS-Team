@@ -11,7 +11,7 @@ mkdir -p /var/plex_dupe
 # FUNCTIONS START ##############################################################
 variable() {
   file="$1"
-  if [ ! -e "$file" ]; then echo "$2" >$1; fi
+  if [[ ! -e "$file" ]]; then echo "$2" >$1; fi
 }
 
 deploycheck() {
@@ -35,54 +35,46 @@ tokenstatus() {
 
 automodestatus() {
   adep=$(cat /var/plex_dupe/plex.authdel)
-  if [ "$adep" == "true" ]; then
+  if [[ "$adep" == "true" ]]; then
     astatus="✅  AUTO_DELETE = true"
- elif [ "$adep" == "false" ]; then
+ elif [[ "$adep" == "false" ]]; then
    astatus="✅  AUTO_DELETE = false"
  else astatus="⚠️  NOT DEPLOYED"; fi
 }
-
 plexcheck() {
-  pcheck=$(docker ps | grep "\<plex\>")
-  if [ "$pcheck" == "" ]; then
-
-    tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - Plex is Not Installed or Running! Exiting!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-    read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-    exit
+  pcheck=$(docker ps --format {{.Names}} | grep "plex")
+  if [[ "$pcheck" == "" ]]; then
+	printf '
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	⛔️  WARNING! - Plex is Not Installed or Running! Exiting!
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	'
+    dontwork
   fi
 }
-
-
 token() {
   touch /var/plex_dupe/plex.token
   ptoken=$(cat /var/plex_dupe/plex.token)
   if [[ "$ptoken" == "" ]]; then
     tokencreate
+	sleep 2
+	X_PLEX_TOKEN=$(sudo cat "/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Preferences.xml" | sed -e 's;^.* PlexOnlineToken=";;' | sed -e 's;".*$;;' | tail -1)
     ptoken=$(cat /var/plex_dupe/plex.token)
-    if [ "$ptoken" == "" ]; then
-      tee <<-EOF
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - Failed to Generate a Valid Plex Token! Exiting Deployment!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-      read -p ' Confirm Info | PRESS [ENTER] ' typed </dev/tty
-      exit
+    if [[ "$ptoken" != "$X_PLEX_TOKEN" ]]; then
+	printf '
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	⛔️  WARNING!  Failed to Generate a Valid Plex Token! 
+	⛔️  WARNING!  Exiting Deployment!
+	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+	'
+	dontwork
     fi
   fi
 }
-
 tokencreate() {
-X_PLEX_TOKEN=$(sudo cat "/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Preferences.xml" | sed -e 's;^.* PlexOnlineToken=";;' | sed -e 's;".*$;;' | tail -1)
+X_PLEX_TOKEN=$(cat "/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Preferences.xml" | sed -e 's;^.* PlexOnlineToken=";;' | sed -e 's;".*$;;' | tail -1)
 echo $X_PLEX_TOKEN >/var/plex_dupe/plex.token
 }
-
 # BAD INPUT
 badinput() {
   echo
@@ -238,7 +230,7 @@ EOF
 
   case $typed in
   1) tokencreate && clear && question1 ;;
-  2 authdel && clear && question1 ;;
+  2) authdel && clear && question1 ;;
   A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner ;;
   a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner ;;
   R) remove && clear && question1 ;;
