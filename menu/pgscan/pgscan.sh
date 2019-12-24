@@ -45,12 +45,13 @@ tokenstatus() {
   else pstatus="⚠️ NOT DEPLOYED"; fi
 }
 
-plexdockeruser() {
-plexdocker=$(docker ps --format {{.Image}} | grep "linuxserver/plex")
-if [[ $plexdocker == "linuxserver/plex:latest" || $plexdocker == "linuxserver/plex" ]]; then
- echo "abc" >/var/plexguide/pgscan/plex.docker
- else echo "plex" >/var/plexguide/pgscan/plex.docker; fi
-}
+# plexdockeruser() {
+# plexdocker=$(docker ps --format {{.Image}} | grep "linuxserver/plex")
+# if [[ $plexdocker == "linuxserver/plex:latest" || $plexdocker == "linuxserver/plex" ]]; then
+ # echo "abc" >/var/plexguide/pgscan/plex.docker
+ # else echo "plex" >/var/plexguide/pgscan/plex.docker; fi
+# plexdockeruser
+# }
 
 plexcheck() {
   pcheck=$(docker ps --format {{.Names}} | grep "plex")
@@ -231,7 +232,6 @@ EOF
 }
 # FUNCTIONS END ##############################################################
 passtartfirst
-plexdockeruser
 userstatus
 tokenstatus
 deploycheck
