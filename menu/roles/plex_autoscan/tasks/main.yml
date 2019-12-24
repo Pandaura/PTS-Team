@@ -37,6 +37,10 @@
   shell: 'cat /var/plexguide/pgscan/plex.token'
   register: plex_auth_token
 
+- name: Set plex.user fact | token
+  shell: 'cat /var/plexguide/pgscan/plex.token'
+  register: plex_auth_token_display
+
 - name: Register IP
   shell: 'cat /var/plexguide/server.ip'
   register: ipaddress
@@ -56,7 +60,7 @@
 
 - name: Display Plex Auth Token
   debug:
-    msg: "Plex Auth Token: {{ plex_auth_token }}"
+    msg: "Plex Auth Token: {{plex_auth_token_display.stdout}}"
 
 - name: Import Services Task
   import_tasks: "subtasks/services.yml"
@@ -117,5 +121,5 @@
 - name: Services | Restart 'plex_autoscan.service'
   systemd:
     name: plex_autoscan
-    state: restart
+    state: restarted
   when: pas_online.stat.exists
