@@ -94,19 +94,19 @@ token() {
 badinput() {
   echo
   read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
-  question1
+  clear && question1
 }
 
 dontwork() {
  echo
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-  exit 0
+  clear &&  exit 0
 }
 
 works(){
  echo
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-  question1
+  clear && question1
 }
 credits(){
 clear
@@ -136,13 +136,13 @@ EOF
 
  echo
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-  question1
+  clear && question1
 }
 
 doneenter(){
  echo
   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
-  question1
+  clear && question1
 }
 
 showupdomain() {
