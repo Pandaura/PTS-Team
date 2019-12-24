@@ -52,11 +52,12 @@ EOF
   read -p '↘️  Type [ Y ] or [ N ] | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
-  Y) docker restart plex && exit ;; 
-  y) docker restart plex && exit ;;
-  N) exit ;;
-  n) exit ;;
-  *) exit ;;
+  case $typed in
+  Y) docker restart plex && exit 0 ;;
+  y) docker restart plex && exit 0 ;;
+  N) exit 0 ;;
+  n) exit 0 ;;
+  *) clear && pasdeployed ;;
   esac
 }
 
