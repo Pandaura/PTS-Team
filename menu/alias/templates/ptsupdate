@@ -7,12 +7,9 @@
 rm -rf /opt/ptsupdate 1>/dev/null 2>&1
 mkdir -p /opt/ptsupdate 1>/dev/null 2>&1
 git clone --single-branch https://github.com/PTS-Team/PTS-Update.git /opt/ptsupdate 1>/dev/null 2>&1
-chown -cR 100:1000 /opt/ptsupdate 1>/dev/null 2>&1 
+chown -cR 1000:1000 /opt/ptsupdate 1>/dev/null 2>&1 
 chmod -cR 775 /opt/ptsupdate 1>/dev/null 2>&1
 
-source /opt/ptsupdate/update.sh
+source /opt/ptsupdate/autoupdate/update.sh
 
-sudocheck
-base
-mainstart
-ende
+start0
