@@ -40,13 +40,11 @@
     shell: 'cat /var/plexguide/server.ip'
     register: ipaddress
 
-  - name: plex_auto_scan server pass 
+  - name: Register ServerPass
     shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
     register: plex_autoscan_server_pass
 
   when: not plex_autoscan_config.stat.exists
-
-# Update 'config.json' for new and existing setups
 
 - name: Settings | Upgrade 'config.json'
   shell: "/opt/plex_autoscan/scan.py update_config"

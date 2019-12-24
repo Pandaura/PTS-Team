@@ -8,6 +8,23 @@
 #                   GNU General Public License v3.0                     #
 #########################################################################
 ---
+- name: Services | Check if 'plex_autoscan.service' exists
+  stat:
+    path: "/etc/systemd/system/plex_autoscan.service"
+  register: plex_pas_config
+
+- name: Services | Stop 'plex_autoscan.service'
+  systemd:
+    name: plex_autoscan
+    state: stopped
+  when: plex_pas_config.stat.exists
+
+- name: Remove old Install
+  shell: 'sudo rm -rf /opt/plex_autoscan'
+
+- name: Remove old service
+  shell: 'sudo rm -rf /etc/systemd/system/plex_autoscan.service'
+
 - name: Set plex.user fact | username
   shell: 'cat /var/plexguide/pgscan/plex.user'
   register: plexuser
@@ -28,10 +45,6 @@
   shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
   register: plex_autoscan_server_pass
 
-- name: Register Plex Docker User
-  shell: 'cat /var/plexguide/pgscan/plex.docker'
-  register: plex_docker_user
-
 - name: Create mounted.bin for trash
   shell: 'touch /mnt/unionfs/mounted.bin'
 
@@ -47,9 +60,6 @@
 
 - name: Import Services Task
   import_tasks: "subtasks/services.yml"
-
-- name: Remove old Install
-  shell: 'sudo rm -rf /opt/plex_autoscan'
 
 - name: Create plex_autoscan directories
   file: "path={{ item }} state=directory mode=0775 owner=1000 group=1000 recurse=yes"
@@ -98,3 +108,14 @@
     state: started
     enabled: yes
     daemon_reload: yes
+
+- name: Services | Check if 'plex_autoscan.service' exists
+  stat:
+    path: "/etc/systemd/system/plex_autoscan.service"
+  register: pas_online
+
+- name: Services | Restart 'plex_autoscan.service'
+  systemd:
+    name: plex_autoscan
+    state: restart
+   when: pas_online.stat.exists
