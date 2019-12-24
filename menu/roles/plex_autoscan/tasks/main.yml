@@ -118,4 +118,4 @@
   systemd:
     name: plex_autoscan
     state: restart
-   when: pas_online.stat.exists
+  when: pas_online.stat.exists
