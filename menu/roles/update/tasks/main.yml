@@ -74,10 +74,14 @@
     path: '/var/log/upgrades/{{ ansible_hostname }}'
     state: directory
 
+- name: Get a timestamp
+  command: date +%Y-%m-%d-%H:%M:%S
+  register: timestamp
+
 - name: for {{ansible_hostname}} || Write changes to logfile
   copy:
     content: "{{ apt_simulate.stdout }}"
-    dest: "/var/log/upgrades/{{ ansible_hostname }}/{{ansible_hostname}}-{{ansible_date_time.iso8601}}.log"
+    dest: "/var/log/upgrades/{{ ansible_hostname }}/{{ansible_hostname}}-{{timestamp.stdout}}.log"
 
 - debug:
     msg:
