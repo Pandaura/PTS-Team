@@ -38,8 +38,8 @@
    "PLEX_EMPTY_TRASH_CONTROL_FILES":[
       "/mnt/unionfs/mounted.bin"
    ],
-   "PLEX_EMPTY_TRASH_MAX_FILES":100,
-   "PLEX_EMPTY_TRASH_ZERO_DELETED":false,
+   "PLEX_EMPTY_TRASH_MAX_FILES":50,
+   "PLEX_EMPTY_TRASH_ZERO_DELETED":true,
    "PLEX_LD_LIBRARY_PATH":"/usr/lib/plexmediaserver/lib",
    "PLEX_LOCAL_URL": "http://localhost:32400",
    "PLEX_SCANNER":"/usr/lib/plexmediaserver/Plex\\ Media\\ Scanner",
@@ -74,8 +74,6 @@
       ]
    },
    "SERVER_IGNORE_LIST":[
-      "/.grab/",
-      ".DS_Store",
       "Thumbs.db"
    ],
    "SERVER_IP":"{{ipaddress.stdout}}",
@@ -89,15 +87,6 @@
    "SERVER_SCAN_DELAY":60,
    "SERVER_SCAN_FOLDER_ON_FILE_EXISTS_EXHAUSTION":true,
    "SERVER_SCAN_PRIORITIES":{
-      "0":[
-         "/TV/"
-      ],
-      "1":[
-         "/Movies/"
-      ],
-      "2":[
-         "/Music/"
-      ]
    },
    "SERVER_USE_SQLITE":true,
    "USE_DOCKER":true,
