@@ -10,6 +10,9 @@ source /opt/plexguide/menu/functions/serverid.sh
 source /opt/plexguide/menu/functions/emergency.sh
 source /opt/plexguide/menu/functions/serverid.sh
 
+freshinstall() {
+
+
 pginstall() {
   versionubucheck
   updateprime
@@ -81,7 +84,7 @@ updateprime() {
   if [[ ! -e "$file" ]]; then echo "/mnt" >${abc}/server.hd.path; fi
 
   file="${abc}/new.install"
-  if [[ ! -e "$file" ]]; then newinstall; fi
+  if [[ -f "$file" ]]; then newinstall; fi
 
   ospgversion=$(lsb_release -si)
   if [[ "$ospgversion" == "Ubuntu" ]]; then
@@ -218,10 +221,10 @@ ansible-playbook /opt/plexguide/menu/installer/mcdeploy.yml
 newinstall() {
   rm -rf ${abc}/pg.exit 1>/dev/null 2>&1
   file="${abc}/new.install"
-  if [[ ! -e "$file" ]]; then
+  if [[ ! -f "$file" ]]; then
     touch ${abc}/pg.number && echo off >/tmp/program_source
     file="${abc}/new.install"
-    if [[ ! -e "$file" ]]; then exit; fi
+    if [[ ! -f "$file" ]]; then exit; fi
   fi
 }
 
@@ -243,27 +246,21 @@ pgedition() {
 
 portainer() {
   dstatus=$(docker ps --format '{{.Names}}' | grep "portainer")
-  if [[ "$dstatus" != "portainer" ]]; then
-    ansible-playbook /opt/coreapps/apps/portainer.yml
-  fi
+  if [[ "$dstatus" != "portainer" ]]; then ansible-playbook /opt/coreapps/apps/portainer.yml; fi
 }
 
 # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
 pgcore() { 
 file="${abc}/new.install"
-if [[ -e "$file" ]]; then
-    ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml
-fi
+if [[ -f "$file" ]]; then ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml; fi
 }
 pgcommunity() {
 file="${abc}/new.install"
-if [[ -e "$file" ]]; then
-     ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml
-fi
+if [[ -f "$file" ]]; then ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml; fi
 }
 pgshield() {
 file="${abc}/new.install"
-if [[ -e "$file" ]]; then
+if [[ -f "$file" ]]; then
      echo 'pgshield' >/var/plexguide/pgcloner.rolename
      echo 'PTS-Shield' >${abc}/pgcloner.roleproper
      echo 'PTS-Shield' >${abc}/pgcloner.projectname
@@ -275,16 +272,12 @@ fi
 
 pythonstart() {
 file="${abc}/new.install"
-if [[ -e "$file" ]]; then
-   bash /opt/plexguide/menu/roles/pythonstart/pyansible.sh
-fi
+if [[ -f "$file" ]]; then bash /opt/plexguide/menu/roles/pythonstart/pyansible.sh; fi
 }
 
 dockerinstall() {
 file="${abc}/new.install"
-if [[ -e "$file" ]]; then
-   ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
-fi
+if [[ -f "$file" ]]; then ansible-playbook /opt/plexguide/menu/pg.yml --tags docker; fi
 }
 
 ####EOF###
