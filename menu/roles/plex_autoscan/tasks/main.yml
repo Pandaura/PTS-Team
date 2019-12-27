@@ -46,7 +46,7 @@
   register: fixmatchlang
   
 - name: Register Fixmatch status
-  shell: 'cat /var/plexguide/pgscan/fixmatch.status
+  shell: 'cat /var/plexguide/pgscan/fixmatch.status'
   register: fixmatchstatus
 
 - name: Create mounted.bin for trash
