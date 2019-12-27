@@ -72,21 +72,23 @@ EOF
 EOF
     echo "$typed" >${abc}/server.id
 	recreatefolder
+    sleep 1
+  fi
+}
+
+recreatefolder() {
+conf="/opt/appdata/plexguide/rclone.conf"
+if [[ -e "$conf" ]]; then
+	start=$(cat /var/plexguide/server.id)
+	serveridcreate=$(tree -d -L 1 /mnt/gdrive/plexguide/backup | awk '{print $2}' | tail -n +2 | head -n -2 | grep "$(cat /var/plexguide/server.id)")
+	if [[ $start != $serveridcreate ]]; then
+	rclone mkdir gdrive:/plexguide/backup/$(cat /var/plexguide/server.id) --config /opt/appdata/plexguide/rclone.conf;fi
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅️  PASS: Backup folder created on GDrive 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    sleep 1
-  fi
-}
-
-recreatefolder() {
-start=$(cat /var/plexguide/server.id)
-serveridcreate=$(tree -d -L 1 /mnt/gdrive/plexguide/backup | awk '{print $2}' | tail -n +2 | head -n -2 | grep "$(cat /var/plexguide/server.id)")
-if [[ $start != $serveridcreate ]]; then
-rclone mkdir gdrive:/plexguide/backup/$(cat /var/plexguide/server.id) --config /opt/appdata/plexguide/rclone.conf;fi
 }
 
 
