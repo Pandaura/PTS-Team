@@ -37,7 +37,7 @@
     register: plex_auth_token
 
   - name: Register IP
-    shell: 'cat /var/plexguide/server.ip'
+    shell: 'wget -qO- http://ipecho.net/plain | xargs echo'
     register: ipaddress
 
   - name: Register ServerPass
