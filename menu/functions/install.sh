@@ -14,6 +14,7 @@ pginstall() {
   versionubucheck
   updateprime
   gcecheck
+  rcloneinstall
   core pythonstart
   core aptupdate
   core alias
@@ -23,12 +24,11 @@ pginstall() {
   core dockerinstall
   core docstart
   rollingpart
-  rcloneinstall
   portainer
-  core motd 1>/dev/null 2>&1
-  core hetzner 1>/dev/null 2>&1
+  core motd
+  core hetzner
   core gcloud
-  core cleaner 1>/dev/null 2>&1
+  core cleaner
   core serverid
   core prune
   pgedition
@@ -53,7 +53,7 @@ This server may not be supported due to having the incorrect OS detected!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 '
   exit 1
-  else echo "18"  >${abc}/os.version.check; fi
+  else echo "18" >${abc}/os.version.check; fi
 }
 
 updateprime() {
@@ -77,10 +77,10 @@ updateprime() {
 
   hostname -I | awk '{print $1}' >${abc}/server.ip
   file="${abc}/server.hd.path"
-  if [ ! -e "$file" ]; then echo "/mnt" >${abc}/server.hd.path; fi
+  if [[ ! -e "$file" ]]; then echo "/mnt" >${abc}/server.hd.path; fi
 
   file="${abc}/new.install"
-  if [ ! -e "$file" ]; then newinstall; fi
+  if [[ ! -e "$file" ]]; then newinstall; fi
 
   ospgversion=$(lsb_release -si)
   if [[ "$ospgversion" == "Ubuntu" ]]; then
@@ -145,43 +145,51 @@ core() {
   touch ${abc}/pg."${1}".stored
   start=$(cat /var/plexguide/pg."${1}")
   stored=$(cat /var/plexguide/pg."${1}".stored)
-  if [ "$start" != "$stored" ]; then
+  if [[ "$start" != "$stored" ]]; then
     $1
     cat ${abc}/pg."${1}" >${abc}/pg."${1}".stored
   fi
 }
 
-alias() { ansible-playbook /opt/plexguide/menu/alias/alias.yml
+alias() { 
+ansible-playbook /opt/plexguide/menu/alias/alias.yml
 }
 
-aptupdate() { ansible-playbook /opt/plexguide/menu/pg.yml --tags update
+aptupdate() { 
+ansible-playbook /opt/plexguide/menu/pg.yml --tags update
 }
 
-cleaner() { ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete,clean,journal
+cleaner() { 
+ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete,clean,journal
 }
 
 dependency() {
   ospgversion=$(cat /var/plexguide/os.version)
-  if [ "$ospgversion" == "debian" ]; then
+  if [[ "$ospgversion" == "debian" ]]; then
     ansible-playbook /opt/plexguide/menu/dependency/dependencydeb.yml
   else
     ansible-playbook /opt/plexguide/menu/dependency/dependency.yml
   fi
 }
 
-docstart() { ansible-playbook /opt/plexguide/menu/pg.yml --tags docstart
+docstart() { 
+ansible-playbook /opt/plexguide/menu/pg.yml --tags docstart
 }
 
-folders() { ansible-playbook /opt/plexguide/menu/installer/folders.yml
+folders() { 
+ansible-playbook /opt/plexguide/menu/installer/folders.yml
 }
 
-prune() { ansible-playbook /opt/plexguide/menu/prune/main.yml
+prune() { 
+ansible-playbook /opt/plexguide/menu/prune/main.yml
 }
 
-gcloud() { ansible-playbook /opt/plexguide/menu/pg.yml --tags gcloud_sdk
+gcloud() { 
+ansible-playbook /opt/plexguide/menu/pg.yml --tags gcloud_sdk
 }
 
-mergerfsinstall() { ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsinstall
+mergerfsinstall() { 
+ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsinstall
 }
 
 rcloneinstall() {
@@ -198,35 +206,38 @@ sleep 15s
 fi
 }
 
-motd() { ansible-playbook /opt/plexguide/menu/motd/motd.yml
+motd() { 
+ansible-playbook /opt/plexguide/menu/motd/motd.yml
 }
 
-mountcheck() { ansible-playbook /opt/plexguide/menu/installer/mcdeploy.yml
+mountcheck() { 
+ansible-playbook /opt/plexguide/menu/installer/mcdeploy.yml
 }
 
 newinstall() {
   rm -rf ${abc}/pg.exit 1>/dev/null 2>&1
   file="${abc}/new.install"
-  if [ ! -e "$file" ]; then
+  if [[ ! -e "$file" ]]; then
     touch ${abc}/pg.number && echo off >/tmp/program_source
     file="${abc}/new.install"
-    if [ ! -e "$file" ]; then exit; fi
+    if [[ ! -e "$file" ]]; then exit; fi
   fi
 }
 
-pgdeploy() { touch ${abc}/pg.edition && bash /opt/plexguide/menu/start/start.sh 
+pgdeploy() { 
+touch ${abc}/pg.edition && bash /opt/plexguide/menu/start/start.sh 
 }
 
 pgedition() {
   file="${abc}/path.check"
-  if [ ! -e "$file" ]; then touch ${abc}/path.check && bash /opt/plexguide/menu/dlpath/dlpath.sh; fi
+  if [[ ! -e "$file" ]]; then touch ${abc}/path.check && bash /opt/plexguide/menu/dlpath/dlpath.sh; fi
   # FOR PG-BLITZ
   file="${abc}/project.deployed"
-  if [ ! -e "$file" ]; then echo "no" >${abc}/project.deployed; fi
+  if [[ ! -e "$file" ]]; then echo "no" >${abc}/project.deployed; fi
   file="${abc}/project.keycount"
-  if [ ! -e "$file" ]; then echo "0" >${abc}/project.keycount; fi
+  if [[ ! -e "$file" ]]; then echo "0" >${abc}/project.keycount; fi
   file="${abc}/server.id"
-  if [ ! -e "$file" ]; then echo "[NOT-SET]" -rf >${abc}/rm; fi
+  if [[ ! -e "$file" ]]; then echo "[NOT-SET]" -rf >${abc}/rm; fi
 }
 
 portainer() {
@@ -237,21 +248,42 @@ portainer() {
 }
 
 # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
-pgcore() { if [[ ! -e "/opt/coreapps/place.holder" ]]; then ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml; fi; }
-pgcommunity() { if [[ ! -e "/opt/communityapps/place.holder" ]]; then ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml; fi; }
-pgshield() { if [[ ! -e "/opt/pgshield/place.holder" ]]; then
+pgcore() { 
+file="${abc}/new.install
+if [[ ! -e "$file" ]]; then
+    ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml
+fi
+}
+pgcommunity() {
+file="${abc}/new.install
+if [[ ! -e "$file" ]]; then
+     ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml
+fi
+}
+pgshield() {
+file="${abc}/new.install
+if [[ ! -e "$file" ]]; then
      echo 'pgshield' >/var/plexguide/pgcloner.rolename
      echo 'PTS-Shield' >${abc}/pgcloner.roleproper
      echo 'PTS-Shield' >${abc}/pgcloner.projectname
      echo 'master' >${abc}/pgcloner.projectversion
      echo 'pgshield.sh' >${abc}/pgcloner.startlink
-     ansible-playbook "/opt/plexguide/menu/pgcloner/corev2/primary.yml" ;fi
+     ansible-playbook "/opt/plexguide/menu/pgcloner/corev2/primary.yml" 
+fi
 }
 
-pythonstart() { bash /opt/plexguide/menu/roles/pythonstart/pyansible.sh >/dev/null 2>&1
+pythonstart() {
+file="${abc}/new.install
+if [[ ! -e "$file" ]]; then
+   bash /opt/plexguide/menu/roles/pythonstart/pyansible.sh
+fi
 }
 
-dockerinstall() { ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
+dockerinstall() {
+file="${abc}/new.install
+if [[ ! -e "$file" ]]; then
+   ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
+fi
 }
 
 ####EOF###
