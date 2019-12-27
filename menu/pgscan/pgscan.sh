@@ -198,8 +198,8 @@ EOF
   case $typed in
   1) lang && clear && fxmatch ;;
   2) runs && clear && fxmatch ;;
-  z) exit ;;
-  Z) exit ;;
+  z) question1 ;;
+  Z) question1 ;;
   *) fxmatch ;;
   esac
 
