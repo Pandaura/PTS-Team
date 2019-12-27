@@ -26,7 +26,6 @@ pginstall() {
   rollingpart
   portainer
   core motd
-  core hetzner
   core gcloud
   core cleaner
   core serverid
@@ -105,7 +104,6 @@ updateprime() {
   echo "3" >${abc}/pg.dep
   echo "3" >${abc}/pg.cleaner
   echo "3" >${abc}/pg.gcloud
-  echo "12" >${abc}/pg.hetzner
   echo "1" >${abc}/pg.amazonaws
   echo "8.4" >${abc}/pg.verionid
   echo "1" >${abc}/pg.installer
