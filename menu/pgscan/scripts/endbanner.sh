@@ -6,8 +6,7 @@
 ################################################################################
 pasdeployed() {
 PAS_CONFIG="/opt/plex_autoscan/config/config.json"
-
-SERVER_IP=$(ip a | grep glo | awk '{print $2}' | head -1 | cut -f1 -d/)
+SERVER_IP=$(cat ${PAS_CONFIG} | jq -r .SERVER_IP)
 SERVER_PORT=$(cat ${PAS_CONFIG} | jq -r .SERVER_PORT)
 SERVER_PASS=$(cat ${PAS_CONFIG} | jq -r .SERVER_PASS)
 domain=$(cat /var/plexguide/server.domain)
