@@ -250,19 +250,19 @@ portainer() {
 
 # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
 pgcore() { 
-file="${abc}/new.install
+file="${abc}/new.install"
 if [[ ! -e "$file" ]]; then
     ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml
 fi
 }
 pgcommunity() {
-file="${abc}/new.install
+file="${abc}/new.install"
 if [[ ! -e "$file" ]]; then
      ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml
 fi
 }
 pgshield() {
-file="${abc}/new.install
+file="${abc}/new.install"
 if [[ ! -e "$file" ]]; then
      echo 'pgshield' >/var/plexguide/pgcloner.rolename
      echo 'PTS-Shield' >${abc}/pgcloner.roleproper
@@ -274,14 +274,14 @@ fi
 }
 
 pythonstart() {
-file="${abc}/new.install
+file="${abc}/new.install"
 if [[ ! -e "$file" ]]; then
    bash /opt/plexguide/menu/roles/pythonstart/pyansible.sh
 fi
 }
 
 dockerinstall() {
-file="${abc}/new.install
+file="${abc}/new.install"
 if [[ ! -e "$file" ]]; then
    ansible-playbook /opt/plexguide/menu/pg.yml --tags docker
 fi
