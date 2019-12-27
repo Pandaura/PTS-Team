@@ -20,9 +20,9 @@ setstart() {
 ### executed parts 
 touch /var/plexguide/pgui.switch
  dstatus=$(docker ps --format '{{.Names}}' | grep "pgui")
-  if [ "pgui" != "$dstatus" ]; then
+  if [[ "pgui" != "$dstatus" ]]; then
   echo "Off" >/var/plexguide/pgui.switch
-  elif [ "pgui" == "$dstatus" ]; then
+  elif [[ "pgui" == "$dstatus" ]]; then
    echo "On" >/var/plexguide/pgui.switch
   else echo ""
   fi
@@ -46,14 +46,13 @@ touch /var/plexguide/pgui.switch
 🚀 Settings Interface Menu
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Download Path            :  Change the Processing Location
-[2] MultiHD                  :  Add Multiple HDs and/or Mount Points to MergerFS
-[3] WatchTower               :  Auto-Update Application Manager
-[4] Comm UI                  :  [ $switchcheck ] | Port [ $ports ] | pgui.$domain
-[5] Emergency Display        :  [ $emdisplay ]
-[6] System & Network Auditor
-[7] Server ID change         : Change your ServerID
-[8] NVIDIA Docker Role       : NVIDIA Docker
+[1] MultiHD                  :  Add Multiple HDs and/or Mount Points to MergerFS
+[2] WatchTower               :  Auto-Update Application Manager
+[3] Comm UI                  :  [ $switchcheck ] | Port [ $ports ] | pgui.$domain
+[4] Emergency Display        :  [ $emdisplay ]
+[5] System & Network Auditor
+[6] Server ID change         : Change your ServerID
+[7] NVIDIA Docker Role       : NVIDIA Docker
 
 [99] TroubleShoot            : PreInstaller
 
@@ -67,18 +66,17 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
-  1) bash /opt/plexguide/menu/dlpath/dlpath.sh && setstart ;;
-  2) bash /opt/plexguide/menu/multihd/multihd.sh ;;
-  3) watchtower && clear && setstart ;;
-  4) uichange && clear && setstart ;;
-  5)
+  1) bash /opt/plexguide/menu/multihd/multihd.sh ;;
+  2) watchtower && clear && setstart ;;
+  3) uichange && clear && setstart ;;
+  4)
     if [[ "$emdisplay" == "On" ]]; then
       echo "Off" >/var/plexguide/emergency.display
     else echo "On" >/var/plexguide/emergency.display; fi
     setstart ;;
-  6) bash /opt/plexguide/menu/functions/network.sh && clear && setstart ;;
-  7) setupnew && clear && setstart ;;
-  8) nvidia && clear && setstart ;;
+  5) bash /opt/plexguide/menu/functions/network.sh && clear && setstart ;;
+  6) setupnew && clear && setstart ;;
+  6) nvidia && clear && setstart ;;
 ###########################################################################
   99) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
   z) exit ;;
