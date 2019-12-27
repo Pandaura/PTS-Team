@@ -2,6 +2,8 @@
 source /opt/plexguide/menu/pgscan/scripts/endbanner.sh
 mkdir -p /var/plexguide/pgscan
 touch /var/plexguide/pgscan/plex.token
+variable /var/plexguide/pgscan/fixmatch.lang "en"
+variable /var/plexguide/pgscan/fixmatch.status "false"
 # FUNCTIONS START ##############################################################
 # FIRST FUNCTION
 variable() {
@@ -169,8 +171,109 @@ ansible-playbook /opt/plexguide/menu/pgscan/remove-pgscan.yml
  echo 
   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
 }
-# FIRST QUESTION
+fxmatch() {
+  tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Plex_AutoScan FixMatching 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NOTE : 
+Plex Autoscan will compare the TVDBID/TMDBID/IMDBID sent 
+by Sonarr/Radarr with what Plex has matched with, and if 
+this match is incorrect, it will autocorrect the match on the 
+item (movie file or TV episode). If the incorrect match is 
+a duplicate entry in Plex, it will auto split the original 
+entry before correcting the match on the new item.
+
+
+[1] Fixmatch Lang                     [ $(cat /var/plexguide/pgscan/fixmatch.lang) ]
+[2] Fixmatch on / off                 [ $(cat /var/plexguide/pgscan/fixmatch.status) ]
+
+[Z] - Exit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
+  case $typed in
+  1) lang && clear && fxmatch ;;
+  2) runs && clear && fxmatch ;;
+  z) exit ;;
+  Z) exit ;;
+  *) fxmatch ;;
+  esac
+
+}
+lang() {
+  tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Plex_AutoScan FixMatching  Lang
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NOTE : Sample :
+
+this will work : 
+en
+de 
+jp
+ch
+
+Default is "en"
+
+[Z] - Exit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+
+  read -p '↘️  Type Lang | Press [ENTER]: ' typed </dev/tty
+
+  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
+  fxmatch 
+  else
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ SYSTEM MESSAGE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Language Set Is: $typed
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+
+  echo $typed >/var/plexguide/pgscan/fixmatch.lang
+    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+  fxmatch
+  fi
+}
+runs() {
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Plex_AutoScan Fixmissmatch
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1] True 
+[2] False
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[Z] - Exit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
+  case $typed in
+  1) echo "true" >/var/plexguide/pgscan/fixmatch.status && fxmatch ;;
+  2) echo "false" >/var/plexguide/pgscan/fixmatch.status && fxmatch ;;
+  z) fxmatch ;;
+  Z) fxmatch ;;
+  *) fxmatch ;;
+  esac
+}
+#######################################################################################
 question1() {
+langfa=$(cat /var/plexguide/pgscan/fixmatch.status)
+lang=$(cat at /var/plexguide/pgscan/fixmatch.lang)
 tokenstatus
 deploycheck
   tee <<-EOF
@@ -182,6 +285,7 @@ deploycheck
 NOTE : Plex_AutoScan are located in /opt/plex_autoscan
 
 [1] Deploy Plex Token                     [ $pstatus ]
+[2] Fixmatch Lang                         [ $lang | $langfa ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [A] Deploy Plex-Auto-Scan                 [ $dstatus ]
@@ -202,6 +306,7 @@ EOF
 
   case $typed in
   1) tokencreate && clear && question1 ;;
+  2) fxmatch && clear && question1 ;;
   A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && clear && pasdeployed && question1 ;;
   a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && clear && pasdeployed && question1 ;;
   D) showupdomain && clear && question1 ;;
