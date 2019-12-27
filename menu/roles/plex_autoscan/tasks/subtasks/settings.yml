@@ -45,12 +45,13 @@
     register: plex_autoscan_server_pass
 
   - name: Register Fixmatch Lang
-    shell: 'cat /var/plexguide/pgscan/fixmatch.lang
+    shell: 'cat /var/plexguide/pgscan/fixmatch.lang'
     register: fixmatchlang
   
   - name: Register Fixmatch status
-    shell: 'cat /var/plexguide/pgscan/fixmatch.status
+    shell: 'cat /var/plexguide/pgscan/fixmatch.status'
     register: fixmatchstatus
+
   when: not plex_autoscan_config.stat.exists
 
 - name: Settings | Upgrade 'config.json'
