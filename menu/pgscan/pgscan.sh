@@ -2,8 +2,7 @@
 source /opt/plexguide/menu/pgscan/scripts/endbanner.sh
 mkdir -p /var/plexguide/pgscan
 touch /var/plexguide/pgscan/plex.token
-variable /var/plexguide/pgscan/fixmatch.lang "en"
-variable /var/plexguide/pgscan/fixmatch.status "false"
+
 # FUNCTIONS START ##############################################################
 # FIRST FUNCTION
 variable() {
@@ -325,5 +324,7 @@ EOF
 # FUNCTIONS END ##############################################################
 passtartfirst
 tokenstatus
+variable /var/plexguide/pgscan/fixmatch.lang "en"
+variable /var/plexguide/pgscan/fixmatch.status "false"
 deploycheck
 question1
