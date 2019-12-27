@@ -221,8 +221,8 @@ ansible-playbook /opt/plexguide/menu/installer/mcdeploy.yml
 newinstall() {
   rm -rf ${abc}/pg.exit 1>/dev/null 2>&1
   file="${abc}/new.install"
-  if [[ ! -f "$file" ]]; then
-    touch ${abc}/pg.number && echo off >/tmp/program_source
+  if [[ -f "$file" ]]; then
+    touch ${abc}/pg.number && echo "off" >/tmp/program_source
     file="${abc}/new.install"
     if [[ ! -f "$file" ]]; then exit; fi
   fi
@@ -233,9 +233,6 @@ touch ${abc}/pg.edition && bash /opt/plexguide/menu/start/start.sh
 }
 
 pgedition() {
-  file="${abc}/path.check"
-  if [[ ! -e "$file" ]]; then touch ${abc}/path.check && bash /opt/plexguide/menu/dlpath/dlpath.sh; fi
-  # FOR PG-BLITZ
   file="${abc}/project.deployed"
   if [[ ! -e "$file" ]]; then echo "no" >${abc}/project.deployed; fi
   file="${abc}/project.keycount"
