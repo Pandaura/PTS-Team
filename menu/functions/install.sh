@@ -10,9 +10,6 @@ source /opt/plexguide/menu/functions/serverid.sh
 source /opt/plexguide/menu/functions/emergency.sh
 source /opt/plexguide/menu/functions/serverid.sh
 
-freshinstall() {
-
-
 pginstall() {
   versionubucheck
   updateprime
