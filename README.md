@@ -72,10 +72,7 @@ sudo apt-get autoclean -yqq
 sudo apt-get install wget -y 
 sudo wget -qO- https://raw.githubusercontent.com/PTS-Team/Install/master/install.sh | sudo bash
 
-```  
-  
-After the install has completed, you will need to **rerun** the above command again. This is required in order to override all the files created by your previous build. Many applications in PTS use env date and NON-set methods, these have to be overwritten and set back to NON-SET.  
-  
+```    
 
 ## Configuring PTS 
   
