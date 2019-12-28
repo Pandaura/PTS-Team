@@ -80,6 +80,12 @@ echo $X_PLEX_TOKEN >/var/plexguide/pgscan/plex.token
 RAN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 echo $RAN >/var/plexguide/pgscan/pgscan.serverpass
 }
+ippart() {
+vs="local"
+if [[ "$vs" != "local" ]]; then
+wget -qO- http://ipecho.net/plain | xargs echo >/var/plexguide/pgscan/pgscan.ip
+else cp -r /var/plexguide/server.ip /var/plexguide/pgscan/pgscan.ip; fi
+}
 
 # BAD INPUT
 badinput() {
@@ -323,6 +329,7 @@ EOF
 # FUNCTIONS END ##############################################################
 passtartfirst
 tokenstatus
+ippart
 variable /var/plexguide/pgscan/fixmatch.lang "en"
 variable /var/plexguide/pgscan/fixmatch.status "false"
 deploycheck
