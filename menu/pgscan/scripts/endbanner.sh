@@ -27,13 +27,13 @@ domain=$(cat /var/plexguide/server.domain)
      SAMPLE :
      /mnt/unionfs/movies/
      /mnt/unionfs/tv/
-     /mnt/unionfs/musik/
+     /mnt/unionfs/music/
 
 4.)  open https://plex.${domain}/web
 5.)  check top right ->
-     -->  Settings --> Activity --> Alerts 
+     -->  Settings --> Activity --> Alerts
      and check the running scan     ( this can take a long time )
-6.)  wait until finished 
+6.)  wait until finished
 7.)  Restart your Plex Docker       (  see below )
 8.)  Start Downloading again
 9.)  Have fun
@@ -68,7 +68,7 @@ printf '
 
 1.)  Stop Downloading
 2.)  Wait until all files have been uploaded
-3.)  Rescan all Media Libraries on Plex 
+3.)  Rescan all Media Libraries on Plex
 4.)  Wait until finished Plex full rescan
 
    ( Failure to follow these steps can lead to problems. )
