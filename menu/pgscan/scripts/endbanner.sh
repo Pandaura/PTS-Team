@@ -25,9 +25,9 @@ domain=$(cat /var/plexguide/server.domain)
      type your Movie Folder or TV Folder in the field
 
      SAMPLE :
-     /mnt/unionfs/movies
-     /mnt/unionfs/tv
-     /mnt/unionfs/musik
+     /mnt/unionfs/movies/
+     /mnt/unionfs/tv/
+     /mnt/unionfs/musik/
 
 4.)  open https://plex.${domain}/web
 5.)  check top right ->
