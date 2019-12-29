@@ -9,6 +9,8 @@ source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/serverid.sh
 source /opt/plexguide/menu/functions/emergency.sh
 source /opt/plexguide/menu/functions/serverid.sh
+source /opt/plexguide/menu/functions/update.sh
+#######################################################
 
 pginstall() {
   versionubucheck
@@ -196,12 +198,21 @@ rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest 
 rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1 )"
 
 if [[ "$rcversion" != "$rcstored" ]]; then
-printf '
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  rclone can be updated to version $rcstored
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-'
-sleep 15s
+tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+↘️  rclone can be updated to version $rcversion
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  read -p '↘️  Type Y or N | Press [ENTER]: ' typed </dev/tty
+
+  case $typed in
+    Y) rcloneupdate ;;
+    y) rcloneupdate ;;
+    N) exit ;;
+    n) exit ;;
+    *) rcloneinstall ;;
+  esac
+  sleep 15s
 fi
 }
 
