@@ -49,10 +49,10 @@ EOF
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
-  Y) ansible-playbok /opt/plexguide/menu/rclonededupe/dupedeploy.yml ;;
-  y) ansible-playbok /opt/plexguide/menu/rclonededupe/dupedeploy.yml ;;
-  N) ansible-playbok /opt/plexguide/menu/rclonededupe/duperemove.yml ;;
-  n) ansible-playbok /opt/plexguide/menu/rclonededupe/duperemove.yml ;;
+  Y) ansible-playbook /opt/plexguide/menu/rclonededupe/dupedeploy.yml ;;
+  y) ansible-playbook /opt/plexguide/menu/rclonededupe/dupedeploy.yml ;;
+  N) ansible-playbook /opt/plexguide/menu/rclonededupe/duperemove.yml ;;
+  n) ansible-playbook /opt/plexguide/menu/rclonededupe/duperemove.yml ;;
   z) setstart ;;
   Z) setstart ;;
   *) setstart ;;
