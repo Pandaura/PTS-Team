@@ -14,7 +14,50 @@ source /opt/plexguide/menu/functions/serverid.sh
 source /opt/plexguide/menu/functions/nvidia.sh
 source /opt/plexguide/menu/functions/uichange.sh
 
+rcdupe() {
+  tee <<-EOF
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 RClone dedupe
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INFO AND NOTE
+Interactively find duplicate files and delete/rename them.
+Synopsis
+By default dedupe interactively finds duplicate files and offers 
+to delete all but one or rename them to be different. 
+Only useful with Google Drive which can have duplicate file names.
+
+In the first pass it will merge directories with the same name. 
+It will do this iteratively until all the identical directories have been merged.
+
+The dedupe command will delete all but one of any identical 
+(same md5sum) files it finds without confirmation. 
+This means that for most duplicated files the dedupe command will 
+not be interactive.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[ Y ] Deploy rclone dedupe weekly
+[ N ] Remove rclone dedupe weekly
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[ Z ] EXIT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+
+  # Standby
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
+  case $typed in
+  Y) ansible-playbok /opt/plexguide/menu/rclonededupe/dupedeploy.yml ;;
+  y) ansible-playbok /opt/plexguide/menu/rclonededupe/dupedeploy.yml ;;
+  N) ansible-playbok /opt/plexguide/menu/rclonededupe/duperemove.yml ;;
+  n) ansible-playbok /opt/plexguide/menu/rclonededupe/duperemove.yml ;;
+  z) setstart ;;
+  Z) setstart ;;
+  *) setstart ;;
+  esac
+}
 # Menu Interface
 setstart() {
 ### executed parts 
@@ -53,6 +96,7 @@ touch /var/plexguide/pgui.switch
 [5] System & Network Auditor
 [6] Server ID change         : Change your ServerID
 [7] NVIDIA Docker Role       : NVIDIA Docker
+[8] RCLONE DEDUPE            
 
 [99] TroubleShoot            : PreInstaller
 
@@ -76,7 +120,8 @@ EOF
     setstart ;;
   5) bash /opt/plexguide/menu/functions/network.sh && clear && setstart ;;
   6) setupnew && clear && setstart ;;
-  6) nvidia && clear && setstart ;;
+  7) nvidia && clear && setstart ;;
+  8) rcdupe ;; 
 ###########################################################################
   99) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
   z) exit ;;

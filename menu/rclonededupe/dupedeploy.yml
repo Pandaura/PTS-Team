@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Title:      PGBlitz (Reference Title File)
+# Authors:    Admin9705, Deiteq, and many PGBlitz Contributors
+# URL:        https://pgblitz.com - http://github.pgblitz.com
+# GNU:        General Public License v3.0
+################################################################################
+---
+- cron:
+    name: Weekly rclone dedupe running
+    special_time: 'weekly'
+    job: 'bash /opt/plexguide/menu/rclonededupe/dupe.sh >/dev/null 2>&1'
+    state: present
+  ignore_errors: yes
