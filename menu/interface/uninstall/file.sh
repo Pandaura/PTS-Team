@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Title:      PGBlitz (Reference Title File)
+# Title:      PTS (Reference Title File)
 # Author(s):  Admin9705 - Deiteq - Sub7Seven
-# URL:        https://pgblitz.com - http://github.pgblitz.com
+# URL:        https://PTS.com - http://github.PTS.com
 # GNU:        General Public License v3.0
 ################################################################################
 menu=$(cat /var/plexguide/final.choice)
@@ -12,7 +12,7 @@ if [ "$menu" == "2" ]; then
 
     echo ""
     echo "-----------------------------------------------------------"
-    echo "SYSTEM MESSAGE: WARNING! PGBlitz Uninstall Interface!"
+    echo "SYSTEM MESSAGE: WARNING! PTS Uninstall Interface!"
     echo "-----------------------------------------------------------"
     echo ""
     sleep 3
@@ -52,7 +52,7 @@ if [ "$menu" == "2" ]; then
 
     echo ""
     echo "-----------------------------------------------------------"
-    echo "SYSTEM MESSAGE: Removing All PGBlitz Dependent Services"
+    echo "SYSTEM MESSAGE: Removing All PTS Dependent Services"
     echo "-----------------------------------------------------------"
     echo ""
     sleep 2
@@ -60,7 +60,7 @@ if [ "$menu" == "2" ]; then
 
     echo ""
     echo "-----------------------------------------------------------"
-    echo "SYSTEM MESSAGE: Removing All PGBlitz File Directories"
+    echo "SYSTEM MESSAGE: Removing All PTS File Directories"
     echo "-----------------------------------------------------------"
     echo ""
     sleep 2
@@ -95,13 +95,13 @@ if [ "$menu" == "2" ]; then
 
     echo ""
     echo "---------------------------------------------------"
-    echo "SYSTEM MESSAGE: Success! PG Uninstalled! Rebooting!"
+    echo "SYSTEM MESSAGE: Success! PTS Uninstalled! Rebooting!"
     echo "---------------------------------------------------"
     echo ""
     sleep 3
     echo ""
     echo "----------------------------------------------------"
-    echo "SYSTEM MESSAGE: PGBlitz Will Never Die! GoodBye!"
+    echo "SYSTEM MESSAGE: PTS Will Never Die! GoodBye!"
     echo "----------------------------------------------------"
     echo ""
     sleep 2
