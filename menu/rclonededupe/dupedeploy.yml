@@ -5,10 +5,14 @@
 # GNU:        General Public License v3.0
 ################################################################################
 ---
-- name: Weekly rclone dedupe running
-  cron:
-    name: Weekly rclone dedupe running
-    special_time: 'weekly'
-    job: 'bash /opt/plexguide/menu/rclonededupe/dupe.sh >/dev/null 2>&1'
-    state: present
-  ignore_errors: yes
+- hosts: localhost
+  gather_facts: false
+  tasks:
+
+  - name: 'deploy Weekly rclone dedupe'
+    cron:
+      name: 'Weekly rclone dedupe running'
+      special_time: 'weekly'
+      job: 'bash /opt/plexguide/menu/rclonededupe/dupe.sh >/dev/null 2>&1'
+      state: 'present'
+    ignore_errors: yes
