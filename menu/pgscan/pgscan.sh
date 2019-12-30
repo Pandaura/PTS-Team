@@ -277,7 +277,7 @@ EOF
 #######################################################################################
 question1() {
 langfa=$(cat /var/plexguide/pgscan/fixmatch.status)
-lang=$(cat at /var/plexguide/pgscan/fixmatch.lang)
+lang=$(cat /var/plexguide/pgscan/fixmatch.lang)
 tokenstatus
 deploycheck
   tee <<-EOF
