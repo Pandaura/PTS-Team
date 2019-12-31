@@ -273,6 +273,12 @@ EOF
   *) fxmatch ;;
   esac
 }
+pasuideploy() {
+cp -rv /opt/plexguide/menu/pgui/templates/autoscan-index.php /opt/appdata/pgui/index.php
+}
+pasuiremove() {
+cp -rv /opt/plexguide/menu/pgui/templates/index.php /opt/appdata/pgui/index.php
+}
 #######################################################################################
 question1() {
 langfa=$(cat /var/plexguide/pgscan/fixmatch.status)
@@ -310,14 +316,14 @@ EOF
   case $typed in
   1) tokencreate && clear && question1 ;;
   2) fxmatch && clear && question1 ;;
-  A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && clear && pasdeployed && question1 ;;
-  a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && clear && pasdeployed && question1 ;;
+  A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && pasuideploy && clear && pasdeployed && question1 ;;
+  a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && pasuideploy && clear && pasdeployed && question1 ;;
   D) showupdomain && clear && question1 ;;
   d) showupdomain && clear && question1 ;;
   S) tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter ;;
   s) tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter;;
-  r) remove && doneenter  && sleep 5 && clear && exit 0 ;;
-  R) remove && doneenter && sleep 5 && clear && exit 0 ;;
+  r) remove && pasuiremove && doneenter  && sleep 5 && clear && exit 0 ;;
+  R) remove && pasuiremove && doneenter && sleep 5 && clear && exit 0 ;;
   C) credits && clear && question1 ;;
   c) credits && clear && question1 ;;
   z) exit 0 ;;
