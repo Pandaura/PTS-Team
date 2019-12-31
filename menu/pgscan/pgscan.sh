@@ -274,10 +274,12 @@ EOF
   esac
 }
 pasuideploy() {
-cp -rv /opt/plexguide/menu/pgui/templates/autoscan-index.php /opt/appdata/pgui/index.php
+ui="/opt/appdata/pgui"
+if [[ -d "$ui" ]]; then cp -rv /opt/plexguide/menu/pgui/templates/autoscan-index.php /opt/appdata/pgui/index.php; fi
 }
 pasuiremove() {
-cp -rv /opt/plexguide/menu/pgui/templates/index.php /opt/appdata/pgui/index.php
+ui="/opt/appdata/pgui"
+if [[ -d "$ui" ]]; then cp -rv /opt/plexguide/menu/pgui/templates/index.php /opt/appdata/pgui/index.php; fi
 }
 #######################################################################################
 question1() {
