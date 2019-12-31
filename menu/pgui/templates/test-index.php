@@ -197,7 +197,7 @@ padding: 10px;
 				<tr>
 				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
 				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<div class="autologs"><?php $output = shell_exec('tail -n 100 /opt/plex_autoscan/plex_autoscan.log');echo "<pre>$output</pre>";?></div>
+					<div class="autologs"><?php $output = shell_exec('tail -n 100 /plex_autoscan/plex_autoscan.log');echo "<pre>$output</pre>";?></div>
 				  </span></td>
 				</tr>
 			  </tbody>
