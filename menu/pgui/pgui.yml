@@ -49,8 +49,9 @@
       set_fact:
         pg_volumes:
           - '/opt/appdata/{{pgrole}}/:/var/www/html/'
-          - '/var/plexguide:/plexguide'
-          - '/opt/appdata/plexguide:/log'
+          - '/var/plexguide:/plexguide:RO'
+          - '/opt/appdata/plexguide:/log:RO'
+          - '/opt:/opt:RO'
 
     - name: 'Setting {{pgrole}} ENV'
       set_fact:
