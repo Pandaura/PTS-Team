@@ -28,7 +28,7 @@ to delete all but one or rename them to be different.
 Only useful with Google Drive which can have duplicate file names.
 
 In the first pass it will merge directories with the same name. 
-It will do this iteractively until all the identical directories have been merged.
+It will do this iteratively until all the identical directories have been merged.
 
 The dedupe command will delete all but one of any identical 
 (same md5sum) files it finds without confirmation. 
