@@ -206,7 +206,6 @@ EOF
   Z) question1 ;;
   *) fxmatch ;;
   esac
-
 }
 lang() {
   tee <<-EOF

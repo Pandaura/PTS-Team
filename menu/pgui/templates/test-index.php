@@ -49,6 +49,14 @@ width: auto;
 border: 1px solid #000;
 padding: 10px;
 }
+.autopas {
+background: #FFFFF;
+height: 150px;
+overflow: auto;
+width: auto;
+border: 1px solid #000;
+padding: 10px;
+}
 .collapsible {
   background-color: #000000;
   color: white;
@@ -180,7 +188,7 @@ padding: 10px;
 				<tr>
 				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
 				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<div class="autologs"><?php $output = shell_exec('tail -n 100 /plexguide/logs/rclone-*.log');echo "<pre>$output</pre>";?></div>
+					<div class="autologs"><?php $output = shell_exec('tail -n 100 /plexguide/logs/rclone-*.log'); echo "<pre>$output</pre>";?></div>
 				  </span></td>
 				</tr>
 			  </tbody>
@@ -192,13 +200,14 @@ padding: 10px;
 				</tr>
 			  </tbody>
 			</table>
-			<table width="100%" height="44" border="1" align="center" cellpadding="5" cellspacing="0">
+			<table width="100%" height="30" border="1" align="center" cellpadding="5" cellspacing="0">
 			  <tbody>
 				<tr>
 				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
 				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<div class="auto"><?php $output = shell_exec('tail -n 100 /plex_autoscan/plex_autoscan.log');echo "<pre>$output</pre>";?></div>
-				  </span></td>
+					<div class="autopas"><?php $output = shell_exec('tail -n 100 /opt/plex_autoscan/plex_*.log'); echo "<pre>$output</pre>";?></div>
+				  </span>
+				 </td>
 				</tr>
 			  </tbody>
 			</table>
@@ -347,7 +356,7 @@ padding: 10px;
 									</span>
 								</td>
 							</tr>
-						</tbody>			
+						</tbody>
 					</table>
 					<table width="100%" height="40" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody> <!--// GDRIVE -->
@@ -383,7 +392,7 @@ padding: 10px;
 									</span>
 								</td>
 							</tr>
-						</tbody>			
+						</tbody>
 					</table>
 				<br>
 					<table width="100%" height="40" border="1" align="center" cellpadding="0" cellspacing="0">
@@ -418,9 +427,9 @@ padding: 10px;
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n1 /plexguide/tdcrypt.log');echo "<pre>$output</pre>";?>
 									</span>
-								</td>			
+								</td>
 							</tr>
-						</tbody>			
+						</tbody>
 					</table>
 					<table width="100%" height="42" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody>
@@ -460,13 +469,14 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
-	
+
 var autoUploadScroll = document.getElementsByClassName("auto")[0];
 var autoLogsScroll = document.getElementsByClassName("autologs")[0];
+var autoPASScroll = document.getElementsByClassName("autopas")[0];
 
 autoUploadScroll.scrollTop = autoUploadScroll.scrollHeight;
 autoLogsScroll.scrollTop = autoLogsScroll.scrollHeight;
-
+autoPASScroll.scrollTop = autoPASScroll.scrollHeight;
 </script>
 </body>
 </html>
