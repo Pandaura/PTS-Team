@@ -1,10 +1,8 @@
 <!doctype html>
 <html>
 <head>
-<meta http-equiv="refresh" content="25" charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-	<meta name="robots" content="noindex, nofollow, noarchive" />
-    <meta http-equiv="cache-control" content="no-cache" /> 
+<meta http-equiv="cache-control" content="no-cache" http-equiv="refresh" content="25" charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<meta name="robots" content="noindex, nofollow, noarchive" /> 
 <title>Com-UI</title>
 <link rel="icon" type="image/png" href="https://i.imgur.com/T7OQsZz.png" sizes="32x32">
 <style type="text/css">
@@ -144,7 +142,7 @@ padding: 10px;
 		<td width="876" align="center">
 			<h1>
 				<strong style="color: #000000; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: xx-large; font-weight: bolder;">Community UI<br>
-					<span style="color: #053F00; font-size: small">Auto-Refreshes Every 25 Seconds</span>	
+					<span style="color: #053F00; font-size: small">Auto-Refreshes Every 10 Seconds</span>	
 					<br>
 				</strong>
 			</h1>
@@ -188,7 +186,7 @@ padding: 10px;
 				<tr>
 				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
 				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<div class="autologs"><?php $output = shell_exec('tail -n 100 /plexguide/logs/rclone-*.log'); echo "<pre>$output</pre>";?></div>
+					<div class="autologs"><?php $output = shell_exec('tail -n 50 /plexguide/logs/rclone-*.log'); echo "<pre>$output</pre>";?></div>
 				  </span></td>
 				</tr>
 			  </tbody>
@@ -205,7 +203,7 @@ padding: 10px;
 				<tr>
 				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
 				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<div class="autopas"><?php $output = shell_exec('tail -n 100 /plex_autoscan/plex_*.log'); echo "<pre>$output</pre>";?></div>
+					<div class="autopas"><?php $output = shell_exec('tail -n 50 /plex_autoscan/plex_*.log'); echo "<pre>$output</pre>";?></div>
 				  </span>
 				 </td>
 				</tr>
@@ -246,11 +244,11 @@ padding: 10px;
 							</tr>
 							<tr>
 							  <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;/mnt/downloads</strong></span></td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
-								<?php $output = shell_exec('tail -n1 /plexguide/spaceused.log');echo "<pre>$output</pre>";?></span>
+								<?php $output = shell_exec('tail -n 1 /plexguide/spaceused.log');echo "<pre>$output</pre>";?></span>
 							  </td>
 							  <td width="15%" height="21" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; "><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;/mnt/move</strong></span></span></td>
 							  <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-								<?php $output = shell_exec('head -n1 /plexguide/spaceused.log');echo "<pre>$output</pre>";?></span></td>
+								<?php $output = shell_exec('head -n 1 /plexguide/spaceused.log');echo "<pre>$output</pre>";?></span></td>
 							</tr>
 							<tr>
 							  <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp; mergerfs </strong></span></td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
@@ -364,13 +362,13 @@ padding: 10px;
 								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive /wo Encryption</strong></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-										<?php $output = shell_exec('tail -n1 /plexguide/gduncrypt.log');echo "<pre>$output</pre>";?>
+										<?php $output = shell_exec('tail -n 1 /plexguide/gduncrypt.log');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
 								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive /w Encyption</strong></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-										<?php $output = shell_exec('tail -n1 /plexguide/gdcrypt.log');echo "<pre>$output</pre>";?>
+										<?php $output = shell_exec('tail -n 1 /plexguide/gdcrypt.log');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
 							</tr>	
@@ -382,13 +380,13 @@ padding: 10px;
 								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive /wo Encryption files/folder</strong></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-										<?php $output = shell_exec('tail -n2 /plexguide/gduncrypt.log | head -1');echo "<pre>$output</pre>";?>
+										<?php $output = shell_exec('tail -n 2 /plexguide/gduncrypt.log | head -1');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
 								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive /w Encyption file/folders</strong></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-										<?php $output = shell_exec('tail -n2 /plexguide/gdcrypt.log | head -1');echo "<pre>$output</pre>";?>
+										<?php $output = shell_exec('tail -n 2 /plexguide/gdcrypt.log | head -1');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
 							</tr>
@@ -419,13 +417,13 @@ padding: 10px;
 								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive /wo Encryption</strong></span></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-										<?php $output = shell_exec('tail -n1 /plexguide/tduncrypt.log');echo "<pre>$output</pre>";?>
+										<?php $output = shell_exec('tail -n 1 /plexguide/tduncrypt.log');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
 								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive /w Encryption</strong></span></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-										<?php $output = shell_exec('tail -n1 /plexguide/tdcrypt.log');echo "<pre>$output</pre>";?>
+										<?php $output = shell_exec('tail -n 1 /plexguide/tdcrypt.log');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
 							</tr>
@@ -437,13 +435,13 @@ padding: 10px;
 								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive /wo Encryption files/folders</strong></span></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-										<?php $output = shell_exec('tail -n2 /plexguide/tduncrypt.log | head -1');echo "<pre>$output</pre>";?>
+										<?php $output = shell_exec('tail -n 2 /plexguide/tduncrypt.log | head -1');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
 								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive /w Encryption files/folders</strong></span></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-										<?php $output = shell_exec('tail -n2 /plexguide/tdcrypt.log | head -1');echo "<pre>$output</pre>";?>
+										<?php $output = shell_exec('tail -n 2 /plexguide/tdcrypt.log | head -1');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
 							</tr>
