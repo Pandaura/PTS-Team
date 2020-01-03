@@ -203,7 +203,7 @@ padding: 10px;
 				<tr>
 				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
 				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<div class="autopas"><?php $output = shell_exec('tail -n 50 /plex_autoscan/plex_*.log'); echo "<pre>$output</pre>";?></div>
+					<div class="autopas"><?php $output = shell_exec('tail -n 50 /opt/plex_autoscan/plex_*.log'); echo "<pre>$output</pre>";?></div>
 				  </span>
 				 </td>
 				</tr>
