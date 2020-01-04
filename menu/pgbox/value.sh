@@ -21,4 +21,7 @@ if [ "$app" == "channelsdvr" ]; then
 if [ "$app" == "rclonegui" ]; then
      bash /opt/plexguide/menu/pgbox/customparts/rclonegui.sh; fi
 
+if [ "$app" == "varken" ]; then
+     bash /opt/plexguide/menu/pgbox/customparts/geolite.sh; fi
+
 ##### CHECK EXIT #####
