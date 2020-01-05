@@ -24,3 +24,9 @@
         dest: '/opt/{{prole.stdout}}'
         version: '{{branch.stdout}}'
         force: yes
+
+    - name: 'Setting permissions on scripts'
+      shell: 'chmod -R 775 /opt/{{prole.stdout}}'
+
+    - name: 'Setting permissions on scripts'
+      shell: 'chown -cR 1000:1000 /opt/{{prole.stdout}}'
