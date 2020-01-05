@@ -6,15 +6,12 @@
 # GNU:        General Public License v3.0
 #
 ################################################################################
-mkdir -p /opt/appdata/plexguide/emergency
-mkdir -p /opt/appdata/plexguide
-rm -rf /opt/appdata/plexguide/emergency/*
-sleep 15
-diskspace27=0
-rm -rf /var/plexguide/status.mounts && touch /var/plexguide/status.mounts
-rm -rf /var/plexguide/pg.blitz && touch /var/plexguide/pg.blitz
 
+mountcheckloop() {
 while true; do
+	
+	rm -rf /opt/appdata/plexguide/emergency/*
+	mkdir -p /opt/appdata/plexguide/emergency
 
 	gdrivecheck=$(systemctl is-active gdrive)
 	gcryptcheck=$(systemctl is-active gcrypt)
@@ -27,27 +24,20 @@ while true; do
 
         pgblitz=$(systemctl list-unit-files | grep pgblitz.service | awk '{ print $2 }')
         pgmove=$(systemctl list-unit-files | grep pgmove.service | awk '{ print $2 }')
-
-        status=$(tail -n 1 /var/plexguide/status.mounts)
-
+		rm -rf /var/plexguide/pg.blitz && touch /var/plexguide/pg.blitz
         if [[ "$pgmove" == "enabled" ]]; then
-                echo "1" >/var/plexguide/status.mounts
-        elif [[ "$pgblitz" == "enabled" ]]; then
-                echo "2" >/var/plexguide/status.mounts
-        else echo "3" >/var/plexguide/status.mounts
-        fi
-
-        if [[ "$status" == "1" ]] ; then
            if [[ "$pgmovecheck" != "active" ]]; then
               echo " 🔴 Not Operational MOVE" >/var/plexguide/pg.blitz
            else echo " ✅ Operational MOVE" >/var/plexguide/pg.blitz ; fi
-        elif [[ "$status" == "2" ]] ; then
+        elif [[ "$pgblitz" == "enabled" ]]; then
            if [[ "$pgblitzcheck" != "active" ]]; then
               echo " 🔴 Not Operational BLITZ" >/var/plexguide/pg.blitz
                 else echo " ✅ Operational BLITZ" >/var/plexguide/pg.blitz ; fi
         else echo " 🔴 Not Operational UPLOADER" >/var/plexguide/pg.blitz
         fi
 
+########################## 
+sleep 5
 ########################## UI 
 
 		config="/opt/appdata/plexguide/rclone.conf"
@@ -84,7 +74,7 @@ while true; do
   # Disk Calculations - 5000000 = 5GB
 
   leftover=$(df / --local | tail -n +2 | awk '{print $4}')
-
+	diskspace27=0
   if [[ "$leftover" -lt "5000000" ]]; then
     diskspace27=1
     echo "Emergency: Primary DiskSpace Under 5GB - Stopped Downloading Programs (i.e. NZBGET, RuTorrent)" >/opt/appdata/plexguide/emergency/message.1
@@ -120,11 +110,11 @@ while true; do
   ##### Warning for Ports Open with Traefik Deployed
   if [[ $(cat /var/plexguide/pg.ports) != "Closed" && $(docker ps --format '{{.Names}}' | grep "traefik") == "traefik" ]]; then
     echo "Warning: Traefik deployed with ports open! Server at risk for explotation!" >/opt/appdata/plexguide/emergency/message.a
-  elif [ -e "/opt/appdata/plexguide/emergency/message.a" ]; then rm -rf /opt/appdata/plexguide/emergency/message.a; fi
+  elif [[ -e "/opt/appdata/plexguide/emergency/message.a" ]]; then rm -rf /opt/appdata/plexguide/emergency/message.a; fi
 
   if [[ $(cat /var/plexguide/pg.ports) == "Closed" && $(docker ps --format '{{.Names}}' | grep "traefik") == "" ]]; then
     echo "Warning: Apps Cannot Be Accessed! Ports are Closed & Traefik is not enabled! Either deploy traefik or open your ports (which is worst for security)" >/opt/appdata/plexguide/emergency/message.b
-  elif [ -e "/opt/appdata/plexguide/emergency/message.b" ]; then rm -rf /opt/appdata/plexguide/emergency/message.b; fi
+  elif [[ -e "/opt/appdata/plexguide/emergency/message.b" ]]; then rm -rf /opt/appdata/plexguide/emergency/message.b; fi
   ##### Warning for Bad Traefik Deployment - message.c is tied to traefik showing a status! Do not change unless you know what your doing
   touch /opt/appdata/plexguide/traefik.check
   domain=$(cat /var/plexguide/server.domain)
@@ -135,10 +125,10 @@ while true; do
   fi
 
   wget -q "https://${cname}.${domain}" -O "/opt/appdata/plexguide/traefik.check"
-  if [[ $(cat /opt/appdata/plexguide/traefik.check) == "" && $(docker ps --format '{{.Names}}' | grep traefik) == "traefik" ]]; then
+  if [[ $(cat /opt/appdata/plexguide/traefik.check) == "" && $(docker ps --format '{{.Names}}' | grep "traefik" ) == "traefik" ]]; then
     echo "Traefik is Not Deployed Properly! Cannot Reach the Portainer SubDomain!" >/opt/appdata/plexguide/emergency/message.c
   else
-    if [ -e "/opt/appdata/plexguide/emergency/message.c" ]; then
+    if [[ -e "/opt/appdata/plexguide/emergency/message.c" ]]; then
       rm -rf /opt/appdata/plexguide/emergency/message.c
     fi
   fi
@@ -146,11 +136,12 @@ while true; do
   if [[ $(cat /opt/appdata/plexguide/traefik.check) == "" && $(docker logs traefik | grep "rateLimited") != "" ]]; then
     echo "$domain's rated limited exceed | Traefik (LetsEncrypt)! Takes upto one week to clear up (or use a new domain)" >/opt/appdata/plexguide/emergency/message.d
   else
-    if [ -e "/opt/appdata/plexguide/emergency/message.d" ]; then
+    if [[ -e "/opt/appdata/plexguide/emergency/message.d" ]]; then
       rm -rf /opt/appdata/plexguide/emergency/message.d
     fi
   fi
-
+ ##################
+sleep 2
   ################# Generate Output
   echo "" >/var/plexguide/emergency.log
 
@@ -165,5 +156,11 @@ while true; do
     echo "NONE" >/var/plexguide/emergency.log
   fi
 
-  sleep 5
+sleep 15  
+
 done
+}
+
+# keeps the function in a loop
+mountcheckloop=0
+while [[ "$mountcheckloop" == "0" ]]; do mountcheckloop; done
