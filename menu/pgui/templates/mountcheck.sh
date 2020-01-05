@@ -36,9 +36,7 @@ while true; do
         else echo " 🔴 Not Operational UPLOADER" >/var/plexguide/pg.blitz
         fi
 
-########################## 
-sleep 5
-########################## UI 
+		sleep 5
 
 		config="/opt/appdata/plexguide/rclone.conf"
 		if grep -q "gdrive" $config; then

@@ -1,4 +1,5 @@
 # KEY VARIABLE RECALL & EXECUTION
+# KEY VARIABLE RECALL & EXECUTION
 source /opt/plexguide/menu/pgscan/scripts/endbanner.sh
 mkdir -p /var/plexguide/pgscan
 touch /var/plexguide/pgscan/plex.token
@@ -143,12 +144,11 @@ doneenter(){
 }
 
 showupdomain() {
-clear
 PAS_CONFIG="/opt/plex_autoscan/config/config.json"
 SERVER_IP=$(cat ${PAS_CONFIG} | jq -r .SERVER_IP)
 SERVER_PORT=$(cat ${PAS_CONFIG} | jq -r .SERVER_PORT)
 SERVER_PASS=$(cat ${PAS_CONFIG} | jq -r .SERVER_PASS)
-
+if [[ -f "$PAS_CONFIG" ]]; then
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -164,9 +164,13 @@ Press Enter to Exit
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
  works
+ else question1; fi
 }
 remove(){
-ansible-playbook /opt/plexguide/menu/pgscan/remove-pgscan.yml 
+PAS_CONFIG="/opt/plex_autoscan/config/config.json"
+if [[ -f "$PAS_CONFIG" ]]; then
+ansible-playbook /opt/plexguide/menu/pgscan/remove-pgscan.yml
+sleep 5
   printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Plex_AutoScan is full removed
@@ -174,6 +178,7 @@ ansible-playbook /opt/plexguide/menu/pgscan/remove-pgscan.yml
 '
  echo 
   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
+  else question1; fi
 }
 fxmatch() {
   tee <<-EOF
