@@ -40,7 +40,7 @@
     name: Daily check for mgerfs / rclone new version
     special_time: 'daily'
     job: 'bash /opt/plexguide/menu/pgui/templates/check.sh 1>/dev/null 2>&1'
-    state: present
+    state: absent
 
 - cron:
     name: Daily G/TDrive used space checker | file & folder

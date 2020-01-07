@@ -9,23 +9,42 @@
 
 mountcheckloop() {
 while true; do
-	
+	###mergerfs part
+	touch /var/plexguide/checkers/mgfs.log
+	touch /var/plexguide/checkers/mergerfs.log
+	mgversion="$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
+	mergfs="$(mergerfs -v | grep 'mergerfs version:' | awk '{print $3}')"
+	echo "$mergfs" >>/var/plexguide/checkers/mgfs.log
+	mgstored="$(tail -n 1 /var/plexguide/checkers/mgfs.log)"
+	if [[ "$mgversion" == "$mgstored" ]];then
+       echo " ✅  No update needed !" >/var/plexguide/checkers/mergerfs.log
+	else echo " ⛔ Update possible !" >/var/plexguide/checkers/mergerfs.log;
+	fi
+	####rclone part
+	touch /var/plexguide/checkers/rclonestored.log
+	touch /var/plexguide/checkers/rclone.log
+	rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
+	rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1)"
+	echo "$rcstored" >/var/plexguide/checkers/rclonestored.log
+	if [[ "$rcversion" == "$rcstored" ]]; then 
+	     echo " ✅  No update needed !" >/var/plexguide/checkers/rclone.log
+	else echo " ⛔  Update possible !" >/var/plexguide/checkers/rclone.log;
+	fi
 	rm -rf /opt/appdata/plexguide/emergency/*
 	mkdir -p /opt/appdata/plexguide/emergency
-
 	gdrivecheck=$(systemctl is-active gdrive)
 	gcryptcheck=$(systemctl is-active gcrypt)
 	tdrivecheck=$(systemctl is-active tdrive)
 	tcryptcheck=$(systemctl is-active tcrypt)
 	pgunioncheck=$(systemctl is-active pgunion)
+    pgblitzcheck=$(systemctl is-active pgblitz)
+    pgmovecheck=$(systemctl is-active pgmove)
+    pgblitz=$(systemctl list-unit-files | grep pgblitz.service | awk '{ print $2 }')
+    pgmove=$(systemctl list-unit-files | grep pgmove.service | awk '{ print $2 }')
 
-        pgblitzcheck=$(systemctl is-active pgblitz)
-        pgmovecheck=$(systemctl is-active pgmove)
-
-        pgblitz=$(systemctl list-unit-files | grep pgblitz.service | awk '{ print $2 }')
-        pgmove=$(systemctl list-unit-files | grep pgmove.service | awk '{ print $2 }')
-		rm -rf /var/plexguide/pg.blitz && touch /var/plexguide/pg.blitz
-        if [[ "$pgmove" == "enabled" ]]; then
+	rm -rf /var/plexguide/pg.blitz && touch /var/plexguide/pg.blitz
+       
+	   if [[ "$pgmove" == "enabled" ]]; then
            if [[ "$pgmovecheck" != "active" ]]; then
               echo " 🔴 Not Operational MOVE" >/var/plexguide/pg.blitz
            else echo " ✅ Operational MOVE" >/var/plexguide/pg.blitz ; fi
@@ -35,42 +54,34 @@ while true; do
                 else echo " ✅ Operational BLITZ" >/var/plexguide/pg.blitz ; fi
         else echo " 🔴 Not Operational UPLOADER" >/var/plexguide/pg.blitz
         fi
-
 		sleep 5
-
 		config="/opt/appdata/plexguide/rclone.conf"
 		if grep -q "gdrive" $config; then
 			  if [[ "$gdrivecheck" != "active" ]]; then
 				echo " 🔴 Not Operational" >/var/plexguide/pg.gdrive
 			  else echo " ✅ Operational" >/var/plexguide/pg.gdrive; fi
 		else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.gdrive; fi
-
 		if grep -q "gcrypt" $config; then
 			  if [[ "$gcryptcheck" != "active" ]]; then
 				echo " 🔴 Not Operational" >/var/plexguide/pg.gcrypt
 			  else echo " ✅ Operational" >/var/plexguide/pg.gcrypt; fi
 		else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.gcrypt; fi
-
 		if grep -q "tdrive" $config; then
 			  if [[ "$tdrivecheck" != "active" ]]; then
 				echo " 🔴 Not Operational " >/var/plexguide/pg.tdrive
 			  else echo " ✅ Operational" >/var/plexguide/pg.tdrive; fi
 		else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.tdrive; fi
-
 		if grep -q "tcrypt" $config; then
 			  if [[ "$tcryptcheck" != "active" ]]; then
 				echo " 🔴 Not Operational " >/var/plexguide/pg.tcrypt
 			  else echo " ✅ Operational" >/var/plexguide/pg.tcrypt; fi
 		else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.tcrypt; fi
-
 		if grep -q "pgunion" $config; then
 			  if [[ "$pgunioncheck" != "active" ]]; then
 				echo " 🔴 Not Operational " >/var/plexguide/pg.union
 			  else echo " ✅ Operational " >/var/plexguide/pg.union; fi
 		else echo "🔴 NOT DEPLOYED" >/var/plexguide/pg.union; fi
-
   # Disk Calculations - 5000000 = 5GB
-
   leftover=$(df / --local | tail -n +2 | awk '{print $4}')
 	diskspace27=0
   if [[ "$leftover" -lt "5000000" ]]; then
@@ -104,7 +115,6 @@ while true; do
     rm -rf /opt/appdata/plexguide/emergency/message.1
     diskspace27=0
   fi
-
   ##### Warning for Ports Open with Traefik Deployed
   if [[ $(cat /var/plexguide/pg.ports) != "Closed" && $(docker ps --format '{{.Names}}' | grep "traefik") == "traefik" ]]; then
     echo "Warning: Traefik deployed with ports open! Server at risk for explotation!" >/opt/appdata/plexguide/emergency/message.a
@@ -116,12 +126,10 @@ while true; do
   ##### Warning for Bad Traefik Deployment - message.c is tied to traefik showing a status! Do not change unless you know what your doing
   touch /opt/appdata/plexguide/traefik.check
   domain=$(cat /var/plexguide/server.domain)
-
   cname="portainer"
   if [[ -f "/var/plexguide/portainer.cname" ]]; then
     cname=$(cat "/var/plexguide/portainer.cname")
   fi
-
   wget -q "https://${cname}.${domain}" -O "/opt/appdata/plexguide/traefik.check"
   if [[ $(cat /opt/appdata/plexguide/traefik.check) == "" && $(docker ps --format '{{.Names}}' | grep "traefik" ) == "traefik" ]]; then
     echo "Traefik is Not Deployed Properly! Cannot Reach the Portainer SubDomain!" >/opt/appdata/plexguide/emergency/message.c
@@ -142,7 +150,6 @@ while true; do
 sleep 2
   ################# Generate Output
   echo "" >/var/plexguide/emergency.log
-
   if [[ $(ls /opt/appdata/plexguide/emergency) != "" ]]; then
     countmessage=0
     while read p; do
@@ -153,9 +160,7 @@ sleep 2
   else
     echo "NONE" >/var/plexguide/emergency.log
   fi
-
-sleep 15  
-
+sleep 15
 done
 }
 

@@ -44,3 +44,10 @@
         job: 'kill_logs 1>/dev/null 2>&1'
         state: present
       ignore_errors: yes
+
+    - cron:
+        name: Daily check for mgerfs / rclone new version
+        special_time: 'daily'
+        job: 'bash /opt/plexguide/menu/pgui/templates/check.sh 1>/dev/null 2>&1'
+        state: absent
+       ignore_errors: yes

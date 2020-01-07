@@ -194,29 +194,6 @@ mergerfsinstall() {
 ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsinstall
 }
 
-rcloneinstall() {
-rcversion="$(curl -s https://api.github.com/repos/rclone/rclone/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
-rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1 )"
-
-if [[ "$rcversion" != "$rcstored" ]]; then
-tee <<-EOF
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-↘️  rclone can be updated to version $rcversion
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-  read -p '↘️  Type Y or N | Press [ENTER]: ' typed </dev/tty
-
-  case $typed in
-    Y) rcloneupdate ;;
-    y) rcloneupdate ;;
-    N) exit ;;
-    n) exit ;;
-    *) rcloneinstall ;;
-  esac
-  sleep 15s
-fi
-}
-
 motd() { 
 ansible-playbook /opt/plexguide/menu/motd/motd.yml
 }
