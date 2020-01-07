@@ -31,8 +31,8 @@
    },
    "PLEX_ANALYZE_DIRECTORY":true,
    "PLEX_ANALYZE_TYPE":"basic",
-   "PLEX_FIX_MISMATCHED":{{fixmatchstatus.stdout}},
-   "PLEX_FIX_MISMATCHED_LANG":"{{fixmatchlang.stdout}}",
+   "PLEX_FIX_MISMATCHED": {{fixmatchstatus.stdout}},
+   "PLEX_FIX_MISMATCHED_LANG": "{{fixmatchlang.stdout}}",
    "PLEX_DATABASE_PATH": "/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db",
    "PLEX_EMPTY_TRASH":true,
    "PLEX_EMPTY_TRASH_CONTROL_FILES":[
@@ -44,9 +44,9 @@
    "PLEX_LOCAL_URL": "http://localhost:32400",
    "PLEX_SCANNER":"/usr/lib/plexmediaserver/Plex\\ Media\\ Scanner",
    "PLEX_SUPPORT_DIR":"/config/Library/Application\\ Support",
-   "PLEX_USER":"abc",
-   "PLEX_TOKEN":"{{plex_auth_token.stdout}}",
-   "PLEX_CHECK_BEFORE_SCAN":true,
+   "PLEX_USER": "{{plex_docker_user.stdout}}",
+   "PLEX_TOKEN": "{{plex_auth_token.stdout}}",
+   "PLEX_CHECK_BEFORE_SCAN": true,
    "PLEX_WAIT_FOR_EXTERNAL_SCANNERS":false,
    "RCLONE": {
     "BINARY": "/usr/bin/rclone",
@@ -76,8 +76,8 @@
    "SERVER_IGNORE_LIST":[
       "Thumbs.db"
    ],
-   "SERVER_IP":"{{ipaddress.stdout}}",
-   "SERVER_PASS":"{{plex_autoscan_server_pass.stdout}}",
+   "SERVER_IP": "{{ipaddress.stdout}}",
+   "SERVER_PASS": "{{plex_autoscan_server_pass.stdout}}",
    "SERVER_PATH_MAPPINGS":{
       "/mnt/":[
          "/mnt/"

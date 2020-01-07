@@ -25,6 +25,14 @@ deploycheck() {
   else dstatus="⚠️ NOT DEPLOYED"; fi
 }
 
+pdockeruser() {
+	plexcontainerversion=$(cat /var/plexguide/image/plex)
+	  if [[ $plexcontainerversion == "linuxserver/plex:latest" ]]; then
+		echo -e "abc" >/var/plexguide/pgscan/plex.docker 
+	else echo "plex" >/var/plexguide/pgscan/plex.docker; 
+fi
+}
+
 tokenstatus() {
   ptokendep=$(cat /var/plexguide/pgscan/plex.token)
   if [[ "$ptokendep" != "" ]]; then
@@ -341,6 +349,7 @@ EOF
 # FUNCTIONS END ##############################################################
 passtartfirst
 tokenstatus
+pdockeruser
 ippart
 variable /var/plexguide/pgscan/fixmatch.lang "en"
 variable /var/plexguide/pgscan/fixmatch.status "false"

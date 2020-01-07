@@ -49,6 +49,10 @@
   shell: 'cat /var/plexguide/pgscan/fixmatch.status'
   register: fixmatchstatus
 
+- name: Register Plex Docker Image status
+  shell: 'cat /var/plexguide/pgscan/plex.docker'
+  register: plex_docker_user
+
 - name: Create mounted.bin for trash
   shell: 'touch /mnt/unionfs/mounted.bin'
 

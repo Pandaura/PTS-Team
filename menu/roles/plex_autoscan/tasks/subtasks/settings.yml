@@ -52,6 +52,10 @@
     shell: 'cat /var/plexguide/pgscan/fixmatch.status'
     register: fixmatchstatus
 
+  - name: Register Plex Docker Image status
+    shell: 'cat /var/plexguide/pgscan/plex.docker'
+    register: plex_docker_user
+
   when: not plex_autoscan_config.stat.exists
 
 - name: Settings | Upgrade 'config.json'
