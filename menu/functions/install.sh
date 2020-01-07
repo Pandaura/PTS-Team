@@ -16,7 +16,6 @@ pginstall() {
   versionubucheck
   updateprime
   gcecheck
-  rcloneinstall
   core pythonstart
   core aptupdate
   core alias
