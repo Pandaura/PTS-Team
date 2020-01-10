@@ -133,6 +133,9 @@
   stat:
     path: "/etc/systemd/system/plex_autoscan.service"
   register: pas_online
+  
+- name: Symlink log to log folder 
+  shell: 'ln -s /opt/plex_autoscan/plex_autoscan.log /var/plexguide/logs/plex_autoscan.log' 
 
 - name: Services | Restart 'plex_autoscan.service'
   systemd:
