@@ -20,7 +20,7 @@
     - name: 'Setting {{pgrole}} ENV'
       set_fact:
         pg_env:
-          TZ: 
+          TZ: 'UTC'
           LATEST: 'true'
           CLEANUP: 'true'
           IGNORE: 'mariadb influxdb mongo postgres'
