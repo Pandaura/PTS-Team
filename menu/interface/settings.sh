@@ -7,7 +7,6 @@
 # GNU:        General Public License v3.0
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
-source /opt/plexguide/menu/functions/watchtower.sh
 source /opt/plexguide/menu/functions/install.sh
 ################################################################################
 source /opt/plexguide/menu/functions/serverid.sh
@@ -90,13 +89,12 @@ touch /var/plexguide/pgui.switch
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] MultiHD                  :  Add Multiple HDs and/or Mount Points to MergerFS
-[2] WatchTower               :  Auto-Update Application Manager
-[3] Comm UI                  :  [ $switchcheck ] | Port [ $ports ] | pgui.$domain
-[4] Emergency Display        :  [ $emdisplay ]
-[5] System & Network Auditor
-[6] Server ID change         : Change your ServerID
-[7] NVIDIA Docker Role       : NVIDIA Docker
-[8] RCLONE DEDUPE            
+[2] Comm UI                  :  [ $switchcheck ] | Port [ $ports ] | pgui.$domain
+[3] Emergency Display        :  [ $emdisplay ]
+[4] System & Network Auditor
+[5] Server ID change         : Change your ServerID
+[6] NVIDIA Docker Role       : NVIDIA Docker
+[7] RCLONE DEDUPE            
 
 [99] TroubleShoot            : PreInstaller
 
@@ -111,17 +109,16 @@ EOF
 
   case $typed in
   1) bash /opt/plexguide/menu/multihd/multihd.sh ;;
-  2) watchtower && clear && setstart ;;
-  3) uichange && clear && setstart ;;
-  4)
+  2) uichange && clear && setstart ;;
+  3)
     if [[ "$emdisplay" == "On" ]]; then
       echo "Off" >/var/plexguide/emergency.display
     else echo "On" >/var/plexguide/emergency.display; fi
     setstart ;;
-  5) bash /opt/plexguide/menu/functions/network.sh && clear && setstart ;;
-  6) setupnew && clear && setstart ;;
-  7) nvidia && clear && setstart ;;
-  8) rcdupe ;; 
+  4) bash /opt/plexguide/menu/functions/network.sh && clear && setstart ;;
+  5) setupnew && clear && setstart ;;
+  6) nvidia && clear && setstart ;;
+  7) rcdupe ;; 
 ###########################################################################
   99) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
   z) exit ;;

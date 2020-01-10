@@ -1,0 +1,41 @@
+#!/bin/bash
+# Title:      ouroboros
+# GNU:        General Public License v3.0
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    # FACTS #######################################################################
+    - name: 'Set Known Facts'
+      set_fact:
+        pgrole: 'ouroboros'
+        image: 'pyouroboros/ouroboros'
+    - name: 'Setting {{pgrole}} Volumes'
+      set_fact:
+        pg_volumes:
+          - '/var/run/docker.sock:/var/run/docker.sock'
+          - '/etc/localtime:/etc/localtime:ro'
+
+    - name: 'Setting {{pgrole}} ENV'
+      set_fact:
+        pg_env:
+          TZ: 
+          LATEST: 'true'
+          CLEANUP: 'true'
+          IGNORE: 'mariadb influxdb mongo postgres'
+    # MAIN DEPLOYMENT #############################################################
+    - name: 'Deploying {{pgrole}}'
+      docker_container:
+        name: '{{pgrole}}'
+        image: '{{image}}'
+        pull: yes
+        volumes: '{{pg_volumes}}'
+        env: '{{pg_env}}'
+        restart_policy: unless-stopped
+        networks:
+          - name: plexguide
+            aliases:
+              - 'ouroboros'
+        state: started
+        labels: '{{pg_labels}}'
