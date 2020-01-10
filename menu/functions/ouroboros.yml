@@ -38,4 +38,3 @@
             aliases:
               - 'ouroboros'
         state: started
-        labels: '{{pg_labels}}'
