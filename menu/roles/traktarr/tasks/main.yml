@@ -182,6 +182,9 @@
 
 - name: Start Traktarr Service
   systemd: state=started name=traktarr enabled=yes
+
+- name: Symlink log to log folder 
+  shell: 'ln -s /opt/appdata/traktarr/activity.log /var/plexguide/logs/traktarr.log' 
     
 # scripts permissions
 - name: 'Setting permissions on scripts'
