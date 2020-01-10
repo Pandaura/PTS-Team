@@ -24,7 +24,7 @@
           CLEANUP: 'true'
           INTERVAL: '86400' #cEvery 24 hours in seconds
           LOG_LEVEL: 'info'
-          SELF_UPDATE 'true'
+          SELF_UPDATE: 'true'
           MONITOR: 'all' #Can set to specific container only see wiki for details (https://github.com/pyouroboros/ouroboros/wiki/Usage#monitor)
           IGNORE: 'mariadb influxdb mongo postgres'
           LABELS_ONLY: 'false' #https://github.com/pyouroboros/ouroboros/wiki/Usage#label-enable
