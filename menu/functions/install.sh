@@ -118,11 +118,11 @@ wstatus=$(docker ps --format '{{.Names}}' | grep "watchtower")
 if [[ "$wstatus" == "watchtower" ]]; then 
     docker stop watchtower >/dev/null 2>&1
 	docker rm watchtower >/dev/null 2>&1
-	ansible-playbook /opt/plexguide/menu/functions/ouroboros.yml >/dev/null 2>&1
+	ansible-playbook /opt/plexguide/menu/functions/ouroboros.yml
 fi
 ostatus=$(docker ps --format '{{.Names}}' | grep "ouroboros")
-if [[ "$ostatus" != "ouroboros" ]]; then ansible-playbook /opt/plexguide/menu/functions/ouroboros.yml >/dev/null 2>&1; fi
- }
+if [[ "$ostatus" != "ouroboros" ]]; then ansible-playbook /opt/plexguide/menu/functions/ouroboros.yml; fi
+}
 
 gcecheck() {
 gcheck=$(dnsdomainname | tail -c 10)
