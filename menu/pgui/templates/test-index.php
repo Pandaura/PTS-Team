@@ -205,7 +205,7 @@ padding: 10px;
 				<tr>
 				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
 				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<div class="autopas"><?php $output = shell_exec('tail -n 100 /opt/plex_autoscan/plex_*.log'); echo "<pre>$output</pre>";?></div>
+					<div class="autopas"><?php $output = shell_exec('tail -n 100 /plexguide/logs/plex_*.log'); echo "<pre>$output</pre>";?></div>
 				  </span>
 				 </td>
 				</tr>
@@ -239,7 +239,6 @@ padding: 10px;
 							<td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong><strong>&nbsp;&nbsp;Union - RClone | Mount</strong></span></span></td>
 							<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/pg.union');echo "<pre>$output</pre>";?></span></td>
-								
 							<td width="15%" height="21" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp; Blitz | Move</strong></span></span></td>
 							<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/pg.blitz');echo "<pre>$output</pre>";?></span></td>

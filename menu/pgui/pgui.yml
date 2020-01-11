@@ -51,7 +51,6 @@
           - '/opt/appdata/{{pgrole}}/:/var/www/html/'
           - '/var/plexguide:/plexguide'
           - '/opt/appdata/plexguide:/log'
-          - '/opt:/opt'
 
     - name: 'Setting {{pgrole}} ENV'
       set_fact:

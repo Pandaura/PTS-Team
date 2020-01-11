@@ -14,7 +14,7 @@
     - name: 'Setting {{pgrole}} Volumes'
       set_fact:
         pg_volumes:
-          - 'unix://var/run/docker.sock:unix://var/run/docker.sock'
+          - '/var/run/docker.sock:/var/run/docker.sock'
           - '/etc/localtime:/etc/localtime:ro'
 
     - name: 'Setting {{pgrole}} ENV'
