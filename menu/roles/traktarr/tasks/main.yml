@@ -183,9 +183,16 @@
 - name: Start Traktarr Service
   systemd: state=started name=traktarr enabled=yes
 
+- name: 'Checking for existing symlink'
+  stat:
+    path: '/var/plexguide/logs/traktarr.log'
+  register: stat_result
+
 - name: Symlink log to log folder 
   shell: 'ln -s /opt/appdata/traktarr/activity.log /var/plexguide/logs/traktarr.log' 
-    
+  when: stat_result.stat.exists == False
+  ignore_errors: yes
+
 # scripts permissions
 - name: 'Setting permissions on scripts'
   shell: 'chown -cR 1000:1000 /opt/appdata/traktarr'
