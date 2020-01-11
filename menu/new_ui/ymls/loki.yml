@@ -56,5 +56,3 @@
             aliases:
               - '{{pgrole}}'
         state: started
-        labels: '{{pg_labels}}'
-
