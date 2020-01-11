@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    # FACTS #######################################################################
+    - name: 'Set Known Facts'
+      set_fact:
+        pgrole: 'loki'
+        intport: '3100'
+        extport: '3100'
+        image: 'grafana/loki:v1.2.0'
+
+    # CORE (MANDATORY) ############################################################
+    - name: 'Including cron job'
+      include_tasks: '/opt/communityapps/apps/_core.yml'
+
+    - name: 'Checking for existing {{pgrole}} config file'
+      stat:
+        path: '/opt/appdata/{{pgrole}}/local-config.yaml'
+      register: stat_result
+
+    - name: 'Clone local-config.yaml for first start'
+      include_tasks: '/opt/communityapps/apps/templates/loki/loki-conf.yml'
+      when: stat_result.stat.exists == False
+      ignore_errors: yes
+
+    # LABELS ######################################################################
+    - name: 'Setting {{pgrole}} Volumes'
+      set_fact:
+        pg_volumes:
+          - '/opt/appdata/{{pgrole}}:/etc/loki/'
+          - '/etc/localtime:/etc/localtime:ro'
+
+    - name: 'Setting {{pgrole}} ENV'
+      set_fact:
+        pg_env:
+          PUID: '1000'
+          PGID: '1000'
+
+    # MAIN DEPLOYMENT #############################################################
+    - name: 'Deploying {{pgrole}}'
+      docker_container:
+        name: '{{pgrole}}'
+        image: '{{image}}'
+        pull: yes
+        published_ports:
+          - '{{ports.stdout}}{{extport}}:{{intport}}'
+        volumes: '{{pg_volumes}}'
+        env: '{{pg_env}}'
+        restart_policy: unless-stopped
+        networks:
+          - name: plexguide
+            aliases:
+              - '{{pgrole}}'
+        state: started
+        labels: '{{pg_labels}}'
+

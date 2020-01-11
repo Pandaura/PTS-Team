@@ -1,0 +1,13 @@
+- name: Creating folder
+  file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
+  with_items:
+    - '/opt/appdata/telegraf/'
+
+- name: 'Copying config'
+  shell: 'cp -r /opt/communityapps/apps/templates/telegraf/telegraf.conf /opt/appdata/telegraf/telegraf.conf'
+
+# scripts permissions
+- name: 'Setting permissions for {{pgrole}}'
+  shell: 'chmod -R 775 /opt/appdata/{{pgrole}}'
+- name: 'set owner rights for {{pgrole}}'
+  shell: 'chown -cR 1000:1000 /opt/appdata/{{pgrole}}'

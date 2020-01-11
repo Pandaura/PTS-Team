@@ -1,0 +1,70 @@
+#!/bin/bash
+#
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    # FACTS #######################################################################
+    - stat: path=/opt/appdata/varken/varken.example.ini
+      register: varken_result
+
+    - debug:
+        msg: "File doesnt exist"
+      when: varken_result.stat.exists == False
+
+    - debug:
+        msg: "File does exist, we can continue"
+      when: varken_result.stat.exists == True
+
+    - name: 'Set Known Facts'
+      set_fact:
+        pgrole: 'varken'
+        intport: '80'
+        extport: '5985'
+        image: 'boerderij/varken:develop'
+
+    - name: Register VRKN_GLOBAL_MAXMIND_LICENSE_KEY
+      shell: 'cat /var/plexguide/varken/geoip.key'
+      register: geoiplzkey
+
+    # CORE (MANDATORY) ############################################################
+    - name: 'Including cron job'
+      include_tasks: '/opt/communityapps/apps/_core.yml'
+
+    - name: 'Checking for existing app data'
+      stat:
+        path: '/opt/appdata/{{pgrole}}/core.conf'
+      register: confcheck
+
+    # LABELS ######################################################################
+    - name: 'Setting {{pgrole}} Volumes'
+      set_fact:
+        pg_volumes:
+          - '/opt/appdata/{{pgrole}}:/config'
+          - '{{path.stdout}}:{{path.stdout}}'
+          - '/etc/localtime:/etc/localtime:ro'
+
+    - name: 'Setting {{pgrole}} ENV'
+      set_fact:
+        pg_env:
+          PUID: '1000'
+          PGID: '1000'
+          VRKN_GLOBAL_MAXMIND_LICENSE_KEY: '{{ geoiplzkey.stdout }}'
+
+    # MAIN DEPLOYMENT #############################################################
+    - name: 'Deploying {{pgrole}}'
+      docker_container:
+        name: '{{pgrole}}'
+        image: '{{image}}'
+        pull: yes
+        published_ports:
+          - '{{ports.stdout}}{{extport}}:{{intport}}'
+        volumes: '{{pg_volumes}}'
+        env: '{{pg_env}}'
+        restart_policy: unless-stopped
+        networks:
+          - name: plexguide
+            aliases:
+              - '{{pgrole}}'
+        state: started

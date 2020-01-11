@@ -1,0 +1,81 @@
+#!/bin/bash
+#
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    # FACTS #######################################################################
+    - stat: path=/opt/appdata/influx/influx.conf
+      register: conf_result
+
+    - debug:
+        msg: "File doesnt exist"
+      when: conf_result.stat.exists == False
+
+    - debug:
+        msg: "File does exist, we can continue"
+      when: conf_result.stat.exists == True
+
+    - name: 'Set Known Facts'
+      set_fact:
+        pgrole: 'influxdb'
+        intport: '8086'
+        extport: '8086'
+        image: 'influxdb'
+
+    # CORE (MANDATORY) ############################################################
+    - name: 'Including cron job'
+      include_tasks: '/opt/communityapps/apps/_core.yml'
+
+    - name: 'Checking for existing app data'
+      stat:
+        path: '/opt/appdata/{{pgrole}}/core.conf'
+      register: confcheck
+
+    # LABELS ######################################################################
+
+    - name: 'Setting {{pgrole}} Volumes'
+      set_fact:
+        pg_volumes:
+          - '/opt/appdata/{{pgrole}}:/var/lib/influxdb'
+          - '{{path.stdout}}:{{path.stdout}}'
+          - '/etc/localtime:/etc/localtime:ro'
+
+    - name: 'Setting {{pgrole}} ENV'
+      set_fact:
+        pg_env:
+          PUID: '1000'
+          PGID: '1000'
+          INFLUX_ADMIN_USER: 'admin'
+          INFLUX_ADMIN_PASSWORD: 'adminpass'
+
+    - name: 'Pulling Image'
+      shell: docker pull influxdb      
+
+    # MAIN DEPLOYMENT #############################################################
+    - name: 'Deploying {{pgrole}}'
+      docker_container:
+        name: '{{pgrole}}'
+        image: '{{image}}'
+        pull: yes
+        published_ports:
+          - '{{ports.stdout}}{{extport}}:{{intport}}'
+        volumes: '{{pg_volumes}}'
+        env: '{{pg_env}}'
+        restart_policy: unless-stopped
+        networks:
+          - name: plexguide
+            aliases:
+              - '{{pgrole}}'
+        state: started
+        
+    ####  CONFIG  ##########
+    - name: 'Waiting for {{pgrole}} to initialize'
+      wait_for:
+        timeout: 10
+
+    - name: 'Generating config'
+      shell: docker run --rm influxdb influxd config > /opt/appdata/{{pgrole}}/influxdb.conf
+      args:
+        creates:  /opt/appdata/{{pgrole}}/influxdb.conf
