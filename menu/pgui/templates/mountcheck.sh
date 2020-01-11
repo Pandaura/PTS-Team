@@ -38,7 +38,7 @@ while true; do
 			  if [[ "$gdrivecheck" != "active" ]]; then
 				echo " ⚠ " >/var/plexguide/pg.gdrive
 			  else echo " ✅ " >/var/plexguide/pg.gdrive; fi
-		else echo "🔴 " >/var/plexguide/pg.gdrive; fi
+		else echo " 🔴 " >/var/plexguide/pg.gdrive; fi
 		if grep -q "gcrypt" $config; then
 			  if [[ "$gcryptcheck" != "active" ]]; then
 				echo " ⚠ " >/var/plexguide/pg.gcrypt
@@ -53,12 +53,12 @@ while true; do
 			  if [[ "$tcryptcheck" != "active" ]]; then
 				echo " ⚠ " >/var/plexguide/pg.tcrypt
 			  else echo " ✅ " >/var/plexguide/pg.tcrypt; fi
-		else echo "🔴" >/var/plexguide/pg.tcrypt; fi
+		else echo " 🔴 " >/var/plexguide/pg.tcrypt; fi
 		if grep -q "pgunion" $config; then
 			  if [[ "$pgunioncheck" != "active" ]]; then
 				echo " ⚠ " >/var/plexguide/pg.union
 			  else echo " ✅ " >/var/plexguide/pg.union; fi
-		else echo "🔴" >/var/plexguide/pg.union; fi
+		else echo " 🔴 " >/var/plexguide/pg.union; fi
   # Disk Calculations - 5000000 = 5GB
   leftover=$(df / --local | tail -n +2 | awk '{print $4}')
 	diskspace27=0
