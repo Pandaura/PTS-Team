@@ -16,7 +16,7 @@ mergfs="$(mergerfs -v | grep 'mergerfs version:' | awk '{print $3}')"
 echo "$mergfs" >>/var/plexguide/checkers/mgfs.log
 mgstored="$(tail -n 1 /var/plexguide/checkers/mgfs.log)"
 if [[ "$mgversion" == "$mgstored" ]];then
-        echo " ✅  No update needed !" >/var/plexguide/checkers/mergerfs.log
+        echo " ✅ !" >/var/plexguide/checkers/mergerfs.log
 else echo " ⛔ Update possible !" >/var/plexguide/checkers/mergerfs.log;
 fi
 ####rclone part
@@ -27,6 +27,6 @@ rcstored="$(rclone --version | awk '{print $2}' | tail -n 3 | head -n 1)"
 echo "$rcstored" >/var/plexguide/checkers/rclonestored.log
 rcstored="$(tail -n 1 /var/plexguide/checkers/rclonestored.log)"
 if [[ "$rcversion" == "$rcstored" ]]; then
-        echo " ✅  No update needed !" >/var/plexguide/checkers/rclone.log
+        echo " ✅ !" >/var/plexguide/checkers/rclone.log
 else echo " ⛔  Update possible !" >/var/plexguide/checkers/rclone.log;
 fi

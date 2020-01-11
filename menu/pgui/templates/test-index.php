@@ -278,13 +278,13 @@ a:visited {
 					<table width="100%" height="40" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody> <!--// GDRIVE -->
 							<tr>
-								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive - RClone | Mount</strong></td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive Mount</strong></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n 1 /plexguide/pg.gdrive');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
-								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GCrypt - RClone | Mount</strong></span></td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GCrypt Mount</strong></span></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n 1 /plexguide/pg.gcrypt');echo "<pre>$output</pre>";?>
@@ -296,13 +296,13 @@ a:visited {
 					<table width="100%" height="40" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody> <!--// GDRIVE -->
 							<tr>
-								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive /wo Encryption</strong></td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive</strong></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n1 /plexguide/gduncrypt.log');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
-								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive /w Encyption</strong></td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive</strong></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n1 /plexguide/gdcrypt.log');echo "<pre>$output</pre>";?>
@@ -314,13 +314,13 @@ a:visited {
 					<table width="100%" height="40" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody> <!--// GDRIVE -->
 							<tr>
-								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive /wo Encryption files/folder</strong></td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GCrypt files</strong></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n2 /plexguide/gduncrypt.log | head -1');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
-								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GDrive /w Encyption file/folders</strong></td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;GCrypt files</strong></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n2 /plexguide/gdcrypt.log | head -1');echo "<pre>$output</pre>";?>
@@ -332,13 +332,13 @@ a:visited {
 					<table width="100%" height="40" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody> <!--// TDRIVE -->
 							<tr>
-								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive - RClone | Mount</strong></span></td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive Mount</strong></span></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n 1 /plexguide/pg.tdrive');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
-								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;TCrypt - RClone | Mount</strong></span></td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong>&nbsp;&nbsp;TCrypt Mount</strong></span></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n 1 /plexguide/pg.tcrypt');echo "<pre>$output</pre>";?>
@@ -350,13 +350,13 @@ a:visited {
 					<table width="100%" height="42" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody>
 							<tr>
-								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive /wo Encryption</strong></span></td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive</strong></span></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n1 /plexguide/tduncrypt.log');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
-								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive /w Encryption</strong></span></td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TCrypt</strong></span></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n1 /plexguide/tdcrypt.log');echo "<pre>$output</pre>";?>
@@ -368,13 +368,13 @@ a:visited {
 					<table width="100%" height="42" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody>
 							<tr>
-								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive /wo Encryption files/folders</strong></span></td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive files</strong></span></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n2 /plexguide/tduncrypt.log | head -1');echo "<pre>$output</pre>";?>
 									</span>
 								</td>
-								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TDrive /w Encryption files/folders</strong></span></td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><strong> &nbsp;&nbsp;TCrypt files</strong></span></td>
 								<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 									<span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 										<?php $output = shell_exec('tail -n2 /plexguide/tdcrypt.log | head -1');echo "<pre>$output</pre>";?>

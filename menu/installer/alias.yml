@@ -9,22 +9,6 @@
 - hosts: localhost
   gather_facts: false
   tasks:
-    - name: Install Status UFSMonitor
-      template:
-        src: sufs
-        dest: /bin/sufs
-        force: yes
-        mode: 0775
-
-    - name: Nano UFSMonitor
-      template:
-        src: nufs
-        dest: /bin/nufs
-        force: yes
-        mode: 0775
-
-    ###### Install PGLog
-
     - name: Nano PGLog
       template:
         src: pglog
@@ -32,35 +16,12 @@
         force: yes
         mode: 0775
 
-    ###### Install PGUpdate
-
-    - name: PGUpdate
-      template:
-        src: pgupdate
-        dest: /bin/pgupdate
-        force: yes
-        mode: 0775
-
-    ###### Install PGBlitz
-
-    - name: PGBlitz
-      template:
-        src: plexguide
-        dest: /bin/plexguide
-        force: yes
-        mode: 0775
-        owner: root
-
-    ###### Server reboot
-
     - name: server reboot
       template:
         src: reboot
         dest: /bin/reboot
         force: yes
         mode: 0775
-
-    ###### Check list of services
 
     - name: list systemd services
       template:
@@ -70,16 +31,12 @@
         mode: 0775
         owner: root
 
-    ###### Server update
-
     - name: update server
       template:
         src: update
         dest: /bin/update
         force: yes
         mode: 0775
-
-    ###### Server upgrade
 
     - name: upgrade server
       template:
@@ -89,8 +46,6 @@
         mode: 0775
         owner: root
 
-    ###### Install app
-
     - name: install appname
       template:
         src: install
@@ -98,8 +53,6 @@
         force: yes
         mode: 0775
         owner: root
-
-    ###### Autoremove installed app packages
 
     - name: autoremove unused packages after app install
       template:
@@ -109,8 +62,6 @@
         mode: 0775
         owner: root
 
-    ###### Remove old docker containers (Tip from @barryclamsworth)
-
     - name: Prune docker containers appname
       template:
         src: prune
@@ -118,13 +69,6 @@
         force: yes
         mode: 0775
         owner: root
-
-    - name: Install PGFork
-      template:
-        src: pgfork
-        dest: /bin/pgfork
-        force: yes
-        mode: 0775
 
     - name: Install Backup
       template:

@@ -175,7 +175,6 @@
         - '/var/plexguide'
         - '/mnt/move'
         - '/mnt/backup'
-        - '/var/plexguide/logs'
         - '/opt/appdata/plexguide/keys/unprocessed'
         - '/opt/appdata/plexguide/keys/processed'
         - '/opt/appdata/plexguide/keys/badjson'
@@ -183,6 +182,9 @@
         - '{{path.stdout}}/nzb'
         - '{{path.stdout}}/torrent'
         - '{{path.stdout}}/move'
-        - '/opt/plexguide/log'
+        - '/var/plexguide/logs'
+        - '/var/plexguide/logs/drive'
+        - '/var/plexguide/logs/emergency'
+        - '/var/plexguide/logs/uploader'
         - '/opt/plexguide/roles/log'
       ignore_errors: yes
