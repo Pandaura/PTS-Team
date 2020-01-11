@@ -4,7 +4,7 @@
     - '/opt/appdata/loki'
 
 - name: 'Copying config'
-  shell: 'cp -r /opt/communityapps/apps/templates/loki/local-config.yaml /opt/appdata/loki/local-config.yaml'
+  shell: 'cp -r /opt/plexguide/menu/new_ui/templates/loki/local-config.yaml /opt/appdata/loki/local-config.yaml'
 
 # scripts permissions
 - name: 'Setting permissions for {{pgrole}}'
