@@ -51,7 +51,10 @@
           PUID: '1000'
           PGID: '1000'
           VRKN_GLOBAL_MAXMIND_LICENSE_KEY: '{{ geoiplzkey.stdout }}'
-
+          VRKN_INFLUXDB_URL: 'influxdb:8086'
+          VRKN_INFLUXDB_USERNAME: 'admin'
+          VRKN_INFLUXDB_PASSWORD: 'adminpass'
+          
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'
       docker_container:
