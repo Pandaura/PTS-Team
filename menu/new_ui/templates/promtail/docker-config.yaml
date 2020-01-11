@@ -9,10 +9,28 @@ clients:
   - url: http://loki:3100/loki/api/v1/push
 
 scrape_configs:
-- job_name: pts
+- job_name: pgblitzlogs
   static_configs:
   - targets:
       - localhost
     labels:
-      job: ptslogs
-      __path__: /var/log/*log
+      job: pgblitzlogs
+      __path__: /var/log/pgblitz.log
+
+scrape_configs:
+- job_name: emergencylogs
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: emergencylogs
+      __path__: /var/log/emergency/*log
+      
+scrape_configs:
+- job_name: drivelogs
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: drivelogs
+      __path__: /var/log//drives/*log
