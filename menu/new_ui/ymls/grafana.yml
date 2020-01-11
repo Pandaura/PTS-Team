@@ -52,7 +52,7 @@
         pg_env:
           PUID: '1000'
           PGID: '1000'
-          GF_INSTALL_PLUGINS:'grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel,grafana-worldmap-panel,raintank-worldping-app'
+          GF_INSTALL_PLUGINS:'grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel,grafana-worldmap-panel'
 
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'
