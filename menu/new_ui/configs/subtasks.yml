@@ -1,0 +1,76 @@
+###############################################################################
+#note later 
+#
+#
+#
+#
+###############################################################################
+---
+- name: Check if varken config exists
+  stat:
+    path: "/opt/appdata/varken/varken.ini"
+  register: varken_config
+
+- name: "Check if sonarr exists"
+  stat:
+    path: "/opt/appdata/sonarr/app/config.xml"
+  register: sonarr_config
+  when: not varken_config.stat.exists
+
+- name: "When sonarr exists, add api key to varken config"
+  block:
+
+  - name: Pull sonarr api key
+    xml:
+      path: "/opt/appdata/sonarr/app/config.xml"
+      xpath: /Config/ApiKey
+      content: text
+    register: xmlresp
+
+  - name: Set sonarr api Key
+    set_fact:
+      sonarr_api_key: "{{ xmlresp.matches[0].ApiKey }}"
+
+  when: (not varken_config.stat.exists) and (sonarr_config.stat.exists)
+
+- name: "Check if radarr exists"
+  stat:
+    path: "/opt/appdata/radarr/app/config.xml"
+  register: radarr_config
+  when: not varken_config.stat.exists
+
+- name: "When radarr exists, add api key to varken config"
+  block:
+
+  - name: Pull radarr api key
+    xml:
+      path: "/opt/appdata/radarr/app/config.xml"
+      xpath: /Config/ApiKey
+      content: text
+    register: xmlresp
+
+  - name: Set radarr api Key
+    set_fact:
+      radarr_api_key: "{{ xmlresp.matches[0].ApiKey }}"
+
+  when: (not varken_config.stat.exists) and (radarr_config.stat.exists)
+
+- name: "Check if tautulli exists"
+  stat:
+    path: "/opt/appdata/tautulli/config.ini"
+  register: tautulli_config
+  when: not varken_config.stat.exists
+
+- name: "When radarr exists, add api key to varken config"
+  block:
+
+  - name: Pull radarr api key
+    shell: 'cat /opt/appdata/tautulli/config.ini | grep api_key | awk '{print $3}' | head -n 1'
+      content: text
+    register: tautulli_api
+
+  - name: Set tautulli api Key
+    set_fact:
+      radarr_api_key: "{{tautulli_api}}"
+  when: (not varken_config.stat.exists) and (tautulli_config.stat.exists)
+ 
