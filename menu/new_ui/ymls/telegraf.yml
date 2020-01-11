@@ -15,7 +15,7 @@
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
-      include_tasks: '/opt/communityapps/apps/_core.yml'
+      include_tasks: '/opt/plexguide/menu/new_ui/ymls/_core.yml'
 
     - name: 'Checking for existing telegraf.conf'
       stat:
@@ -23,7 +23,7 @@
       register: stat_result
 
     - name: 'Clone telegraf.conf for first start'
-      include_tasks: '/opt/communityapps/apps/templates/telegraf/telegraf-conf.yml'
+      include_tasks: '/opt/plexguide/menu/new_ui/templates/telegraf/telegraf-conf.yml'
       when: stat_result.stat.exists == False
       ignore_errors: yes
 

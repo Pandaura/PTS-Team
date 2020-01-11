@@ -15,7 +15,7 @@
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
-      include_tasks: '/opt/communityapps/apps/_core.yml'
+      include_tasks: '/opt/plexguide/menu/new_ui/ymls/_core.yml'
 
     - name: 'Checking for existing app data'
       stat:

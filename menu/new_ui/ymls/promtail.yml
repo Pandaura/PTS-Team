@@ -15,7 +15,7 @@
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
-      include_tasks: '/opt/communityapps/apps/_core.yml'
+      include_tasks: '/opt/plexguide/menu/new_ui/ymls/_core.yml'
 
     - name: 'Checking for existing {{pgrole}} config file'
       stat:
@@ -23,7 +23,7 @@
       register: stat_result
 
     - name: 'Clone docker-config.yaml for first start'
-      include_tasks: '/opt/communityapps/apps/templates/promtail/promtail-conf.yml'
+      include_tasks: '/opt/plexguide/menu/new_ui/templates/promtail/promtail-conf.yml'
       when: stat_result.stat.exists == False
       ignore_errors: yes
 
