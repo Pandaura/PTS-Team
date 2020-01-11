@@ -15,7 +15,7 @@
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
-      include_tasks: '/opt/plexguide/menu/new_ui/ymls/_core.yml'
+      include_tasks: '/opt/communityapps/apps/_core.yml'
 
     - name: 'Checking for existing app data'
       stat:
@@ -52,6 +52,7 @@
         pg_env:
           PUID: '1000'
           PGID: '1000'
+          GF_INSTALL_PLUGINS:'grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel,grafana-worldmap-panel,raintank-worldping-app'
 
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'
