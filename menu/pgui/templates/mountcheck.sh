@@ -18,12 +18,35 @@ while true; do
 	pgunioncheck=$(systemctl is-active pgunion)
     pgblitzcheck=$(systemctl is-active pgblitz)
     pgmovecheck=$(systemctl is-active pgmove)
+
+    pgblitz=$(systemctl list-unit-files | grep pgblitz.service | awk '{ print $2 }')
+    pgmove=$(systemctl list-unit-files | grep pgmove.service | awk '{ print $2 }')
     upper=$(docker ps --format '{{.Names}}' | grep "uploader")
+    uppercheck="/opt/appdata/uploader/"
+
+	rm -rf /var/plexguide/pg.blitz && touch /var/plexguide/pg.blitz
+       
+	   if [[ "$pgmove" == "enabled" ]]; then
+           if [[ "$pgmovecheck" != "active" ]]; then
+              echo " 🔴 MOVE" >/var/plexguide/pg.blitz
+           else echo " ✅ MOVE" >/var/plexguide/pg.blitz; fi
+        elif [[ "$pgblitz" == "enabled" ]]; then
+           if [[ "$pgblitzcheck" != "active" ]]; then
+              echo " 🔴 BLITZ" >/var/plexguide/pg.blitz
+                else echo " ✅ BLITZ" >/var/plexguide/pg.blitz; fi
+	    elif [[ -d "$uppercheck" ]]; then
+		   if [[ "$upper" == "uploader" ]]; then
+              echo " ✅ Uploader" >/var/plexguide/pg.blitz
+                else echo " 🔴 Uploader" >/var/plexguide/pg.blitz; fi
+        else echo " 🔴 Not Operational UPLOADER" >/var/plexguide/pg.blitz
+        fi
 
 	    rm -rf /var/plexguide/pg.blitz && touch /var/plexguide/pg.blitz
 	    if [[ "$upper" == "uploader" ]]; then
            echo " ✅ Uploader" >/var/plexguide/pg.blitz
-        else echo " 🔴 Uploader" >/var/plexguide/pg.blitz ; fi
+        else echo " 🔴 Uploader" >/var/plexguide/pg.blitz; fi
+
+
 		config="/opt/appdata/plexguide/rclone.conf"
 		if grep -q "gdrive" $config; then
 			  if [[ "$gdrivecheck" != "active" ]]; then

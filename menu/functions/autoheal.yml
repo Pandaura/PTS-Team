@@ -1,0 +1,43 @@
+#!/bin/bash
+# Title:      autoheal 
+# GNU:        General Public License v3.0
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    # FACTS #######################################################################
+    - name: 'Set Known Facts'
+      set_fact:
+        pgrole: 'autoheal'
+        image: 'willfarrell/autoheal'
+    - name: 'Setting {{pgrole}} Volumes'
+      set_fact:
+        pg_volumes:
+          - '/var/run/docker.sock:/var/run/docker.sock'
+          - '/etc/localtime:/etc/localtime:ro'
+
+    - name: 'Setting {{pgrole}} ENV'
+      set_fact:
+        pg_env:
+          AUTOHEAL_CONTAINER_LABEL: 'all'
+          AUTOHEAL_INTERVAL: '5'
+          AUTOHEAL_START_PERIOD: '0'
+          AUTOHEAL_DEFAULT_STOP_TIMEOUT: '10'
+          CURL_TIMEOUT: '30'
+          DOCKER_SOCK: '/var/run/docker.sock'
+          
+    # MAIN DEPLOYMENT #############################################################
+    - name: 'Deploying {{pgrole}}'
+      docker_container:
+        name: '{{pgrole}}'
+        image: '{{image}}'
+        pull: yes
+        volumes: '{{pg_volumes}}'
+        env: '{{pg_env}}'
+        restart_policy: unless-stopped
+        networks:
+          - name: plexguide
+            aliases:
+              - 'autoheal'
+        state: started

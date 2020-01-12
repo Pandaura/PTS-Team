@@ -175,42 +175,6 @@ padding: 10px;
 				</tr>
 			  </tbody>
 			</table>
-			<br>
-			<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-			  <tbody>
-				<tr>
-				  <td width="90%" height="30" style="color: #0FA702; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif; font-weight: bolder; font-size: large; text-align: left;">rClone Logs</td>
-				</tr>
-			  </tbody>
-			</table>
-			<table width="100%" height="44" border="1" align="center" cellpadding="5" cellspacing="0">
-			  <tbody>
-				<tr>
-				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
-				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<div class="autologs"><?php $output = shell_exec('tail -n 100 /plexguide/logs/rclone-*.log'); echo "<pre>$output</pre>";?></div>
-				  </span></td>
-				</tr>
-			  </tbody>
-			</table>
-            <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-			  <tbody>
-				<tr>
-				  <td width="90%" height="30" style="color: #0FA702; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif; font-weight: bolder; font-size: large; text-align: left;">Plex AutoScan Logs</td>
-				</tr>
-			  </tbody>
-			</table>
-			<table width="100%" height="30" border="1" align="center" cellpadding="5" cellspacing="0">
-			  <tbody>
-				<tr>
-				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
-				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<div class="autopas"><?php $output = shell_exec('tail -n 100 /plexguide/logs/plex_*.log'); echo "<pre>$output</pre>";?></div>
-				  </span>
-				 </td>
-				</tr>
-			  </tbody>
-			</table>
 			<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
 			  <tbody>
 				<tr>
@@ -228,9 +192,14 @@ padding: 10px;
 					</td>
 				</tr>
 			  </tbody>
-			</table>
-			<br>
-<table width="100%" height="44" border="1" align="center" cellpadding="0" cellspacing="0">
+        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td width="100%" height="30" style="color: #E8DD06; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif; font-weight: bolder; font-size: large; text-align: left;">RClone | Transport & Checks</td>
+            </tr>
+          </tbody>
+        </table>					
+		     <table width="100%" height="44" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody>
 							<tr>
 							    <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong><strong>&nbsp;&nbsp;Union - RClone | Mount</strong></span></span></td>

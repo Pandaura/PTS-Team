@@ -184,7 +184,8 @@ a:visited {
               <td width="100%" height="30" style="color: #E8DD06; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif; font-weight: bolder; font-size: large; text-align: left;">RClone | Transport & Checks</td>
             </tr>
           </tbody>
-        </table>					<table width="100%" height="44" border="1" align="center" cellpadding="0" cellspacing="0">
+        </table>					
+		<table width="100%" height="44" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody>
 							<tr>
 							    <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong><strong>&nbsp;&nbsp;Union - RClone | Mount</strong></span></span></td>
