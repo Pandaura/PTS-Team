@@ -5,32 +5,50 @@ server:
 positions:
   filename: /tmp/positions.yaml
 
-clients:
-  - url: http://loki:3100/loki/api/v1/push
+client:
+  url: http://loki:3100/loki/api/v1/push
 
 scrape_configs:
-- job_name: pgblitzlogs
-  static_configs:
-  - targets:
+ - job_name: pgvar
+   pipeline_stages:
+   - docker:
+   static_configs:
+   - targets:
       - localhost
-    labels:
-      job: pgblitzlogs
-      __path__: /var/log/pgblitz.log
+     labels:
+      job: pgvar
+      host: yourhost
+      __path__: /var/log/*.log
 
-scrape_configs:
-- job_name: emergencylogs
-  static_configs:
-  - targets:
+ - job_name: uploader
+   pipeline_stages:
+   - docker:
+   static_configs:
+   - targets:
       - localhost
-    labels:
-      job: emergencylogs
-      __path__: /var/log/emergency/*log
-      
-scrape_configs:
-- job_name: drivelogs
-  static_configs:
-  - targets:
+     labels:
+      job: uploader
+      host: yourhost
+      __path__: /var/log/uploader/*.log
+
+ - job_name: mounts
+   pipeline_stages:
+   - docker:
+   static_configs:
+   - targets:
       - localhost
-    labels:
-      job: drivelogs
-      __path__: /var/log//drives/*log
+     labels:
+      job: mounts
+      host: yourhost
+      __path__: /var/log/drive/*.log
+
+ - job_name: emergency
+   pipeline_stages:
+   - docker:
+   static_configs:
+   - targets:
+      - localhost
+     labels:
+      job: emergency
+      host: yourhost
+      __path__: /var/log/emergency/*.log
