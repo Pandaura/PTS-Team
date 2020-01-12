@@ -1,17 +1,52 @@
 <!doctype html>
-<html>
+<!-- /* < ? php
+// session_start();
+// if ( isset($_POST['Username']) and $_POST['Username'] != "" 
+     // and isset($_POST['password']) and $_POST['password'] != ""  )
+// {
+    // if ( 
+         // $_POST['Username'] == "admin" 
+         // AND 
+         // $_POST['password'] == "admin"
+       // )
+    // {
+        // $_SESSION['Username'] = $_POST['Username'];
+        // $_SESSION['eingeloggt'] = true;
+        // echo "<b></b>";
+    // }
+    // else
+    // {
+        // echo "<b>ungültige Eingabe</b>";
+        // $_SESSION['eingeloggt'] = false;
+    // }
+// }
+// if ( isset($_SESSION['eingeloggt']) and $_SESSION['eingeloggt'] == true )
+ //{
+   // Benutzer begruessen
+    // echo "<h1></h1>";
+// }
+// else
+// {
+    // echo "<h1>Please Login";
+    // $url = $_SERVER['SCRIPT_NAME'];
+    // echo '<form action="'. $url .'" method="POST">';
+    // echo '<p>Username:<br>';
+    // echo '<input type="text" name="Username" value="">';
+    // echo '<p>password:<br>';
+    // echo '<input type="password" name="password" value="">';
+    // echo '<p><input type="Submit" value="einloggen">';
+    // echo '</form>';
+    // exit;
+// }
+// ? > -->
 <head>
-<meta http-equiv="refresh" content="25" charset="UTF-8"/>
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-	<meta name="robots" content="noindex, nofollow, noarchive" />
-    <meta http-equiv="cache-control" content="no-cache" /> 
+<meta name="robots" content="noindex, nofollow, noarchive" />
+<meta http-equiv="cache-control" content="no-cache" /> 
 <title>Com-UI</title>
 <link rel="icon" type="image/png" href="https://i.imgur.com/T7OQsZz.png" sizes="32x32">
 <style type="text/css">
-body {
-	background-color: #252525;
-	text-align: left;
-}
 .test {
 	margin: auto;
 }
@@ -19,6 +54,17 @@ body,td,th {
 	color: #FFFFFF;
 	font-size: medium;
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+}
+body {
+	background-color: #252525;
+	text-align: left;
+  background: -webkit-linear-gradient;
+  background: -moz-linear-gradient;
+  background: -o-linear-gradient);
+  background: linear-gradient;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
 }
 a:link {
 	color: #E8DD06;
@@ -31,37 +77,6 @@ a:visited {
   height: 100%;
   background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('https://i.imgur.com/01ueZ9g.png');
   background-size: 98% 98%;
-}
-.auto {
-background: #FFFFF;
-height: 350px;
-overflow: auto;
-width: auto;
-border: 1px solid #000;
-padding: 10px;
-display: flex;
-}
-.autologs {
-background: #FFFFF;
-height: 150px;
-overflow: auto;
-width: auto;
-border: 1px solid #000;
-padding: 10px;
-}
-.collapsible {
-  background-color: #000000;
-  color: white;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: 1px solid grey;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-}
-.active, .collapsible:hover {
-  background-color: #FFFFF;
 }
 .content {
   padding: 0 18px;
@@ -122,6 +137,7 @@ padding: 10px;
     border-bottom: none;
   }
 }
+
 </style>
 </head>
 <body text="#FFFFFF">
@@ -145,46 +161,6 @@ padding: 10px;
   </tbody>
 </table>
 </div>
-<table width="100%" cellpadding="10">
-  <tbody>
-		<tr>
-		  <td height="100" valign="top">
-			<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-			  <tbody>
-				<tr>
-				  <td width="90%" height="30" style="color: #0FA702; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif; font-weight: bolder; font-size: large; text-align: left;">Upload via rClone</td>
-				</tr>
-			  </tbody>
-			</table>
-			<table width="100%" height="44" border="1" align="center" cellpadding="5" cellspacing="0">
-			  <tbody>
-				<tr>
-				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
-				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<div class="auto"><?php $output = shell_exec('tail -n 250 /plexguide/logs/pg*.log'); echo "<pre>$output</pre>";?></div>
-				  </span>
-				 </td>
-				</tr>
-			  </tbody>
-			</table>
-			<br>
-			<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-			  <tbody>
-				<tr>
-				  <td width="90%" height="30" style="color: #0FA702; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif; font-weight: bolder; font-size: large; text-align: left;">rClone Logs</td>
-				</tr>
-			  </tbody>
-			</table>
-			<table width="100%" height="44" border="1" align="center" cellpadding="5" cellspacing="0">
-			  <tbody>
-				<tr>
-				  <td colspan="6" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;">
-				  <span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-					<div class="autologs"><?php $output = shell_exec('tail -n 100 /plexguide/logs/rclone-*.log');echo "<pre>$output</pre>";?></div>
-				  </span></td>
-				</tr>
-			  </tbody>
-			</table>
 			<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
 			  <tbody>
 				<tr>
@@ -202,118 +178,103 @@ padding: 10px;
 					</td>
 				</tr>
 			  </tbody>
-			</table>
-			<br>
-			 <button type="button" class="collapsible">Open RClone | Transport & Checks</button>
-				<div class="content">
-				<br>
-					<table width="100%" height="44" border="1" align="center" cellpadding="0" cellspacing="0">
+        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td width="100%" height="30" style="color: #E8DD06; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif; font-weight: bolder; font-size: large; text-align: left;">RClone | Transport & Checks</td>
+            </tr>
+          </tbody>
+        </table>					<table width="100%" height="44" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody>
 							<tr>
-							<td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong><strong>&nbsp;&nbsp;Union - RClone | Mount</strong></span></span></td>
-							<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
+							    <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong><strong>&nbsp;&nbsp;Union - RClone | Mount</strong></span></span></td>
+						    	<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/pg.union');echo "<pre>$output</pre>";?></span></td>
-								
-							<td width="15%" height="21" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp; Blitz | Move</strong></span></span></td>
-							<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
+						    	<td width="15%" height="21" bgcolor="#000000" style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp; Uploader </strong></span></span></td>
+						    	<td width="18%" height="21" class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/pg.blitz');echo "<pre>$output</pre>";?></span></td>
-							</tr>
-							<tr>
-							  <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;/mnt/downloads</strong></span></td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
+						        </tr>
+							    <tr>
+								<td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;/mnt/downloads</strong></span></td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
 								<?php $output = shell_exec('tail -n1 /plexguide/spaceused.log');echo "<pre>$output</pre>";?></span>
-							  </td>
-							  <td width="15%" height="21" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; "><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;/mnt/move</strong></span></span></td>
-							  <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
+							    </td>
+							    <td width="15%" height="21" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; "><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;/mnt/move</strong></span></span></td>
+							    <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 								<?php $output = shell_exec('head -n1 /plexguide/spaceused.log');echo "<pre>$output</pre>";?></span></td>
-							</tr>
-							<tr>
-							  <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp; mergerfs </strong></span></td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
+						    	</tr>
+						    	<tr>
+							    <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp; mergerfs </strong></span></td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/checkers/mergerfs.log');echo "<pre>$output</pre>";?></span>
-							  </td>
-							  <td width="15%" height="21" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; "><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;rClone</strong></span></span></td>
-							  <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
+							    </td>
+						        <td width="15%" height="21" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; "><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;rClone</strong></span></span></td>
+							    <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/checkers/rclone.log');echo "<pre>$output</pre>";?></span></td>
 							</tr>
 						</tbody>
 					</table>
-				</div>
 			<br>
-			 <button type="button" class="collapsible">Open Basic Information</button>
-				<div class="content">	
-				<br>
+        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"><tbody><tr>
+			<td width="90%" height="30" style="color: #E8DD06; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif; font-weight: bolder; font-size: large; text-align: left;">
+				Basic Information
+			</td></tr></tbody>
+        </table>
 					<table width="100%" height="44" border="1" align="center" cellpadding="0" cellspacing="0">			
 						<tbody>
 							<tr>
-							  <td width="15%" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;Edition</td>
-								  <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
+							    <td width="15%" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;Edition</td>
+								<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/pg.transport');echo "<pre>$output</pre>" ?></span></td>
-							  <td width="15%" height="21" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;Version</td>
-								  <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-								<?php $output = shell_exec('tail -n 1 /plexguide/pg.number');echo "<pre>$output</pre>";?></span></td>
-							  <td width="15%" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;ServerID</td>
+							    <td width="15%" height="21" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;Version</td>
 								<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
-								<?php $output = shell_exec('tail -n 1 /plexguide/server.id');echo "<pre>$output</pre>" ?></span></td>
+								<?php $output = shell_exec('tail -n 1 /plexguide/pg.number');echo "<pre>$output</pre>";?></span></td>
 							</tr>
 							<tr>
-							  <td width="15%" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;Traefik</td>
+								<td width="15%" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;ServerID</td>
+								<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
+								<?php $output = shell_exec('tail -n 1 /plexguide/server.id');echo "<pre>$output</pre>" ?></span></td>
+							    <td width="15%" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;Traefik</td>
 								<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/pg.traefik');echo "<pre>$output</pre>";?></span></td>
-							  <td width="15%" height="21" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;GOAuth</td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
+							</tr>
+							<tr>
+								<td width="15%" height="21" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;GOAuth</td><td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/pg.oauth');echo "<pre>$output</pre>";?></span></td>
-							  <td width="15%" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;PortGuard</td>
-							  <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
+							    <td width="15%" bgcolor="#000000" style="font-size: medium">&nbsp;&nbsp;PortGuard</td>
+							    <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/pg.ports');echo "<pre>$output</pre>";?></span></td>
 							</tr>
 							<tr>
 								<td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;OS</strong></span></td>
 								<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
-								<?php $output = shell_exec('tail -n 1 /plexguide/pg.os');echo "<pre>$output</pre>";?></span>
-								</td>
+								<?php $output = shell_exec('tail -n 1 /plexguide/pg.os');echo "<pre>$output</pre>";?></span></td>
 								<td width="15%" height="21" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; "><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;Ansible</strong></span></span></td>
 								<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/pg.ansible');echo "<pre>$output</pre>";?></span></td>
+							</tr>
+							<tr>
 								<td width="15%" bgcolor="#000000" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium; font-weight: bold;"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong> &nbsp;&nbsp;Used Space</strong></span></span></td>
 								<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/pg.used');echo "<pre>$output</pre>" ?></span></td>
+							    <td width="15%" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp; GCE</strong></span></td>
+								<td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF;">
+								<?php $output = shell_exec('tail -n 1 /plexguide/pg.gce');echo "<pre>$output</pre>";?></span></td>
 							</tr>
 							<tr>
-							  <td width="15%" bgcolor="#000000" style="font-size: medium">
-							  <span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp; GCE</strong></span></td>
-								  <td width="18%" height="21" style="font-size: medium">
-									  <span class="test" style="color: #FFFFFF;">
-										<?php $output = shell_exec('tail -n 1 /plexguide/pg.gce');echo "<pre>$output</pre>";?>
-									  </span>
-								  </td>
-								<td width="15%" height="21" bgcolor="#000000" style="font-size: medium">
-									<span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; ">
-										<span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;Docker</strong>
-										</span>
-									</span>
-								</td>
-							  <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
+								<td width="15%" height="21" bgcolor="#000000" style="font-size: medium"><span style="color: #F7F6F6; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-weight: bold; font-size: medium; "><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;Docker</strong></span></span></td>
+							    <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/pg.docker');echo "<pre>$output</pre>";?></span></td>
-							  <td width="15%" bgcolor="#000000" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium; font-weight: bold;"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;Disk Space</strong></span></span></td>
-							  <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
+							    <td width="15%" bgcolor="#000000" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium; font-weight: bold;"><span style="color: #F7F6F6; font-weight: bold; font-size: medium;"><strong>&nbsp;&nbsp;Disk Space</strong></span></span></td>
+							    <td width="18%" height="21" style="font-size: medium"><span class="test" style="color: #FFFFFF; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: medium;">
 								<?php $output = shell_exec('tail -n 1 /plexguide/pg.capacity');echo "<pre>$output</pre>";?></span></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-			<!--added -->
-			<!-- <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-				  <tbody>
-					<tr>
-					  <td width="100%" height="30" style="color: #E8DD06; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif; font-weight: bolder; font-size: large; text-align: left;"> More Informations </td>
-					</tr>
-				  </tbody>
-				</table>
-			<table width="100%" height="60" border="1" align="center" cellpadding="0" cellspacing="0">
-			<tbody>
-			</table> */ -->
-			<br>
-			<button type="button" class="collapsible">Open GDrive TDrive Section</button>
-				<div class="content">
-				<br>
+        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"><tbody><tr>
+			<td width="90%" height="30" style="color: #E8DD06; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif; font-weight: bolder; font-size: large; text-align: left;">
+				TDrive | GDrive Section
+			</td></tr></tbody>
+        </table>
 					<table width="100%" height="40" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody> <!--// GDRIVE -->
 							<tr>
@@ -368,7 +329,6 @@ padding: 10px;
 							</tr>
 						</tbody>			
 					</table>
-				<br>
 					<table width="100%" height="40" border="1" align="center" cellpadding="0" cellspacing="0">
 						<tbody> <!--// TDRIVE -->
 							<tr>
@@ -428,28 +388,5 @@ padding: 10px;
 		</tr>			
 	</tbody>
 </table>
-<script>
-var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.maxHeight){
-      content.style.maxHeight = null;
-    } else {
-      content.style.maxHeight = content.scrollHeight + "px";
-    }
-  });
-}
-	
-var autoUploadScroll = document.getElementsByClassName("auto")[0];
-var autoLogsScroll = document.getElementsByClassName("autologs")[0];
-
-autoUploadScroll.scrollTop = autoUploadScroll.scrollHeight;
-autoLogsScroll.scrollTop = autoLogsScroll.scrollHeight;
-
-</script>
 </body>
 </html>
