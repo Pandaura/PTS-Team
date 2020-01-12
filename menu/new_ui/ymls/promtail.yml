@@ -57,7 +57,7 @@
         networks:
           - name: plexguide
             aliases:
-              - '{{pgrole}}'
-        state: started
+              - '{{pgrole}}'       
         labels: '{{pg_labels}}'
+        state: started
 
