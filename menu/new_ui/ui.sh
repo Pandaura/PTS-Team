@@ -5,7 +5,7 @@ variable() {
   file="$1"
   if [[ ! -e "$file" ]]; then echo "$2" >$1; fi
 }
-base()
+base() {
 fid1="/var/plexguide/varken/"
 if [[ ! -d "$fid1" ]]; then mkdir -p "$fid1" && apt-get update -yqq; fi
 }
