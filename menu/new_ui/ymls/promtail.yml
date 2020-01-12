@@ -58,6 +58,5 @@
           - name: plexguide
             aliases:
               - '{{pgrole}}'       
-        labels: '{{pg_labels}}'
         state: started
 
