@@ -11,7 +11,7 @@
         pgrole: 'promtail'
         intport: '9080'
         extport: '9080'
-        image: 'promtail'
+        image: 'grafana/promtail'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
