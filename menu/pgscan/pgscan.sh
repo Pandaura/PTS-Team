@@ -265,16 +265,16 @@ EOF
   esac
 }
 # pasuideploy() {
-# ui="/opt/appdata/pgui"
+# ui=/opt/appdata/pgui
 # if [[ -d "$ui" ]]; then cp -rv /opt/plexguide/menu/pgui/templates/autoscan-index.php /opt/appdata/pgui/index.php; fi
 # }
 # pasuiremove() {
-# ui="/opt/appdata/pgui"
+# ui=/opt/appdata/pgui
 # if [[ -d "$ui" ]]; then cp -rv /opt/plexguide/menu/pgui/templates/index.php /opt/appdata/pgui/index.php; fi
 # }
 #######################################################################################
 lore() {
-remote=$(wget -qO- http://ipecho.net/plain | xargs echo >/var/plexguide/pgscan/pgscan.ipremo)
+remote=$(wget -qO- http://ipecho.net/plain | xargs echo)
 local=$(cat /var/plexguide/server.ip)
   tee <<-EOF
 
@@ -282,8 +282,8 @@ local=$(cat /var/plexguide/server.ip)
 🚀 Plex Host 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Local Server             [ $local ]
-Remote Server            [ $remote ] 
+Local Server IP            [ $local ]
+Remote Server IP           [ $remote ] 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -300,13 +300,13 @@ EOF
   case $typed in
   1) 
       cp -r /var/plexguide/server.ip /var/plexguide/pgscan/pgscan.ip
-	  echo "IP SET to LOCAL" >/var/plexguide/pgscan/pgscan.ipsetup
-      lore	  
+	  echo "IP SET" >/var/plexguide/pgscan/pgscan.ipsetup
+      question1	  
 	  ;;
   2) 
       wget -qO- http://ipecho.net/plain | xargs echo >/var/plexguide/pgscan/pgscan.ip 
-	  echo "IP SET to REMOTE" >/var/plexguide/pgscan/pgscan.ipsetup
-      lore	  
+	  echo "IP SET" >/var/plexguide/pgscan/pgscan.ipsetup
+      question1	  
 	  ;;
   z) question1 ;;
   Z) question1 ;;
