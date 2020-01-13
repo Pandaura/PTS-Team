@@ -21,7 +21,7 @@ deploycheck() {
 }
 pdockeruser() {
         plexcontainerversion=$(docker ps --format '{{.Image}}' | grep "plex")
-          if [[ "$plexcontainerversion" == "linuxserver/plex:latest" ]]; the
+          if [[ "$plexcontainerversion" == "linuxserver/plex:latest" ]]; then
 		echo -e "abc" >/var/plexguide/pgscan/plex.docker 
 	else echo "plex" >/var/plexguide/pgscan/plex.docker
 fi
