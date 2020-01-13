@@ -318,6 +318,10 @@ pasuserdocker=$(cat /var/plexguide/pgscan/plex.dockeruserset)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Plex Docker
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Linuxserver Docker  used "abc"
+Plex        Docker  used "plex"
+
+
 Plex Docker Image:          [ $plexcontainerversion ]
 Set Plex Docker user:       [ $pasuserdocker ]
 
