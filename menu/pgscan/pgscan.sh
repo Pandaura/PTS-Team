@@ -1,38 +1,31 @@
 # KEY VARIABLE RECALL & EXECUTION
-# KEY VARIABLE RECALL & EXECUTION
 source /opt/plexguide/menu/pgscan/scripts/endbanner.sh
 mkdir -p /var/plexguide/pgscan
-touch /var/plexguide/pgscan/plex.token
-
 # FUNCTIONS START ##############################################################
 # FIRST FUNCTION
 variable() {
   file="$1"
   if [[ ! -e "$file" ]]; then echo "$2" >$1; fi
 }
-
 passtartfirst() {
 file="/opt/plex_autoscan/config/config.json"
   if [[ ! -f $file ]]; then
 	pasundeployed 
   else plexcheck; fi
 }
-
 deploycheck() {
   dcheck=$(systemctl is-active plex_autoscan.service)
   if [[ "$dcheck" == "active" ]]; then
     dstatus="✅ DEPLOYED"
   else dstatus="⚠️ NOT DEPLOYED"; fi
 }
-
 pdockeruser() {
-	plexcontainerversion=$(cat /var/plexguide/image/plex)
-	  if [[ $plexcontainerversion == "linuxserver/plex:latest" ]]; then
+        plexcontainerversion=$(docker ps --format '{{.Image}}' | grep "plex")
+          if [[ "$plexcontainerversion" == "linuxserver/plex:latest" ]]; the
 		echo -e "abc" >/var/plexguide/pgscan/plex.docker 
 	else echo "plex" >/var/plexguide/pgscan/plex.docker; 
 fi
 }
-
 tokenstatus() {
   ptokendep=$(cat /var/plexguide/pgscan/plex.token)
   if [[ "$ptokendep" != "" ]]; then
@@ -45,7 +38,6 @@ tokenstatus() {
         fi
   else pstatus="⚠️ NOT DEPLOYED"; fi
 }
-
 plexcheck() {
   pcheck=$(docker ps --format {{.Names}} | grep "plex")
   if [[ "$pcheck" == "" ]]; then
@@ -57,7 +49,6 @@ plexcheck() {
     dontwork
   fi
 }
-
 token() {
   touch /var/plexguide/pgscan/plex.token
   ptoken=$(cat /var/plexguide/pgscan/plex.token)
@@ -77,7 +68,6 @@ token() {
     fi
   fi
 }
-
 tokencreate() {
 templatebackup=/opt/plexguide/menu/roles/plex_autoscan/templates/config.backup
 template=/opt/plexguide/menu/roles/plex_autoscan/templates/config.json.j2
@@ -89,26 +79,16 @@ echo $X_PLEX_TOKEN >/var/plexguide/pgscan/plex.token
 RAN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 echo $RAN >/var/plexguide/pgscan/pgscan.serverpass
 }
-ippart() {
-vs=$(cat /var/plexguide/pg.transport)
-if [[ "$vs" != "local" ]]; then
-wget -qO- http://ipecho.net/plain | xargs echo >/var/plexguide/pgscan/pgscan.ip
-else cp -r /var/plexguide/server.ip /var/plexguide/pgscan/pgscan.ip; fi
-}
-
-# BAD INPUT
 badinput() {
   echo
   read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
   clear && question1
 }
-
 dontwork() {
  echo
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
   clear &&  exit 0
 }
-
 works(){
  echo
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
@@ -144,13 +124,11 @@ EOF
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
   clear && question1
 }
-
 doneenter(){
  echo
   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
   clear && question1
 }
-
 showupdomain() {
 PAS_CONFIG="/opt/plex_autoscan/config/config.json"
 SERVER_IP=$(cat ${PAS_CONFIG} | jq -r .SERVER_IP)
@@ -265,7 +243,7 @@ runs() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Plex_AutoScan Fixmissmatch
+🚀 Plex_AutoScan Fix Missmatch
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] True 
@@ -295,9 +273,50 @@ EOF
 # if [[ -d "$ui" ]]; then cp -rv /opt/plexguide/menu/pgui/templates/index.php /opt/appdata/pgui/index.php; fi
 # }
 #######################################################################################
+lore() {
+remote=$(wget -qO- http://ipecho.net/plain | xargs echo >/var/plexguide/pgscan/pgscan.ipremo)
+local=$(cat /var/plexguide/server.ip)
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Plex Host 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Local Server             [ $local ]
+Remote Server            [ $remote ] 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1] Set Local Server IP
+[2] Set Remote Server IP 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[Z] - Exit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
+  case $typed in
+  1) 
+      cp -r /var/plexguide/server.ip /var/plexguide/pgscan/pgscan.ip
+	  echo "IP SET to LOCAL" >/var/plexguide/pgscan/pgscan.ipsetup
+      lore	  
+	  ;;
+  2) 
+      wget -qO- http://ipecho.net/plain | xargs echo >/var/plexguide/pgscan/pgscan.ip 
+	  echo "IP SET to REMOTE" >/var/plexguide/pgscan/pgscan.ipsetup
+      lore	  
+	  ;;
+  z) question1 ;;
+  Z) question1 ;;
+  *) lore ;;
+  esac
+}
 question1() {
 langfa=$(cat /var/plexguide/pgscan/fixmatch.status)
 lang=$(cat /var/plexguide/pgscan/fixmatch.lang)
+steip=$(cat /var/plexguide/pgscan/pgscan.ipsetup)
 tokenstatus
 deploycheck
   tee <<-EOF
@@ -310,6 +329,7 @@ NOTE : Plex_AutoScan are located in /opt/plex_autoscan
 
 [1] Deploy Plex Token                     [ $pstatus ]
 [2] Fixmatch Lang                         [ $lang | $langfa ]
+[3] Local or Remote Version               [ $steip ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [A] Deploy Plex-Auto-Scan                 [ $dstatus ]
@@ -331,6 +351,7 @@ EOF
   case $typed in
   1) tokencreate && clear && question1 ;;
   2) fxmatch && clear && question1 ;;
+  3) lore && clear && question1 ;;
   A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && pasuideploy && clear && question1 ;;
   a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && pasuideploy && clear && question1 ;;
   D) showupdomain && clear && question1 ;;
@@ -353,5 +374,6 @@ pdockeruser
 ippart
 variable /var/plexguide/pgscan/fixmatch.lang "en"
 variable /var/plexguide/pgscan/fixmatch.status "false"
+variable /var/plexguide/pgscan/pgscan.ipsetup "NOT-SET"
 deploycheck
 question1
