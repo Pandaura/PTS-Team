@@ -371,7 +371,6 @@ EOF
 passtartfirst
 tokenstatus
 pdockeruser
-ippart
 variable /var/plexguide/pgscan/fixmatch.lang "en"
 variable /var/plexguide/pgscan/fixmatch.status "false"
 variable /var/plexguide/pgscan/pgscan.ipsetup "NOT-SET"
