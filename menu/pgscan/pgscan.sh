@@ -23,7 +23,7 @@ pdockeruser() {
         plexcontainerversion=$(docker ps --format '{{.Image}}' | grep "plex")
           if [[ "$plexcontainerversion" == "linuxserver/plex:latest" ]]; the
 		echo -e "abc" >/var/plexguide/pgscan/plex.docker 
-	else echo "plex" >/var/plexguide/pgscan/plex.docker; 
+	else echo "plex" >/var/plexguide/pgscan/plex.docker
 fi
 }
 tokenstatus() {
