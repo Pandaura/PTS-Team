@@ -82,12 +82,12 @@ dontwork() {
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
   clear &&  exit 0
 }
-works(){
+works() {
  echo
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
   clear && question1
 }
-credits(){
+credits() {
 clear
 chk=$(figlet Plex Auto Scan | lolcat )
   tee <<-EOF
@@ -117,7 +117,7 @@ EOF
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
   clear && question1
 }
-doneenter(){
+doneenter() {
  echo
   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
   clear && question1
@@ -145,7 +145,7 @@ EOF
  works
  else question1; fi
 }
-remove(){
+remove() {
 PAS_CONFIG="/opt/plex_autoscan/config/config.json"
 if [[ -f "$PAS_CONFIG" ]]; then
 ansible-playbook /opt/plexguide/menu/pgscan/remove-pgscan.yml
