@@ -32,7 +32,7 @@ tokenstatus() {
   else pstatus="⚠️ NOT DEPLOYED"; fi
 }
 plexcheck() {
-  pcheck=$(docker ps --format {{.Names}} | grep "plex")
+  pcheck=$(docker ps --format '{{.Names}}' | grep "plex")
   if [[ "$pcheck" == "" ]]; then
 	printf '
 	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -247,7 +247,9 @@ runs() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
-   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
+  case $typed in
   1) echo "true" >/var/plexguide/pgscan/fixmatch.status && fxmatch ;;
   2) echo "false" >/var/plexguide/pgscan/fixmatch.status && fxmatch ;;
   z) fxmatch ;;
@@ -387,6 +389,6 @@ tokenstatus
 variable /var/plexguide/pgscan/fixmatch.lang "en"
 variable /var/plexguide/pgscan/fixmatch.status "false"
 variable /var/plexguide/pgscan/pgscan.ipsetup "NOT-SET"
-variable /var/plexguide/pgscan/plex.docker "NOT-SET
+variable /var/plexguide/pgscan/plex.docker "NOT-SET"
 deploycheck
 question1
