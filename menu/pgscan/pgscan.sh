@@ -19,13 +19,6 @@ deploycheck() {
     dstatus="✅ DEPLOYED"
   else dstatus="⚠️ NOT DEPLOYED"; fi
 }
-pdockeruser() {
-        plexcontainerversion=$(docker ps --format '{{.Image}}' | grep "plex")
-          if [[ "$plexcontainerversion" == "linuxserver/plex:latest" ]]; then
-		echo -e "abc" >/var/plexguide/pgscan/plex.docker 
-	else echo "plex" >/var/plexguide/pgscan/plex.docker
-fi
-}
 tokenstatus() {
   ptokendep=$(cat /var/plexguide/pgscan/plex.token)
   if [[ "$ptokendep" != "" ]]; then
@@ -254,9 +247,7 @@ runs() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-
-  case $typed in
+   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
   1) echo "true" >/var/plexguide/pgscan/fixmatch.status && fxmatch ;;
   2) echo "false" >/var/plexguide/pgscan/fixmatch.status && fxmatch ;;
   z) fxmatch ;;
@@ -313,10 +304,31 @@ EOF
   *) lore ;;
   esac
 }
+pversion() {
+plexcontainerversion=$(docker ps --format '{{.Image}}' | grep "plex")
+  if [[ "$plexcontainerversion" == "linuxserver/plex:latest" ]]; then
+      echo -e "abc" >/var/plexguide/pgscan/plex.dockeruserset
+   else echo "plex" >/var/plexguide/pgscan/plex.dockeruserset
+fi
+pasuserdocker=$(cat /var/plexguide/pgscan/plex.dockeruserset)
+  tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Plex Docker
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Plex Docker Image:          [ $plexcontainerversion ]
+Set Plex Docker user:       [ $pasuserdocker ]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+cp -r /var/plexguide/pgscan/plex.dockeruserset /var/plexguide/pgscan/plex.docker 1>/dev/null 2>&1
+doneenter
+}
 question1() {
 langfa=$(cat /var/plexguide/pgscan/fixmatch.status)
 lang=$(cat /var/plexguide/pgscan/fixmatch.lang)
 steip=$(cat /var/plexguide/pgscan/pgscan.ipsetup)
+dplexset=$(cat /var/plexguide/pgscan/plex.docker)
 tokenstatus
 deploycheck
   tee <<-EOF
@@ -330,6 +342,7 @@ NOTE : Plex_AutoScan are located in /opt/plex_autoscan
 [1] Deploy Plex Token                     [ $pstatus ]
 [2] Fixmatch Lang                         [ $lang | $langfa ]
 [3] Local or Remote Version               [ $steip ]
+[4] Plex Docker Version                   [ $dplexset ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [A] Deploy Plex-Auto-Scan                 [ $dstatus ]
@@ -352,6 +365,7 @@ EOF
   1) tokencreate && clear && question1 ;;
   2) fxmatch && clear && question1 ;;
   3) lore && clear && question1 ;;
+  4) pversion && clear && question1 ;;
   A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && pasuideploy && clear && question1 ;;
   a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && pasuideploy && clear && question1 ;;
   D) showupdomain && clear && question1 ;;
@@ -370,9 +384,9 @@ EOF
 # FUNCTIONS END ##############################################################
 passtartfirst
 tokenstatus
-pdockeruser
 variable /var/plexguide/pgscan/fixmatch.lang "en"
 variable /var/plexguide/pgscan/fixmatch.status "false"
 variable /var/plexguide/pgscan/pgscan.ipsetup "NOT-SET"
+variable /var/plexguide/pgscan/plex.docker "NOT-SET
 deploycheck
 question1
