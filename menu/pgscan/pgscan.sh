@@ -372,8 +372,8 @@ EOF
   2) fxmatch && clear && question1 ;;
   3) lore && clear && question1 ;;
   4) pversion && clear && question1 ;;
-  A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && pasuideploy && clear && question1 ;;
-  a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && pasuideploy && clear && question1 ;;
+  A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && clear && question1 ;;
+  a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_autoscan && clear && question1 ;;
   D) showupdomain && clear && question1 ;;
   d) showupdomain && clear && question1 ;;
   S) tail -n 50 /opt/plex_autoscan/plex_autoscan.log && doneenter ;;
