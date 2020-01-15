@@ -216,7 +216,7 @@ EOF
   case $typed in
   1) clear && bash /opt/plexguide/menu/pgcloner/traefik.sh && clear && primestart ;;
   2) clear && bash /opt/plexguide/menu/portguard/portguard.sh && clear && primestart ;;
-  3) clear && bash /opt/plexguide/menu/pgcloner/pgshield.sh && clear && primestart ;;
+  3) clear && bash /opt/plexguide/menu/shield/pgshield.sh && clear && primestart ;;
   4) clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart ;;
   5) clear && bash /opt/plexguide/menu/pgbox/select.sh  && clear && primestart ;;
   6) clear && bash /opt/plexguide/menu/pgcloner/pgvault.sh  && clear && primestart ;;
@@ -296,7 +296,7 @@ EOF
   case $typed in
   1) clear && bash /opt/plexguide/menu/pgcloner/traefik.sh && clear && primestart ;;
   2) clear && bash /opt/plexguide/menu/portguard/portguard.sh && clear && primestart ;;
-  3) clear && bash /opt/plexguide/menu/pgcloner/pgshield.sh && clear && primestart ;;
+  3) clear && bash /opt/plexguide/menu/shield/pgshield.sh && clear && primestart ;;
   4) clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart ;;
   5) clear && bash /opt/plexguide/menu/pgbox/select.sh && clear && primestart ;;
   6) clear && bash /opt/plexguide/menu/pgscan/pgscan.sh && clear && primestart ;;

@@ -1,0 +1,155 @@
+#!/bin/bash
+#
+# Title:      PGBlitz (Reference Title File)
+# Author(s):  Admin9705
+# URL:        https://pgblitz.com - http://github.pgblitz.com
+# GNU:        General Public License v3.0
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    # FACTS #######################################################################
+    - name: 'Set Known Facts'
+      set_fact:
+        pgrole: 'portainer'
+        intport: '9000'
+        extport: '9000'
+        image: 'portainer/portainer'
+
+    # CORE (MANDATORY) ############################################################
+    - name: 'Including cron job'
+      include_tasks: '/opt/coreapps/apps/_core.yml'
+
+    # LABELS ######################################################################
+    - name: 'Adding Traefik'
+      set_fact:
+        pg_labels:
+          traefik.enable: 'true'
+          traefik.port: '{{intport}}'
+          traefik.frontend.auth.forward.address: '{{gauth}}'
+          traefik.frontend.rule: 'Host:{{pgrole}}.{{domain.stdout}}{{tldset}}{{cname}}'
+          traefik.frontend.headers.SSLHost: '{{domain.stdout}}'
+          traefik.frontend.headers.SSLRedirect: 'true'
+          traefik.frontend.headers.STSIncludeSubdomains: 'true'
+          traefik.frontend.headers.STSPreload: 'true'
+          traefik.frontend.headers.STSSeconds: '315360000'
+          traefik.frontend.headers.browserXSSFilter: 'true'
+          traefik.frontend.headers.contentTypeNosniff: 'true'
+          traefik.frontend.headers.customResponseHeaders: 'X-Robots-Tag:noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex'
+          traefik.frontend.headers.forceSTSHeader: 'true'
+
+    - name: 'Setting {{pgrole}} Volumes'
+      set_fact:
+        pg_volumes:
+          - '/etc/localtime:/etc/localtime:ro'
+          - '/opt/appdata/{{pgrole}}:/data'
+          - '/var/run/docker.sock:/var/run/docker.sock'
+
+    - name: 'Setting {{pgrole}} ENV'
+      set_fact:
+        pg_env:
+          PUID: '1000'
+          PGID: '1000'
+
+    # MAIN DEPLOYMENT #############################################################
+    - name: 'Deploying {{pgrole}}'
+      docker_container:
+        name: '{{pgrole}}'
+        image: '{{image}}'
+        pull: yes
+        published_ports:
+          - '{{ports.stdout}}{{extport}}:{{intport}}'
+        volumes: '{{pg_volumes}}'
+        env: '{{pg_env}}'
+        restart_policy: unless-stopped
+        networks:
+          - name: plexguide
+            aliases:
+              - '{{pgrole}}'
+        state: started
+        labels: '{{pg_labels}}'
+
+    # FACTS #######################################################################
+
+    - name: 'Set Known Facts'
+      set_fact:
+        pgrole: 'ouroboros'
+    - name: 'Setting {{pgrole}} Volumes'
+      set_fact:
+        pg_volumes:
+          - '/var/run/docker.sock:/var/run/docker.sock'
+          - '/etc/localtime:/etc/localtime:ro'
+
+    - name: 'Setting {{pgrole}} ENV'
+      set_fact:
+        pg_env:
+          LATEST: 'true' #Some containers will break if set to latest, use tag already set by setting this to false
+          CLEANUP: 'true'
+          INTERVAL: '86400' #cEvery 24 hours in seconds
+          LOG_LEVEL: 'info'
+          SELF_UPDATE: 'true'
+          MONITOR: '' #Can set to specific container only see wiki for details (https://github.com/pyouroboros/ouroboros/wiki/Usage#monitor)
+          IGNORE: 'mariadb influxdb mongo postgres'
+          LABELS_ONLY: 'false' #https://github.com/pyouroboros/ouroboros/wiki/Usage#label-enable
+          LABEL_ENABLE: 'false'
+ #         DATA_EXPORT: 'influxdb'
+ #         INFLUX_URL: 'influxdb'
+ #         INFLUX_PORT: '8086'
+ #         INFLUX_USERNAME: 'admin'
+ #         INFLUX_PASSWORD: 'adminpass'
+ #         INFLUX_DATABASE: 'ouroboros'
+ #         INFLUX_SSL: 'false'
+ #         INFLUX_VERIFY_SSL 'false'
+          NOTIFIERS: ''
+          
+    # MAIN DEPLOYMENT #############################################################
+    - name: 'Deploying {{pgrole}}'
+      docker_container:
+        name: '{{pgrole}}'
+        image: 'pyouroboros/ouroboros'
+        pull: yes
+        volumes: '{{pg_volumes}}'
+        env: '{{pg_env}}'
+        restart_policy: unless-stopped
+        networks:
+          - name: plexguide
+            aliases:
+              - 'ouroboros'
+        state: started
+
+    # FACTS #######################################################################
+    - name: 'Set Known Facts'
+      set_fact:
+        pgrole: 'autoheal'
+        image: 'willfarrell/autoheal'
+    - name: 'Setting {{pgrole}} Volumes'
+      set_fact:
+        pg_volumes:
+          - '/var/run/docker.sock:/var/run/docker.sock'
+          - '/etc/localtime:/etc/localtime:ro'
+
+    - name: 'Setting {{pgrole}} ENV'
+      set_fact:
+        pg_env:
+          AUTOHEAL_CONTAINER_LABEL: 'all'
+          AUTOHEAL_INTERVAL: '5'
+          AUTOHEAL_START_PERIOD: '0'
+          AUTOHEAL_DEFAULT_STOP_TIMEOUT: '10'
+          CURL_TIMEOUT: '30'
+          DOCKER_SOCK: '/var/run/docker.sock'
+          
+    # MAIN DEPLOYMENT #############################################################
+    - name: 'Deploying {{pgrole}}'
+      docker_container:
+        name: '{{pgrole}}'
+        image: '{{image}}'
+        pull: yes
+        volumes: '{{pg_volumes}}'
+        env: '{{pg_env}}'
+        restart_policy: unless-stopped
+        networks:
+          - name: plexguide
+            aliases:
+              - 'autoheal'
+        state: started

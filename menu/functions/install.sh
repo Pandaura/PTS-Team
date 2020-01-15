@@ -26,6 +26,7 @@ pginstall() {
   core docstart
   rollingpart
   portainer
+  oruborus
   core motd
   core gcloud
   core cleaner
@@ -35,7 +36,7 @@ pginstall() {
   core mountcheck
   emergency
   pgdeploy
-  oruborus
+  # oruborus
 }
 
 ############################################################ INSTALLER FUNCTIONS
@@ -123,7 +124,6 @@ fi
 ostatus=$(docker ps --format '{{.Names}}' | grep "ouroboros")
 if [[ "$ostatus" != "ouroboros" ]]; then ansible-playbook /opt/plexguide/menu/functions/ouroboros.yml; fi
 }
-
 gcecheck() {
 gcheck=$(dnsdomainname | tail -c 10)
 if [[ "$gcheck" == ".internal" ]]; then
@@ -146,9 +146,9 @@ rollingpart() {
   # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
   if [[ $(cat /var/plexguide/install.roles) != "$rolenumber" ]]; then
     rm -rf /opt/{coreapps,communityapps,pgshield} 
-    pgcore
-    pgcommunity
-    pgshield
+    ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml
+    ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml
+	clone
     echo "$rolenumber" >${abc}/install.roles
   fi
  }
@@ -166,15 +166,12 @@ core() {
 alias() { 
 ansible-playbook /opt/plexguide/menu/alias/alias.yml
 }
-
 aptupdate() { 
 ansible-playbook /opt/plexguide/menu/pg.yml --tags update
 }
-
 cleaner() { 
 ansible-playbook /opt/plexguide/menu/pg.yml --tags autodelete,clean,journal
 }
-
 dependency() {
   ospgversion=$(cat /var/plexguide/os.version)
   if [[ "$ospgversion" == "debian" ]]; then
@@ -183,35 +180,27 @@ dependency() {
     ansible-playbook /opt/plexguide/menu/dependency/dependency.yml
   fi
 }
-
 docstart() { 
 ansible-playbook /opt/plexguide/menu/pg.yml --tags docstart
 }
-
 folders() { 
 ansible-playbook /opt/plexguide/menu/installer/folders.yml
 }
-
 prune() { 
 ansible-playbook /opt/plexguide/menu/prune/main.yml
 }
-
 gcloud() { 
 ansible-playbook /opt/plexguide/menu/pg.yml --tags gcloud_sdk
 }
-
 mergerfsinstall() { 
 ansible-playbook /opt/plexguide/menu/pg.yml --tags mergerfsinstall
 }
-
 motd() { 
 ansible-playbook /opt/plexguide/menu/motd/motd.yml
 }
-
 mountcheck() { 
 ansible-playbook /opt/plexguide/menu/installer/mcdeploy.yml
 }
-
 newinstall() {
   rm -rf ${abc}/pg.exit 1>/dev/null 2>&1
   file="${abc}/new.install"
@@ -221,11 +210,9 @@ newinstall() {
     if [[ ! -f "$file" ]]; then exit; fi
   fi
 }
-
 pgdeploy() { 
 touch ${abc}/pg.edition && bash /opt/plexguide/menu/start/start.sh 
 }
-
 pgedition() {
   file="${abc}/project.deployed"
   if [[ ! -e "$file" ]]; then echo "no" >${abc}/project.deployed; fi
@@ -234,41 +221,40 @@ pgedition() {
   file="${abc}/server.id"
   if [[ ! -e "$file" ]]; then echo "[NOT-SET]" -rf >${abc}/rm; fi
 }
-
 portainer() {
   dstatus=$(docker ps --format '{{.Names}}' | grep "portainer")
-  if [[ "$dstatus" != "portainer" ]]; then ansible-playbook /opt/coreapps/apps/portainer.yml; fi
+  if [[ "$dstatus" != "portainer" ]]; then ansible-playbook /opt/plexguide/menu/functions/portainer.yml; fi
 }
-
 # Roles Ensure that PG Replicates and has once if missing; important for startup, cron and etc
 pgcore() { 
 file="${abc}/new.install"
 if [[ -f "$file" ]]; then ansible-playbook /opt/plexguide/menu/pgbox/core/core.yml; fi
-}
-pgcommunity() {
-file="${abc}/new.install"
 if [[ -f "$file" ]]; then ansible-playbook /opt/plexguide/menu/pgbox/community/community.yml; fi
 }
-pgshield() {
+clone() {
 file="${abc}/new.install"
 if [[ -f "$file" ]]; then
-     echo 'pgshield' >/var/plexguide/pgcloner.rolename
-     echo 'PTS-Shield' >${abc}/pgcloner.roleproper
-     echo 'PTS-Shield' >${abc}/pgcloner.projectname
+	 echo 'pgclone' >${abc}/pgcloner.rolename
+	 echo 'PTS-Clone' >${abc}/pgcloner.roleproper
+	 echo 'PTS-Clone' >${abc}/pgcloner.projectname
+	 echo 'final' >${abc}/pgcloner.projectversion
+	 echo 'pgclone.sh' >${abc}/pgcloner.startlink
+     ansible-playbook "/opt/plexguide/menu/pgcloner/clone/primary.yml"
+	 sleep 0.1
+	 echo 'traefik' >${abc}/pgcloner.rolename
+     echo 'Traefik' >${abc}/pgcloner.roleproper
+     echo 'Traefik' >${abc}/pgcloner.projectname
      echo 'master' >${abc}/pgcloner.projectversion
-     echo 'pgshield.sh' >${abc}/pgcloner.startlink
-     ansible-playbook "/opt/plexguide/menu/pgcloner/corev2/primary.yml" 
+     echo 'traefik.sh' >${abc}/pgcloner.startlink
+     ansible-playbook "/opt/plexguide/menu/pgcloner/clone/primary.yml"	 
 fi
 }
-
 pythonstart() {
 file="${abc}/new.install"
 if [[ -f "$file" ]]; then bash /opt/plexguide/menu/roles/pythonstart/pyansible.sh; fi
 }
-
 dockerinstall() {
 file="${abc}/new.install"
 if [[ -f "$file" ]]; then ansible-playbook /opt/plexguide/menu/pg.yml --tags docker; fi
 }
-
 ####EOF###

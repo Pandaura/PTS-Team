@@ -10,7 +10,6 @@
     - name: 'Set Known Facts'
       set_fact:
         pgrole: 'ouroboros'
-        image: 'pyouroboros/ouroboros'
     - name: 'Setting {{pgrole}} Volumes'
       set_fact:
         pg_volumes:
@@ -20,7 +19,7 @@
     - name: 'Setting {{pgrole}} ENV'
       set_fact:
         pg_env:
-          LATEST: 'false' #Some containers will break if set to latest, use tag already set by setting this to false
+          LATEST: 'true' #Some containers will break if set to latest, use tag already set by setting this to false
           CLEANUP: 'true'
           INTERVAL: '86400' #cEvery 24 hours in seconds
           LOG_LEVEL: 'info'
@@ -43,7 +42,7 @@
     - name: 'Deploying {{pgrole}}'
       docker_container:
         name: '{{pgrole}}'
-        image: '{{image}}'
+        image: 'pyouroboros/ouroboros'
         pull: yes
         volumes: '{{pg_volumes}}'
         env: '{{pg_env}}'
