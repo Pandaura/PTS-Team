@@ -83,7 +83,7 @@ phase1() {
       echo -n "$p," >>/var/plexguide/pgshield.compiled
     done </var/plexguide/pgshield.emails
 
-    ansible-playbook /opt/pgshield/pgshield.yml
+    ansible-playbook /opt/plexguide/menu/shield/pgshield.yml
     rebuild && endbanner && question1 ;;
   z) exit ;;
   Z) exit ;;
@@ -402,7 +402,7 @@ EOF
 }
 
 rebuild() {
-    bash /opt/pgshield/rebuild.sh
+    bash /opt/plexguide/menu/shield/rebuild.sh
 }
 
 doneenter() {
@@ -413,7 +413,7 @@ doneenter() {
 endbanner() {
 oauth=$( docker ps --format '{{.Names}}' | grep "oauth")
 if [[ $oauth == "oauth" ]]; then
-bash /opt/pgshield/endbanner.sh
+bash /opt/plexguide/menu/shield/endbanner.sh
 else question1 ; fi
 
 }
