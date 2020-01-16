@@ -5,9 +5,14 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-file="/opt/plex_dupefinder/config.json"
-  if [[ -f $file ]]; then
+timer() {
+seconds=90; date1=$((`date +%s` + $seconds)); 
+while [ "$date1" -ge `date +%s` ]; do 
+  echo -ne "$(date -u --date @$(($date1 - `date +%s` )) +%H:%M:%S)\r"; 
+done
+}
 
+endbanner() { 
 tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 💬 NOTE / INFO MANUAL EDITS IS NEEDED NOW
@@ -37,7 +42,7 @@ For more advanced libraries, it can look like this:
    "TV": 2
 },
 3.) SAVE it
-4.) plex_dupefinder and following the output
+4.) [ sudo ] plex_dupefinder and following the output
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 You will need to make sure that Allow media deletion is enabled in Plex.
@@ -52,5 +57,12 @@ These edits must be made by the user! We will not do this for you, so you have t
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  fi
 
+timer
+doneokay
+}
+
+doneokay() {
+ echo
+  read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+}
