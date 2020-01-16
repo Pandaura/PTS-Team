@@ -9,14 +9,17 @@ rm -rf /tmp/backup.build 1>/dev/null 2>&1
 rm -rf /tmp/backup.list 1>/dev/null 2>&1
 rm -rf /tmp/backup.final 1>/dev/null 2>&1
 
-docker ps --format '{{.Names}}' >/tmp/backup.list
+tree -d -L 1 /opt/appdata | awk '{print $2}' | tail -n +2 | head -n -2  >/tmp/backup.list
 sed -i -e "/traefik/d" /tmp/backup.list
-sed -i -e "/watchtower/d" /tmp/backup.list
+sed -i -e "/oauth/d" /tmp/backup.list
 sed -i -e "/wp-*/d" /tmp/backup.list
-sed -i -e "/x2go*/d" /tmp/backup.list
 sed -i -e "/plexguide/d" /tmp/backup.list
 sed -i -e "/cloudplow/d" /tmp/backup.list
 sed -i -e "/phlex/d" /tmp/backup.list
+sed -i -e "/plexguide/d" /tmp/backup.list
+sed -i -e "/plexpatrol/d" /tmp/backup.list
+sed -i -e "/uploader/d" /tmp/backup.list
+sed -i -e "/portainer/d" /tmp/backup.list
 
 #### Commenting Out To Let User See
 num=0
@@ -24,24 +27,13 @@ while read p; do
   let "num++"
   echo -n $p >>/tmp/backup.final
   echo -n " " >>/tmp/backup.final
-  if [ "$num" == 7 ]; then
+  if [[ "$num" == 7 ]; then
     num=0
     echo " " >>/tmp/backup.final
   fi
 done </tmp/backup.list
 
 running=$(cat /tmp/backup.final)
-# If Blank, Exit
-if [ "$running" == "" ]; then
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️ WARNING! - No Apps are Running! Exiting!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EOF
-  sleep 3
-  exit
-fi
 
 # Menu Interface
 tee <<-EOF
@@ -52,21 +44,21 @@ tee <<-EOF
 
 ⚠️  Backup Data if Required! Removes Local App Data!
 
-💾 Current Running Apps
+💾 Current Installed Apps or Folders
 
 $running
 
-[Z] Exit
+[ Z ] Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-read -p '🌍 Type APP for QUEUE | Press [ENTER]: ' typed </dev/tty
+read -p '🌍 Type APP for QUEUE | Press [[ENTER]: ' typed </dev/tty
 
 if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then exit; fi
 
 tcheck=$(echo $running | grep "\<$typed\>")
-if [ "$tcheck" == "" ]; then
+if [[ "$tcheck" == "" ]]; then
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -78,7 +70,7 @@ EOF
   exit
 fi
 
-if [ "$typed" == "" ]; then
+if [[ "$typed" == "" ]]; then
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -97,31 +89,34 @@ tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 sleep 1.5
-
+##check for running docker 
+drunning=$(docker ps --format '{{.Names}}' | grep "$typed")
+if [[ "$running" == "$typed" ]]; then
 tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🍖  NOM NOM - Stopping | Removing > $typed Docker Container
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-sleep .5
+     docker stop $typed 1>/dev/null 2>&1
+     docker rm $typed 1>/dev/null 2>&1
+	 rm -rf /opt/appdata/$typed
+fi
 
-docker stop $typed 1>/dev/null 2>&1
-docker rm $typed 1>/dev/null 2>&1
-
+if [[ "$running" != "$typed" ]]; then
 tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🍖  NOM NOM - Removing /opt/appdata/$typed
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-sleep 1
-rm -rf /opt/appdata/$typed
+	 rm -rf /opt/appdata/$typed
+fi
 
 file="/opt/coreapps/apps/$typed.yml"
-if [ -e "$file" ]; then
+if [[ -e "$file" ]]; then
   check=$(cat /opt/coreapps/apps/$typed.yml | grep '##PG-Community')
-  if [ "$check" == "##PG-Community" ]; then rm -r /opt/communityapps/apps/$typed.yml; fi
+  if [[ "$check" == "##PG-Community" ]]; then rm -r /opt/communityapps/apps/$typed.yml; fi
   rm -rf /var/plexguide/community.app
 fi
 
