@@ -27,7 +27,7 @@ while read p; do
   let "num++"
   echo -n $p >>/tmp/backup.final
   echo -n " " >>/tmp/backup.final
-  if [[ "$num" == 7 ]; then
+  if [[ "$num" == 7 ]]; then
     num=0
     echo " " >>/tmp/backup.final
   fi
