@@ -4,6 +4,14 @@
 # Author(s):  MrDoob
 # GNU:        General Public License v3.0
 ################################################################################
+timer() {
+seconds=90; date1=$((`date +%s` + $seconds)); 
+while [ "$date1" -ge `date +%s` ]; do 
+  echo -ne "$(date -u --date @$(($date1 - `date +%s` )) +%H:%M:%S)\r"; 
+done
+}
+
+
 pasdeployed() {
 PAS_CONFIG="/opt/plex_autoscan/config/config.json"
 SERVER_IP=$(cat ${PAS_CONFIG} | jq -r .SERVER_IP)
@@ -48,7 +56,11 @@ domain=$(cat /var/plexguide/server.domain)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
-  read -p '↘️  Type [ Y ] or [ N ] | Press [ENTER]: ' typed </dev/tty
+timer
+donepasread
+}
+doneopasread() {
+   read -p '↘️  Type [ Y ] or [ N ] | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
   Y) docker restart plex && exit ;;
@@ -74,5 +86,11 @@ printf '
    ( Failure to follow these steps can lead to problems. )
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 '
+timer
+doneokay
+}
+
+doneokay() {
+ echo
   read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
 }
