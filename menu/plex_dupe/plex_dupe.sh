@@ -7,6 +7,7 @@
 
 # KEY VARIABLE RECALL & EXECUTION
 mkdir -p /var/plex_dupe
+source /opt/plexguide/menu/plex_dupe/scripts/endbanner.sh
 
 # FUNCTIONS START ##############################################################
 variable() {
@@ -124,12 +125,6 @@ doneenter(){
   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
   question1
 }
-endbanner() {
-bash /opt/plexguide/menu/plex_dupe/scripts/endbanner.sh
- echo
-  read -p ' Confirm Info | PRESS [ENTER] ' typed </dev/tty
-  question1
-}
 
 authdel(){
 clear
@@ -231,8 +226,8 @@ EOF
   case $typed in
   1) tokencreate && clear && question1 ;;
   2) authdel && clear && question1 ;;
-  A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner ;;
-  a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner ;;
+  A) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner && question1 ;;
+  a) ansible-playbook /opt/plexguide/menu/pg.yml --tags plex_dupefinder && clear && endbanner && question1 ;;
   R) remove && clear && question1 ;;
   r) remove && clear && question1 ;;
   C) credits && clear && question1 ;;
