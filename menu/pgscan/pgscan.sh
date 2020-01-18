@@ -280,8 +280,8 @@ Remote Server IP           [ $remoteip ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Set Local Server IP
-[2] Set Remote Server IP 
+[1] Set Local Server IP (Home Server)
+[2] Set Remote Server IP (Dedicated Server)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [Z] - Exit
