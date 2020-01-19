@@ -19,8 +19,8 @@ variable() {
 deploycheck() {
   dcheck=$(docker ps --format '{{.Names}}' | grep "plexautoscan")
   if [[ "$dcheck" == "plexautoscan" ]]; then
-    dstatus="✅ DOCKER DEPLOYED"
-  else dstatus="⚠️ DOCKER NOT DEPLOYED"; fi
+    dstatus="✅ TOKEN DEPLOYED"
+  else dstatus="⚠️ TOKEN NOT DEPLOYED"; fi
 }
 tokenstatus() {
   ptokendep=$(cat /var/plexguide/pgscan/plex.token)
