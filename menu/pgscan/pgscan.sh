@@ -96,7 +96,6 @@ printf '
 '
 
 timerremove
-doneokay
 question1 
 }
 badinput() {
@@ -172,6 +171,11 @@ docker stop plexautoscan
 docker rm plexautoscan
 rm -rf /opt/appdata/plexautoscan
 rm -rf /var/plexguide/pgscan
+fresh
+echo "en" >/var/plexguide/pgscan/fixmatch.lang
+echo "false" >/var/plexguide/pgscan/fixmatch.status
+echo "NOT-SET" >/var/plexguide/pgscan/plex.docker
+
 
 printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -179,7 +183,6 @@ printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 '
 timerremove
-doneokay
 question1 
 }
 notinstalled() {
