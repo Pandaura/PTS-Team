@@ -1,6 +1,5 @@
 #!/bin/bash
 # FUNCTIONS START ##############################################################
-# FIRST FUNCTION
 rmoldinstall() {
   dcheck=$(systemctl is-active plex_autoscan.service)
   if [[ "$dcheck" == "active" ]]; then
@@ -10,7 +9,6 @@ rmoldinstall() {
     fresh
   else fresh; fi
 }
-
 fresh() {
 mkdir -p /var/plexguide/pgscan
 }
@@ -176,7 +174,6 @@ echo "en" >/var/plexguide/pgscan/fixmatch.lang
 echo "false" >/var/plexguide/pgscan/fixmatch.status
 echo "NOT-SET" >/var/plexguide/pgscan/plex.docker
 
-
 printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 FINISHED REMOVE Plex AutoScan Docker
@@ -340,7 +337,26 @@ cp -r /var/plexguide/pgscan/plex.dockeruserset /var/plexguide/pgscan/plex.docker
 doneenter
 
 }
+
+showuppage() {
+  dpas=$(docker ps --format '{{.Names}}' | grep "plexautoscan")
+  dtra=$(docker ps --format '{{.Names}}' | grep "traefik")
+  if [[ "$dpas" == "plexautoscan" && "$dtra" == "traefik"  ]]; then
+    showpaspage="http://plexautoscan:3468/$(cat /var/plexguide/pgscan/pgscan.serverpass)"
+  else showpaspage="http://$(cat /var/plexguide/server.ip):3468/$(cat /var/plexguide/pgscan/pgscan.serverpass)"; fi
+}
+
 question1() {
+  dcheck=$(docker ps --format '{{.Names}}' | grep "plexautoscan")
+  if [[ "$dcheck" == "plexautoscan" ]]; then
+    deplyoed
+  else undeployed; fi
+}
+pasdeploy() {
+ansible-playbook /opt/plexguide/menu/pgscan/yml/plexautoscan.yml
+clear 
+}
+undeployed() {
 langfa=$(cat /var/plexguide/pgscan/fixmatch.status)
 lang=$(cat /var/plexguide/pgscan/fixmatch.lang)
 dplexset=$(cat /var/plexguide/pgscan/plex.docker)
@@ -358,7 +374,56 @@ tee <<-EOF
 [3] Plex Docker Version                   [ $dplexset ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 [A] Deploy Plex-Auto-Scan Docker          [ $dstatus ]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[Z] - Exit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+
+  case $typed in
+  1) tokencreate && clear && question1 ;;
+  2) fxmatch && clear && question1 ;;
+  3) pversion && clear && question1 ;;
+  A) pasdeploy && question1 ;;
+  a) pasdeploy && question1 ;;
+  C) credits && clear && question1 ;;
+  c) credits && clear && question1 ;;
+  z) exit 0 ;;
+  Z) exit 0 ;;
+  *) question1 ;;
+  esac
+}
+
+deplyoed() {
+langfa=$(cat /var/plexguide/pgscan/fixmatch.status)
+lang=$(cat /var/plexguide/pgscan/fixmatch.lang)
+dplexset=$(cat /var/plexguide/pgscan/plex.docker)
+showuppage
+tokenstatus
+deploycheck
+
+tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Plex_AutoScan Interface  || l3uddz/plex_autoscan
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1] Deploy Plex Token                     [ $pstatus ]
+[2] Fixmatch Lang                         [ $lang | $langfa ]
+[3] Plex Docker Version                   [ $dplexset ]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PAS Webhook ARRs : [ $showpaspage ]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[A] Redeploy Plex-Auto-Scan Docker          [ $dstatus ]
 
 [S] Show last 50 lines of Plex_AutoScan log
 [R] Remove Plex_AutoScan
@@ -378,8 +443,8 @@ EOF
   1) tokencreate && clear && question1 ;;
   2) fxmatch && clear && question1 ;;
   3) pversion && clear && question1 ;;
-  A) ansible-playbook /opt/plexguide/menu/pgscan/plexautoscan.yml && clear && question1 ;;
-  a) ansible-playbook /opt/plexguide/menu/pgscan/plexautoscan.yml && clear && question1 ;;
+  A) pasdeploy && question1 ;;
+  a) pasdeploy && question1 ;;
   S) logger ;;
   s) logger ;;
   r) removepas ;;
