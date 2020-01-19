@@ -67,7 +67,7 @@ token() {
   fi
 }
 tokencreate() {
-printf'
+printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 START Plex_AutoScan Token Create
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -80,7 +80,7 @@ X_PLEX_TOKEN=$(sudo cat "/opt/appdata/plex/database/Library/Application Support/
 cp -r $template $templatebackup
 echo $X_PLEX_TOKEN >/var/plexguide/pgscan/plex.token
 
-printf'
+printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅ FINISHED Plex_AutoScan Token  🚀 START SERVERPASS Create
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -89,7 +89,7 @@ printf'
 RAN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 echo $RAN >/var/plexguide/pgscan/pgscan.serverpass
 
-printf'
+printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅ FINISHED Plex_AutoScan Token || SERVERPASS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -116,7 +116,7 @@ works() {
 }
 credits() {
 clear
-printf'
+printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Plex_AutoScan Credits 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -162,7 +162,7 @@ remove() {
 }
 
 removepas() {
-printf'
+printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 STARTING Remove Plex AutoScan Docker  || l3uddz/plex_autoscan 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -173,7 +173,7 @@ docker rm plexautoscan
 rm -rf /opt/appdata/plexautoscan
 rm -rf /var/plexguide/pgscan
 
-printf'
+printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 FINISHED REMOVE Plex AutoScan Docker
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -183,7 +183,8 @@ doneokay
 question1 
 }
 notinstalled() {
-printf'
+
+printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⛔️  WARNING! - PAS is Not Installed or Running! Exiting!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -195,7 +196,7 @@ question1
 logger() {
   dcheck=$(docker ps --format '{{.Names}}' | grep "plexautoscan")
   if [[ "$dcheck" == "plexautoscan" ]]; then
-printf'
+printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 ACTIVE LOGS Plex AutoScan Docker  || l3uddz/plex_autoscan 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
