@@ -169,7 +169,7 @@ printf'
 '
 
 docker stop plexautoscan
-docker rum plexautoscan
+docker rm plexautoscan
 rm -rf /opt/appdata/plexautoscan
 rm -rf /var/plexguide/pgscan
 
