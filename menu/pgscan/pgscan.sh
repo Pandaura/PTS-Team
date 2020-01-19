@@ -6,11 +6,15 @@ rmoldinstall() {
     service plex_autoscan stop
     rm -rf /opt/plex_autoscan
     rm -rf /etc/systemd/system/plex_autoscan.service
+	rm -rf /var/plexguide/pgscan
     fresh
   else fresh; fi
 }
 fresh() {
 mkdir -p /var/plexguide/pgscan
+echo "en" >/var/plexguide/pgscan/fixmatch.lang
+echo "false" >/var/plexguide/pgscan/fixmatch.status
+echo "NOT-SET" >/var/plexguide/pgscan/plex.docker
 }
 variable() {
   file="$1"
