@@ -24,6 +24,7 @@ tokenstatus() {
         fi
   else pstatus="⚠️ NOT DEPLOYED"; fi
 }
+
 plexcheck() {
   pcheck=$(docker ps --format '{{.Names}}' | grep "plex")
   if [[ "$pcheck" == "" ]]; then
