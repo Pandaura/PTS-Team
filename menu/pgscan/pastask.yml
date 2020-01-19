@@ -124,3 +124,6 @@
     register: plex_docker_user
 
   when: not plex_autoscan_config.stat.exists
+ 
+- name: 'Setting ownership on appdata'
+  shell: 'chown 1000:1000 /opt/appdata/{{pgrole}}'

@@ -15,7 +15,7 @@ deploycheck() {
 tokenstatus() {
   ptokendep=$(cat /var/plexguide/pgscan/plex.token)
   if [[ "$ptokendep" != "" ]]; then
-        if [[ ! -f "/opt/appdata/plexautoscan/config.json" ]]; then
+        if [[ ! -f "/opt/appdata/plexautoscan/config/config.json" ]]; then
                 pstatus="❌ DEPLOYED BUT PAS CONFIG MISSING";
         else
                 PGSELFTEST=$(curl -LI "http://$(hostname -I | awk '{print $1}'):32400/system?X-Plex-Token=$(cat /opt/appdata/plexautoscan/config/config.json | jq .PLEX_TOKEN | sed 's/"//g')" -o /dev/null -w '%{http_code}\n' -s)
@@ -24,7 +24,6 @@ tokenstatus() {
         fi
   else pstatus="⚠️ NOT DEPLOYED"; fi
 }
-
 plexcheck() {
   pcheck=$(docker ps --format '{{.Names}}' | grep "plex")
   if [[ "$pcheck" == "" ]]; then
