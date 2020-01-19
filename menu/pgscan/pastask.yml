@@ -1,0 +1,80 @@
+#########################################################################
+# Title:         Cloudbox: Plex Autoscan Role                           #
+# Author(s):     l3uddz, desimaniac                                     #
+# URL:           https://github.com/cloudbox/cloudbox                   #
+# --                                                                    #
+#         Part of the Cloudbox project: https://cloudbox.works          #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Services | Check if 'plex_autoscan.service' exists
+  stat:
+    path: "/etc/systemd/system/plex_autoscan.service"
+  register: plex_pas_config
+
+- name: Services | Stop 'plex_autoscan.service'
+  systemd:
+    name: plex_autoscan
+    state: stopped
+  when: plex_pas_config.stat.exists
+
+- name: Remove old Install
+  shell: 'sudo rm -rf /opt/plex_autoscan'
+
+- name: Remove old service
+  shell: 'sudo rm -rf /etc/systemd/system/plex_autoscan.service'
+
+- name: Set plex.user fact | token
+  shell: 'cat /var/plexguide/pgscan/plex.token'
+  register: plex_auth_token
+
+- name: Set plex.user fact | token
+  shell: 'cat /var/plexguide/pgscan/plex.token'
+  register: plex_auth_token_display
+
+- name: Register ServerPass
+  shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
+  register: plex_autoscan_server_pass
+
+- name: Register Fixmatch Lang
+  shell: 'cat /var/plexguide/pgscan/fixmatch.lang'
+  register: fixmatchlang
+  
+- name: Register Fixmatch status
+  shell: 'cat /var/plexguide/pgscan/fixmatch.status'
+  register: fixmatchstatus
+
+- name: Register Plex Docker Image status
+  shell: 'cat /var/plexguide/pgscan/plex.docker'
+  register: plex_docker_user
+
+- name: Create mounted.bin for trash
+  shell: 'touch /mnt/unionfs/mounted.bin'
+
+- name: Set User Permission  for Plex Folder | part 1
+  shell: 'chown 1000:1000 "/opt/appdata/plex/database/Library/Application Support/"'
+
+- name: Set User Permission  for Plex Folder | part 2
+  shell: 'chown 1000:1000 /opt/appdata/plex/database/Library/'
+
+- name: Display Plex Auth Token
+  debug:
+    msg: "Plex Auth Token: {{plex_auth_token_display.stdout}}"
+
+- name: Token Recall
+  shell: 'cat /var/plexguide/pgscan/plex.token'
+  register: plex_auth_token
+
+- name: Register Plex Docker Image status
+  shell: 'cat /var/plexguide/pgscan/plex.docker'
+  register: plex_docker_user
+ 
+- name: Settings | Import default 'config.json'
+  template:
+    src: ./templates/config.json.j2
+    dest: /opt/appdata/plexautoscan/config.json
+    owner: '1000'
+    group: '1000'
+    mode: 0775
+    force: yes
