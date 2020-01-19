@@ -22,6 +22,9 @@
 - name: Remove old Install
   shell: 'sudo rm -rf /opt/plex_autoscan'
 
+- name: Remove old Install
+  shell: 'sudo rm -rf /opt/appdata/plexautoscan/'
+
 - name: Remove old service
   shell: 'sudo rm -rf /etc/systemd/system/plex_autoscan.service'
 
@@ -70,11 +73,54 @@
   shell: 'cat /var/plexguide/pgscan/plex.docker'
   register: plex_docker_user
  
-- name: Settings | Import default 'config.json'
-  template:
-    src: ./templates/config.json.j2
-    dest: /opt/appdata/plexautoscan/config.json
-    owner: '1000'
-    group: '1000'
-    mode: 0775
-    force: yes
+- name: Settings | Install required packages
+  apt:
+    state: present
+    name:
+      - jq
+      - moreutils
+
+- name: Settings | Check if 'config.json' exists
+  stat:
+    path: "/opt/appdata/plexautoscan/config.json"
+  register: plex_autoscan_config
+
+- name: Settings | New 'config.json' tasks
+  block:
+
+  - name: Create plex_autoscan directories
+    file: "path={{ item }} state=directory mode=0775 owner=1000 group=1000 recurse=yes"
+    with_items:
+      - '/opt/appdata/plexautoscan/'
+      - '/opt/appdata/plexautoscan/config'
+      
+  - name: Settings | Import default 'config.json'
+    template:
+      src: /opt/plexguide/menu/pgscan/templates/config.json.j2
+      dest: /opt/appdata/plexautoscan/config/config.json
+      owner: '1000'
+      group: '1000'
+      mode: 0775
+      force: yes
+
+  - name: Token Recall
+    shell: 'cat /var/plexguide/pgscan/plex.token'
+    register: plex_auth_token
+
+  - name: Register ServerPass
+    shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
+    register: plex_autoscan_server_pass
+
+  - name: Register Fixmatch Lang
+    shell: 'cat /var/plexguide/pgscan/fixmatch.lang'
+    register: fixmatchlang
+  
+  - name: Register Fixmatch status
+    shell: 'cat /var/plexguide/pgscan/fixmatch.status'
+    register: fixmatchstatus
+
+  - name: Register Plex Docker Image status
+    shell: 'cat /var/plexguide/pgscan/plex.docker'
+    register: plex_docker_user
+
+  when: not plex_autoscan_config.stat.exists
