@@ -264,8 +264,6 @@ deploycheck
 🚀 Plex_AutoScan Interface  || l3uddz/plex_autoscan
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-NOTE : Plex_AutoScan are located in /opt/plex_autoscan
-
 [1] Deploy Plex Token                     [ $pstatus ]
 [2] Fixmatch Lang                         [ $lang | $langfa ]
 [3] Plex Docker Version                   [ $dplexset ]
@@ -292,8 +290,8 @@ EOF
   3) pversion && clear && question1 ;;
   A) ansible-playbook /opt/plexguide/menu/pgscan/plexautoscan.yml && clear && question1 ;;
   a) ansible-playbook /opt/plexguide/menu/pgscan/plexautoscan.yml && clear && question1 ;;
-  S) tail -n 50 /opt/appdata/plexautoscan/plex_autoscan.log && doneenter ;;
-  s) tail -n 50 /opt/appdata/plexautoscan/plex_autoscan.log && doneenter;;
+  S) tail -n 50 /opt/appdata/plexautoscan/config/plex_autoscan.log && doneenter ;;
+  s) tail -n 50 /opt/appdata/plexautoscan/config/plex_autoscan.log && doneenter;;
   r) remove && doneenter  && sleep 5 && clear && exit 0 ;;
   R) remove && doneenter && sleep 5 && clear && exit 0 ;;
   C) credits && clear && question1 ;;
