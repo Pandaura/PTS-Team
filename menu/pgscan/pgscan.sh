@@ -50,13 +50,13 @@ plexcheck() {
 token() {
   touch /var/plexguide/pgscan/plex.token
   ptoken=$(cat /var/plexguide/pgscan/plex.token)
-  if [[ "$ptoken" == "" ]]; then
-    tokencreate
+  if [[ ! -f "$ptoken" ]]; then
+      tokencreate
 	sleep 2
-	X_PLEX_TOKEN=$(sudo cat "/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Preferences.xml" | sed -e 's;^.* PlexOnlineToken=";;' | sed -e 's;".*$;;' | tail -1)
+    X_PLEX_TOKEN=$(sudo cat "/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Preferences.xml" | sed -e 's;^.* PlexOnlineToken=";;' | sed -e 's;".*$;;' | tail -1)
     ptoken=$(cat /var/plexguide/pgscan/plex.token)
     if [[ "$ptoken" != "$X_PLEX_TOKEN" ]]; then
-	printf'
+	printf '
 	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 	⛔️  WARNING!  Failed to Generate a Valid Plex Token! 
 	⛔️  WARNING!  Exiting Deployment!
