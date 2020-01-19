@@ -27,7 +27,7 @@
           traefik.enable: 'true'
           traefik.port: '{{intport}}'
           traefik.frontend.auth.forward.address: '{{gauth}}'
-          traefik.frontend.rule: 'Host:{{pgrole}}.{{domain.stdout}}'
+          traefik.frontend.rule: 'Host:{{pgrole}}.{{domain.stdout}}/{{plex_autoscan_server_pass.stdout}}'
           traefik.frontend.headers.SSLHost: '{{domain.stdout}}'
           traefik.frontend.headers.SSLRedirect: 'true'
           traefik.frontend.headers.STSIncludeSubdomains: 'true'
@@ -73,3 +73,4 @@
         state: started
         labels: '{{pg_labels}}'
 
+    - debug: msg="Final Notes = Plex AutoScan PAGE  {{pgrole}}.{{domain.stdout}}/{{plex_autoscan_server_pass.stdout}}"
