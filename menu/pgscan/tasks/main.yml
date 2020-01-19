@@ -1,0 +1,151 @@
+#########################################################################
+# Title:         Cloudbox: Plex Autoscan Role                           #
+# Author(s):     l3uddz, desimaniac                                     #
+# URL:           https://github.com/cloudbox/cloudbox                   #
+# --                                                                    #
+#         Part of the Cloudbox project: https://cloudbox.works          #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Services | Check if 'plex_autoscan.service' exists
+  stat:
+    path: "/etc/systemd/system/plex_autoscan.service"
+  register: plex_pas_config
+
+- name: Services | Stop 'plex_autoscan.service'
+  systemd:
+    name: plex_autoscan
+    state: stopped
+  when: plex_pas_config.stat.exists
+
+- name: Remove old Install
+  shell: 'sudo rm -rf /opt/plex_autoscan'
+
+- name: Remove old service
+  shell: 'sudo rm -rf /etc/systemd/system/plex_autoscan.service'
+
+- name: Set plex.user fact | token
+  shell: 'cat /var/plexguide/pgscan/plex.token'
+  register: plex_auth_token
+
+- name: Set plex.user fact | token
+  shell: 'cat /var/plexguide/pgscan/plex.token'
+  register: plex_auth_token_display
+
+- name: Register IP
+  shell: 'cat /var/plexguide/pgscan/pgscan.ip'
+  register: ipaddress
+
+- name: Register ServerPass
+  shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
+  register: plex_autoscan_server_pass
+
+- name: Register Fixmatch Lang
+  shell: 'cat /var/plexguide/pgscan/fixmatch.lang'
+  register: fixmatchlang
+  
+- name: Register Fixmatch status
+  shell: 'cat /var/plexguide/pgscan/fixmatch.status'
+  register: fixmatchstatus
+
+- name: Register Plex Docker Image status
+  shell: 'cat /var/plexguide/pgscan/plex.docker'
+  register: plex_docker_user
+
+- name: Create mounted.bin for trash
+  shell: 'touch /mnt/unionfs/mounted.bin'
+
+- name: Set User Permission  for Plex Folder | part 1
+  shell: 'chown 1000:1000 "/opt/appdata/plex/database/Library/Application Support/"'
+
+- name: Set User Permission  for Plex Folder | part 2
+  shell: 'chown 1000:1000 /opt/appdata/plex/database/Library/'
+
+- name: Display Plex Auth Token
+  debug:
+    msg: "Plex Auth Token: {{plex_auth_token_display.stdout}}"
+
+- name: Import Services Task
+  import_tasks: "subtasks/services.yml"
+
+- name: Create plex_autoscan directories
+  file: "path={{ item }} state=directory mode=0775 owner=1000 group=1000 recurse=yes"
+  with_items:
+    - /opt/plex_autoscan
+
+- name: Clone plex_autoscan repo 'HEAD'
+  git:
+    repo: https://github.com/l3uddz/plex_autoscan.git
+    dest: /opt/plex_autoscan
+    clone: yes
+    version: HEAD
+    force: yes
+  ignore_errors: yes
+  register: plex_autoscan_clone_status
+
+- name: Clone plex_autoscan repo 'master'
+  git:
+    repo: https://github.com/l3uddz/plex_autoscan.git
+    dest: /opt/plex_autoscan
+    clone: yes
+    version: master
+    force: yes
+  become: yes
+  become_user: "1000"
+  when: plex_autoscan_clone_status is failed
+
+- name: Install pip requirements
+  pip:
+    requirements: /opt/plex_autoscan/requirements.txt
+    executable: pip2
+
+- name: Set 'scan.py' as executable
+  file:
+    path: /opt/plex_autoscan/scan.py
+    owner: "1000"
+    group: "1000"
+    mode: a+x
+
+- name: Import Settings Task
+  import_tasks: "subtasks/settings.yml"
+
+- name: Start 'plex_autoscan.service'
+  systemd:
+    name: plex_autoscan
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: Remove .githube folder and .git files
+  file: "path={{ item }} state=absent"
+  with_items:
+    - '/opt/plex_autoscan/.git'
+    - '/opt/plex_autoscan/.github'
+    - '/opt/plex_autoscan/assets'
+    - '/opt/plex_autoscan/.gitignore'
+    - '/opt/plex_autoscan/config/config.json.sample'
+    - '/opt/plex_autoscan/README.bak.md'
+    - '/opt/plex_autoscan/README.md'
+    - '/opt/plex_autoscan/RCONTRIBUTING.md'
+
+- name: Services | Check if 'plex_autoscan.service' exists
+  stat:
+    path: "/etc/systemd/system/plex_autoscan.service"
+  register: pas_online
+
+- name: 'Checking for existing symlink'
+  stat:
+    path: '/var/plexguide/logs/traktarr.log'
+  register: stat_result
+
+- name: Symlink log to log folder 
+  shell: 'ln -s /opt/plex_autoscan/plex_autoscan.log /var/plexguide/logs/plex_autoscan.log'
+  when: stat_result.stat.exists == False
+  ignore_errors: yes
+
+- name: Services | Restart 'plex_autoscan.service'
+  systemd:
+    name: plex_autoscan
+    state: restarted
+  when: pas_online.stat.exists

@@ -1,0 +1,64 @@
+#########################################################################
+# Title:         Cloudbox: Plex Autoscan | Settings Task                #
+# Author(s):     desimaniac                                             #
+# URL:           https://github.com/cloudbox/cloudbox                   #
+# --                                                                    #
+#         Part of the Cloudbox project: https://cloudbox.works          #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Settings | Install required packages
+  apt:
+    state: present
+    name:
+      - jq
+      - moreutils
+
+- name: Settings | Check if 'config.json' exists
+  stat:
+    path: "/opt/plex_autoscan/config/config.json"
+  register: plex_autoscan_config
+
+- name: Settings | New 'config.json' tasks
+  block:
+
+  - name: Settings | Import default 'config.json'
+    template:
+      src: config.json.j2
+      dest: /opt/plex_autoscan/config/config.json
+      owner: '1000'
+      group: '1000'
+      mode: 0775
+      force: yes
+
+  - name: Token Recall
+    shell: 'cat /var/plexguide/pgscan/plex.token'
+    register: plex_auth_token
+
+  - name: Register IP
+    shell: 'cat /var/plexguide/pgscan/pgscan.ip'
+    register: ipaddress
+
+  - name: Register ServerPass
+    shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
+    register: plex_autoscan_server_pass
+
+  - name: Register Fixmatch Lang
+    shell: 'cat /var/plexguide/pgscan/fixmatch.lang'
+    register: fixmatchlang
+  
+  - name: Register Fixmatch status
+    shell: 'cat /var/plexguide/pgscan/fixmatch.status'
+    register: fixmatchstatus
+
+  - name: Register Plex Docker Image status
+    shell: 'cat /var/plexguide/pgscan/plex.docker'
+    register: plex_docker_user
+
+  when: not plex_autoscan_config.stat.exists
+
+- name: Settings | Upgrade 'config.json'
+  shell: "/opt/plex_autoscan/scan.py update_config"
+  ignore_errors: yes
+  tags: plex-autoscan-update-sections
