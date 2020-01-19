@@ -15,7 +15,7 @@
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
-      include_tasks: '/opt/core/apps/_core.yml'
+      include_tasks: './core.yml'
 
     - name: 'Including PAS Tasks'
       include_tasks: './pastask.yml'
