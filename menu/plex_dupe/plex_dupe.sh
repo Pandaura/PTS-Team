@@ -83,13 +83,13 @@ badinput() {
   question1
 }
 
-works(){
+works() {
  echo
   read -p ' Confirm Info | PRESS [ENTER] ' typed </dev/tty
   question1
 }
 
-credits(){
+credits() {
 clear
 chk=$(figlet Plex Dupe finder | lolcat )
   tee <<-EOF
@@ -120,13 +120,13 @@ EOF
   question1
 }
 
-doneenter(){
+doneenter() {
  echo
   read -p 'All done | PRESS [ENTER] ' typed </dev/tty
   question1
 }
 
-authdel(){
+authdel() {
 clear
 status=$(cat /var/plex_dupe/plex.authdel)
   tee <<-EOF
