@@ -9,18 +9,18 @@ variable() {
 deploycheck() {
   dcheck=$(docker ps --format '{{.Names}}' | grep "plexautoscan")
   if [[ "$dcheck" == "plexautoscan" ]]; then
-    dstatus="✅ DEPLOYED"
-  else dstatus="⚠️ NOT DEPLOYED"; fi
+    dstatus="✅ DOCKER DEPLOYED"
+  else dstatus="⚠️ DOCKER NOT DEPLOYED"; fi
 }
 tokenstatus() {
   ptokendep=$(cat /var/plexguide/pgscan/plex.token)
   if [[ "$ptokendep" != "" ]]; then
         if [[ ! -f "/opt/appdata/plexautoscan/config/config.json" ]]; then
-                pstatus="❌ DEPLOYED BUT PAS CONFIG MISSING";
+                pstatus="❌ TOKEN DEPLOYED || PAS CONFIG MISSING";
         else
                 PGSELFTEST=$(curl -LI "http://$(hostname -I | awk '{print $1}'):32400/system?X-Plex-Token=$(cat /opt/appdata/plexautoscan/config/config.json | jq .PLEX_TOKEN | sed 's/"//g')" -o /dev/null -w '%{http_code}\n' -s)
-                if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then pstatus="✅ DEPLOYED"
-                else pstatus="❌ DEPLOYED BUT PAS TOKEN FAILED"; fi
+                if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then pstatus="✅ DOCKER DEPLOYED"
+                else pstatus="❌ DOCKER DEPLOYED || PAS TOKEN FAILED"; fi
         fi
   else pstatus="⚠️ NOT DEPLOYED"; fi
 }
