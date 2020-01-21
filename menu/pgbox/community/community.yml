@@ -19,4 +19,4 @@
         force: yes
 
     - name: Set Permission and Owner 
-      shell: 'chown -R 1000:1000 /opt/coreapps && chmod -R 775 /opt/coreapps'
+      shell: 'chown -R 1000:1000 /opt/communityapps && chmod -R 775 /opt/communityapps'
