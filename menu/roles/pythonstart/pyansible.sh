@@ -19,17 +19,16 @@
     pyOpenSSL \
     requests \
     netaddr \
-	pipenv
+    pipenv
   python -m pip install --disable-pip-version-check --upgrade --force-reinstall pip==${pip}
   python -m pip install --disable-pip-version-check --upgrade --force-reinstall setuptools
   python -m pip install --disable-pip-version-check --upgrade --force-reinstall ansible==${1-$ansible}
 
-	pip install -U --force-reinstall pip==9.0.3
-	pip3 install -U --force-reinstall pip==9.0.3
-	pip install --upgrade --force-reinstall pip==9.0.3
-	pip install PyYAML --disable-pip-version-check
-	pip install --upgrade pip
-	pip install docker-py --ignore-installed PyYAML
+  pip install -U --force-reinstall pip==9.0.3
+  pip3 install -U --force-reinstall pip==9.0.3
+  pip install --upgrade --force-reinstall pip==9.0.3
+  pip install --upgrade pip
+  pip install docker-py --ignore-installed PyYAML
 
   ## Copy pip to /usr/bin
   cp /usr/local/bin/pip /usr/bin/pip
