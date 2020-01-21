@@ -10,8 +10,6 @@
         - "There is the possibility that an older reboot is already necessary for {{ansible_hostname}}"
         - "This is needed to process all updates and upgrades of the system."
         when: file_reboot_before.stat.islnk is defined
-        any_errors_fatal: true
-
   when: file_reboot_before.stat.islnk is defined
 
 - name: for {{ansible_hostname}} || Update packages to latest versions on {{ansible_hostname}}
