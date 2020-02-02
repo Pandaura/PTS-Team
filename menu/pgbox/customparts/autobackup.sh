@@ -34,13 +34,6 @@ startup() {
 
   docker ps | awk '{print $NF}' | tail -n +2 >/var/plexguide/pgbox.running
   docker ps | awk '{print $NF}' | tail -n +2 >/var/plexguide/app.list
-
-  file="/opt/coreapps/place.holder"
-  waitvar=0
-  while [ "$waitvar" == "0" ]; do
-    sleep .5
-    if [ -e "$file" ]; then waitvar=1; fi
-  done
 }
 
 autoupdateall() {
@@ -58,12 +51,14 @@ appselect() {
 
   ### List out installed apps
   num=0
-  sed -i -e "/templates/d" /var/plexguide/app.list
-  sed -i -e "/image/d" /var/plexguide/app.list
-  sed -i -e "/ouroboros/d" /var/plexguide/app.list
-  sed -i -e "/oath/d" /var/plexguide/app.list
+  tree -d -L 1 /opt/appdata | awk '{print $2}' | tail -n +2 | head -n -2 >/var/plexguide/app.list
+  
+  sed -i -e "/plexguide/d" /var/plexguide/app.list
   sed -i -e "/oauth/d" /var/plexguide/app.list
   sed -i -e "/traefik/d" /var/plexguide/app.list
+  sed -i -e "/wp-*/d" /var/plexguide/app.list
+  sed -i -e "/*-vpn/d" /var/plexguide/app.list
+
   p="/var/plexguide/pgbox.running"
   while read p; do
     echo -n $p >>/var/plexguide/program.temp
