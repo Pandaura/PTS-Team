@@ -58,7 +58,6 @@ sudo wget -qO- https://raw.githubusercontent.com/MHA-Team/Install/master/install
 
 The installation will then take you through the setup which is self-explanatory.  
 
-
 ### Alternative method of installing PTS fork (without removing your current build)
 
 **NOTE** This has currently only been tested with PG v8.5-8.7  
@@ -82,6 +81,20 @@ sudo wget -qO- https://raw.githubusercontent.com/MHA-Team/Install/master/relocat
 sudo ptsupdate
 
 ```
+
+### Testing Only - Not Supported - Install PTS-Team fork via Windows 10 20H1 WSL2 Ubuntu 18.04
+
+Sammykins has tested installing the PTS-Team form on a Windows 10 machine via the new WSL2 system built into Windows.
+Follow the above (#ii-installing-pts) in a WSL2 terminal shell, if you do not know how to enable WSL2 and install an Ubuntu 18.04 system for this method it is recommended not to install.
+
+DO NOT ASK FOR SUPPORT OR FIXES FOR THIS METHOD IT IS PROVIDED AS-IS AND WE TAKE NO RESPONSIBILITY IF ANYTHING BELOW DOES NOT FUNCTION OR BREAKS YOUR WINDOWS 10 INSTALLATION. YOU DO THE BELOW AT YOUR OWN RISK.
+
+* Follow the following page to install and setup WSL2 ([see here](https://docs.microsoft.com/en-us/windows/wsl/install-win10))
+* Only use an Ubuntu 18.04 VM from the Microsoft Store
+* Prior to install follow this guide to enable systemd: ([see here](https://forum.snapcraft.io/t/running-snaps-on-wsl2-insiders-only-for-now/13033/))
+* The script may fail to create the plexguide network in docker, simply run `docker network create plexguide` to fix
+* Use MultiHD to set another drive as the main path for data, we recommend this if your C drive is too small as WSL2 will default run on the OS drive, e.g. if you have a D: drive, this would be `/mnt/d/pathtoanewfolderforptsfiles`
+* Follow the rest of the guides for configuring PTS
 
 ## Configuring PTS
 
