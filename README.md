@@ -91,7 +91,7 @@ DO NOT ASK FOR SUPPORT OR FIXES FOR THIS METHOD IT IS PROVIDED AS-IS AND WE TAKE
 
 * Follow the following page to install and setup WSL2 ([see here](https://docs.microsoft.com/en-us/windows/wsl/install-win10))
 * Only use an Ubuntu 18.04 VM from the Microsoft Store
-* Prior to install follow this guide to enable systemd: ([see here](https://forum.snapcraft.io/t/running-snaps-on-wsl2-insiders-only-for-now/13033/))
+* Prior to install follow this to enable systemd: ([see here](https://github.com/DamionGans/ubuntu-wsl2-systemd-script))
 * The script may fail to create the plexguide network in docker, simply run `docker network create plexguide` to fix
 * Use MultiHD to set another drive as the main path for data, we recommend this if your C drive is too small as WSL2 will default run on the OS drive, e.g. if you have a D: drive, this would be `/mnt/d/pathtoanewfolderforptsfiles`
 * Follow the rest of the guides for configuring PTS
