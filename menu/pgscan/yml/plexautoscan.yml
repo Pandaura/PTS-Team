@@ -42,7 +42,7 @@
       set_fact:
         pg_volumes:
           - '/mnt/unionfs/:/data'
-          - '/opt/appdata/{{pgrole}}/config:/config'
+          - '/opt/appdata/plexguide:/rclone_config'
           - '/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Plug-in Support/Databases/:/plexDb'
           - '{{path.stdout}}:{{path.stdout}}'
           - '/etc/localtime:/etc/localtime:ro'
