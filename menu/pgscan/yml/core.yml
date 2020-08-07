@@ -70,14 +70,14 @@
 
     - name: 'Auth Check 2'
       set_fact:
-        gauth: ''
+        gauth: 'http://oauth:4181'
       when: authcheck.stat.exists
 
   when: oauth.stdout == 'good'
 
 - name: 'OAuth Exe'
   set_fact:
-    gauth: ''
+    gauth: 'http://oauth:4181'
   when: not oauth.stdout == 'good'
 
 - debug: msg="OAuth - {{oauth.stdout}}"
