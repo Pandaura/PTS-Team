@@ -1,0 +1,158 @@
+#########################################################################
+# Title:         Cloudbox: Plex Autoscan Role                           #
+# Author(s):     l3uddz, desimaniac                                     #
+# URL:           https://github.com/cloudbox/cloudbox                   #
+# --                                                                    #
+#         Part of the Cloudbox project: https://cloudbox.works          #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Services | Check if 'plex_autoscan.service' exists
+  stat:
+    path: "/etc/systemd/system/plex_autoscan.service"
+  register: plex_pas_config
+
+- name: Services | Stop 'plex_autoscan.service'
+  systemd:
+    name: plex_autoscan
+    state: stopped
+  when: plex_pas_config.stat.exists
+
+- name: Remove old Install
+  shell: 'sudo rm -rf /opt/plex_autoscan'
+
+- name: Remove old Install
+  shell: 'sudo rm -rf /opt/appdata/plexautoscan/'
+
+- name: Remove old service
+  shell: 'sudo rm -rf /etc/systemd/system/plex_autoscan.service'
+
+- name: Set plex.user fact | token
+  shell: 'cat /var/plexguide/pgscan/plex.token'
+  register: plex_auth_token
+
+- name: Set plex.user fact | token
+  shell: 'cat /var/plexguide/pgscan/plex.token'
+  register: plex_auth_token_display
+
+- name: Register ServerPass
+  shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
+  register: plex_autoscan_server_pass
+
+- name: Register Fixmatch Lang
+  shell: 'cat /var/plexguide/pgscan/fixmatch.lang'
+  register: fixmatchlang
+
+- name: Register Fixmatch status
+  shell: 'cat /var/plexguide/pgscan/fixmatch.status'
+  register: fixmatchstatus
+
+- name: Register Plex Docker Image status
+  shell: 'cat /var/plexguide/pgscan/plex.docker'
+  register: plex_docker_user
+
+- name: Create mounted.bin for trash
+  shell: 'touch /mnt/unionfs/mounted.bin'
+
+- name: Set User Permission  for Plex Folder | part 1
+  shell: 'chown 1000:1000 "/opt/appdata/plex/database/Library/Application Support/"'
+
+- name: Set User Permission  for Plex Folder | part 2
+  shell: 'chown 1000:1000 /opt/appdata/plex/database/Library/'
+
+- name: Display Plex Auth Token
+  debug:
+    msg: "Plex Auth Token: {{plex_auth_token_display.stdout}}"
+
+- name: Token Recall
+  shell: 'cat /var/plexguide/pgscan/plex.token'
+  register: plex_auth_token
+
+- name: Register Plex Docker Image status
+  shell: 'cat /var/plexguide/pgscan/plex.docker'
+  register: plex_docker_user
+
+- name: Settings | Install required packages
+  apt:
+    state: present
+    name:
+      - jq
+      - moreutils
+
+- name: Settings | Check if 'config.json' exists
+  stat:
+    path: "/opt/appdata/plexautoscan/config.json"
+  register: plex_autoscan_config
+
+- name: Settings | New 'config.json' tasks
+  block:
+
+  - name: Create plex_autoscan directories
+    file: "path={{ item }} state=directory mode=0775 owner=1000 group=1000 recurse=yes"
+    with_items:
+      - '/opt/appdata/plexautoscan/'
+      - '/opt/appdata/plexautoscan/config'
+
+  - name: Settings | Import default 'config.json'
+    template:
+      src: /opt/plexguide/menu/pgscan/templates/config.json.j2
+      dest: /opt/appdata/plexautoscan/config/config.json
+      owner: '1000'
+      group: '1000'
+      mode: 0775
+      force: yes
+
+  - name: Clone plex_autoscan repo 'master'
+  git:
+    repo: https://github.com/l3uddz/plex_autoscan.git
+    dest: /opt/plex_autoscan
+    clone: yes
+    version: master
+    force: yes
+  become: yes
+  become_user: "1000"
+
+  - name: Set 'scan.py' as executable
+  file:
+    path: /opt/plex_autoscan/scan.py
+    owner: "1000"
+    group: "1000"
+    mode: a+x
+
+  - name: Remove .githube folder and .git files
+  file: "path={{ item }} state=absent"
+  with_items:
+    - '/opt/plex_autoscan/.git'
+    - '/opt/plex_autoscan/.github'
+    - '/opt/plex_autoscan/assets'
+    - '/opt/plex_autoscan/.gitignore'
+    - '/opt/plex_autoscan/config/config.json.sample'
+    - '/opt/plex_autoscan/README.bak.md'
+    - '/opt/plex_autoscan/README.md'
+    - '/opt/plex_autoscan/RCONTRIBUTING.md'
+
+  - name: Token Recall
+    shell: 'cat /var/plexguide/pgscan/plex.token'
+    register: plex_auth_token
+
+  - name: Register ServerPass
+    shell: 'cat /var/plexguide/pgscan/pgscan.serverpass'
+    register: plex_autoscan_server_pass
+
+  - name: Register Fixmatch Lang
+    shell: 'cat /var/plexguide/pgscan/fixmatch.lang'
+    register: fixmatchlang
+
+  - name: Register Fixmatch status
+    shell: 'cat /var/plexguide/pgscan/fixmatch.status'
+    register: fixmatchstatus
+
+  - name: Register Plex Docker Image status
+    shell: 'cat /var/plexguide/pgscan/plex.docker'
+    register: plex_docker_user
+
+  when: not plex_autoscan_config.stat.exists
+
+- name: 'Setting ownership on appdata'
+  shell: 'chown 1000:1000 /opt/appdata/{{pgrole}}'
