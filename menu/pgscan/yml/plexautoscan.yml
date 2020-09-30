@@ -11,7 +11,7 @@
         pgrole: 'plexautoscan'
         intport: '3468'
         extport: '3468'
-        image: 'sabrsorensen/alpine-plex_autoscan'
+        image: 'sabrsorensen/alpine-plex_autoscan:1df2c05'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
