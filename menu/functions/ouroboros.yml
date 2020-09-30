@@ -37,7 +37,7 @@
           LOG_LEVEL: 'info'
           SELF_UPDATE: 'true'
           MONITOR: '{{pgupdater.stdout}}' #Can set to specific container only see wiki for details (https://github.com/pyouroboros/ouroboros/wiki/Usage#monitor)
-          IGNORE: 'mariadb influxdb mongo postgres'
+          IGNORE: 'mariadb influxdb mongo postgres plexautoscan'
           LABELS_ONLY: 'false' #https://github.com/pyouroboros/ouroboros/wiki/Usage#label-enable
           LABEL_ENABLE: 'false'
  #         DATA_EXPORT: 'influxdb'
