@@ -1,13 +1,20 @@
+**PTS is currently in maintenance mode and is considered feature complete.** From time-to-time developers will take it upon themselves to add new containers to Community-Apps as requested and update the Core-Apps whenever required.
+
+We consider PTS to be a remarkable collaborative achievement and take pride in the fact we have built a solid foundation for any person to setup and learn basic Linux and also run a media server with minimal effort.
+
+We encourage anyone wanting to contribute to the project in the future to join our community, this is also where we provide support: https://discord.gg/cKsMwMZ
+
+Thanks to our valued contributors over the past couple of years, you have helped create something to be proud of and that will serve the community well into the future.
+
+**You know who you are.** PTS is forever, others will come and go.
 
 _**Table of Contents**_
 
 1. [Install](#1-install)
 2. [Project Statement](#2-project-statement)
 3. [Functional Use](#3-functional-use)
-4. [Testimonials](#4-testimonials)
-5. [Recommended Reading](#5-recommended-reading)
-6. [Having Issues?](#6-having-issues)
-
+4. [Recommended Reading](#5-recommended-reading)
+5. [Having Issues?](#6-having-issues)
 
 ----
 
@@ -116,8 +123,8 @@ Then type the following to run the PTS menu: `sudo pts`
 
 * (Optional) If overwriting/restoring, you will need to change 2 remote path mappings in applications (NZB clients / Torrent clients / radarr / sonarr / lidarr etc)    [see here](https://github.com/MHA-Team/PTS-Team/wiki/Remote-Path-Mappings)
 
-
 **Why do I need to change remote paths?**  
+
 PTS will create one download folder for completed downloads using any NZB client `/mnt/downloads/nzb` and one download folder for completed downloads using any torrent client `/mnt/downloads/torrent`. Both folder names are different to those used in previous versions of PTS. This remote paths need to be changed in your configuration settings (nzbget/radarr/sonarr etc) which you can do in either in terminal or webUI.  
 
 **NOTE**  PTS fork does **not** install PGUI by default.   
@@ -136,15 +143,12 @@ PTS  is a **fork** of PG / Plexguide, an all-in-one media solution that deploys 
 1. Aligns data and ports for efficiency
 1. Deploys with a simple installer and a GUI like interface (commands do not have to be typed out)
 
-# 4. Testimonials
-
 .....
 
-
-# 5. Recommended Reading
+# 4. Recommended Reading
 
 [**[Click Here]**](https://github.com/MHA-Team/PTS-Team/wiki/Pre-Reading) to view the list!
 
-## 6. Having Issues?
+## 5. Having Issues?
 
 [**[Click Here]**](https://github.com/MHA-Team/PTS-Team/wiki/Common-Issues) for more information!
