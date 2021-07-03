@@ -59,7 +59,7 @@ sudo apt-get update -yqq
 sudo apt-get upgrade -yqq
 sudo apt-get autoclean -yqq
 sudo apt-get install wget -y
-sudo wget -qO- https://raw.githubusercontent.com/MHA-Team/Install/master/install.sh | sudo bash
+sudo wget -qO- https://raw.githubusercontent.com/pandaura/Install/master/install.sh | sudo bash
 
 ```
 
