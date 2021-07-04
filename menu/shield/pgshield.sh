@@ -1,18 +1,18 @@
 #!/bin/bash
 #
-# Title:      PGBlitz (Reference Title File)
-# Author(s):  Admin9705 - Deiteq
-# URL:        https://pgblitz.com - http://github.pgblitz.com
+# Title:      PTSUpdate Manual
+# Author(s):  MrDoob for PTS
 # GNU:        General Public License v3.0
 ################################################################################
-source /opt/plexguide/menu/functions/functions.sh
+rm -rf /opt/ptsupdate 1>/dev/null 2>&1
+mkdir -p /opt/ptsupdate 1>/dev/null 2>&1
+git clone --single-branch https://github.com/Pandaura/PTS-Update.git /opt/ptsupdate 1>/dev/null 2>&1
+chown -cR 1000:1000 /opt/ptsupdate 1>/dev/null 2>&1
+chmod -cR 775 /opt/ptsupdate 1>/dev/null 2>&1
 
-question1() {
-  touch /var/plexguide/auth.bypass
+source /opt/ptsupdate/autoupdate/update.sh
 
-  a7=$(cat /var/plexguide/auth.bypass)
-  if [[ "$a7" != "good" ]]; then shieldcheck; fi
-  echo good >/var/plexguide/auth.bypass
+start0
 
   touch /var/plexguide/pgshield.emails
   mkdir -p /var/plexguide/auth/
@@ -267,7 +267,7 @@ webid() {
 
 Note :  Use the link for more information 
 
-https://github.com/MHA-Team/PTS-Team/wiki/PTS-Shield
+https://github.com/Pandaura/PTS-Team/wiki/PTS-Shield
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [Z] Exit
