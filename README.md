@@ -59,7 +59,7 @@ sudo apt-get update -yqq
 sudo apt-get upgrade -yqq
 sudo apt-get autoclean -yqq
 sudo apt-get install wget -y
-sudo wget -qO- https://raw.githubusercontent.com/pandaura/Install/master/install.sh | sudo bash
+sudo wget -qO- https://raw.githubusercontent.com/Pandaura/Install/master/install.sh | sudo bash
 
 ```
 
@@ -76,14 +76,14 @@ sudo apt-get update -yqq
 sudo apt-get upgrade -yqq
 sudo apt-get autoclean -yqq
 sudo apt-get install wget -y
-sudo wget -qO- https://raw.githubusercontent.com/MHA-Team/Install/master/install.sh | sudo bash
+sudo wget -qO- https://raw.githubusercontent.com/Pandaura/Install/master/install.sh | sudo bash
 
 ```    
 ### Optional - updating your PTS-Team fork to the new MHA-Team fork
 IDoMnCi came up with a great script to change all the links on an existing PTS-Team fork (NOT PG 8.x) to the MHA-Team fork.
 Details - https://github.com/Pandaura/Install/pull/4
 ```
-sudo wget -qO- https://raw.githubusercontent.com/MHA-Team/Install/master/relocate.sh | sudo bash
+sudo wget -qO- https://raw.githubusercontent.com/Pandaura/Install/master/relocate.sh | sudo bash
 
 sudo ptsupdate
 
