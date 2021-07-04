@@ -1,12 +1,14 @@
-**PTS is currently in maintenance mode and is considered feature complete.** From time-to-time developers will take it upon themselves to add new containers to Community-Apps as requested and update the Core-Apps whenever required.
+This is a fork of PTS/MHA called Pandaura. Thank you to all who contributed to the project. No features are really added to MHA anymore as it is in maintenance mode so I will be making some ammendments here.
 
-We consider PTS to be a remarkable collaborative achievement and take pride in the fact we have built a solid foundation for any person to setup and learn basic Linux and also run a media server with minimal effort.
-
-We encourage anyone wanting to contribute to the project in the future to join our community, this is also where we provide support: https://discord.gg/cKsMwMZ
-
-Thanks to our valued contributors over the past couple of years, you have helped create something to be proud of and that will serve the community well into the future.
-
-**You know who you are.** PTS is forever, others will come and go.
+Traefik V2
+Authelia
+Cloud Companion
+Python Plex Library - own version with scraping using dialogue
+Spelling/typos/general script tidy up
+Refresh
+Ouroboros -- It's no longer in development https://github.com/pyouroboros/ouroboros
+Core Apps - Update
+Community Apps - Update
 
 _**Table of Contents**_
 
