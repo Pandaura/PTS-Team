@@ -18,7 +18,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⌛ Cron - Schedule Cron Jobs (Backups) | $program?
+⌛ Cron - Would you like to schedule Cron Jobs (Backups) for $program?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [ 1 ] No
@@ -27,13 +27,13 @@ question1() {
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-  if [ "$typed" == "1" ]; then
-    ansible-playbook /opt/plexguide/menu/cron/remove.yml && exit
-  elif [ "$typed" == "2" ]; then
-    break="on"
-  else badinput; fi
+    
+    read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+    if [ "$typed" == "1" ]; then
+        ansible-playbook /opt/plexguide/menu/cron/remove.yml && exit
+        elif [ "$typed" == "2" ]; then
+        break="on"
+else badinput; fi
 }
 
 # SECOND QUESTION
@@ -41,10 +41,10 @@ question2() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⌛  Cron - Backup How Often?
+⌛  Cron - How often and when do you want to run backups?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-WEEKLY
+WEEKLY BACKUP SCHEDULE
 
 [ 0 / 7 ] - Sunday
 [ 1 ]     - Monday
@@ -54,7 +54,7 @@ WEEKLY
 [ 5 ]     - Friday
 [ 6 ]     - Saturday
 
-DAILY
+DAILY BACKUPS
 [ 8 ] - Daily
 
 RANDOM
@@ -62,12 +62,12 @@ RANDOM
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-
-read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-  
-if [[ "$typed" -ge "0" && "$typed" -le "7" ]]; then echo $typed >/var/plexguide/cron/cron.day && break=1;
-elif [ "$typed" == "8" ]; then echo "*" > /var/plexguide/cron/cron.day && break=1;
-elif [ "$typed" == "9" ]; then echo $RAN >/var/plexguide/cron/cron.day && break=1;
+    
+    read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+    
+    if [[ "$typed" -ge "0" && "$typed" -le "7" ]]; then echo $typed >/var/plexguide/cron/cron.day && break=1;
+        elif [ "$typed" == "8" ]; then echo "*" > /var/plexguide/cron/cron.day && break=1;
+        elif [ "$typed" == "9" ]; then echo $RAN >/var/plexguide/cron/cron.day && break=1;
 else badinput; fi
 }
 
@@ -76,7 +76,7 @@ question3() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⌛ Cron - Hour of the Day?
+⌛ Cron - Select time of the day?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Type an HOUR from [0 to 23]
@@ -87,11 +87,11 @@ Type an HOUR from [0 to 23]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-
-  read -p '↘️  Type a Number | Press [ENTER]: ' typed </dev/tty
-  if [[ "$typed" -ge "0" && "$typed" -le "23" ]]; then
-    echo $typed >/var/plexguide/cron/cron.hour && break=1
-  else badinput; fi
+    
+    read -p '↘️  Type a Number | Press [ENTER]: ' typed </dev/tty
+    if [[ "$typed" -ge "0" && "$typed" -le "23" ]]; then
+        echo $typed >/var/plexguide/cron/cron.hour && break=1
+else badinput; fi
 }
 
 # FUNCTIONS END ##############################################################

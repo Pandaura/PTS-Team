@@ -109,11 +109,11 @@ while true; do
   fi
   ##### Warning for Ports Open with Traefik Deployed
   if [[ $(cat /var/plexguide/pg.ports) != "Closed" && $(docker ps --format '{{.Names}}' | grep "traefik") == "traefik" ]]; then
-    echo "Warning: Traefik deployed with ports open! Server at risk for explotation!" >/opt/appdata/plexguide/emergency/message.a
+    echo "Warning: Traefik has been deployed with ports open! Server is at risk for exploitation!" >/opt/appdata/plexguide/emergency/message.a
   elif [[ -e "/opt/appdata/plexguide/emergency/message.a" ]]; then rm -rf /opt/appdata/plexguide/emergency/message.a; fi
 
   if [[ $(cat /var/plexguide/pg.ports) == "Closed" && $(docker ps --format '{{.Names}}' | grep "traefik") == "" ]]; then
-    echo "Warning: Apps Cannot Be Accessed! Ports are Closed & Traefik is not enabled! Either deploy traefik or open your ports (which is worst for security)" >/opt/appdata/plexguide/emergency/message.b
+    echo "Warning: Apps cannot be accessed! Ports are closed & Traefik is not deployed! Either deploy Traefik or open your ports (which is worst for security)" >/opt/appdata/plexguide/emergency/message.b
   elif [[ -e "/opt/appdata/plexguide/emergency/message.b" ]]; then rm -rf /opt/appdata/plexguide/emergency/message.b; fi
   ##### Warning for Bad Traefik Deployment - message.c is tied to traefik showing a status! Do not change unless you know what your doing
   touch /opt/appdata/plexguide/traefik.check
@@ -124,7 +124,7 @@ while true; do
   fi
   wget -q "https://${cname}.${domain}" -O "/opt/appdata/plexguide/traefik.check"
   if [[ $(cat /opt/appdata/plexguide/traefik.check) == "" && $(docker ps --format '{{.Names}}' | grep "traefik" ) == "traefik" ]]; then
-    echo "Traefik is Not Deployed Properly! Cannot Reach the Portainer SubDomain!" >/opt/appdata/plexguide/emergency/message.c
+    echo "Traefik is not deployed properly! Cannot Reach the Portainer SubDomain!" >/opt/appdata/plexguide/emergency/message.c
   else
     if [[ -e "/opt/appdata/plexguide/emergency/message.c" ]]; then
       rm -rf /opt/appdata/plexguide/emergency/message.c
@@ -132,7 +132,7 @@ while true; do
   fi
   ##### Warning for Traefik Rate Limit Exceeded
   if [[ $(cat /opt/appdata/plexguide/traefik.check) == "" && $(docker logs traefik | grep "rateLimited") != "" ]]; then
-    echo "$domain's rated limited exceed | Traefik (LetsEncrypt)! Takes upto one week to clear up (or use a new domain)" >/opt/appdata/plexguide/emergency/message.d
+    echo "$domain's rated limited exceed | Traefik (LetsEncrypt)! Takes up to one week to clear up (or use a new domain)" >/opt/appdata/plexguide/emergency/message.d
   else
     if [[ -e "/opt/appdata/plexguide/emergency/message.d" ]]; then
       rm -rf /opt/appdata/plexguide/emergency/message.d
