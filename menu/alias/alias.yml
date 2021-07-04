@@ -50,6 +50,14 @@
         mode: 0775
         owner: root
 
+        - name: Pandaura
+      template:
+        src: pandaura
+        dest: /bin/pandaura
+        force: yes
+        mode: 0775
+        owner: root
+
     ###### Server reboot
 
     - name: server reboot
