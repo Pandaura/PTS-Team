@@ -1,14 +1,14 @@
 This is a fork of PTS/MHA called Pandaura. Thank you to all who contributed to the project. No features are really added to MHA anymore as it is in maintenance mode so I will be making some ammendments here.
 
-Traefik V2
-Authelia
-Cloud Companion
-Python Plex Library - own version with scraping using dialogue
-Spelling/typos/general script tidy up
-Refresh
-Ouroboros -- It's no longer in development https://github.com/pyouroboros/ouroboros
-Core Apps - Update
-Community Apps - Update
+Traefik V2  
+Authelia  
+Cloud Companion  
+Python Plex Library - own version with scraping using dialogue  
+Spelling/typos/general script tidy up  
+Refresh  
+Ouroboros -- It's no longer in development https://github.com/pyouroboros/ouroboros  
+Core Apps - Update  
+Community Apps - Update  
 
 _**Table of Contents**_
 
