@@ -1,4 +1,6 @@
-This is a fork of PTS/MHA called Pandaura. Thank you to all who contributed to the project. No features are really added to MHA anymore as it is in maintenance mode so I will be making some ammendments here.
+This is a fork of PTS/MHA called Pandaura. Thank you to all who contributed to the project. No features are really added to MHA anymore as it is in maintenance mode so I will be making some ammendments here. This will be tackled in waves meaning I'll hit each section head on with the odd ripple here and there.
+
+Current section being worked on - Vault  
 
 Traefik V2  
 Authelia  
@@ -6,9 +8,9 @@ Cloud Companion
 Python Plex Library - own version with scraping using dialogue  
 Spelling/typos/general script tidy up  
 Refresh  
-Ouroboros -- It's no longer in development https://github.com/pyouroboros/ouroboros  
-Core Apps - Update  
-Community Apps - Update  
+Ouroboros -- It's no longer in development so why use it https://github.com/pyouroboros/ouroboros  
+Core Apps - Update the list of Core apps  
+Community Apps - Update the list of Community apps  
 
 _**Table of Contents**_
 
