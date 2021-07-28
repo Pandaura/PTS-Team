@@ -166,7 +166,7 @@ menuprime1() {
 🌵 Disk Used Space: $used of $capacity | $percentage Used Capacity
 EOF
 
-  # Displays Second Drive If GCE
+  # Displays Second Drive of GCE
   edition=$(cat /var/plexguide/pg.server.deploy)
   if [ "$edition" == "feeder" ]; then
     used_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $3}')
@@ -228,6 +228,17 @@ EOF
 }
 
 menuprime2() {
+  #welcome="Welcome to Pandaura. Thanks for being part of the community"
+  #firstRun=True
+#def writeFile(number):
+ #   global firstRun
+  #  if firstRun:
+   #     print("${welcome}")
+    #    firstRun=False
+    #print(str(number))
+
+#for i in range(10):
+ #   writeFile(i)
   transport=$(cat /var/plexguide/pg.transport)
 
   # Menu Interface
@@ -269,20 +280,20 @@ EOF
 
   tee <<-EOF
 
-[1]  PTS-Traefik    : Reverse Proxy
+[1]  Traefik        : Reverse Proxy | Domain Setup
 [2]  Port Guard     : [$ports] Protects the Server App Ports
-[3]  PTS-Shield     : Enable Google's OAuthentication Protection
-[4]  PTS-Clone      : Mount Transport
-[5]  PTS-Apps       : Apps ~ Core, Community & Removal
+[3]  Authelia       : Enable Authelia
+[4]  Mount          : Mount Cloud Based Storage
+[5]  Apps           : Apps ~ Core, Community & Removal
 [6]  CBOX-PAS       : PlexAutoScan 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[7]  PTS-WordPress  : Deploy WordPress Instances
-[8]  PTS-Vault      : Backup & Restore
-[9]  PTS-Cloud      : GCE & Virtual Instances
+[7]  WordPress      : Deploy WordPress
+[8]  Vault          : Backup & Restore
+[9]  Cloud          : GCE & Hetzner Instances
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[10] CBOX-PDUPE     : Find and delete duplicate files in Plex
-[11] Traktarr       : Fill Sonarr/Radarr over Trakt lists.
-[12] Plex Patrol    : Kick transcodes (audio or video or both)
+[10] CBOX-PDUPE     : Find | delete duplicate files in Plex
+[11] Traktarr       : Fill arr's with Trakt lists.
+[12] Plex Patrol    : Kick transcodes (audio/video or both)
 [13] Settings 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [Z]  Exit
