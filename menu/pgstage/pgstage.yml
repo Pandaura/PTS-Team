@@ -7,9 +7,9 @@
         path: /opt/pgstage
       register: stat_result
     - debug:
-        msg: "PTS Check for missing pull"
+        msg: "Pandaura is checking folder exists"
 
-    - name: 'Cloning PTS Install files'
+    - name: 'Cloning Pandaura Install files'
       git:
         repo: 'https://github.com/Pandaura/Install'
         dest: '/opt/pgstage'
@@ -23,7 +23,7 @@
         path: /opt/pgstage
       register: p
     - debug:
-        msg: "Path exists and PTS folder are pulled"
+        msg: "Path exists"
       when: p.stat.isdir is defined and p.stat.isdir
 
     - name: Remove .githube folder and .git files

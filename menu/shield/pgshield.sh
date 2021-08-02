@@ -4,6 +4,7 @@
 # Author(s):  MrDoob for PTS
 # GNU:        General Public License v3.0
 ################################################################################
+typed="${typed,,}"
 rm -rf /opt/ptsupdate 1>/dev/null 2>&1
 mkdir -p /opt/ptsupdate 1>/dev/null 2>&1
 git clone --single-branch https://github.com/Pandaura/PTS-Update.git /opt/ptsupdate 1>/dev/null 2>&1
@@ -14,15 +15,15 @@ source /opt/ptsupdate/autoupdate/update.sh
 
 start0
 
-  touch /var/plexguide/pgshield.emails
-  mkdir -p /var/plexguide/auth/
+touch /var/plexguide/pgshield.emails
+mkdir -p /var/plexguide/auth/
 
-  domain=$(cat /var/plexguide/server.domain)
+domain=$(cat /var/plexguide/server.domain)
 
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛡️  PTS-Shield 
+🛡️  PTS-Shield
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 💬   Shield requires Google Web Auth Keys!
 
@@ -36,70 +37,70 @@ start0
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-  phase1
+phase1
 }
 
 phase1() {
 
-  read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
+read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
 
-  case $typed in
-  1) webid && phase1 ;;
-  2) email && phase1 ;;
-  3) appexempt && phase1 ;;
-  4)
-    # Sanity Check to Ensure At Least 1 Authorized User Exists
-    touch /var/plexguide/pgshield.emails
-    efg=$(cat "/var/plexguide/pgshield.emails")
-    if [[ "$efg" == "" ]]; then
-      echo
-      echo "SANITY CHECK: No Authorized Users have been Added! Exiting!"
-      read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
-      question1
-    fi
-
-    # Sanity Check to Ensure that Web ID ran domaincheck
-    file="/var/plexguide/auth.idset"
-    if [ ! -e "$file" ]; then
-      echo
-      echo "SANITY CHECK: You Must @ Least Run the Web ID Interface Once!"
-      read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
-      question1
-    fi
-
-    # Sanity Check to Ensure Ports are closed
-    touch /var/plexguide/server.ports
-    ports=$(cat "/var/plexguide/server.ports")
-    if [ "$ports" != "127.0.0.1:" ]; then
-      echo
-      echo "SANITY CHECK: Ports are open, PTS-Shield cannot be enabled until they are closed due to security risks!"
-      read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
-      question1
-    fi
-
-    touch /var/plexguide/pgshield.compiled
-    rm -r /var/plexguide/pgshield.compiled
-    while read p; do
-      echo -n "$p," >>/var/plexguide/pgshield.compiled
-    done </var/plexguide/pgshield.emails
-
-    ansible-playbook /opt/plexguide/menu/shield/pgshield.yml
+case $typed in
+    1) webid && phase1 ;;
+    2) email && phase1 ;;
+    3) appexempt && phase1 ;;
+    4)
+        # Sanity Check to Ensure At Least 1 Authorized User Exists
+        touch /var/plexguide/pgshield.emails
+        efg=$(cat "/var/plexguide/pgshield.emails")
+        if [[ "$efg" == "" ]]; then
+            echo
+            echo "SANITY CHECK: No Authorized Users have been Added! Exiting!"
+            read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            question1
+        fi
+        
+        # Sanity Check to Ensure that Web ID ran domaincheck
+        file="/var/plexguide/auth.idset"
+        if [ ! -e "$file" ]; then
+            echo
+            echo "SANITY CHECK: You Must @ Least Run the Web ID Interface Once!"
+            read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            question1
+        fi
+        
+        # Sanity Check to Ensure Ports are closed
+        touch /var/plexguide/server.ports
+        ports=$(cat "/var/plexguide/server.ports")
+        if [ "$ports" != "127.0.0.1:" ]; then
+            echo
+            echo "SANITY CHECK: Ports are open, PTS-Shield cannot be enabled until they are closed due to security risks!"
+            read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            question1
+        fi
+        
+        touch /var/plexguide/pgshield.compiled
+        rm -r /var/plexguide/pgshield.compiled
+        while read p; do
+            echo -n "$p," >>/var/plexguide/pgshield.compiled
+        done </var/plexguide/pgshield.emails
+        
+        ansible-playbook /opt/plexguide/menu/shield/pgshield.yml
     rebuild && endbanner && question1 ;;
-  z) exit ;;
-  Z) exit ;;
-  *) question1 ;;
-  esac
+    z) exit ;;
+    Z) exit ;;
+    *) question1 ;;
+esac
 }
 
 appexempt() {
-  bash /opt/coreapps/apps/_appsgen.sh
-  bash /opt/communityapps/apps/_appsgen.sh
-  ls -l /var/plexguide/auth | awk '{ print $9 }' >/var/plexguide/pgshield.ex15
+bash /opt/coreapps/apps/_appsgen.sh
+bash /opt/communityapps/apps/_appsgen.sh
+ls -l /var/plexguide/auth | awk '{ print $9 }' >/var/plexguide/pgshield.ex15
 
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛡️ PTS-Shield ~ App Protection 
+🛡️ PTS-Shield ~ App Protection
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] Disable PTS-Shield for a single app
@@ -112,56 +113,56 @@ appexempt() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-  phase3
+phase3
 }
 
 phase3() {
-  read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
+read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
 
-  case $typed in
-  1) phase31 && appexempt ;;
-  2) phase21 && appexempt ;;
-  3)
-    emptycheck=$(cat /var/plexguide/pgshield.ex15)
-    if [[ "$emptycheck" == "" ]]; then
-      echo
-      read -p 'No Apps have PTS-Shield Disabled! Exiting | Press [ENTER]'
-      appexempt
-    fi
-    rm -rf /var/plexguide/auth/*
-    echo ""
-    echo "NOTE: Does not take effect until PTS-Shield is redeployed!"
-    read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
+case $typed in
+    1) phase31 && appexempt ;;
+    2) phase21 && appexempt ;;
+    3)
+        emptycheck=$(cat /var/plexguide/pgshield.ex15)
+        if [[ "$emptycheck" == "" ]]; then
+            echo
+            read -p 'No Apps have PTS-Shield Disabled! Exiting | Press [ENTER]'
+            appexempt
+        fi
+        rm -rf /var/plexguide/auth/*
+        echo ""
+        echo "NOTE: Does not take effect until PTS-Shield is redeployed!"
+        read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
     appexempt ;;
-  z) question1 ;;
-  Z) question1 ;;
-  *) appexempt ;;
-  esac
+    z) question1 ;;
+    Z) question1 ;;
+    *) appexempt ;;
+esac
 
 }
 
 phase31() {
-  touch /var/plexguide/app.list
-  while read p; do
+touch /var/plexguide/app.list
+while read p; do
     sed -i -e "/$p/d" /var/plexguide/app.list
-  done </var/plexguide/pgshield.ex15
+done </var/plexguide/pgshield.ex15
 
-  ### Blank Out Temp List
-  rm -rf /var/plexguide/program.temp && touch /var/plexguide/program.temp
+### Blank Out Temp List
+rm -rf /var/plexguide/program.temp && touch /var/plexguide/program.temp
 
-  ### List Out Apps In Readable Order (One's Not Installed)
-  num=0
-  while read p; do
+### List Out Apps In Readable Order (One's Not Installed)
+num=0
+while read p; do
     echo -n $p >>/var/plexguide/program.temp
     echo -n " " >>/var/plexguide/program.temp
     num=$((num + 1))
     if [ "$num" == 7 ]; then
-      num=0
-      echo " " >>/var/plexguide/program.temp
+        num=0
+        echo " " >>/var/plexguide/program.temp
     fi
-  done </var/plexguide/app.list
+done </var/plexguide/app.list
 
-  notrun=$(cat /var/plexguide/program.temp)
+notrun=$(cat /var/plexguide/program.temp)
 
   tee <<-EOF
 
@@ -178,50 +179,50 @@ $notrun
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-  read -p '🌍 Type APP to disable PTS-Shield | Press [ENTER]: ' typed </dev/tty
+read -p '🌍 Type APP to disable PTS-Shield | Press [ENTER]: ' typed </dev/tty
 
-  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then appexempt; fi
+if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then then appexempt; fi
 
-  grep -w "$typed" /var/plexguide/program.temp >/var/plexguide/check55.sh
-  usercheck=$(cat /var/plexguide/check55.sh)
+grep -w "$typed" /var/plexguide/program.temp >/var/plexguide/check55.sh
+usercheck=$(cat /var/plexguide/check55.sh)
 
-  if [[ "$usercheck" == "" ]]; then
+if [[ "$usercheck" == "" ]]; then
     echo
     read -p 'App does not exist! | Press [ENTER] ' note </dev/tty
     appexempt
-  fi
+fi
 
-  touch /var/plexguide/auth/$typed
-  echo
-  echo "NOTE: No effect until PTS-Shield or the app is redeployed!"
-  read -p '🌍 Acknoweldge! | Press [ENTER] ' note </dev/tty
-  appexempt
+touch /var/plexguide/auth/$typed
+echo
+echo "NOTE: No effect until PTS-Shield or the app is redeployed!"
+read -p '🌍 Acknoweldge! | Press [ENTER] ' note </dev/tty
+appexempt
 }
 
 phase21() {
 
-  emptycheck=$(cat /var/plexguide/pgshield.ex15)
-  if [[ "$emptycheck" == "" ]]; then
+emptycheck=$(cat /var/plexguide/pgshield.ex15)
+if [[ "$emptycheck" == "" ]]; then
     echo
     read -p 'No apps are exempt! Exiting | Press [ENTER]'
     appexempt
-  fi
-  ### Blank Out Temp List
-  rm -rf /var/plexguide/program.temp && touch /var/plexguide/program.temp
+fi
+### Blank Out Temp List
+rm -rf /var/plexguide/program.temp && touch /var/plexguide/program.temp
 
-  ### List Out Apps In Readable Order (One's Not Installed)
-  num=0
-  while read p; do
+### List Out Apps In Readable Order (One's Not Installed)
+num=0
+while read p; do
     echo -n $p >>/var/plexguide/program.temp
     echo -n " " >>/var/plexguide/program.temp
     num=$((num + 1))
     if [ "$num" == 7 ]; then
-      num=0
-      echo " " >>/var/plexguide/program.temp
+        num=0
+        echo " " >>/var/plexguide/program.temp
     fi
-  done </var/plexguide/pgshield.ex15
+done </var/plexguide/pgshield.ex15
 
-  notrun=$(cat /var/plexguide/program.temp)
+notrun=$(cat /var/plexguide/program.temp)
 
   tee <<-EOF
 
@@ -238,11 +239,11 @@ $notrun
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-  read -p '🌍 Type app to enable PTS-Shield | Press [ENTER]: ' typed </dev/tty
+read -p '🌍 Type app to enable PTS-Shield | Press [ENTER]: ' typed </dev/tty
 
-  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then appexempt; fi
+if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then then appexempt; fi
 
-  grep -w "$typed" /var/plexguide/pgshield.ex15 >/var/plexguide/check55.sh
+grep -w "${typed} /var/plexguide/pgshield.ex15 >/var/plexguide/check55.sh
   usercheck=$(cat /var/plexguide/check55.sh)
 
   if [[ "$usercheck" == "" ]]; then
@@ -251,7 +252,7 @@ EOF
     appexempt
   fi
 
-  rm -rf /var/plexguide/auth/$typed
+  rm -rf /var/plexguide/auth/${typed}
   echo
   echo "NOTE: No effect until PTS-Shield or the app is redeployed!"
   read -p '🌍 Acknoweldge! | Press [ENTER] ' note </dev/tty
@@ -265,7 +266,7 @@ webid() {
 🔑 Google Web Keys - Client ID
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Note :  Use the link for more information 
+Note :  Use the link for more information
 
 https://github.com/Pandaura/PTS-Team/wiki/PTS-Shield
 
@@ -313,34 +314,34 @@ phase2() {
 
   read -p 'Type a Number | Press [ENTER]: ' typed </dev/tty
 
-  case $typed in
+  case ${typed} in
   1)
     echo
     read -p 'User Email to Add | Press [ENTER]: ' typed </dev/tty
 
-    emailcheck=$(echo $typed | grep "@")
+    emailcheck=$(echo ${typed} | grep "@")
     if [[ "$emailcheck" == "" ]]; then
       read -p 'Invalid E-Mail! | Press [ENTER] ' note </dev/tty
       email
     fi
 
-    usercheck=$(cat /var/plexguide/pgshield.emails | grep $typed)
+    usercheck=$(cat /var/plexguide/pgshield.emails | grep ${typed})
     if [[ "$usercheck" != "" ]]; then
       read -p 'User Already Exists! | Press [ENTER] ' note </dev/tty
       email
     fi
     read -p 'User Added | Press [ENTER] ' note </dev/tty
-    echo "$typed" >>/var/plexguide/pgshield.emails
+    echo "${typed}" >>/var/plexguide/pgshield.emails
     email ;;
   2)
     echo
     read -p 'User Email to Remove | Press [ENTER]: ' typed </dev/tty
-    testremove=$(cat /var/plexguide/pgshield.emails | grep $typed)
+    testremove=$(cat /var/plexguide/pgshield.emails | grep ${typed})
     if [[ "$testremove" == "" ]]; then
       read -p 'User does not exist | Press [ENTER] ' typed </dev/tty
       email
     fi
-    sed -i -e "/$typed/d" /var/plexguide/pgshield.emails
+    sed -i -e "/${typed}/d" /var/plexguide/pgshield.emails
     echo ""
     echo "NOTE: Does not take effect until PTS-Shield is redeployed!"
     read -p 'Removed User | Press [ENTER] ' typed </dev/tty

@@ -1,25 +1,25 @@
- #/bin/bash 
+#/bin/bash
 ####rcwebui.sh
 start0() {
-folder && rcwebui
+    folder && rcwebui
 }
 
 folder() {
-if [[ ! -e "/var/plexguide/rcwebui" ]]; then 
-	remove
+    if [[ ! -e "/var/plexguide/rcwebui" ]]; then
+        remove
 else create; fi
 }
 
 remove() {
-	rm -rf /var/plexguide/rcwebui
-	mkdir -p /var/plexguide/rcwebui
-	echo "NOT-SET" >/var/plexguide/rcwebui/rcuser.user
-	echo "NOT-SET" >/var/plexguide/rcwebui/rcpass.pass
+    rm -rf /var/plexguide/rcwebui
+    mkdir -p /var/plexguide/rcwebui
+    echo "NOT-SET" >/var/plexguide/rcwebui/rcuser.user
+    echo "NOT-SET" >/var/plexguide/rcwebui/rcpass.pass
 }
 create() {
-	mkdir -p /var/plexguide/rcwebui
-	echo "NOT-SET" >/var/plexguide/rcwebui/rcuser.user
-	echo "NOT-SET" >/var/plexguide/rcwebui/rcpass.pass
+    mkdir -p /var/plexguide/rcwebui
+    echo "NOT-SET" >/var/plexguide/rcwebui/rcuser.user
+    echo "NOT-SET" >/var/plexguide/rcwebui/rcpass.pass
 }
 
 rcwebui() {
@@ -37,13 +37,13 @@ Go Back? Type > exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  read -p '↘️ Type Username | Press [ENTER]: ' typed </dev/tty
-  echo $typed >/var/plexguide/rcwebui/rcuser.user
-  read -p '↘️ Type Password | Press [ENTER]: ' typed </dev/tty
-  echo $typed >/var/plexguide/rcwebui/rcpass.pass
-  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
-    exit 0
-  else
+    read -p '↘️ Type Username | Press [ENTER]: ' typed </dev/tty
+    echo $typed >/var/plexguide/rcwebui/rcuser.user
+    read -p '↘️ Type Password | Press [ENTER]: ' typed </dev/tty
+    echo $typed >/var/plexguide/rcwebui/rcpass.pass
+    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then then
+        exit 0
+    else
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -55,8 +55,8 @@ Password  : $(cat /var/plexguide/rcwebui/rcpass.pass)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-  fi
+        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+    fi
 }
 
 start0

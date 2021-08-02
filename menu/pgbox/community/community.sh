@@ -7,11 +7,12 @@
 ################################################################################
 
 # FUNCTIONS START ##############################################################
+typed="${typed,,}"
 source /opt/plexguide/menu/functions/functions.sh
 
 queued() {
     echo
-    read -p "⛔️ ERROR - $typed already queued! | Press [ENTER] " typed </dev/tty
+    read -p "⛔️ ERROR - ${typed} already queued! | Press [ENTER] " typed </dev/tty
     question1
 }
 
@@ -21,7 +22,7 @@ value() {
 
 exists() {
     echo ""
-    echo "⛔️ ERROR - $typed already installed!"
+    echo "⛔️ ERROR - ${typed} already installed!"
     read -p '⚠️  Reinstall? [Y/N] | Press [ENTER] ' foo </dev/tty
     
     if [[ "$foo" == "y" || "$foo" == "Y" ]]; then
@@ -33,7 +34,7 @@ else exists; fi
 
 badinputcom() {
     echo ""
-    echo "⛔️ ERROR - Bad Input! $typed not exist"
+    echo "⛔️ ERROR - Bad Input! ${typed} not exist"
     echo ""
     read -p 'PRESS [ENTER] ' typed </dev/tty
 }

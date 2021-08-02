@@ -7,30 +7,30 @@
 ################################################################################
 
 # FUNCTIONS START ##############################################################
-
+typed="${typed,,}"
 # BAD INPUT
 badinput() {
-  echo
-  read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
-  question1
+    echo
+    read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
+    question1
 }
 
 badinput2() {
-  echo
-  read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
-  question2
+    echo
+    read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
+    question2
 }
 
 tokenstatus() {
-  ptokendep=$(cat /var/plexguide/plex.token)
-  if [ "$ptokendep" != "" ]; then
-  PGSELFTEST=$(curl -LI "http://$(hostname -I | awk '{print $1}'):32400/system?X-Plex-Token=$(cat /var/plexguide/plex.token)"  -o /dev/null -w '%{http_code}\n' -s)
-  	if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then
-  	  pstatus="✅ DEPLOYED"
-	  else
-	  pstatus="❌ DEPLOYED BUT TOKEN FAILED"
-	fi
-  else pstatus="⚠️ NOT DEPLOYED"; fi
+    ptokendep=$(cat /var/plexguide/plex.token)
+    if [ "$ptokendep" != "" ]; then
+        PGSELFTEST=$(curl -LI "http://$(hostname -I | awk '{print $1}'):32400/system?X-Plex-Token=$(cat /var/plexguide/plex.token)"  -o /dev/null -w '%{http_code}\n' -s)
+        if [[ $PGSELFTEST -ge 200 && $PGSELFTEST -le 299 ]]; then
+            pstatus="✅ DEPLOYED"
+        else
+            pstatus="❌ DEPLOYED BUT TOKEN FAILED"
+        fi
+else pstatus="⚠️ NOT DEPLOYED"; fi
 }
 
 # FIRST QUESTION
@@ -52,38 +52,38 @@ Token Status				: [$pstatus]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  read -p 'Make a Selection | Press [ENTER]: ' typed </dev/tty
-  echo
-
-  if [ "$typed" == "1" ]; then
-    read -p 'Enter the PLEX User Name      | Press [ENTER]: ' user </dev/tty
-    read -p 'Enter the PLEX User Password  | Press [ENTER]: ' pw </dev/tty
-
+    read -p 'Make a Selection | Press [ENTER]: ' typed </dev/tty
+    echo
+    
+    if [ "${typed}" == "1" ]; then
+        read -p 'Enter the PLEX User Name      | Press [ENTER]: ' user </dev/tty
+        read -p 'Enter the PLEX User Password  | Press [ENTER]: ' pw </dev/tty
+        
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🍖  NOM NOM - Saved Your Information!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    sleep 3
-    question2
-  elif [ "$typed" == "2" ]; then 
-
+        sleep 3
+        question2
+        elif [ "${typed}" == "2" ]; then
+        
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🍖  NOM NOM - Read Your Information!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    sleep 3
-  tokenexist
-
-pw=$(cat /var/plexguide/plex.pw)
-user=$(cat /var/plexguide/plex.user)
-
-  elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
-    exit
-  else badinput; fi
+        sleep 3
+        tokenexist
+        
+        pw=$(cat /var/plexguide/plex.pw)
+        user=$(cat /var/plexguide/plex.user)
+        
+        elif [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then
+        exit
+else badinput; fi
 }
 
 question2() {
@@ -106,9 +106,9 @@ User Pass: $pw
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  read -p 'Make a Selection | Press [ENTER]: ' typed </dev/tty
-
-  if [ "$typed" == "1" ]; then
+    read -p 'Make a Selection | Press [ENTER]: ' typed </dev/tty
+    
+    if [ "$typed" == "1" ]; then
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -118,29 +118,29 @@ EOF
 NOTE: If the token is bad, this process will repeat again!
 
 EOF
-    sleep 4
-    question3
-  elif [ "$typed" == "2" ]; then
-    question1
-  elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
-    exit
-  else badinput2; fi
+        sleep 4
+        question3
+        elif [ "$typed" == "2" ]; then
+        question1
+        elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
+        exit
+else badinput2; fi
 }
 
 question3() {
-  echo "$pw" >/var/plexguide/plex.pw
-  echo "$user" >/var/plexguide/plex.user
-  ansible-playbook /opt/plexguide/menu/plex/token.yml
-  token=$(cat /var/plexguide/plex.token)
-  if [ "$token" != "" ]; then
+    echo "$pw" >/var/plexguide/plex.pw
+    echo "$user" >/var/plexguide/plex.user
+    ansible-playbook /opt/plexguide/menu/plex/token.yml
+    token=$(cat /var/plexguide/plex.token)
+    if [ "$token" != "" ]; then
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅️  PlexToken Generation Succeeded!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    sleep 4
-  else
+        sleep 4
+    else
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -150,26 +150,26 @@ EOF
 NOTE: Process will repeat until you succeed or exit!
 
 EOF
-    read -p 'Confirm Info | Press [ENTER] ' typed </dev/tty
-    question1
-  fi
+        read -p 'Confirm Info | Press [ENTER] ' typed </dev/tty
+        question1
+    fi
 }
 
 tokenexist(){
-pw=$(cat /var/plexguide/plex.pw)
-user=$(cat /var/plexguide/plex.user)
-ansible-playbook /opt/plexguide/menu/plex/token.yml
-token=$(cat /var/plexguide/plex.token)
-  token=$(cat /var/plexguide/plex.token)
-  if [ "$token" != "" ]; then
+    pw=$(cat /var/plexguide/plex.pw)
+    user=$(cat /var/plexguide/plex.user)
+    ansible-playbook /opt/plexguide/menu/plex/token.yml
+    token=$(cat /var/plexguide/plex.token)
+    token=$(cat /var/plexguide/plex.token)
+    if [ "$token" != "" ]; then
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅️  PlexToken Generation Succeeded!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    sleep 4
-  else
+        sleep 4
+    else
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -179,9 +179,9 @@ EOF
 NOTE: Process will repeat until you succeed or exit!
 
 EOF
-    read -p 'Confirm Info | Press [ENTER] ' typed </dev/tty
-    question1
-  fi
+        read -p 'Confirm Info | Press [ENTER] ' typed </dev/tty
+        question1
+    fi
 }
 
 # FUNCTIONS END ##############################################################

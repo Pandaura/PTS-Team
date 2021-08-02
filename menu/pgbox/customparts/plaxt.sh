@@ -1,8 +1,8 @@
- #/bin/bash 
+#/bin/bash
 ###plaxt.sh
 api() {
-
-domain=$(cat /var/plexguide/server.domain)
+    typed="${typed,,}"
+    domain=$(cat /var/plexguide/server.domain)
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -24,28 +24,28 @@ Go Back? Type > exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  read -p '↘️ Type API Client | Press [ENTER]: ' typed </dev/tty
-  echo $typed >/var/plexguide/trakt.id
-  read -p '↘️ Type API Secret | Press [ENTER]: ' typed </dev/tty
-  echo $typed >/var/plexguide/trakt.sec
-
-  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
-    exit 0
-  else
+    read -p '↘️ Type API Client | Press [ENTER]: ' typed </dev/tty
+    echo $typed >/var/plexguide/trakt.id
+    read -p '↘️ Type API Secret | Press [ENTER]: ' typed </dev/tty
+    echo $typed >/var/plexguide/trakt.sec
+    
+    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then
+        exit 0
+    else
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅ SYSTEM MESSAGE: Traktarr API Notice
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-NOTE: The API Client and Secret is set! 
+NOTE: The API Client and Secret is set!
 
 INFO: Messed up? Rerun this API Interface to update the information!
 
 EOF
-
-    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-  fi
+        
+        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+    fi
 }
 
 api

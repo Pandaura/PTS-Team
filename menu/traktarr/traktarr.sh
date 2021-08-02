@@ -10,24 +10,24 @@
 mkdir -p /var/plexguide/traktarr/
 
 # FUNCTIONS START ##############################################################
-
+typed="${typed,,}"
 # FIRST FUNCTION
 variable() {
-  file="$1"
-  if [ ! -e "$file" ]; then echo "$2" >$1; fi
+    file="$1"
+    if [ ! -e "$file" ]; then echo "$2" >$1; fi
 }
 
 deploycheck() {
-  dcheck=$(systemctl is-active traktarr.service)
-  if [ "$dcheck" == "active" ]; then
-    dstatus="✅ DEPLOYED"
-  else dstatus="⚠️ NOT DEPLOYED"; fi
+    dcheck=$(systemctl is-active traktarr.service)
+    if [ "$dcheck" == "active" ]; then
+        dstatus="✅ DEPLOYED"
+else dstatus="⚠️ NOT DEPLOYED"; fi
 }
 
 sonarrcheck() {
-  pcheck=$(docker ps --format '{{.Names}}' | grep "sonarr")
-  if [ "$pcheck" == "" ]; then
-
+    pcheck=$(docker ps --format '{{.Names}}' | grep "sonarr")
+    if [ "$pcheck" == "" ]; then
+        
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -35,15 +35,15 @@ sonarrcheck() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-    read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-    question1
-  fi
+        read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+        question1
+    fi
 }
 
 radarrcheck() {
-  pcheck=$(docker ps --format '{{.Names}}' | grep "radarr")
-  if [ "$pcheck" == "" ]; then
-
+    pcheck=$(docker ps --format '{{.Names}}' | grep "radarr")
+    if [ "$pcheck" == "" ]; then
+        
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -51,13 +51,13 @@ radarrcheck() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-    read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-    question1
-  fi
+        read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+        question1
+    fi
 }
 
 squality() {
-  sonarrcheck
+    sonarrcheck
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -80,30 +80,30 @@ HD - 720p/1080p
 Go Back? Type > exit
 
 EOF
-  read -p '↘️ Type Sonarr Location | Press [ENTER]: ' typed </dev/tty
-
-  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
-    question1
-  else
+    read -p '↘️ Type Sonarr Location | Press [ENTER]: ' typed </dev/tty
+    
+    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then
+        question1
+    else
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅ SYSTEM MESSAGE: Sonarr Path Completed!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Quality Set Is: $typed
+Quality Set Is: ${typed}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-
-    echo "$typed" >/var/plexguide/traktarr/pgtrak.sprofile
-    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-    question1
-  fi
+        
+        echo "${typed}" >/var/plexguide/traktarr/pgtrak.sprofile
+        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+        question1
+    fi
 }
 
 rquality() {
-  radarrcheck
+    radarrcheck
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -126,25 +126,25 @@ HD - 720p/1080p
 Go Back? Type > exit
 
 EOF
-  read -p '↘️ Type Radarr Location | Press [ENTER]: ' typed </dev/tty
-
-  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
-    question1
-  else
+    read -p '↘️ Type Radarr Location | Press [ENTER]: ' typed </dev/tty
+    
+    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then
+        question1
+    else
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅ SYSTEM MESSAGE: Radarr Path Completed!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Quality Set Is: $typed
+Quality Set Is: ${typed}
 
 EOF
-
-    echo "$typed" >/var/plexguide/traktarr/pgtrak.rprofile
-    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-    question1
-  fi
+        
+        echo "${typed}" >/var/plexguide/traktarr/pgtrak.rprofile
+        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+        question1
+    fi
 }
 
 api() {
@@ -169,14 +169,14 @@ Go Back? Type > exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  read -p '↘️ Type API Client | Press [ENTER]: ' typed </dev/tty
-  echo $typed >/var/plexguide/traktarr/pgtrak.client
-  read -p '↘️ Type API Secret | Press [ENTER]: ' typed </dev/tty
-  echo $typed >/var/plexguide/traktarr/pgtrak.secret
-
-  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
-    question1
-  else
+    read -p '↘️ Type API Client | Press [ENTER]: ' typed </dev/tty
+    echo ${typed} >/var/plexguide/traktarr/pgtrak.client
+    read -p '↘️ Type API Secret | Press [ENTER]: ' typed </dev/tty
+    echo ${typed} >/var/plexguide/traktarr/pgtrak.secret
+    
+    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then
+        question1
+    else
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -189,16 +189,16 @@ NOTE: The API Client and Secret is set! Ensure to setup your <paths> and
 INFO: Messed up? Rerun this API Interface to update the information!
 
 EOF
-
-    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-    question1
-  fi
+        
+        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+        question1
+    fi
 }
 
 spath() {
-hdpath=$(cat /var/plexguide/server.hd.path)
-tvfolderprint=$(ls -ah $hdpath/unionfs/ | grep -E 'TV*|tv')
-  sonarrcheck
+    hdpath=$(cat /var/plexguide/server.hd.path)
+    tvfolderprint=$(ls -ah $hdpath/unionfs/ | grep -E 'TV*|tv')
+    sonarrcheck
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📁 Sonarr Path
@@ -216,47 +216,47 @@ $tvfolderprint
 Go Back? Type > exit
 
 EOF
-  read -p '↘️ Type Sonarr Location | Press [ENTER]: ' typed </dev/tty
-
-  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
-    question1
-  else
+    read -p '↘️ Type Sonarr Location | Press [ENTER]: ' typed </dev/tty
+    
+    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then
+        question1
+    else
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 SYSTEM MESSAGE: Checking Path $typed
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    sleep 1.5
-
-    ##################################################### TYPED CHECKERS - START
-    typed2=$typed
-    bonehead=no
-    ##### If user forgot to add a / in the beginning, we fix for them
-    initial="$(echo $typed | head -c 1)"
-    if [ "$initial" != "/" ]; then
-      typed="/$typed"
-    fi
-    ##### If user added a / at the end, we fix for them
-    initial="${typed: -1}"
-    if [ "$initial" == "/" ]; then
-      typed=${typed::-1}
-    fi
-
-    ##################################################### TYPED CHECKERS - START
+        sleep 1.5
+        
+        ##################################################### TYPED CHECKERS - START
+        typed2=${typed}
+        bonehead=no
+        ##### If user forgot to add a / in the beginning, we fix for them
+        initial="$(echo ${typed} | head -c 1)"
+        if [ "$initial" != "/" ]; then
+            typed="/${typed}"
+        fi
+        ##### If user added a / at the end, we fix for them
+        initial="${typed: -1}"
+        if [ "$initial" == "/" ]; then
+            typed=${typed::-1}
+        fi
+        
+        ##################################################### TYPED CHECKERS - START
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 SYSTEM MESSAGE: Checking if Location is Valid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    sleep 1.5
-
-    mkdir $typed/test 1>/dev/null 2>&1
-
-    file="$typed/test"
-    if [ -e "$file" ]; then
-
+        sleep 1.5
+        
+        mkdir ${typed}/test 1>/dev/null 2>&1
+        
+        file="${typed}/test"
+        if [ -e "$file" ]; then
+            
       tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -264,22 +264,22 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-
-      ### Removes /mnt if /mnt/unionfs exists
-      #check=$(echo $typed | head -c 12)
-      #if [ "$check" == "/mnt/unionfs" ]; then
-      #typed=${typed:4}
-      #fi
-
-      echo "$typed" >/var/plexguide/traktarr/pgtrak.spath
-      read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-      echo ""
-      question1
-    else
+            
+            ### Removes /mnt if /mnt/unionfs exists
+            #check=$(echo ${typed} | head -c 12)
+            #if [ "$check" == "/mnt/unionfs" ]; then
+            #typed=${typed:4}
+            #fi
+            
+            echo "${typed}" >/var/plexguide/traktarr/pgtrak.spath
+            read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            echo ""
+            question1
+        else
       tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔ ALERT: Path $typed DOES NOT Exist! No Changes Made!
+⛔ ALERT: Path ${typed} DOES NOT Exist! No Changes Made!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Note: Exiting the Process! You must ensure that linux is able to READ
 your location.
@@ -288,17 +288,17 @@ Advice: Exit PTS and (Test) Type >>> mkdir $typed/testfolder
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-      read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-      echo "" && question1
+            read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            echo "" && question1
+        fi
     fi
-  fi
-
+    
 }
 
 rpath() {
-hdpath=$(cat /var/plexguide/server.hd.path)
-moviefolderprint=$(ls -ah $hdpath/unionfs/ | grep -E  'Movi*|movi*')
-  radarrcheck
+    hdpath=$(cat /var/plexguide/server.hd.path)
+    moviefolderprint=$(ls -ah $hdpath/unionfs/ | grep -E  'Movi*|movi*')
+    radarrcheck
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -318,47 +318,47 @@ $moviefolderprint
 Go Back? Type > exit
 
 EOF
-  read -p '↘️ Type Radarr Location | Press [ENTER]: ' typed </dev/tty
-
-  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
-    question1
-  else
+    read -p '↘️ Type Radarr Location | Press [ENTER]: ' typed </dev/tty
+    
+    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then
+        question1
+    else
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 SYSTEM MESSAGE: Checking Path $typed
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    sleep 1.5
-
-    ##################################################### TYPED CHECKERS - START
-    typed2=$typed
-    bonehead=no
-    ##### If user forgot to add a / in the beginning, we fix for them
-    initial="$(echo $typed | head -c 1)"
-    if [ "$initial" != "/" ]; then
-      typed="/$typed"
-    fi
-    ##### If user added a / at the end, we fix for them
-    initial="${typed: -1}"
-    if [ "$initial" == "/" ]; then
-      typed=${typed::-1}
-    fi
-
-    ##################################################### TYPED CHECKERS - START
+        sleep 1.5
+        
+        ##################################################### TYPED CHECKERS - START
+        typed2=${typed}
+        bonehead=no
+        ##### If user forgot to add a / in the beginning, we fix for them
+        initial="$(echo ${typed} | head -c 1)"
+        if [ "$initial" != "/" ]; then
+            typed="/${typed}"
+        fi
+        ##### If user added a / at the end, we fix for them
+        initial="${typed: -1}"
+        if [ "$initial" == "/" ]; then
+            typed=${typed::-1}
+        fi
+        
+        ##################################################### TYPED CHECKERS - START
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 SYSTEM MESSAGE: Checking if Location is Valid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    sleep 1.5
-
-    mkdir $typed/test 1>/dev/null 2>&1
-
-    file="$typed/test"
-    if [ -e "$file" ]; then
-
+        sleep 1.5
+        
+        mkdir ${typed}/test 1>/dev/null 2>&1
+        
+        file="${typed}/test"
+        if [ -e "$file" ]; then
+            
       tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -366,37 +366,37 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-      echo "$typed" >/var/plexguide/traktarr/pgtrak.rpath
-      read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-      echo ""
-      question1
-    else
+            echo "${typed}" >/var/plexguide/traktarr/pgtrak.rpath
+            read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            echo ""
+            question1
+        else
       tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔ ALERT: Path $typed DOES NOT Exist! No Changes Made!
+⛔ ALERT: Path ${typed} DOES NOT Exist! No Changes Made!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Note: Exiting the Process! You must ensure that linux is able to READ
 your location.
 
-Advice: Exit PTS and (Test) Type >>> mkdir $typed/testfolder
+Advice: Exit PTS and (Test) Type >>> mkdir ${typed}/testfolder
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-      read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-      echo "" && question1
+            read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            echo "" && question1
+        fi
     fi
-  fi
-
+    
 }
 #########################################################################
 ####Custom parts
 #########################################################################
 maxyear() {
-((mnyear=$(date +"%Y")+1))
-((mxyear=$(date +"%Y")+7))
-
+    ((mnyear=$(date +"%Y")+1))
+    ((mxyear=$(date +"%Y")+7))
+    
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -407,16 +407,16 @@ Set a Year between [ $mnyear ] and [ $mxyear ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-	if [[ "$typed" -ge "$mnyear" && "$typed" -le "$mxyear" ]]; then
-    echo "$typed" >/var/plexguide/traktarr/pgtrakyear.max && question1
-  else maxyear ; fi
+    read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+    if [[ "${typed}" -ge "$mnyear" && "${typed}" -le "$mxyear" ]]; then
+        echo "${typed}" >/var/plexguide/traktarr/pgtrakyear.max && question1
+else maxyear ; fi
 }
 
 minyear() {
-((mnyear=$(date +"%Y")-80))
-((mxyear=$(date +"%Y")-1))
-
+    ((mnyear=$(date +"%Y")-80))
+    ((mxyear=$(date +"%Y")-1))
+    
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -427,14 +427,14 @@ Set a Year between [ $mnyear ] and [ $mxyear ]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-	if [[ "$typed" -ge "$mnyear" && "$typed" -le "$mxyear" ]]; then
-    echo "$typed" >/var/plexguide/traktarr/pgtrakyear.min && question1
-  else minyear ; fi
+    read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+    if [[ "${typed}" -ge "$mnyear" && "${typed}" -le "$mxyear" ]]; then
+        echo "${typed}" >/var/plexguide/traktarr/pgtrakyear.min && question1
+else minyear ; fi
 }
 
 lang() {
-
+    
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -442,8 +442,8 @@ lang() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Language Profile that TV shows are assigned to. Only applies to Sonarr v3.
 
-Note : 
-you have to write it as it really is, 
+Note :
+you have to write it as it really is,
 if you make a mistake, it will not be checked for conformity!
 the first letter must be large, otherwise it will not work
 
@@ -451,43 +451,43 @@ Sample:
 
 English
 German
-France 
+France
 Spain
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  read -p '↘️  Type your language profile from Sonarr | Press [ENTER]: ' typed </dev/tty
-  echo $typed >/var/plexguide/traktarr/pgtrak.lang
-  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then
-    echo -e "English" /var/plexguide/traktarr/pgtrak.lang
-    question1
-  else
-  clear
-  lprofil=$(cat /var/plexguide/traktarr/pgtrak.lang)
+    read -p '↘️  Type your language profile from Sonarr | Press [ENTER]: ' typed </dev/tty
+    echo $typed >/var/plexguide/traktarr/pgtrak.lang
+    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then
+        echo -e "English" /var/plexguide/traktarr/pgtrak.lang
+        question1
+    else
+        clear
+        lprofil=$(cat /var/plexguide/traktarr/pgtrak.lang)
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅ Traktarr Language Profil set
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  You have chosen the language profile =  $lprofil
- 
+
  If this is wrong now, traktarr will not work 100%
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-    question1
-  fi
+        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+        question1
+    fi
 }
 
 avbila() {
-avacbact=$(cat /var/plexguide/traktarr/pgtrak.minimumavailability)
+    avacbact=$(cat /var/plexguide/traktarr/pgtrak.minimumavailability)
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Set minimum availability movies for Radarr
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-The minimum availability for movies are actually set to 
+The minimum availability for movies are actually set to
 
 $avacbact
 
@@ -500,23 +500,23 @@ Choices are announced, in_cinemas, released (Physical/Web), or predb.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-
-  case $typed in
-  1) echo -e "announced" >/var/plexguide/traktarr/pgtrak.minimumavailability && question1 ;;
-  2) echo -e "in_cinemas" >/var/plexguide/traktarr/pgtrak.minimumavailability && question1 ;;
-  3) echo -e "released" >/var/plexguide/traktarr/pgtrak.minimumavailability && question1 ;;
-  4) echo -e "predb" >/var/plexguide/traktarr/pgtrak.minimumavailability && question1 ;;
-  z) exit ;;
-  Z) exit ;;
-  *) question1 ;;
+    
+    read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+    
+    case $typed in
+        1) echo -e "announced" >/var/plexguide/traktarr/pgtrak.minimumavailability && question1 ;;
+        2) echo -e "in_cinemas" >/var/plexguide/traktarr/pgtrak.minimumavailability && question1 ;;
+        3) echo -e "released" >/var/plexguide/traktarr/pgtrak.minimumavailability && question1 ;;
+        4) echo -e "predb" >/var/plexguide/traktarr/pgtrak.minimumavailability && question1 ;;
+        z) exit ;;
+        Z) exit ;;
+        *) question1 ;;
     esac
 }
-################################################################################## 
+##################################################################################
 credits() {
-clear
-chk=$(figlet traktarr | lolcat )
+    clear
+    chk=$(figlet traktarr | lolcat )
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -540,15 +540,15 @@ $chk
 #########################################################################
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-
- echo
-  read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-  question1
+    
+    echo
+    read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+    question1
 }
 
 prefill() {
-clear
-chk=$(figlet traktarr | lolcat )
+    clear
+    chk=$(figlet traktarr | lolcat )
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -565,32 +565,32 @@ chk=$(figlet traktarr | lolcat )
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-
- echo
-  read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-
-  case $typed in
-  1) ansible-playbook /opt/plexguide/menu/traktarr/traktarr-list/prefillallow.yml && question1 ;;
-  2) ansible-playbook /opt/plexguide/menu/traktarr/traktarr-list/prefillremove.yml && question1 ;;
-  z) exit ;;
-  Z) exit ;;
-  *) question1 ;;
-  esac
+    
+    echo
+    read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+    
+    case $typed in
+        1) ansible-playbook /opt/plexguide/menu/traktarr/traktarr-list/prefillallow.yml && question1 ;;
+        2) ansible-playbook /opt/plexguide/menu/traktarr/traktarr-list/prefillremove.yml && question1 ;;
+        z) exit ;;
+        Z) exit ;;
+        *) question1 ;;
+    esac
 }
 # BAD INPUT
 badinput() {
-  echo
-  read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
-  question1
+    echo
+    read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
+    question1
 }
 
 endbanner() {
-clear
-chk=$(figlet traktarr | lolcat )
+    clear
+    chk=$(figlet traktarr | lolcat )
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 traktarr Commands 
+🚀 traktarr Commands
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 $chk
@@ -604,27 +604,27 @@ Commands:
   shows                 Add multiple shows to Sonarr.
 
 Args:
-  -t, --list-type TEXT               Trakt list to process. 
-                                     For example: 
-									 'anticipated', 'trending', 'popular', 
+  -t, --list-type TEXT               Trakt list to process.
+                                     For example:
+									 'anticipated', 'trending', 'popular',
 									 'person', 'watched', 'played', 'recommended',
                                      'watchlist', or any URL to a list.  [required]
-									 
+
   -l, --add-limit INTEGER            Limit number of movies added to Radarr.
   -d, --add-delay FLOAT              Seconds between each add request to Radarr.  [default: 2.5]
   -s, --sort [rating|release|votes]  Sort list to process.  [default: votes]
- 
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
- echo
-  read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-  question1
+    echo
+    read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+    question1
 }
 #####################################################################################################################################
 checkcase() {
     sonarr=$(docker ps --format '{{.Names}}' | grep "sonarr")
     radarr=$(docker ps --format '{{.Names}}' | grep "radarr")
-	if [[ "$radarr" == "" ]] && [[ "$sonarr" == "" ]]; then
+    if [[ "$radarr" == "" ]] && [[ "$sonarr" == "" ]]; then
 		tee <<-EOF
 
 		━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -632,33 +632,33 @@ checkcase() {
 		━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 		EOF
-    read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
-		exit 0
-	elif [[ "$sonarr" = "sonarr" ]] && [[ "$radarr" = "" ]]; then
-		echo "⛔  WARNING! - Traktarr will only work for shows! Radarr Not Running!" >/var/plexguide/traktarr/docker.status
-	elif [[ "$radarr" = "radarr" ]] && [[ "$sonarr" = "" ]]; then
-		echo "⛔  WARNING! - Traktarr will only work for movies! Sonarr Not Running!" >/var/plexguide/traktarr/docker.status
-	else [[ "$radarr" = "radarr" ]] && [[ "$sonarr" = "sonarr" ]]
-		echo "🚀 Traktarr - Radarr and Sonarr detected | it will work for both" >/var/plexguide/traktarr/docker.status; fi
+        read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+        exit 0
+        elif [[ "$sonarr" = "sonarr" ]] && [[ "$radarr" = "" ]]; then
+        echo "⛔  WARNING! - Traktarr will only work for shows! Radarr Not Running!" >/var/plexguide/traktarr/docker.status
+        elif [[ "$radarr" = "radarr" ]] && [[ "$sonarr" = "" ]]; then
+        echo "⛔  WARNING! - Traktarr will only work for movies! Sonarr Not Running!" >/var/plexguide/traktarr/docker.status
+    else [[ "$radarr" = "radarr" ]] && [[ "$sonarr" = "sonarr" ]]
+    echo "🚀 Traktarr - Radarr and Sonarr detected | it will work for both" >/var/plexguide/traktarr/docker.status; fi
 }
 
 question1() {
-
-  api=$(cat /var/plexguide/traktarr/pgtrak.secret)
-  if [ "$api" == "NOT-SET" ]; then api="NOT-SET"; else api="SET"; fi
-
-  rpath=$(cat /var/plexguide/traktarr/pgtrak.rpath)
-  spath=$(cat /var/plexguide/traktarr/pgtrak.spath)
-  rprofile=$(cat /var/plexguide/traktarr/pgtrak.rprofile)
-  sprofile=$(cat /var/plexguide/traktarr/pgtrak.sprofile)
-  mxyear=$(cat /var/plexguide/traktarr/pgtrakyear.max)
-  mnyear=$(cat /var/plexguide/traktarr/pgtrakyear.min)
-  langprofil=$(cat /var/plexguide/traktarr/pgtrak.lang)
-  avmin=$(cat /var/plexguide/traktarr/pgtrak.minimumavailability)
-  status=$(cat /var/plexguide/traktarr/docker.status)  
-  
-  deploycheck
-
+    
+    api=$(cat /var/plexguide/traktarr/pgtrak.secret)
+    if [ "$api" == "NOT-SET" ]; then api="NOT-SET"; else api="SET"; fi
+    
+    rpath=$(cat /var/plexguide/traktarr/pgtrak.rpath)
+    spath=$(cat /var/plexguide/traktarr/pgtrak.spath)
+    rprofile=$(cat /var/plexguide/traktarr/pgtrak.rprofile)
+    sprofile=$(cat /var/plexguide/traktarr/pgtrak.sprofile)
+    mxyear=$(cat /var/plexguide/traktarr/pgtrakyear.max)
+    mnyear=$(cat /var/plexguide/traktarr/pgtrakyear.min)
+    langprofil=$(cat /var/plexguide/traktarr/pgtrak.lang)
+    avmin=$(cat /var/plexguide/traktarr/pgtrak.minimumavailability)
+    status=$(cat /var/plexguide/traktarr/docker.status)
+    
+    deploycheck
+    
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -690,84 +690,84 @@ NOTE: Changes Made? Must Redeploy Traktarr when Complete!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
-
-  case $typed in
-  1) api && question1 ;; 
-  2) spath && question1 ;; 
-  3) rpath  && question1 ;; 
-  4) squality  && question1 ;; 
-  5) rquality  && question1 ;; 
-  6) maxyear  && question1 ;; 
-  7) minyear  && question1 ;; 
-  8) lang && question1 ;; 
-  9) avbila && question1 ;; 
-  10)
-    sonarr=$(docker ps --format '{{.Names}}' | grep "sonarr")
-    radarr=$(docker ps --format '{{.Names}}' | grep "radarr")
-    if [ "$radarr" == "" ] && [ "$sonarr" == "" ]; then
+    
+    read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+    
+    case ${typed} in
+        1) api && question1 ;;
+        2) spath && question1 ;;
+        3) rpath  && question1 ;;
+        4) squality  && question1 ;;
+        5) rquality  && question1 ;;
+        6) maxyear  && question1 ;;
+        7) minyear  && question1 ;;
+        8) lang && question1 ;;
+        9) avbila && question1 ;;
+        10)
+            sonarr=$(docker ps --format '{{.Names}}' | grep "sonarr")
+            radarr=$(docker ps --format '{{.Names}}' | grep "radarr")
+            if [ "$radarr" == "" ] && [ "$sonarr" == "" ]; then
       tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⛔️  WARNING! - Sonarr or Radarr must be Running!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-      read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-      question1
-    else
-      if [ "$sonarr" = "sonarr" ] && [ "$radarr" = "" ]; then
+                read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+                question1
+            else
+                if [ "$sonarr" = "sonarr" ] && [ "$radarr" = "" ]; then
         tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⛔️  WARNING! - Traktarr will only work for shows! Radarr Not Running!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-      fi
-
-      if [ "$radarr" = "radarr"  ] && [ "$sonarr" = "" ]; then
+                    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+                fi
+                
+                if [ "$radarr" = "radarr"  ] && [ "$sonarr" = "" ]; then
         tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⛔️  WARNING! - Traktarr will only work for movies! Sonarr Not Running!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-      fi
-
-      if [ "$radarr" = "radarr"  ] && [ "$sonarr" = "sonarr" ]; then
+                    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+                fi
+                
+                if [ "$radarr" = "radarr"  ] && [ "$sonarr" = "sonarr" ]; then
         tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Traktarr - Radarr and Sonarr detected | it will work for both
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
-      fi
-
-      file="/opt/appdata/radarr/config.xml"
-      if [ -e "$file" ]; then
-        info=$(cat /opt/appdata/radarr/config.xml)
-        info=${info#*<ApiKey>} 1>/dev/null 2>&1
-        info1=$(echo ${info:0:32}) 1>/dev/null 2>&1
-        echo "$info1" >/var/plexguide/traktarr/pgtrak.rapi
-      fi
-
-      file="/opt/appdata/sonarr/config.xml"
-      if [ -e "$file" ]; then
-        info=$(cat /opt/appdata/sonarr/config.xml)
-        info=${info#*<ApiKey>} 1>/dev/null 2>&1
-        info2=$(echo ${info:0:32}) 1>/dev/null 2>&1
-        echo "$info2" >/var/plexguide/traktarr/pgtrak.sapi
-      fi
-    fi
-    ansible-playbook /opt/plexguide/menu/pg.yml --tags traktarr && question1 ;;
-	
-  11) prefill && clear && question1  ;;
-  12) endbanner  && clear && question1  ;;
-  C) credits  && clear && question1  ;;
-  c) credits  && clear && question1  ;;
-  z) exit ;;
-  Z) exit ;;
-  *) question1 ;;
-  esac
+                    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+                fi
+                
+                file="/opt/appdata/radarr/config.xml"
+                if [ -e "$file" ]; then
+                    info=$(cat /opt/appdata/radarr/config.xml)
+                    info=${info#*<ApiKey>} 1>/dev/null 2>&1
+                    info1=$(echo ${info:0:32}) 1>/dev/null 2>&1
+                    echo "$info1" >/var/plexguide/traktarr/pgtrak.rapi
+                fi
+                
+                file="/opt/appdata/sonarr/config.xml"
+                if [ -e "$file" ]; then
+                    info=$(cat /opt/appdata/sonarr/config.xml)
+                    info=${info#*<ApiKey>} 1>/dev/null 2>&1
+                    info2=$(echo ${info:0:32}) 1>/dev/null 2>&1
+                    echo "$info2" >/var/plexguide/traktarr/pgtrak.sapi
+                fi
+            fi
+        ansible-playbook /opt/plexguide/menu/pg.yml --tags traktarr && question1 ;;
+        
+        11) prefill && clear && question1  ;;
+        12) endbanner  && clear && question1  ;;
+        C) credits  && clear && question1  ;;
+        c) credits  && clear && question1  ;;
+        z) exit ;;
+        Z) exit ;;
+        *) question1 ;;
+    esac
 }
 
 # FUNCTIONS END ##############################################################

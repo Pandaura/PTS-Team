@@ -5,6 +5,7 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
+typed="${typed,,}"
 program=$(cat /tmp/program_var)
 cname=$program
 
@@ -258,9 +259,9 @@ $buildup
 EOF
   read -p '↪️ Type App Name to Queue Auto Updating | Type ALL to select all | Press [ENTER]: ' typed </dev/tty
 
-  if [[ "$typed" == "deploy" || "$typed" == "Deploy" || "$typed" == "DEPLOY" || "$typed" == "install" || "$typed" == "Install" || "$typed" == "INSTALL" || "$typed" == "a" || "$typed" == "A" ]]; then question2; fi
+  if [[ "${typed}" == "deploy" || "${typed}" == "install" || "${typed}" == "a" ]]; then question2; fi
 
-  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then exit; fi
+  if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
 
   current=$(cat /var/plexguide/pgbox.buildup | grep "\<$typed\>")
   if [ "$current" != "" ]; then queued && appselect; fi
