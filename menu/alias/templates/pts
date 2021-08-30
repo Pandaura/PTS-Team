@@ -13,38 +13,6 @@ source /opt/plexguide/menu/functions/install.sh
 sudocheck
 missingpull
 
-# Start of added code  ################
-
-# check for user direct app installation (user arguments)
-# check for user direct app installation (user arguments)
-has_arg=${1,,}
-all_args=${@,,}
-
-# check from custom "install" app user input
-if [ $has_arg == "install" ]; then
-  
-  if [ ${#@} -eq 1 ]; then    # missing app name, hence show usage then exit
-    echo -e "usage: $0 install appname\nusage: $0 install app1 app2 app3"  
-    exit 1
-  fi
-  
-  # append all user specified apps to pgbox.buildup
-  apps="${all_args#*install}"
-  for app in $apps; do
-    echo "$app" >>/var/plexguide/pgbox.buildup
-  done
-  
-  # call question2 funtion from core.sh
-  source /opt/plexguide/menu/pgbox/core/core.sh
-  question2  # installs the app(s) that have been specified by user
-  
-  exit 0
-
-fi
-
-# end of added code  #################
-
-
 # pg deploy contains pgdeploy at end
 clear
 pginstall
