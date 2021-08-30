@@ -15,7 +15,7 @@ mkdir -p /opt/appdata/plexguide/cron
 # BAD INPUT
 badinput() {
   echo
-  read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
+  read -p '⚠️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
 
 }
 

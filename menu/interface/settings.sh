@@ -6,18 +6,22 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
+typed="${typed,,}"
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/install.sh
 ################################################################################
 source /opt/plexguide/menu/functions/serverid.sh
 source /opt/plexguide/menu/functions/nvidia.sh
 source /opt/plexguide/menu/functions/uichange.sh
+branch="cat /var/plexguide/pgcloner.projectversion"
+dev="sed -i '1s/.*/dev/' $branch"
+final="sed -i '1s/.*/final/' $branch"
 
 rcdupe() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 RClone dedupe
+🛈 RClone dedupe
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 INFO AND NOTE
 Interactively find duplicate files and delete/rename them.
@@ -85,7 +89,7 @@ touch /var/plexguide/pgui.switch
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Settings Interface Menu
+🛈 Settings Interface Menu
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] MultiHD                  :  Add Multiple HDs and/or Mount Points to MergerFS
@@ -95,8 +99,9 @@ touch /var/plexguide/pgui.switch
 [5] Server ID change         : Change your ServerID
 [6] NVIDIA Docker Role       : NVIDIA Docker
 [7] RCLONE DEDUPE            
-
-[99] TroubleShoot            : PreInstaller
+--------------------------------------------------------------------------
+[T] TroubleShoot             : PreInstaller
+[B] Change Branch            : Change Github 
 
 [Z] Exit
 
@@ -120,11 +125,38 @@ EOF
   6) nvidia && clear && setstart ;;
   7) rcdupe ;; 
 ###########################################################################
-  99) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
+  t) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
+  T) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
+  B) branch && clear && setstart ;;
   z) exit ;;
   Z) exit ;;
   *) setstart ;;
   esac
 }
 
-setstart
+branch(){
+  tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💪 Set Pandaura branch
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Here you can set which Pandaura branch you wish to use.
+
+Type on of the following to continue:
+final
+dev
+--------------------------------------------------------------------------
+Current Branch : $branch
+
+[Z] Exit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+
+  read -p '↘️  Type in a branch | Press [ENTER]: ' typed </dev/tty
+  if [[ "$typed" == "" ]]; then setstart; fi
+  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then setstart; fi
+  if [[ "$typed" == "dev" ]]; then $dev; fi
+  if [[ "$typed" == "dev" ]]; then $final; fi
+}
+  setstart

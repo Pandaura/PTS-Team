@@ -11,13 +11,13 @@ source /opt/plexguide/menu/functions/functions.sh
 
 queued() {
     echo
-    read -p "⛔️ ERROR - $typed Already Queued! | Press [ENTER] " typed </dev/tty
+    read -p "⚠️ ERROR - $typed Already Queued! | Press [ENTER] " typed </dev/tty
     question1
 }
 
 exists() {
     echo ""
-    echo "⛔️ ERROR - $typed Already Installed!"
+    echo "⚠️ ERROR - $typed Already Installed!"
     read -p '⚠️  Reinstall? [Y/N] | Press [ENTER] ' foo </dev/tty
     
     if [[ "$foo" == "y" || "$foo" == "Y" ]]; then
@@ -29,7 +29,7 @@ else exists; fi
 
 badinputgce() {
     echo ""
-    echo "⛔️ ERROR - Bad Input! $typed not exist"
+    echo "⚠️ ERROR - Bad Input! $typed not exist"
     echo ""
     read -p 'PRESS [ENTER] ' typed </dev/tty
 }
@@ -128,7 +128,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Multi-App Installer | GCE Edition
+🛈 Multi-App Installer | GCE Edition
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📂 Potential Apps to Install

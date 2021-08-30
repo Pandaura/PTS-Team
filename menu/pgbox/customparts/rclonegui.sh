@@ -55,7 +55,7 @@ Password  : $(cat /var/plexguide/rcwebui/rcpass.pass)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+        read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
     fi
 }
 

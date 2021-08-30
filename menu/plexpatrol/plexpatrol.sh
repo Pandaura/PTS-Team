@@ -37,7 +37,7 @@ plexcheck() {
   if [ "$pcheck" == "" ]; then
 printf'
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - Plex is Not Installed or Running! Exiting!
+⚠️  WARNING! - Plex is Not Installed or Running! Exiting!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 '
     read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
@@ -65,7 +65,7 @@ bash /opt/plexguide/menu/plexpatrol/token.sh && clear
 # BAD INPUT
 badinput() {
   echo
-  read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
+  read -p '⚠️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
   question1
 }
 
@@ -73,7 +73,7 @@ selection1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Instantly Kick Video Transcodes?
+🛈 Instantly Kick Video Transcodes?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] False
@@ -93,7 +93,7 @@ selection2() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Instantly Kick 4k - Video Transcodes?
+🛈 Instantly Kick 4k - Video Transcodes?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] False
@@ -113,7 +113,7 @@ selection3() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Instantly Kick Audio Transcodes?
+🛈 Instantly Kick Audio Transcodes?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] False
@@ -133,7 +133,7 @@ selection4() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Limit Amount of Different IPs a User Can Make?
+🛈 Limit Amount of Different IPs a User Can Make?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Set a Number from [ 1 ] - [ 10 ]
@@ -149,7 +149,7 @@ selection5() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Limit How Long a User Can Pause For!
+🛈 Limit How Long a User Can Pause For!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Set a Number from [ 5 ] - [ 120 ] Mintues
@@ -165,7 +165,7 @@ selection6() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Check Interval # how often to check the active streams in seconds
+🛈 Check Interval # how often to check the active streams in seconds
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Set a Number from [ 60 ] - [ 240 ] seconds
@@ -181,7 +181,7 @@ selection7() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Remove Plex Patrol  || l3uddz/plex_patrol
+🛈 Remove Plex Patrol  || l3uddz/plex_patrol
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [ 1 ] - NO
@@ -205,7 +205,7 @@ chk=$(figlet Plex Patrol | lolcat )
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Plex Patrol Credits 
+🛈 Plex Patrol Credits 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 $chk
@@ -241,7 +241,7 @@ deploycheck
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Plex - Patrol Interface || l3uddz/plex_patrol
+🛈 Plex - Patrol Interface || l3uddz/plex_patrol
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Plex Token                               [ $pstatus ]

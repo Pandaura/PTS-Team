@@ -12,7 +12,7 @@ typed="${typed,,}"
 
 queued() {
     echo
-    read -p "⛔️ ERROR - $typed Already Queued! | Press [ENTER] " typed </dev/tty
+    read -p "⚠️ ERROR - $typed Already Queued! | Press [ENTER] " typed </dev/tty
     question1
 }
 
@@ -22,7 +22,7 @@ value() {
 
 exists() {
     echo ""
-    echo "⛔️ ERROR - $typed Is already installed!"
+    echo "⚠️ ERROR - $typed Is already installed!"
     read -p "⚠️  Would you like to reinstall $typed? [Y/N] | Press [ENTER] " foo </dev/tty
     
     if [[ "$foo" == "y" || "$foo" == "Y" ]]; then
@@ -34,7 +34,7 @@ else exists; fi
 
 badinputcore() {
     echo ""
-    echo "⛔️ ERROR - Bad Input! $typed not exist"
+    echo "⚠️ ERROR - Bad Input! $typed not exist"
     echo ""
     read -p 'PRESS [ENTER] ' typed </dev/tty
 }
@@ -146,7 +146,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Multi-App Installer                                          Core Apps
+🛈 Multi-App Installer                                          Core Apps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📂 Potential apps to install - Installed apps will be $(echo -e ${NF}GREEN${NC})
