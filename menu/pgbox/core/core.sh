@@ -12,7 +12,7 @@ typed="${typed,,}"
 
 queued() {
     echo
-    read -p "⚠️ ERROR - $typed Already Queued! | Press [ENTER] " typed </dev/tty
+    read -p "⛔️ ERROR - $typed Already Queued! | Press [ENTER] " typed </dev/tty
     question1
 }
 
@@ -22,7 +22,7 @@ value() {
 
 exists() {
     echo ""
-    echo "⚠️ ERROR - $typed Is already installed!"
+    echo "⛔️ ERROR - $typed Is already installed!"
     read -p "⚠️  Would you like to reinstall $typed? [Y/N] | Press [ENTER] " foo </dev/tty
     
     if [[ "$foo" == "y" || "$foo" == "Y" ]]; then
@@ -34,7 +34,7 @@ else exists; fi
 
 badinputcore() {
     echo ""
-    echo "⚠️ ERROR - Bad Input! $typed not exist"
+    echo "⛔️ ERROR - Bad Input! $typed not exist"
     echo ""
     read -p 'PRESS [ENTER] ' typed </dev/tty
 }
@@ -146,7 +146,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛈 Multi-App Installer                                          Core Apps
+🚀 Multi-App Installer                                          Core Apps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📂 Potential apps to install - Installed apps will be $(echo -e ${NF}GREEN${NC})
@@ -275,5 +275,13 @@ folder() {
 
 
 # FUNCTIONS END ##############################################################
+
+# replaces line 279 of:
+# https://github.com/Pandaura/PTS-Team/blob/687c31fc6b2c8722b57515181f1f28b75f0629df/menu/pgbox/core/core.sh#L279
+# only execute the start funtion if this script it called directly and but not when sourced.
+# this has been done, as question2 funtion  is reused by the pts script for direct app(s) installation
+# e.g pts install radarr will utilize question2 funtion while skipping the start part.
 echo "" >/tmp/output.info
-if [ $(basename $0) == "core.sh" ]; then start; fi
+
+caller=$(basename $0)
+if [[ "$caller" != "pts" &&  "$caller" != "pandaura" ]]; then start; fi
