@@ -22,7 +22,7 @@ question1() {
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⌛ $program - Set subdomains & ports
+🛈 $program - Set subdomains & ports
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -62,7 +62,7 @@ EOF
     if [[ "$typed" == "A" || "$typed" == "a" ]]; then
         exit
     elif [ "$typed" == "1" ]; then
-        read -p "🌍 Type subdomain to use for $program | Press [ENTER]: " typed </dev/tty
+        read -p "↘️ Type subdomain to use for $program | Press [ENTER]: " typed </dev/tty
 
         if [[ "$typed" == "" ]]; then
             badinput1
@@ -75,7 +75,7 @@ EOF
             fi
         fi
     elif [ "$typed" == "2" ]; then
-        read -p "🌍 Type port 1025-65535 to use for $program | blank for default | Press [ENTER]: " typed </dev/tty
+        read -p "↘️ Type port 1025-65535 to use for $program | blank for default | Press [ENTER]: " typed </dev/tty
         if [[ "$typed" == "" ]]; then
             echo "" >"/var/plexguide/$program.port"
         else

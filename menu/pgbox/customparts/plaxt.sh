@@ -44,7 +44,7 @@ INFO: Messed up? Rerun this API Interface to update the information!
 
 EOF
         
-        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+        read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
     fi
 }
 

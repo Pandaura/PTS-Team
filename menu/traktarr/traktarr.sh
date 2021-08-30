@@ -31,7 +31,7 @@ sonarrcheck() {
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - Sonarr is not Installed/Running! Cannot Proceed!
+⚠️  WARNING! - Sonarr is not Installed/Running! Cannot Proceed!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -47,7 +47,7 @@ radarrcheck() {
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - Radarr is not Installed/Running! Cannot Proceed!
+⚠️  WARNING! - Radarr is not Installed/Running! Cannot Proceed!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -97,7 +97,7 @@ Quality Set Is: ${typed}
 EOF
         
         echo "${typed}" >/var/plexguide/traktarr/pgtrak.sprofile
-        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+        read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
         question1
     fi
 }
@@ -142,7 +142,7 @@ Quality Set Is: ${typed}
 EOF
         
         echo "${typed}" >/var/plexguide/traktarr/pgtrak.rprofile
-        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+        read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
         question1
     fi
 }
@@ -190,7 +190,7 @@ INFO: Messed up? Rerun this API Interface to update the information!
 
 EOF
         
-        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+        read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
         question1
     fi
 }
@@ -224,7 +224,7 @@ EOF
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 SYSTEM MESSAGE: Checking Path $typed
+🛈 SYSTEM MESSAGE: Checking Path $typed
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
         sleep 1.5
@@ -247,7 +247,7 @@ EOF
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 SYSTEM MESSAGE: Checking if Location is Valid
+🛈 SYSTEM MESSAGE: Checking if Location is Valid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
         sleep 1.5
@@ -272,7 +272,7 @@ EOF
             #fi
             
             echo "${typed}" >/var/plexguide/traktarr/pgtrak.spath
-            read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
             echo ""
             question1
         else
@@ -288,7 +288,7 @@ Advice: Exit PTS and (Test) Type >>> mkdir $typed/testfolder
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-            read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
             echo "" && question1
         fi
     fi
@@ -326,7 +326,7 @@ EOF
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 SYSTEM MESSAGE: Checking Path $typed
+🛈 SYSTEM MESSAGE: Checking Path $typed
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
         sleep 1.5
@@ -349,7 +349,7 @@ EOF
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 SYSTEM MESSAGE: Checking if Location is Valid
+🛈 SYSTEM MESSAGE: Checking if Location is Valid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
         sleep 1.5
@@ -367,7 +367,7 @@ EOF
 
 EOF
             echo "${typed}" >/var/plexguide/traktarr/pgtrak.rpath
-            read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
             echo ""
             question1
         else
@@ -384,7 +384,7 @@ Advice: Exit PTS and (Test) Type >>> mkdir ${typed}/testfolder
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-            read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
             echo "" && question1
         fi
     fi
@@ -400,7 +400,7 @@ maxyear() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Limit the maximum allowed year for traktarr
+🛈 Limit the maximum allowed year for traktarr
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Set a Year between [ $mnyear ] and [ $mxyear ]
@@ -420,7 +420,7 @@ minyear() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Limit the minimum allowed year for traktarr
+🛈 Limit the minimum allowed year for traktarr
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Set a Year between [ $mnyear ] and [ $mxyear ]
@@ -438,7 +438,7 @@ lang() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Set language profile for Sonarr
+🛈 Set language profile for Sonarr
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Language Profile that TV shows are assigned to. Only applies to Sonarr v3.
 
@@ -474,7 +474,7 @@ EOF
  If this is wrong now, traktarr will not work 100%
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-        read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+        read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
         question1
     fi
 }
@@ -484,7 +484,7 @@ avbila() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Set minimum availability movies for Radarr
+🛈 Set minimum availability movies for Radarr
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 The minimum availability for movies are actually set to
@@ -520,7 +520,7 @@ credits() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 traktarr Credits
+🛈 traktarr Credits
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 $chk
@@ -552,7 +552,7 @@ prefill() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 traktarr prefilling the system
+🛈 traktarr prefilling the system
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] Prefilling allowed (Runs a daily job that grabs up to 50 shows and
@@ -580,7 +580,7 @@ EOF
 # BAD INPUT
 badinput() {
     echo
-    read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
+    read -p '⚠️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
     question1
 }
 
@@ -590,7 +590,7 @@ endbanner() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 traktarr Commands
+🛈 traktarr Commands
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 $chk
@@ -628,7 +628,7 @@ checkcase() {
 		tee <<-EOF
 
 		━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-		⛔️  WARNING! - Sonarr/Radarr is not Installed/Running!
+		⚠️  WARNING! - Sonarr/Radarr is not Installed/Running!
 		━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 		EOF
@@ -639,7 +639,7 @@ checkcase() {
         elif [[ "$radarr" = "radarr" ]] && [[ "$sonarr" = "" ]]; then
         echo "⛔  WARNING! - Traktarr will only work for movies! Sonarr Not Running!" >/var/plexguide/traktarr/docker.status
     else [[ "$radarr" = "radarr" ]] && [[ "$sonarr" = "sonarr" ]]
-    echo "🚀 Traktarr - Radarr and Sonarr detected | it will work for both" >/var/plexguide/traktarr/docker.status; fi
+    echo "🛈 Traktarr - Radarr and Sonarr detected | it will work for both" >/var/plexguide/traktarr/docker.status; fi
 }
 
 question1() {
@@ -662,7 +662,7 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Traktarr Interface
+🛈 Traktarr Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 $status
@@ -709,37 +709,37 @@ EOF
             if [ "$radarr" == "" ] && [ "$sonarr" == "" ]; then
       tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - Sonarr or Radarr must be Running!
+⚠️  WARNING! - Sonarr or Radarr must be Running!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-                read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+                read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
                 question1
             else
                 if [ "$sonarr" = "sonarr" ] && [ "$radarr" = "" ]; then
         tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - Traktarr will only work for shows! Radarr Not Running!
+⚠️  WARNING! - Traktarr will only work for shows! Radarr Not Running!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-                    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+                    read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
                 fi
                 
                 if [ "$radarr" = "radarr"  ] && [ "$sonarr" = "" ]; then
         tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⛔️  WARNING! - Traktarr will only work for movies! Sonarr Not Running!
+⚠️  WARNING! - Traktarr will only work for movies! Sonarr Not Running!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-                    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+                    read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
                 fi
                 
                 if [ "$radarr" = "radarr"  ] && [ "$sonarr" = "sonarr" ]; then
         tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 Traktarr - Radarr and Sonarr detected | it will work for both
+🛈 Traktarr - Radarr and Sonarr detected | it will work for both
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-                    read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+                    read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
                 fi
                 
                 file="/opt/appdata/radarr/config.xml"

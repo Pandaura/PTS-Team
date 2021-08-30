@@ -29,7 +29,7 @@ EOF
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 SYSTEM MESSAGE: Checking Path $typed
+🛈 SYSTEM MESSAGE: Checking Path $typed
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
         sleep 1.5
@@ -52,7 +52,7 @@ EOF
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🚀 SYSTEM MESSAGE: Checking if Location is Valid
+🛈 SYSTEM MESSAGE: Checking if Location is Valid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
         sleep 1.5
@@ -77,7 +77,7 @@ EOF
             #fi
             
             echo "$typed" >/var/plexguide/channelsdvr.folder
-            read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
         else
       tee <<-EOF
 
@@ -87,7 +87,7 @@ EOF
 Note: You must ensure that linux is able to READ your location.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-            read -p '🌎 Acknowledge Info | Press [ENTER] ' typed </dev/tty
+            read -p '🛈 Acknowledge Info | Press [ENTER] ' typed </dev/tty
             channelsdvr
         fi
     fi
