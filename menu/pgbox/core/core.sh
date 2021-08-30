@@ -276,4 +276,4 @@ folder() {
 
 # FUNCTIONS END ##############################################################
 echo "" >/tmp/output.info
-if [ $(basename $0) == "core.sh" ]; then start; fi
+start

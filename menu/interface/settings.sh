@@ -13,7 +13,9 @@ source /opt/plexguide/menu/functions/install.sh
 source /opt/plexguide/menu/functions/serverid.sh
 source /opt/plexguide/menu/functions/nvidia.sh
 source /opt/plexguide/menu/functions/uichange.sh
-branch=$(cat /var/plexguide/pgcloner.projectversion)
+branch="cat /var/plexguide/pgcloner.projectversion"
+dev="sed -i '1s/.*/dev/' $branch"
+final="sed -i '1s/.*/final/' $branch"
 
 rcdupe() {
   tee <<-EOF
@@ -125,8 +127,7 @@ EOF
 ###########################################################################
   t) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
   T) bash /opt/plexguide/menu/functions/tshoot.sh && clear && setstart ;;
-  b) clear && branch && clear && setstart ;;
-  B) clear && branch && clear && setstart ;;
+  B) branch && clear && setstart ;;
   z) exit ;;
   Z) exit ;;
   *) setstart ;;
@@ -134,8 +135,6 @@ EOF
 }
 
 branch(){
-  outcome=${branch}
-
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 💪 Set Pandaura branch
@@ -154,11 +153,10 @@ Current Branch : $branch
 
 EOF
 
-  read -p '↘️  Type in a branch | Press [ENTER]: ' branch </dev/tty
-  if [[ "$branch" == "" ]]; then setstart; fi
-  if [[ "$branch" == "exit" || "$branch" == "Exit" || "$branch" == "EXIT" || "$branch" == "z" || "$branch" == "Z" ]]; then setstart; fi
-  if [[ "$branch" == "dev" ]]; then $dev; fi
-  if [[ "$branch" == "final" || "$branch" == "dev" ]]; then echo "$outcome" >/var/plexguide/pgcloner.projectversion; fi
-  
+  read -p '↘️  Type in a branch | Press [ENTER]: ' typed </dev/tty
+  if [[ "$typed" == "" ]]; then setstart; fi
+  if [[ "$typed" == "exit" || "$typed" == "Exit" || "$typed" == "EXIT" || "$typed" == "z" || "$typed" == "Z" ]]; then setstart; fi
+  if [[ "$typed" == "dev" ]]; then $dev; fi
+  if [[ "$typed" == "dev" ]]; then $final; fi
 }
   setstart
