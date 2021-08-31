@@ -6,6 +6,9 @@
 # GNU:        General Public License v3.0
 ################################################################################
 
+echo haha $(basename $0)
+exit
+
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/start.sh
 source /opt/plexguide/menu/functions/install.sh
