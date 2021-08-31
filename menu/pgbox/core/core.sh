@@ -282,6 +282,10 @@ folder() {
 # this has been done, as question2 funtion  is reused by the pts script for direct app(s) installation
 # e.g pts install radarr will utilize question2 funtion while skipping the start part.
 echo "" >/tmp/output.info
+<<<<<<< HEAD
 
 caller=$(basename $0)
 if [[ "$caller" != "pts" &&  "$caller" != "pandaura" ]]; then start; fi
+=======
+start
+>>>>>>> parent of 051a16f (re-test)
