@@ -69,20 +69,6 @@ sudo wget -qO- https://raw.githubusercontent.com/Pandaura/Install/master/install
 
 The installation will then take you through the setup which is self-explanatory.  
 
-### Alternative method of installing PTS fork (without removing your current build)
-
-**NOTE** This has currently only been tested with PG v8.5-8.7  
-
-Type or paste the following:
-
-```
-sudo apt-get update -yqq
-sudo apt-get upgrade -yqq
-sudo apt-get autoclean -yqq
-sudo apt-get install wget -y
-sudo wget -qO- https://raw.githubusercontent.com/Pandaura/Install/master/install.sh | sudo bash
-
-```    
 ### Optional - updating your PTS-Team fork to the new MHA-Team fork
 IDoMnCi came up with a great script to change all the links on an existing PTS-Team fork (NOT PG 8.x) to the MHA-Team fork.
 Details - https://github.com/Pandaura/Install/pull/4
