@@ -99,8 +99,8 @@ varstart() {
   # For PG UI - Force Variable to Set
   ports=$(cat /var/plexguide/server.ports)
   if [ "$ports" == "" ]; then
-    echo "Open" >$filevg/pg.ports
-  else echo "Closed" >$filevg/pg.ports; fi
+    echo "🔴" >$filevg/pg.ports
+  else echo "🟢" >$filevg/pg.ports; fi
 
   ansible --version | head -n +1 | awk '{print $2'} >$filevg/pg.ansible
   docker --version | head -n +1 | awk '{print $3'} | sed 's/,$//' >$filevg/pg.docker
@@ -163,7 +163,7 @@ menuprime1() {
 🛈 $transport | Version: $pgnumber | ID: $serverid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🌵 Disk Used Space: $used of $capacity | $percentage Used Capacity
+Disk Used Space: $used of $capacity | $percentage Used Capacity
 EOF
 
   # Displays Second Drive of GCE
@@ -190,21 +190,20 @@ EOF
   ports=$(cat /var/plexguide/server.ports)
 
   if [ "$ports" == "" ]; then
-    ports="OPEN"
-  else ports="CLOSED"; fi
+    ports="🔴"
+  else ports="🟢"; fi
 
   tee <<-EOF
      -- GCE optimized surface --
 
-[1]  PTS-Traefik    : Reverse Proxy
+[1]  Traefik        : Reverse Proxy | Domain Setup
 [2]  Port Guard     : [$ports] Protects the Server App Ports
-[3]  PTS-Shield     : Enable Google's OAuthentication Protection
-[4]  PTS-Clone      : Mount Transport
-[5]  PTS-Apps       : Apps
-[6]  PTS-Vault      : Backup & Restore
-[7]  Traktarr       : Fill Sonarr/Radarr over Trakt lists.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+[3]  Authelia       : Enable Authelia
+[4]  Mount          : Mount Cloud Based Storage
+[5]  Apps           : Apps ~ Core, Community & Removal
+[6]  Vault          : Backup & Restore
+[7]  Traktarr       : Fill arr's with Trakt lists
+_________________________________________________________________________
 [Z]  Exit
 
 "$wisword"
@@ -248,7 +247,7 @@ menuprime2() {
 🛈 $transport | Version: $pgnumber | ID: $serverid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🌵 Disk Used Space: $used of $capacity | $percentage Used Capacity
+Disk Used Space: $used of $capacity | $percentage Used Capacity     Deployed
 EOF
 
   # Displays Second Drive If GCE
@@ -275,31 +274,28 @@ EOF
   ports=$(cat /var/plexguide/server.ports)
 
   if [ "$ports" == "" ]; then
-    ports="OPEN"
-  else ports="CLOSED"; fi
+    ports="🔴"
+  else ports="🟢"; fi
 
   tee <<-EOF
 
-[1]  Traefik        : Reverse Proxy | Domain Setup
-[2]  Port Guard     : [$ports] Protects the Server App Ports
-[3]  Authelia       : Enable Authelia
-[4]  Mount          : Mount Cloud Based Storage
-[5]  Apps           : Apps ~ Core, Community & Removal
-[6]  CBOX-PAS       : PlexAutoScan 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[7]  WordPress      : Deploy WordPress
-[8]  Vault          : Backup & Restore
-[9]  Cloud          : GCE & Hetzner Instances
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[10] CBOX-PDUPE     : Find | delete duplicate files in Plex
-[11] Traktarr       : Fill arr's with Trakt lists.
-[12] Plex Patrol    : Kick transcodes (audio/video or both)
-[13] Settings 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[1]  Traefik        : Reverse Proxy | Domain Setup                   [🔴]
+[2]  Port Guard     : [$ports] Protects Container Ports              [🔴]
+[3]  Authelia       : Enable Authelia                                [🔴]
+[4]  Mount          : Mount Cloud Based Storage                      [🔴]
+[5]  Apps           : Apps ~ Core, Community & Removal               [🔴] 
+[6]  CBOX-PAS       : PlexAutoScan                                   [🔴]
+[7]  Vault          : Backup & Restore                               [🔴]
+-------------------------------------------------------------------------
+[8] CBOX-PDUPE      : Find | delete duplicate files in Plex
+[9] Traktarr        : Fill arr's with Trakt lists
+[10] Plex Patrol    : Kick transcodes (audio/video or both)
+[11] Settings 
+_________________________________________________________________________
 [Z]  Exit
 
 "$wisword"
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   # Standby
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
@@ -311,16 +307,17 @@ EOF
   4) clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart ;;
   5) clear && bash /opt/plexguide/menu/pgbox/select.sh && clear && primestart ;;
   6) clear && bash /opt/plexguide/menu/pgscan/pgscan.sh && clear && primestart ;;
-  7) clear && bash /opt/plexguide/menu/pgcloner/pgpress.sh && clear && primestart ;;
-  8) clear && bash /opt/plexguide/menu/pgcloner/pgvault.sh && clear && primestart ;;
-  9) clear && bash /opt/plexguide/menu/interface/cloudselect.sh && clear && primestart ;;
-  10) clear && bash /opt/plexguide/menu/plex_dupe/plex_dupe.sh && clear && primestart ;;
-  11) clear && bash /opt/plexguide/menu/traktarr/traktarr.sh && clear && primestart ;;
-  12) clear && bash /opt/plexguide/menu/plexpatrol/plexpatrol.sh && clear && primestart ;;
-  13) clear && bash /opt/plexguide/menu/interface/settings.sh && clear && primestart ;;
+  7) clear && bash /opt/plexguide/menu/pgcloner/pgvault.sh && clear && primestart ;;
+  8) clear && bash /opt/plexguide/menu/plex_dupe/plex_dupe.sh && clear && primestart ;;
+  9) clear && bash /opt/plexguide/menu/traktarr/traktarr.sh && clear && primestart ;;
+  10) clear && bash /opt/plexguide/menu/plexpatrol/plexpatrol.sh && clear && primestart ;;
+  11) clear && bash /opt/plexguide/menu/interface/settings.sh && clear && primestart ;;
   z) clear && bash /opt/plexguide/menu/interface/ending.sh  && exit ;;
   Z) clear&& bash /opt/plexguide/menu/interface/ending.sh && exit ;;
   *) primestart ;;
+  #These options are hidden
+  13) clear && bash /opt/plexguide/menu/interface/cloudselect.sh && clear && primestart ;;
+  12) clear && bash /opt/plexguide/menu/pgcloner/pgpress.sh && clear && primestart ;;
   esac
 }
 

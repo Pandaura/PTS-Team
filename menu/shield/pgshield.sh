@@ -19,20 +19,24 @@ touch /var/plexguide/pgshield.emails
 mkdir -p /var/plexguide/auth/
 
 domain=$(cat /var/plexguide/server.domain)
+# For PG UI - Force Variable to Set
+  auth=$(cat /var/plexguide/auth.var)
+  if [ "$ports" == "null" ]; then
+    echo "🔴" >$filevg/pg.ports
+  else echo "🟢" >$filevg/pg.ports; fi
 
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛡️  PTS-Shield
+🛡️  Authelia - Protect your domain                 Deployed Status [$auth]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💬   Shield requires Google Web Auth Keys!
 
-[1] Set Web Client ID & Secret
-[2] Authorize User(s)
+[1] Set login credentials
+[2] Authorize User(s)                                No of Users 
 [3] Protect / UnProtect Apps
-[4] Deploy PTS-Shield
+[4] Deploy Authelia
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+__________________________________________________________________________
 [Z] Exit
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -73,7 +77,7 @@ case $typed in
         ports=$(cat "/var/plexguide/server.ports")
         if [ "$ports" != "127.0.0.1:" ]; then
             echo
-            echo "SANITY CHECK: Ports are open, PTS-Shield cannot be enabled until they are closed due to security risks!"
+            echo "SANITY CHECK: Ports are open, Authelia cannot be enabled until they are closed due to security risks!"
             read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
             question1
         fi
@@ -100,13 +104,13 @@ ls -l /var/plexguide/auth | awk '{ print $9 }' >/var/plexguide/pgshield.ex15
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛡️ PTS-Shield ~ App Protection
+🛡️ Authelia ~ App Protection
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] Disable PTS-Shield for a single app
-[2] Enable  PTS-Shield for a single app
+[1] Disable Authelia for a single app
+[2] Enable  Authelia for a single app
 
-[3] Reset & Enable PTS-Shield for all apps
+[3] Reset & Enable Authelia for all apps
 
 [Z] Exit
 
@@ -126,13 +130,13 @@ case $typed in
         emptycheck=$(cat /var/plexguide/pgshield.ex15)
         if [[ "$emptycheck" == "" ]]; then
             echo
-            read -p 'No Apps have PTS-Shield Disabled! Exiting | Press [ENTER]'
+            read -p 'No apps have Authelia disabled! Exiting | Press [ENTER]'
             appexempt
         fi
         rm -rf /var/plexguide/auth/*
         echo ""
-        echo "NOTE: Does not take effect until PTS-Shield is redeployed!"
-        read -p 'Acknowledge Info | Press [ENTER] ' typed </dev/tty
+        echo "NOTE: Does not take effect until Authelia is redeployed!"
+        read -p 'Acknowledge info | Press [ENTER] ' typed </dev/tty
     appexempt ;;
     z) question1 ;;
     Z) question1 ;;
@@ -167,10 +171,10 @@ notrun=$(cat /var/plexguide/program.temp)
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛡️ PTS-Shield ~ Disable Shield for an app
+🛡️ Authelia ~ Disable Authelia for an app
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📂 Apps currently protected by Shield:
+📂 Apps currently protected by Authelia:
 
 $notrun
 
@@ -179,7 +183,7 @@ $notrun
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-read -p '🌍 Type APP to disable PTS-Shield | Press [ENTER]: ' typed </dev/tty
+read -p '🌍 Type APP to disable Authelia | Press [ENTER]: ' typed </dev/tty
 
 if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then then appexempt; fi
 
@@ -194,7 +198,7 @@ fi
 
 touch /var/plexguide/auth/$typed
 echo
-echo "NOTE: No effect until PTS-Shield or the app is redeployed!"
+echo "NOTE: No effect until Authelia or the app is redeployed!"
 read -p '🌍 Acknoweldge! | Press [ENTER] ' note </dev/tty
 appexempt
 }
@@ -227,10 +231,10 @@ notrun=$(cat /var/plexguide/program.temp)
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛡️ PTS-Shield ~ Enable Shield for an app
+🛡️ Authelia ~ Enable Authelia for an app
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📂 Apps NOT currently protected by Shield:
+📂 Apps NOT currently protected by Authelia:
 
 $notrun
 
@@ -239,7 +243,7 @@ $notrun
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-read -p '🌍 Type app to enable PTS-Shield | Press [ENTER]: ' typed </dev/tty
+read -p '🌍 Type app to enable Authelia | Press [ENTER]: ' typed </dev/tty
 
 if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then then appexempt; fi
 
@@ -293,14 +297,14 @@ email() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛡️ PTS-Shield ~ Trusted Users
+🛡️ Authelia ~ Authorised Users
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] E-Mail: Add User
 [2] E-Mail: Remove User
 [3] E-Mail: View Authorization List
 
-[4] E-Mail: Remove All Users (Stops Shield)
+[4] E-Mail: Remove All Users (Stops Authelia)
 
 [Z] Exit
 
@@ -387,7 +391,7 @@ shieldcheck() {
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛡️ PTS-Shield ~ Unable to talk to Portainer
+🛡️ Authelia ~ Unable to talk to Portainer
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1] Did you forget to enable Traefik?"
