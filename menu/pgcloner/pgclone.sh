@@ -29,15 +29,6 @@ startlink=$(cat /var/plexguide/pgcloner.startlink)
 mkdir -p "/opt/$rolename"
 
 initial() {
-    ansible-playbook "/opt/plexguide/menu/pgcloner/clone/primary.yml" >/dev/null 2>&1
-    echo ""
-    echo "💬  Pulling Update Files - Please Wait"
-    file="/opt/$rolename/place.holder"
-    waitvar=0
-    while [ "$waitvar" == "0" ]; do
-        sleep .5
-        if [ -e "$file" ]; then waitvar=1; fi
-    done
     bash /opt/${rolename}/${startlink}
 }
 initial
