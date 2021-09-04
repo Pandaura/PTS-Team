@@ -24,9 +24,9 @@ _**Table of Contents**_
 
 # 1. Install
 
-## (i) Backup your current server using PTS Vault before installing PTS-Team.   
+## (i) Backup your current server using PTS Vault before installing Pandaura.   
 
-Your PTS backup can be used to restore your applications in PTS fork after install (see later)  
+Your PTS backup can be used to restore your applications in Pandaura fork after install (see later)  
 **NOTE**  Tested and working for PG v8.5-8.7
 
 Type the following to access your current build's menu: `sudo pgblitz`    
@@ -47,16 +47,16 @@ sudo wget -N https://raw.githubusercontent.com/MHA-Team/PTS-Clone/final/function
 ```  
 
 
-## (ii) Installing PTS
+## (ii) Installing Pandaura
 
 **NOTE**
-The ideal method of installing the PTS fork is to delete your current build and install PTS fork on a clean system.
-PTS fork works best on **ubuntu 18.XX** and this tutorial will assume you are using ubuntu 18.XX.
+The ideal method of installing the Pandaura fork is to delete your current build and install Pandaura fork on a clean system.
+Pandaura fork works best on **ubuntu 18.XX** and this tutorial will assume you are using ubuntu 18.XX.
 If you are unsure on how to do this, please refer to the documentation provided by your server provider.  
 
 Once your server has an OS installed, login to your server using SSH.  
 
-Type or paste the following to install PTS fork:  
+Type or paste the following to install Pandaura fork:  
 
 ```
 sudo apt-get update -yqq
@@ -69,8 +69,8 @@ sudo wget -qO- https://raw.githubusercontent.com/Pandaura/Install/master/install
 
 The installation will then take you through the setup which is self-explanatory.  
 
-### Optional - updating your PTS-Team fork to the new MHA-Team fork
-IDoMnCi came up with a great script to change all the links on an existing PTS-Team fork (NOT PG 8.x) to the MHA-Team fork.
+### Optional - updating your PTS fork to the new Pandaura fork
+IDoMnCi came up with a great script to change all the links on an existing PTS-Team fork (NOT PG 8.x) to the Pandaura fork.
 Details - https://github.com/Pandaura/Install/pull/4
 ```
 sudo wget -qO- https://raw.githubusercontent.com/Pandaura/Install/master/relocate.sh | sudo bash
@@ -79,9 +79,9 @@ sudo ptsupdate
 
 ```
 
-### Testing Only - Not Supported - Install PTS-Team fork via Windows 10 20H1 WSL2 Ubuntu 18.04
+### Testing Only - Not Supported - Install Pandaura fork via Windows 10 20H1 WSL2 Ubuntu 18.04
 
-Sammykins has tested installing the PTS-Team form on a Windows 10 machine via the new WSL2 system built into Windows.
+Sammykins has tested installing the Pandaura form on a Windows 10 machine via the new WSL2 system built into Windows.
 Follow the above (#ii-installing-pts) in a WSL2 terminal shell, if you do not know how to enable WSL2 and install an Ubuntu 18.04 system for this method it is recommended not to install.
 
 DO NOT ASK FOR SUPPORT OR FIXES FOR THIS METHOD IT IS PROVIDED AS-IS AND WE TAKE NO RESPONSIBILITY IF ANYTHING BELOW DOES NOT FUNCTION OR BREAKS YOUR WINDOWS 10 INSTALLATION. YOU DO THE BELOW AT YOUR OWN RISK.
@@ -91,19 +91,19 @@ DO NOT ASK FOR SUPPORT OR FIXES FOR THIS METHOD IT IS PROVIDED AS-IS AND WE TAKE
 * Prior to install follow this to enable systemd: ([see here](https://github.com/DamionGans/ubuntu-wsl2-systemd-script))
 * The script may fail to create the plexguide network in docker, simply run `docker network create plexguide` to fix
 * Use MultiHD to set another drive as the main path for data, we recommend this if your C drive is too small as WSL2 will default run on the OS drive, e.g. if you have a D: drive, this would be `/mnt/d/pathtoanewfolderforptsfiles`
-* Follow the rest of the guides for configuring PTS
+* Follow the rest of the guides for configuring Pandaura
 
-## Configuring PTS
+## Configuring Pandaura
 
-Configuring PTS fork is the same as configuring PG / PlexGuide.
+Configuring Pandaura fork is the same as configuring PG / PlexGuide.
 
-Then type the following to run the PTS menu: `sudo pts`
+Then type the following to run the Pandaura menu: `sudo pts`
 
 * Set up and deploy Traefik ([see here](https://github.com/Pandaura/PTS-Team/wiki/Traefik))   
 
 * Close ports using Port Guard ([see here](https://github.com/Pandaura/PTS-Team/wiki/PTS-Port-Guard))  
 
-* Deploy PTS Shield (GOAuth - all apps supported) [see here](https://github.com/Pandaura/PTS-Team/wiki/PTS-Shield)
+* Deploy Pandaura Shield (GOAuth - all apps supported) [see here](https://github.com/Pandaura/PTS-Team/wiki/PTS-Shield)
 
 * Set up and deploy PTS-Clone. You can restore you backup keys at this stage. [see here](https://github.com/Pandaura/PTS-Team/wiki/PTS-Clone)
 
