@@ -14,7 +14,6 @@
       template:
         src: ptsupdate
         dest: /bin/ptsupdate
-        no_log: true
         force: yes
         mode: 0775
 
@@ -22,7 +21,6 @@
       template:
         src: autoupdatepts
         dest: /bin/autoupdatepts
-        no_log: true
         force: yes
         mode: 0775
 
@@ -32,7 +30,6 @@
       template:
         src: plexguide
         dest: /bin/plexguide
-        no_log: true
         force: yes
         mode: 0775
         owner: root
@@ -41,7 +38,6 @@
       template:
         src: pts
         dest: /bin/pts
-        no_log: true
         force: yes
         mode: 0775
         owner: root
@@ -50,7 +46,6 @@
       template:
         src: pgblitz
         dest: /bin/pgblitz
-        no_log: true
         force: yes
         mode: 0775
         owner: root
@@ -61,7 +56,6 @@
       template:
         src: reboot
         dest: /bin/reboot
-        no_log: true
         force: yes
         mode: 0775
 
@@ -71,7 +65,6 @@
       template:
         src: slist
         dest: /bin/slist
-        no_log: true
         force: yes
         mode: 0775
         owner: root
@@ -80,7 +73,6 @@
       template:
         src: scommands
         dest: /bin/scommands
-        no_log: true
         force: yes
         mode: 0775
         owner: root
@@ -91,7 +83,6 @@
       template:
         src: update
         dest: /bin/update
-        no_log: true
         force: yes
         mode: 0775
 
@@ -101,7 +92,6 @@
       template:
         src: upgrade
         dest: /bin/upgrade
-        no_log: true
         force: yes
         mode: 0775
         owner: root
@@ -112,7 +102,6 @@
       template:
         src: install
         dest: /bin/install
-        no_log: true
         force: yes
         mode: 0775
         owner: root
@@ -123,7 +112,6 @@
       template:
         src: autoremove
         dest: /bin/autoremove
-        no_log: true
         force: yes
         mode: 0775
         owner: root
@@ -132,7 +120,6 @@
       template:
         src: prune
         dest: /bin/prune
-        no_log: true
         force: yes
         mode: 0775
         owner: root
@@ -141,7 +128,6 @@
       template:
         src: ptsadd
         dest: /bin/ptsadd
-        no_log: true
         force: yes
         mode: 0775
 
@@ -149,7 +135,6 @@
       template:
         src: rcupdate
         dest: /bin/rcupdate
-        no_log: true
         force: yes
         mode: 0775
 
@@ -157,7 +142,6 @@
       template:
         src: mgupdate
         dest: /bin/mgupdate
-        no_log: true
         force: yes
         mode: 0775
 
@@ -165,7 +149,6 @@
       template:
         src: backup
         dest: /bin/backup
-        no_log: true
         force: yes
         mode: 0775
 
@@ -173,7 +156,6 @@
       template:
         src: gce
         dest: /bin/gce
-        no_log: true
         force: yes
         mode: 0775
 
@@ -181,7 +163,6 @@
       template:
         src: jpurge
         dest: /bin/jpurge
-        no_log: true
         force: yes
         mode: 0775
 
@@ -189,7 +170,6 @@
       template:
         src: kill_logs
         dest: /bin/kill_logs
-        no_log: true
         force: yes
         mode: 0775
 
@@ -197,7 +177,6 @@
       template:
         src: autobackup
         dest: /bin/autobackup
-        no_log: true
         force: yes
         mode: 0775
 
@@ -205,6 +184,5 @@
       template:
         src: ptsspeed
         dest: /bin/ptsspeed
-        no_log: true
         force: yes
         mode: 0775
