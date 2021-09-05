@@ -8,7 +8,7 @@ typed="${typed,,}"
 
 queued() {
     echo
-    read -p "⛔️ ERROR - $typed Already Queued! | Press [ENTER] " typed </dev/tty
+    read -p "⛔️ ERROR - $typed is already queued! | Press [ENTER] " typed </dev/tty
     question1
 }
 
@@ -18,7 +18,7 @@ value() {
 
 exists() {
     echo ""
-    echo "⛔️ ERROR - $typed Is already installed!"
+    echo "⛔️ ERROR - $typed is already installed!"
     read -p "⚠️  Would you like to reinstall $typed? [Y/N] | Press [ENTER] " foo </dev/tty
     
     if [[ "$foo" == "y" || "$foo" == "Y" ]]; then
@@ -30,7 +30,7 @@ else exists; fi
 
 badinputcore() {
     echo ""
-    echo "⛔️ ERROR - Bad Input! $typed not exist"
+    echo "⛔️ ERROR - Bad input! $typed not exist"
     echo ""
     read -p 'PRESS [ENTER] ' typed </dev/tty
 }
@@ -142,25 +142,22 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💼 Multi-App Installer                                          Core Apps
+💼  Multi-App Installer                                          Core Apps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📂 Potential apps to install - Installed apps will be $(echo -e ${NF}GREEN${NC})
+📂  Potential apps to install - Installed apps will be $(echo -e ${NF}GREEN${NC})
 
 $notrun
-
+-------------------------------------------------------------------------
 💾 Apps below are queued for installation
 
 $buildup
---------------------------------------------------------------------------
-[A] Install
-
-[Z] Exit
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+_________________________________________________________________________
+[A] Install                                                      [Z] Exit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-    read -p '↪️ Type an app to queue for install | Press [ENTER]: ' typed </dev/tty #convert to lowercase all the fucking time
+    read -p '💬 Type an app to queue for install | Press [ENTER]: ' typed </dev/tty #convert to lowercase all the fucking time
     
     if [[ "${typed}" == "deploy" || "${typed}" == "install" || "${typed}" == "a" ]]; then question2; fi
     
@@ -232,7 +229,7 @@ question2() {
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-$p - Is now Installing!
+$p - Is now installing...
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF

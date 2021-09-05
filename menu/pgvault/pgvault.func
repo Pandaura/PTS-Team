@@ -43,7 +43,7 @@ initial2() {
 final() {
     echo
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    read -p '✅ Process Complete! | PRESS [ENTER] ' typed </dev/tty
+    read -p '✅ Process complete! | PRESS [ENTER] ' typed </dev/tty
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     bash /opt/pgvault/pgvault.sh
     exit
@@ -51,12 +51,12 @@ final() {
 
 queued() {
     echo
-    read -p "⚠️ ERROR - $typed Already Queued! | Press [ENTER] " typed </dev/tty
+    read -p "⚠️ ERROR - $typed is already queued! | Press [ENTER] " typed </dev/tty
 }
 
 badserver() {
     echo
-    read -p '⚠️ ERROR - Type an Exact Server Name | Press [ENTER] ' typed </dev/tty
+    read -p '⚠️ ERROR - Type an exact server name | Press [ENTER] ' typed </dev/tty
 }
 
 #not used yet
@@ -156,7 +156,7 @@ $servers
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-    read -p '🌍 Type Server Name | Press [ENTER]: ' server </dev/tty
+    read -p '💬 Type Server Name | Press [ENTER]: ' server </dev/tty
     echo $server >/tmp/server.select
     
     if [[ "$server" == "exit" || "$server" == "Exit" || "$server" == "EXIT" || "$server" == "z" || "$server" == "Z" ]]; then exit; fi
@@ -214,7 +214,7 @@ backup_all_start() {
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- Vault - Backing Up: $p
+ Vault - Backing up: $p
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
@@ -236,7 +236,7 @@ backup_start() {
     tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Vault - Backing Up: $p
+Vault - Backing up: $p
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF

@@ -247,7 +247,7 @@ menuprime2() {
 🛈 $transport | Version: $pgnumber | ID: $serverid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Disk Used Space: $used of $capacity | $percentage Used Capacity     Deployed
+Used disk space: $used of $capacity | $percentage used capacity                  Deployed
 EOF
 
   # Displays Second Drive If GCE
@@ -256,7 +256,7 @@ EOF
     used_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $3}')
     capacity_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $2}')
     percentage_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $5}')
-    echo " GCE Disk Used Space: $used_gce of $capacity_gce | $percentage_gce Used Capacity"
+    echo " GCE used disk space: $used_gce of $capacity_gce | $percentage_gce Used Capacity"
   fi
 
   disktwo=$(cat "/var/plexguide/server.hd.path")
@@ -266,7 +266,7 @@ EOF
     percentage_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $5}')
 
     if [[ "$disktwo" != "/mnt" ]]; then
-      echo " 2nd Disk Used Space: $used_gce2 of $capacity_gce2 | $percentage_gce2 Used Capacity"
+      echo " 2nd Used disk space: $used_gce2 of $capacity_gce2 | $percentage_gce2 Used Capacity"
     fi
   fi
 
@@ -280,7 +280,7 @@ EOF
   tee <<-EOF
 
 [1]  Traefik        : Reverse Proxy | Domain Setup                   [🔴 ]
-[2]  Port Guard     : [$ports] Protects Container Ports              [🔴 ]
+[2]  Port Guard     : [$ports] Protects Container Ports                    [🔴 ]
 [3]  Authelia       : Enable Authelia                                [🔴 ]
 [4]  Mount          : Mount Cloud Based Storage                      [🔴 ]
 [5]  Apps           : Apps ~ Core, Community & Removal               [🔴 ] 
