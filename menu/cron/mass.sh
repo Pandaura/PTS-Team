@@ -25,18 +25,18 @@ if [ "$program" == "plex" ]; then extra="/web"; else extra=""; fi
 tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛈 Access Configuration Info
+🛈 Access configuration info
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
 
 tee <<-EOF
-▫ $program:${port} <- Use this as the url when connecting another app to $program.
+▫ https://$program:${port} <- Use this as the url when connecting another app to $program.
 EOF
 
 if [ "$ports" == "" ]; then
   tee <<-EOF
-▫ $ip:${port}${extra}
+▫ https://$ip:${port}${extra}
 EOF
 fi
 
@@ -73,10 +73,10 @@ if [[ "$program" == *"sonarr"* ]] || [[ "$program" == *"radarr"* ]] || [[ "$prog
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💬 Manual Configuration Required
+🛈 Manual configuration required
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $program requires additional manual configuration!
+  $program requires additional manual configuration
 EOF
     if [[ "$program" == *"sonarr"* ]] || [[ "$program" == *"radarr"* ]] || [[ "$program" == *"lidarr"* ]] || [[ "$program" == *"qbittorrent"* ]]; then
     tee <<-EOF
@@ -94,7 +94,7 @@ EOF
     fi
   tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠ Failure to perform manual configuration changes will cause problems!
+⚠️ Failure to perform manual configuration changes will cause problems
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🌍 Visit the wiki for instructions on how to configure $program.
@@ -112,11 +112,11 @@ if [[ "$program" == *"sabnzbd"* ]] || [[ "$program" == *"nzbget"* ]]  ; then
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💬 NOTE / INFO
+🛈 NOTE / INFO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  for incomplete downloads $program used the folder $hdpath/incomplete/nzb
-  for finished downloads $program used the folder $hdpath/downloads/nzb
+  For incomplete downloads $program uses the folder $hdpath/incomplete/nzb
+  For finished downloads $program uses the folder $hdpath/downloads/nzb
 
   beware the cloneclean is set to $cclean min
 
@@ -129,7 +129,7 @@ if [[ "$program" == *"sabnzbd"* ]] ; then
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💬 sabnzbd api_key = $sbakey
+🛈 Sabnzbd api_key = $sbakey
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 fi
@@ -139,13 +139,13 @@ if [[ "$program" == *"rutorrent"* ]] || [[ "$program" == *"qbittorrent"* ]] || [
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💬 NOTE / INFO
+🛈 NOTE / INFO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  for incomplete downloads $program used the folder $hdpath/incomplete/torrent
-  for finished downloads $program used the folder $hdpath/downloads/torrent
+  For incomplete downloads $program uses the folder $hdpath/incomplete/nzb
+  For finished downloads $program uses the folder $hdpath/downloads/nzb
 
-  beware the cloneclean is set to $tclean min
+  Beware that CloneClean is set to $tclean min
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
@@ -154,11 +154,11 @@ if [ "$program" == "plex" ]; then
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-💬 Manual Configuration Required
+🛈 Manual configuration required
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-we prefer using plex_autoscan, unlike other alternatives,
-that does not put a lot of pressure on the API of your Google Account.
+We prefer using plex_autoscan, unlike other alternatives,
+that does not put a lot of pressure on the API of your Google account.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -208,20 +208,20 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⌛ PTS Cron - Schedule Cron Jobs (Backups) | Mass Program Interface
+🛈 PTS Cron - Schedule Cron Jobs (Backups) | Mass Program Interface
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚡ Reference: https://github.com/Pandaura/PTS-Team/wiki/PTS-Cron
+Reference: https://github.com/Pandaura/PTS-Team/wiki/PTS-Cron
 
-[1] No  [Skip   - All Cron Jobs]
-[2] Yes [Manual - Select for Each App]
-[3] Yes [Daily  - Select Random Times]
-[4] Yes [Weekly - Select Random Times & Days]
+[1] Skip   - All Cron Jobs]
+[2] Manual - Select for each app]
+[3] Daily  - Select random times]
+[4] Weekly - Select random times & days]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
 
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
   if [ "$typed" == "1" ]; then
     exit
   elif [ "$typed" == "2" ]; then
