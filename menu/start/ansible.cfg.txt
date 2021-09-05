@@ -1,0 +1,3 @@
+[defaults]
+no_target_syslog = True
+syslog_facility = LOG_USER
