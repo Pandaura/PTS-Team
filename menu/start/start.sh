@@ -210,7 +210,7 @@ _________________________________________________________________________
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   # Standby
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
   1) clear && bash /opt/plexguide/menu/pgcloner/traefik.sh && clear && primestart ;;
@@ -274,18 +274,18 @@ EOF
   ports=$(cat /var/plexguide/server.ports)
 
   if [ "$ports" == "" ]; then
-    ports="🔴"
+    ports="🔴 "
   else ports="🟢"; fi
 
   tee <<-EOF
 
-[1]  Traefik        : Reverse Proxy | Domain Setup                   [🔴]
-[2]  Port Guard     : [$ports] Protects Container Ports              [🔴]
-[3]  Authelia       : Enable Authelia                                [🔴]
-[4]  Mount          : Mount Cloud Based Storage                      [🔴]
-[5]  Apps           : Apps ~ Core, Community & Removal               [🔴] 
-[6]  CBOX-PAS       : PlexAutoScan                                   [🔴]
-[7]  Vault          : Backup & Restore                               [🔴]
+[1]  Traefik        : Reverse Proxy | Domain Setup                   [🔴 ]
+[2]  Port Guard     : [$ports] Protects Container Ports              [🔴 ]
+[3]  Authelia       : Enable Authelia                                [🔴 ]
+[4]  Mount          : Mount Cloud Based Storage                      [🔴 ]
+[5]  Apps           : Apps ~ Core, Community & Removal               [🔴 ] 
+[6]  CBOX-PAS       : PlexAutoScan                                   [🔴 ]
+[7]  Vault          : Backup & Restore                               [🔴 ]
 -------------------------------------------------------------------------
 [8] CBOX-PDUPE      : Find | delete duplicate files in Plex
 [9] Traktarr        : Fill arr's with Trakt lists
@@ -298,7 +298,7 @@ _________________________________________________________________________
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
   # Standby
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
   1) clear && bash /opt/plexguide/menu/pgcloner/traefik.sh && clear && primestart ;;
