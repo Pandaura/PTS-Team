@@ -4,6 +4,7 @@
 # Author(s):  Pandaura
 # GNU:        General Public License v3.0
 ################################################################################
+ANSIBLE_CONFIG=menu\alias\ansible.cfg
 ---
 - hosts: localhost
   gather_facts: false
