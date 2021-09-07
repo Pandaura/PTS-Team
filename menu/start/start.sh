@@ -279,7 +279,7 @@ EOF
 
   tee <<-EOF
 
-[1]  Traefik        : Reverse Proxy | Domain Setup                   [🔴 ]
+[1]  Traefik        : Reverse Proxy | Domain Setup                   [🟢 ]
 [2]  Port Guard     : [$ports] Protects Container Ports                    [🔴 ]
 [3]  Authelia       : Enable Authelia                                [🔴 ]
 [4]  Mount          : Mount Cloud Based Storage                      [🔴 ]
