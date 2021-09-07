@@ -9,9 +9,9 @@
     - name: 'Set Known Facts'
       set_fact:
         pgrole: 'plexautoscan'
-        intport: '3468'
-        extport: '3468'
-        image: 'sabrsorensen/alpine-plex_autoscan:1df2c05'
+        intport: '3030'
+        extport: '3030'
+        image: 'cloudb0x/autoscan:master'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
@@ -21,7 +21,7 @@
       include_tasks: './pastask.yml'
 
     # LABELS ######################################################################
-    - name: 'Adding Traefik'
+    - name: 'Adding Traefik for {{pgrole}}'
       set_fact:
         pg_labels:
           traefik.enable: 'true'
@@ -38,6 +38,34 @@
           traefik.frontend.headers.customResponseHeaders: 'X-Robots-Tag:noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex'
           traefik.frontend.headers.forceSTSHeader: 'true'
 
+    ## Anchors ###########################################################-07-09-2021
+    - name: 'Create {{pgrole}} folders'
+      file: "path={{ item }} state=directory mode=0775 owner=1000 group=1000 recurse=yes"
+      with_items:
+        - '/opt/appdata/{{pgrole}}'
+        - '/mnt/unionfs/.anchors/'
+
+    - name: 'Create {{pgrole}} anchors file'
+      file: "path={{ item }} state=touch mode=0775 owner=1000 group=1000"
+      with_items:
+        - '/mnt/unionfs/.anchors/cloud.anchor'
+        - '/mnt/unionfs/.anchors/local.anchor'
+
+
+    ## ConfigFile ###########################################################-07-09-2021
+    - name: 'Checking for existing {{pgrole}}/config.yml'
+      stat:
+        path: /opt/appdata/{{pgrole}}/config.yml
+      register: confcheck
+
+    - name: 'Creating {{pgrole}}/config.yml'
+      file: "path={{ item }} state=file mode=0775 owner=1000 group=1000 recurse=yes"
+      with_items:
+        - '/opt/appdata/{{pgrole}}/config.yml'
+      ignore_errors: yes
+      when: confcheck.stat.exists == false
+
+    # Volumes ######################################################################
     - name: 'Setting {{pgrole}} Volumes'
       set_fact:
         pg_volumes:
@@ -49,12 +77,13 @@
           - '/etc/localtime:/etc/localtime:ro'
           - '/var/run/docker.sock:/var/run/docker.sock'
 
+    # Env ######################################################################      
     - name: 'Setting {{pgrole}} ENV'
       set_fact:
         pg_env:
           PUID: '1000'
           PGID: '1000'
-          DOCKERGID: '999'
+          AUTOSCAN_VERBOSITY: '1'
 
     # MAIN DEPLOYMENT #############################################################
     - name: 'Deploying {{pgrole}}'

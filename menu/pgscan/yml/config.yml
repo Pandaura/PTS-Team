@@ -1,0 +1,48 @@
+# override the minimum age to 2 minutes:
+minimum-age: 2m
+
+# override the interval scan stats are displayed:
+# defaults to 1 hour / 0s to disable
+scan-stats: 1h
+
+# you can set multiple anchor files
+anchors:
+        - /mnt/unionfs/.anchors/cloud.anchor
+        - /mnt/unionfs/.anchors/local.anchor
+
+# Optionally, protect your webhooks with authentication
+authentication:
+  username: hello
+  password: general
+
+# port for Autoscan webhooks to listen on
+port: 3030
+
+triggers:
+# The manual trigger is always enabled, the config only adjusts its priority and the rewrite rules.
+  manual:
+    priority: 1
+    rewrite:
+
+  sonarr:
+    # name of sonarr in portainer.
+    - name: sonarr
+      priority: 2
+    # name of sonarr4k in portainer.
+    - name: sonarr4k
+      priority: 3
+
+  radarr:
+    # name of radarr in portainer
+    - name: radarr
+      priority: 2
+    # name of radarr4k in portainer
+    - name: radarr4k
+      priority: 3
+
+targets:
+ plex:
+    # plex url
+    - url: http://plex:32400
+      # plex API key
+      token: {{plex_auth_token}}
