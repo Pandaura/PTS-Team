@@ -6,6 +6,13 @@
 # GNU:        General Public License v3.0
 ################################################################################
 # Create Variables (If New) & Recall
+rm -rf /opt/ptsupdate 1>/dev/null 2>&1
+mkdir -p /opt/ptsupdate 1>/dev/null 2>&1
+git clone --single-branch https://github.com/Pandaura/PTS-Update.git /opt/ptsupdate 1>/dev/null 2>&1
+chown -cR 1000:1000 /opt/ptsupdate 1>/dev/null 2>&1
+chmod -cR 775 /opt/ptsupdate 1>/dev/null 2>&1
+
+source /opt/ptsupdate/autoupdate/update.sh
 pcloadletter() {
   filevg="/var/plexguide"
   touch $filevg/pgclone.transport
