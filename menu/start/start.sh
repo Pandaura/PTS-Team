@@ -288,7 +288,7 @@ EOF
 
 [1]  Traefik        : Reverse Proxy | Domain Setup                   [🟢 ]
 [2]  Port Guard     : [$ports] Protects Container Ports                    [🔴 ]
-[3]  Authelia       : Enable Authelia                                [🔴 ]
+[3]  Authelia       : Enable Authelia                                [🟢 ]
 [4]  Mount          : Mount Cloud Based Storage                      [🔴 ]
 [5]  Apps           : Apps ~ Core, Community & Removal               [🔴 ] 
 [6]  CBOX-PAS       : PlexAutoScan                                   [🔴 ]
