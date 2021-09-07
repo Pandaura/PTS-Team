@@ -134,7 +134,7 @@ buildup() {
 }
 ################################################ FOR BACKUP - END
 serverprime() {
-    tree -d -L 1 /mnt/gdrive/plexguide/backup | awk '{print $2}' | tail -n +2 | head -n -2 >/tmp/server.list
+    tree -d -L 1 /mnt/unionfs/plexguide/backup | awk '{print $2}' | tail -n +2 | head -n -2 >/tmp/server.list
     
     ### List Out Apps In Readable Order (One's Not Installed)
     num=0
