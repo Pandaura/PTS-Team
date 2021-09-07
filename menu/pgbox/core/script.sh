@@ -2,7 +2,7 @@
 
 IFS=$'\n'
 # File name or path
-APPS_FILE="apps.txt"
+APPS_FILE="/var/plexguide/app.list"
 
 # Read file as array
 apps=($(cat "$APPS_FILE"))

@@ -14,7 +14,7 @@ if [[ ! -f "/bin/pts" ]]; then
 clear 
  printf '
 ┌─────────────────────────────────────┐
-│         -==   Team PTS  ==-         │
+│        -==   Pandaura  ==-          │
 │ ————————————————————————————————————│
 │ Restart PTS:              pts       │
 │ Update  PTS:              ptsupdate │
@@ -32,10 +32,7 @@ clear
 │ l3uddz, RXWatcher, Calmcacil,       │
 │ ΔLPHΔ , Maikash , Porkie            │
 │ CDN_RAGE , hawkinzzz , The_DeadPool │
-│ BugHunter : Krallenkiller           │
+| Krallenkiller, Xployt, Anap         │
 │                                     │
 └─────────────────────────────────────┘
 '
-
-
-

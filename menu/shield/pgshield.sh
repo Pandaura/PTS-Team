@@ -247,7 +247,7 @@ read -p '🌍 Type app to enable Authelia | Press [ENTER]: ' typed </dev/tty
 
 if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then then appexempt; fi
 
-grep -w "${typed} /var/plexguide/pgshield.ex15 >/var/plexguide/check55.sh
+grep -w "${typed}" /var/plexguide/pgshield.ex15 >/var/plexguide/check55.sh
   usercheck=$(cat /var/plexguide/check55.sh)
 
   if [[ "$usercheck" == "" ]]; then
