@@ -55,13 +55,13 @@
     ## ConfigFile ###########################################################-07-09-2021
     - name: 'Checking for existing {{pgrole}}/config.yml'
       stat:
-        path: /opt/appdata/{{pgrole}}/config.yml
+        path: /opt/appdata/{{pgrole}}/yml/config.yml
       register: confcheck
 
-    - name: 'Creating {{pgrole}}/config.yml'
+    - name: 'Creating {{pgrole}}/yml/config.yml'
       file: "path={{ item }} state=file mode=0775 owner=1000 group=1000 recurse=yes"
       with_items:
-        - '/opt/appdata/{{pgrole}}/config.yml'
+        - '/opt/appdata/{{pgrole}}/yml/config.yml'
       ignore_errors: yes
       when: confcheck.stat.exists == false
 
@@ -71,7 +71,7 @@
         pg_volumes:
           - '/mnt/unionfs/:/data'
           - '/opt/appdata/plexguide:/rclone_config'
-          - '/opt/appdata/{{pgrole}}/config:/config'
+          - '/opt/appdata/{{pgrole}}/yml:/config'
           - '/opt/appdata/plex/database/Library/Application Support/Plex Media Server/Plug-in Support/Databases/:/plexDb'
           - '{{path.stdout}}:{{path.stdout}}'
           - '/etc/localtime:/etc/localtime:ro'
