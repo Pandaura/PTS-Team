@@ -6,6 +6,13 @@
 # GNU:        General Public License v3.0
 ################################################################################
 # Create Variables (If New) & Recall
+rm -rf /opt/ptsupdate 1>/dev/null 2>&1
+mkdir -p /opt/ptsupdate 1>/dev/null 2>&1
+git clone --single-branch https://github.com/Pandaura/PTS-Update.git /opt/ptsupdate 1>/dev/null 2>&1
+chown -cR 1000:1000 /opt/ptsupdate 1>/dev/null 2>&1
+chmod -cR 775 /opt/ptsupdate 1>/dev/null 2>&1
+
+source /opt/ptsupdate/autoupdate/update.sh
 pcloadletter() {
   filevg="/var/plexguide"
   touch $filevg/pgclone.transport
@@ -281,7 +288,7 @@ EOF
 
 [1]  Traefik        : Reverse Proxy | Domain Setup                   [🟢 ]
 [2]  Port Guard     : [$ports] Protects Container Ports                    [🔴 ]
-[3]  Authelia       : Enable Authelia                                [🔴 ]
+[3]  Authelia       : Enable Authelia                                [🟢 ]
 [4]  Mount          : Mount Cloud Based Storage                      [🔴 ]
 [5]  Apps           : Apps ~ Core, Community & Removal               [🔴 ] 
 [6]  CBOX-PAS       : PlexAutoScan                                   [🔴 ]
