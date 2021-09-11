@@ -1,5 +1,8 @@
 #!/bin/bash
 # FUNCTIONS START ##############################################################
+
+pgautoscan="autoscan"
+
 typed="${typed,,}"
 rmoldinstall() {
     dcheck=$(systemctl is-active plex_autoscan.service)
@@ -199,14 +202,14 @@ notinstalled() {
 }
 ##### REMOVE END
 logger() {
-    dcheck=$(docker ps --format '{{.Names}}' | grep "plexautoscan")
-    if [[ "$dcheck" == "plexautoscan" ]]; then
+    dcheck=$(docker ps --format '{{.Names}}' | grep "$pgautoscan")
+    if [[ "$dcheck" == "$pgautoscan" ]]; then
         printf '
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🛈 ACTIVE LOGS Plex AutoScan Docker  || l3uddz/plex_autoscan
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         '
-        tail -n 50 /opt/appdata/plexautoscan/config/plex_autoscan.log
+        tail -n 50 /opt/appdata/$pgautoscan/config/plex_autoscan.log
         doneenter
     else
         notinstalled
@@ -347,8 +350,8 @@ showuppage() {
     dpas=$(docker ps --format '{{.Names}}' | grep "plexautoscan")
     dtra=$(docker ps --format '{{.Names}}' | grep "traefik")
     if [[ "$dpas" == "plexautoscan" && "$dtra" == "traefik"  ]]; then
-        showpaspage="http://plexautoscan:3468/$(cat /var/plexguide/pgscan/pgscan.serverpass)"
-else showpaspage="http://$(cat /var/plexguide/server.ip):3468/$(cat /var/plexguide/pgscan/pgscan.serverpass)"; fi
+        showpaspage="http://plexautoscan:3030/$(cat /var/plexguide/pgscan/pgscan.serverpass)"
+else showpaspage="http://$(cat /var/plexguide/server.ip):3030/$(cat /var/plexguide/pgscan/pgscan.serverpass)"; fi
 }
 
 question1() {
