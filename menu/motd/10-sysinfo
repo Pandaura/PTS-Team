@@ -82,7 +82,3 @@ $W  GDrive | uncrypted : $G$gdrive
 $W  TDrive | uncrypted : $G$tdrive
 $W  GDrive | crypted   : $G$gcrypt
 $W  TDrive | crypted   : $G$tcrypt
-
-$W %++++++++++ WISE WORD OF THE DAY ++++++++++%
-$W $W$wisword
-$W %++++++++++ WISE WORD OF THE DAY ++++++++++%"

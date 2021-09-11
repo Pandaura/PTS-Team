@@ -259,7 +259,7 @@ $buildup
 EOF
   read -p '↪️ Type App Name to Queue Auto Updating | Type ALL to select all | Press [ENTER]: ' typed </dev/tty
 
-  if [[ "${typed}" == "deploy" || "${typed}" == "install" || "${typed}" == "a" ]]; then question2; fi
+  if [[ "${typed}" == "deploy" || "${typed}" == "install" || "${typed}" == "a" ]]; then start; fi
 
   if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
 
@@ -301,19 +301,6 @@ complete() {
   read -p '✅ Process Complete! | PRESS [ENTER] ' typed </dev/tty
   echo
   exit
-}
-
-question2() {
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Rebuilding Ouroboros!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-
-  ansible-playbook /opt/plexguide/menu/functions/ouroboros.yml
-  complete
 }
 
 start() {

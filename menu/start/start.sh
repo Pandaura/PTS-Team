@@ -6,13 +6,8 @@
 # GNU:        General Public License v3.0
 ################################################################################
 # Create Variables (If New) & Recall
-rm -rf /opt/ptsupdate 1>/dev/null 2>&1
-mkdir -p /opt/ptsupdate 1>/dev/null 2>&1
-git clone --single-branch https://github.com/Pandaura/PTS-Update.git /opt/ptsupdate 1>/dev/null 2>&1
-chown -cR 1000:1000 /opt/ptsupdate 1>/dev/null 2>&1
-chmod -cR 775 /opt/ptsupdate 1>/dev/null 2>&1
+source /opt/plexguide/menu/functions/start.sh
 
-source /opt/ptsupdate/autoupdate/update.sh
 pcloadletter() {
   filevg="/var/plexguide"
   touch $filevg/pgclone.transport
@@ -46,7 +41,7 @@ primestart() {
 wisword=$(/usr/games/fortune -as | sed "s/^/ /")
 
 varstart() {
-  ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - START
+  ###################### FOR VARIABLES ROLE SO DOESNT CREATE RED - START
   filevg="/var/plexguide"
   if [ ! -e "$filevg" ]; then
     mkdir -p $filevg/logs 1>/dev/null 2>&1
@@ -60,7 +55,7 @@ varstart() {
     chmod -R 775 $fileag 1>/dev/null 2>&1
   fi
 
-  ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - START
+  ###################### FOR VARIABLES ROLE SO DOESNT CREATE RED - START
   variable $filevg/pgfork.project "NOT-SET"
   variable $filevg/pgfork.version "NOT-SET"
   variable $filevg/tld.program "NOT-SET"
@@ -160,38 +155,10 @@ menuprime1
 else menuprime2; fi
 }
 
-menuprime1() {
-  transport=$(cat /var/plexguide/pg.transport)
-
-  # Menu Interface
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛈 $transport | Version: $pgnumber | ID: $serverid
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Disk Used Space: $used of $capacity | $percentage Used Capacity
-EOF
-
-  # Displays Second Drive of GCE
-  edition=$(cat /var/plexguide/pg.server.deploy)
-  if [ "$edition" == "feeder" ]; then
-    used_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $3}')
-    capacity_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $2}')
-    percentage_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $5}')
-    echo " GCE Disk Used Space: $used_gce of $capacity_gce | $percentage_gce Used Capacity"
-  fi
-
-  disktwo=$(cat "/var/plexguide/server.hd.path")
-  if [ "$edition" != "feeder" ]; then
-    used_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $3}')
-    capacity_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $2}')
-    percentage_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $5}')
-
-    if [[ "$disktwo" != "/mnt" ]]; then
-      echo " 2nd Disk Used Space: $used_gce2 of $capacity_gce2 | $percentage_gce2 Used Capacity"
-    fi
-  fi
+menuprime1() { # GCE Optimised Menu
+transport=$(cat /var/plexguide/pg.transport)
+top_menu
+disk_space_used_space
 
   # Declare Ports State
   ports=$(cat /var/plexguide/server.ports)
@@ -210,12 +177,8 @@ EOF
 [5]  Apps           : Apps ~ Core, Community & Removal
 [6]  Vault          : Backup & Restore
 [7]  Traktarr       : Fill arr's with Trakt lists
-_________________________________________________________________________
-[Z]  Exit
-
-"$wisword"
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
+end_menu
   # Standby
   read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
 
@@ -233,7 +196,7 @@ EOF
   esac
 }
 
-menuprime2() {
+menuprime2() { # 
   #welcome="Welcome to Pandaura. Thanks for being part of the community"
   #firstRun=True
 #def writeFile(number):
@@ -248,35 +211,9 @@ menuprime2() {
   transport=$(cat /var/plexguide/pg.transport)
 
   # Menu Interface
-  tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛈 $transport | Version: $pgnumber | ID: $serverid
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Used disk space: $used of $capacity | $percentage used capacity                  Deployed
-EOF
-
-  # Displays Second Drive If GCE
-  edition=$(cat /var/plexguide/pg.server.deploy)
-  if [ "$edition" == "feeder" ]; then
-    used_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $3}')
-    capacity_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $2}')
-    percentage_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $5}')
-    echo " GCE used disk space: $used_gce of $capacity_gce | $percentage_gce Used Capacity"
-  fi
-
-  disktwo=$(cat "/var/plexguide/server.hd.path")
-  if [ "$edition" != "feeder" ]; then
-    used_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $3}')
-    capacity_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $2}')
-    percentage_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $5}')
-
-    if [[ "$disktwo" != "/mnt" ]]; then
-      echo " 2nd Used disk space: $used_gce2 of $capacity_gce2 | $percentage_gce2 Used Capacity"
-    fi
-  fi
-
+top_menu
+disk_space_used_space
+  
   # Declare Ports State
   ports=$(cat /var/plexguide/server.ports)
 
@@ -286,31 +223,30 @@ EOF
 
   tee <<-EOF
 
-[1]  Traefik        : Reverse Proxy | Domain Setup                   [🟢 ]
-[2]  Port Guard     : [$ports] Protects Container Ports                    [🔴 ]
-[3]  Authelia       : Enable Authelia                                [🟢 ]
-[4]  Mount          : Mount Cloud Based Storage                      [🔴 ]
-[5]  Apps           : Apps ~ Core, Community & Removal               [🔴 ] 
-[6]  CBOX-PAS       : PlexAutoScan                                   [🔴 ]
-[7]  Vault          : Backup & Restore                               [🔴 ]
+[1]  Networking     : Reverse Proxy | Domain Setup                   [🟢 ]
+[2]  Security       : Secure your server                             [$ports]
+[3]  Mount          : Mount Cloud Based Storage                      [🔴 ]
+[4]  Apps           : Apps ~ Core, Community & Removal               [🔴 ] 
+[5]  Vault          : Backup & Restore                               [🔴 ]
 -------------------------------------------------------------------------
-[8] CBOX-PDUPE      : Find | delete duplicate files in Plex
-[9] Traktarr        : Fill arr's with Trakt lists
-[10] Plex Patrol    : Kick transcodes (audio/video or both)
-[11] Settings 
-_________________________________________________________________________
-[Z]  Exit
-
-"$wisword"
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
+[0] Settings        : Settings
 EOF
+end_menu
   # Standby
   read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
 
+
+  
+
+Used disk space: $used of $capacity | $percentage used capacity                  Deployed
+EOF
+
   case $typed in
   1) clear && bash /opt/plexguide/menu/pgcloner/traefik.sh && clear && primestart ;;
-  2) clear && bash /opt/plexguide/menu/portguard/portguard.sh && clear && primestart ;;
-  3) clear && bash /opt/plexguide/menu/shield/pgshield.sh && clear && primestart ;;
+  2) clear && primestart && sub_menu_security ;; #clear && bash /opt/plexguide/menu/portguard/portguard.sh && clear && primestart ;;
+  A) clear && bash /opt/plexguide/menu/shield/pgshield.sh && clear && primestart ;;
   4) clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart ;;
   5) clear && bash /opt/plexguide/menu/pgbox/select.sh && clear && primestart ;;
   6) clear && bash /opt/plexguide/menu/pgscan/pgscan.sh && clear && primestart ;;
