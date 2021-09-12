@@ -31,12 +31,12 @@ tee <<-EOF
 mergerfs installed version = 		$mgstored
 mergerfs latest version    = 		$mgversion
 
-[Y] UPDATE to lateste version
+[Y] UPDATE to latest version
 
 [Z] Exit
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
 

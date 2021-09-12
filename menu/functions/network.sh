@@ -11,28 +11,24 @@ question1() {
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📂  System & Network Auditor
+📂  System & network auditor
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1] System & Network Benchmark - Basic
-[2] System & Network Benchmark - Advanced
+[1] System & network benchmark - Basic
+[2] System & network benchmark - Advanced
 
-[3] Simple SpeedTest
-
-[Z] Exit
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[3] Simple speedtest
 
 EOF
-
+end_menu
   # Standby
-  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
+  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
 
   case $typed in
   1)
     sudo wget -qO- bench.sh | bash
     echo ""
-    read -p '🌍 Process Complete | Press [ENTER] ' typed </dev/tty
+    read -p ' Process Complete | Press [ENTER] ' typed </dev/tty
     question1
     ;;
   2)
@@ -40,13 +36,13 @@ EOF
     echo ""
 	curl -LsO git.io/bench.sh; chmod +x bench.sh && ./bench.sh -a
     echo ""
-    read -p '🌍 Process Complete | Press [ENTER] ' typed </dev/tty
+    read -p ' Process Complete | Press [ENTER] ' typed </dev/tty
     question1
     ;;
   3)
 	curl -LsO git.io/bench.sh; chmod +x bench.sh && ./bench.sh -speed
     echo ""
-    read -p '🌍 Process Complete | Press [ENTER] ' typed </dev/tty
+    read -p ' Process Complete | Press [ENTER] ' typed </dev/tty
 	question1 ;;
   z) exit ;;
   Z) exit ;;
