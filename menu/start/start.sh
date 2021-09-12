@@ -195,7 +195,15 @@ end_menu
   *) primestart ;;
   esac
 }
+security() {
+  top_menu
+  sub_menu_security
+}
 
+apps() {
+  top_menu
+  sub_menu_app
+}
 menuprime2() { # 
   #welcome="Welcome to Pandaura. Thanks for being part of the community"
   #firstRun=True
@@ -221,18 +229,8 @@ disk_space_used_space
     ports="🔴 "
   else ports="🟢"; fi
 
-  tee <<-EOF
-
-[1]  Networking     : Reverse Proxy | Domain Setup                   [🟢 ]
-[2]  Security       : Secure your server                             [$ports]
-[3]  Mount          : Mount Cloud Based Storage                      [🔴 ]
-[4]  Apps           : Apps ~ Core, Community & Removal               [🔴 ] 
-[5]  Vault          : Backup & Restore                               [🔴 ]
--------------------------------------------------------------------------
-[8] Tools           : Tools
-[9] IRC             : Matrix chat client to Discord
-[0] Settings        : Settings
-EOF
+#if [[ "${typed}" == "2" ]]; then sub_menu_security; fi
+echo = "test"
 end_menu
   # Standby
   read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
@@ -245,10 +243,10 @@ EOF
 
   case $typed in
   1) clear && bash /opt/plexguide/menu/pgcloner/traefik.sh && clear && primestart ;;
-  2) clear && primestart && sub_menu_security ;; #clear && bash /opt/plexguide/menu/portguard/portguard.sh && clear && primestart ;;
+  2) clear && security ;; #clear && bash /opt/plexguide/menu/portguard/portguard.sh && clear && primestart ;;
   A) clear && bash /opt/plexguide/menu/shield/pgshield.sh && clear && primestart ;;
   4) clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart ;;
-  5) clear && bash /opt/plexguide/menu/pgbox/select.sh && clear && primestart ;;
+  5) clear && apps ;;
   6) clear && bash /opt/plexguide/menu/pgscan/pgscan.sh && clear && primestart ;;
   7) clear && bash /opt/plexguide/menu/pgvault/pgvault.sh && clear && primestart ;;
   8) clear && bash /opt/plexguide/menu/plex_dupe/plex_dupe.sh && clear && primestart ;;
@@ -263,5 +261,5 @@ EOF
   12) clear && bash /opt/plexguide/menu/pgcloner/pgpress.sh && clear && primestart ;;
   esac
 }
-
+#bash /opt/plexguide/menu/pgbox/select.sh && clear && primestart ;; this is for apps
 primestart

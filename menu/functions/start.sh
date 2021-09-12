@@ -7,8 +7,9 @@
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/install.sh
-declare YELLOW='\033[0;33m'
+declare NF='\033[0;33m'
 declare NC='\033[0m'
+update="🌟 Update Available!🌟"
 
 sudocheck() {
     if [[ $EUID -ne 0 ]]; then
@@ -81,7 +82,7 @@ top_menu() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 - SB-API Access: 🟢   - Internal API Access: 🟢   - HERE?         🔴
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                                                 | $Update Available: 🟢| # This will show when an update is available
+                                                  $(echo -e $update) 
 Disk Used Space: $used of $capacity | $percentage Used Capacity
 EOF
 }
@@ -108,6 +109,22 @@ disk_space_used_space() {
   fi
 }
 
+main_menu() {
+      
+      tee <<-EOF
+
+[1]  Networking     : Reverse Proxy | Domain Setup                   [🟢 ]
+[2]  Security       : Secure your server                             [$ports]
+[3]  Mount          : Mount Cloud Based Storage                      [🔴 ]
+[4]  Apps           : Apps ~ Core, Community & Removal               [🔴 ] 
+[5]  Vault          : Backup & Restore                               [🔴 ]
+-------------------------------------------------------------------------
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
+[0] Settings        : Settings
+EOF
+}
+
 end_menu() {
     tee <<-EOF
 _________________________________________________________________________
@@ -118,15 +135,15 @@ EOF
 }
 
 sub_menu_networking() { # first sub menu
+
   tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🛈 $transport               Version: $pgnumber               ID: $serverid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[1]${YELLOW}\"Networking"${NC}     : Reverse Proxy | Domain Setup                   
+[1]$(echo -e ${NF}Networking${NC})     : Reverse Proxy | Domain Setup                   
     [A] Reverse Proxy    - Setup a domain using Traefik              [🟢 ]
-    [B] Port Security    - Close vulnerable container ports          [🟢 ]
 [2]  Security       : Secure your server                             
 [3]  Mount          : Mount Cloud Based Storage                      
 [4]  Apps           : Apps ~ Core, Community & Removal                
@@ -145,12 +162,44 @@ EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 [1]  Networking     : Reverse Proxy | Domain Setup                   
-[2]  Security       : Secure your server                             
+[2]  $(echo -e ${NF}Security${NC})       : Secure your server                             
     [A] Authelia    - Single Sign-On MFA Portal                      [🟢 ]
-    [B] PortGuard   - guard innit                                    [🟢 ]
-    [B] VPN         - guard innit                                    [🟢 ]
+    [B] PortGuard   - Close vulnerable container ports               [🟢 ]
+    [C] VPN         - Setup a secure network                         [🟢 ]
 [3]  Mount          : Mount Cloud Based Storage                      
 [4]  Apps           : Apps ~ Core, Community & Removal               
+[5]  Vault          : Backup & Restore                               
+-------------------------------------------------------------------------
+[9] Tools           : Tools 
+[0] Settings        : Settings
+_________________________________________________________________________
+                                                                [Z]  Exit
+https://discord.gg/KhyKMzXgax                         https://sudobox.io/
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+  }
+
+sub_menu_app() { # Menu Interface
+  tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🛈 $transport               Version: $pgnumber               ID: $serverid
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1]  Networking     : Reverse Proxy | Domain Setup                   
+[2]  Security       : Secure your server                             
+[3]  Mount          : Mount Cloud Based Storage                      
+[4]  $(echo -e ${NF}Apps${NC})           : Apps ~ Core, Community & Removal
+    --$(echo -e ${NF}INSTALL${NC})--
+    [A] Core                                      11/11
+    [A] Community apps                            11/11
+    [A] Personal apps
+    --$(echo -e ${NF}REMOVE${NC})--
+    [A] Remove apps
+    [A] Full wipe (appdata too) # needs research
+    --$(echo -e ${NF}UPDATE${NC})--
+    [A] Update app
+    [A] Update app subdomain
+    --$(echo -e ${NF}THEMES${NC})--
 [5]  Vault          : Backup & Restore                               
 -------------------------------------------------------------------------
 [9] Tools           : Tools 

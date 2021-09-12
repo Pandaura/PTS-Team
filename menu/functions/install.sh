@@ -26,7 +26,6 @@ pginstall() {
   core docstart
   rollingpart
   portainer
-  oruborus
   core motd
   core gcloud
   core cleaner
@@ -36,7 +35,6 @@ pginstall() {
   core mountcheck
   emergency
   pgdeploy
-  # oruborus
 }
 
 ############################################################ INSTALLER FUNCTIONS
