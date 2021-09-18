@@ -38,8 +38,8 @@ else
   echo "command_warnings = False" >>/etc/ansible/ansible.cfg
   echo "callback_whitelist = profile_tasks" >>/etc/ansible/ansible.cfg
   echo "inventory = /etc/ansible/inventories/local" >>/etc/ansible/ansible.cfg
-  echo "no_target_syslog = True" >>etc/ansible/ansible.cfg
-  echo "syslog_facility = LOG_USER" >>etc/ansible/ansible.cfg
+  echo "no_target_syslog = True" >>/etc/ansible/ansible.cfg
+  echo "syslog_facility = LOG_USER" >>/etc/ansible/ansible.cfg
 
   ### Disabling cows for people that have cowsay installed
   echo "nocows = 1" >>/etc/ansible/ansible.cfg
