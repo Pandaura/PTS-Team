@@ -7,7 +7,7 @@
 
     - name: pandaura
       command: pandaura 
-      Info: Open PTS Interface
+      Info: Open Pandaura Interface
 
     - name: server reboot
       command: reboot

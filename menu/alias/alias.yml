@@ -26,14 +26,6 @@
 
     ###### Install PGBlitz
 
-    - name: PTS
-      template:
-        src: pts
-        dest: /bin/pts
-        force: yes
-        mode: 0775
-        owner: root
-
     - name: Pandaura
       template:
         src: Pandaura

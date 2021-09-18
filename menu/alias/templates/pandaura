@@ -17,10 +17,10 @@ mkdir -p /opt/appdata/plexguide
 sudocheck
 missingpull
 
-if [[ ! -e "/bin/Pandaura" ]]; then
-  cp /opt/plexguide/menu/alias/templates/Pandaura /bin/ &>/dev/null &
-  chown 1000:1000 /bin/Pandaura
-  chmod 0755 /bin/Pandaura
+if [[ ! -e "/bin/pandaura" ]]; then
+  cp /opt/plexguide/menu/alias/templates/pandaura /bin/ &>/dev/null &
+  chown 1000:1000 /bin/pandaura
+  chmod 0755 /bin/pandaura
 fi
 # pg deploy contains pgdeploy at end
 pginstall
