@@ -7,6 +7,7 @@
 ################################################################################
 # Create Variables (If New) & Recall
 source /opt/plexguide/menu/functions/start.sh
+typed="${typed,,}"
 
 pcloadletter() {
   filevg="/var/plexguide"
@@ -195,17 +196,69 @@ end_menu
   *) primestart ;;
   esac
 }
+networking() {
+  top_menu
+  sub_menu_networking
+  end_menu
+read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
+    if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgcloner/traefik.sh; fi
+    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
+    main_menu_options
+
+}
 security() {
   top_menu
   sub_menu_security
+  end_menu
+  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
+   if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && mount /opt/plexguide/menu/shield/pgshield.sh; fi
+   if [[ "${typed}" == "D" || "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/portguard/portguard.sh; fi
+   if [[ "${typed}" == "C" || "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
+   if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
+   main_menu_options
 }
 
+mount() {
+  top_menu
+  sub_menu_mount
+  end_menu
+  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
+   if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart; fi
+   if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/portguard/portguard.sh; fi
+   if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
+   if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
+   main_menu_options
+}
 apps() {
   top_menu
   sub_menu_app
+  end_menu
+  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
+    if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
+    if [[ "${typed}" == "D" || "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/pgbox/community/community.sh; fi
+    if [[ "${typed}" == "C" || "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/personal/personal.sh; fi
+    if [[ "${typed}" == "R" || "${typed}" == "r" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
+    if [[ "${typed}" == "F" || "${typed}" == "f" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
+    if [[ "${typed}" == "T" || "${typed}" == "t" ]]; then clear && bash /opt/plexguide/menu/pgbox/customparts/autobackup.sh; fi
+    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
+    main_menu_options
+}
+vault() {
+  top_menu
+  sub_menu_app
+  end_menu
+  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
+    if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
+    if [[ "${typed}" == "D" || "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/pgbox/community/community.sh; fi
+    if [[ "${typed}" == "C" || "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/personal/personal.sh; fi
+    if [[ "${typed}" == "R" || "${typed}" == "r" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
+    if [[ "${typed}" == "F" || "${typed}" == "f" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
+    if [[ "${typed}" == "T" || "${typed}" == "t" ]]; then clear && bash /opt/plexguide/menu/pgbox/customparts/autobackup.sh; fi
+    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
+    main_menu_options
 }
 menuprime2() { # 
-  #welcome="Welcome to Pandaura. Thanks for being part of the community"
+  #welcome="Welcome to Pandaura. Thanks for being a part of the community"
   #firstRun=True
 #def writeFile(number):
  #   global firstRun
@@ -217,11 +270,9 @@ menuprime2() { #
 #for i in range(10):
  #   writeFile(i)
   transport=$(cat /var/plexguide/pg.transport)
-
-  # Menu Interface
 top_menu
 disk_space_used_space
-  
+main_menu
   # Declare Ports State
   ports=$(cat /var/plexguide/server.ports)
 
@@ -230,7 +281,6 @@ disk_space_used_space
   else ports="🟢"; fi
 
 #if [[ "${typed}" == "2" ]]; then sub_menu_security; fi
-echo = "test"
 end_menu
   # Standby
   read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
@@ -240,14 +290,22 @@ end_menu
 
 Used disk space: $used of $capacity | $percentage used capacity                  Deployed
 EOF
-
+main_menu_options() {
   case $typed in
-  1) clear && bash /opt/plexguide/menu/pgcloner/traefik.sh && clear && primestart ;;
-  2) clear && security ;; #clear && bash /opt/plexguide/menu/portguard/portguard.sh && clear && primestart ;;
-  A) clear && bash /opt/plexguide/menu/shield/pgshield.sh && clear && primestart ;;
-  4) clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart ;;
-  5) clear && apps ;;
-  6) clear && bash /opt/plexguide/menu/pgscan/pgscan.sh && clear && primestart ;;
+  1) clear && networking && clear && primestart;;
+  2) clear && security && clear && primestart;;
+  3) clear && mount && clear && primestart;;
+  4) clear && apps && clear && primestart;;
+  5) clear && vault && clear && primestart;;
+  esac
+}
+  case $typed in
+  1) clear && networking && clear && primestart ;;
+  2) clear && security && clear && primestart ;;
+  3) clear && mount && clear && primestart;;
+  4) clear && apps && clear && primestart;;
+  5) clear && vault && clear && primestart;;
+  #/opt/plexguide/menu/pgscan/pgscan.sh && clear && primestart ;;
   7) clear && bash /opt/plexguide/menu/pgvault/pgvault.sh && clear && primestart ;;
   8) clear && bash /opt/plexguide/menu/plex_dupe/plex_dupe.sh && clear && primestart ;;
   9) clear && bash /opt/plexguide/menu/traktarr/traktarr.sh && clear && primestart ;;

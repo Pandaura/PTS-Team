@@ -153,10 +153,10 @@ $notrun
 
 $buildup
 _________________________________________________________________________
-[A] Install                                                      [Z] Exit
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[A] Install                                                      
 
 EOF
+end_menu
     read -p '💬 Type an app to queue for install | Press [ENTER]: ' typed </dev/tty #convert to lowercase all the fucking time
     
     if [[ "${typed}" == "deploy" || "${typed}" == "install" || "${typed}" == "a" ]]; then question2; fi

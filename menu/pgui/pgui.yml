@@ -15,7 +15,7 @@
         pgrole: 'pgui'
         intport: '80'
         extport: '8555'
-        image: 'mrdoob/dngele:latest'
+        image: 'hawkinzzz/dngele'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including core job'

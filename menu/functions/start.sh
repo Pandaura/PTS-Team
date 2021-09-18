@@ -7,10 +7,17 @@
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/install.sh
-declare NF='\033[0;33m'
+declare NY='\033[0;33m'
 declare NC='\033[0m'
+declare NG='\033[1;32m'
 update="🌟 Update Available!🌟"
+Memory = cmd()
+Disk='df -h | awk '$NF=="/"{printf "Disk Usage: %d/%dGB (%s)\n", $3,$2,$5}''
+CPU='top -bn1 | grep load | awk '{printf "CPU Load: %.2f\n", $(NF-2)}''
 
+cmd(){
+  free -m | awk 'NR==2{printf "%.2f%%\t\t", $3*100/$2 }'
+}
 sudocheck() {
     if [[ $EUID -ne 0 ]]; then
     tee <<-EOF
@@ -80,7 +87,7 @@ top_menu() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🛈 $transport               Version: $pgnumber               ID: $serverid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- SB-API Access: 🟢   - Internal API Access: 🟢   - HERE?         🔴
+- SB-API Access: 🟢   - Internal API Access: 🟢   - $(echo -e $Memory)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                                                   $(echo -e $update) 
 Disk Used Space: $used of $capacity | $percentage Used Capacity
@@ -129,41 +136,73 @@ end_menu() {
     tee <<-EOF
 _________________________________________________________________________
                                                                 [Z]  Exit
-https://discord.gg/KhyKMzXgax                         https://sudobox.io/
+https://discord.sudobox.io                            https://sudobox.io/
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 }
-
+end_menu_back() {
+    tee <<-EOF
+_________________________________________________________________________
+                                                                [Z]  Back
+https://discord.sudobox.io                            https://sudobox.io/
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+}
 sub_menu_networking() { # first sub menu
 
   tee <<-EOF
 
-[1]$(echo -e ${NF}Networking${NC})     : Reverse Proxy | Domain Setup                   
-    [A] Reverse Proxy    - Setup a domain using Traefik              [🟢 ]
+[1]$(echo -e ${NG}Networking${NC})     : Reverse Proxy | Domain Setup                   
+    [E] Reverse Proxy    - Setup a domain using Traefik              [🟢 ]
 [2]  Security       : Secure your server                             
 [3]  Mount          : Mount Cloud Based Storage                      
 [4]  Apps           : Apps ~ Core, Community & Removal                
 [5]  Vault          : Backup & Restore                               
 -------------------------------------------------------------------------
-[9] Tools           : Tools 
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
 [0] Settings        : Settings
 
 EOF
   }
 
-  sub_menu_security() { # Menu Interface
+sub_menu_security() { # Menu Interface
   tee <<-EOF
 
 [1]  Networking     : Reverse Proxy | Domain Setup                   
-[2]  $(echo -e ${NF}Security${NC})       : Secure your server                             
-    [A] Authelia    - Single Sign-On MFA Portal                      [🟢 ]
-    [B] PortGuard   - Close vulnerable container ports               [🟢 ]
+[2]  $(echo -e ${NG}Security${NC})       : Secure your server                             
+    [E] Authelia    - Single Sign-On MFA Portal                      [🟢 ]
+    [D] PortGuard   - Close vulnerable container ports               [🟢 ]
     [C] VPN         - Setup a secure network                         [🟢 ]
 [3]  Mount          : Mount Cloud Based Storage                      
 [4]  Apps           : Apps ~ Core, Community & Removal               
 [5]  Vault          : Backup & Restore                               
 -------------------------------------------------------------------------
-[9] Tools           : Tools 
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
+[0] Settings        : Settings
+
+EOF
+  }
+
+sub_menu_mount() { # first sub menu
+
+  tee <<-EOF
+
+[1]Networking     : Reverse Proxy | Domain Setup                   
+[2]  Security       : Secure your server                             
+[3]  $(echo -e ${NG}Mount${NC})          : Mount Cloud Based Storage
+    [E] Deploy Mount    - Single Sign-On MFA Portal                      [🟢 ]
+    [D] Deploy Uploader   - Close vulnerable container ports             [🟢 ]
+    [C] Add keys         - Setup a secure network             $displaykey
+    --$(echo -e ${NY}UPDATE MOUNT DETAILS${NC})--
+    [R] Update credentials        - Setup a secure network             
+    [F] Update mount options         - Setup a secure network
+[4]  Apps           : Apps ~ Core, Community & Removal                
+[5]  Vault          : Backup & Restore                               
+-------------------------------------------------------------------------
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
 [0] Settings        : Settings
 
 EOF
@@ -175,21 +214,46 @@ sub_menu_app() { # Menu Interface
 [1]  Networking     : Reverse Proxy | Domain Setup                   
 [2]  Security       : Secure your server                             
 [3]  Mount          : Mount Cloud Based Storage                      
-[4]  $(echo -e ${NF}Apps${NC})           : Apps ~ Core, Community & Removal
-    --$(echo -e ${NF}INSTALL${NC})--
-    [A] Core                                      11/11
-    [A] Community apps                            11/11
-    [A] Personal apps
-    --$(echo -e ${NF}REMOVE${NC})--
-    [A] Remove apps
-    [A] Full wipe (appdata too) # needs research
-    --$(echo -e ${NF}UPDATE${NC})--
-    [A] Update app
-    [A] Update app subdomain
-    --$(echo -e ${NF}THEMES${NC})--
+[4]  $(echo -e ${NG}Apps${NC})           : Apps ~ Core, Community & Removal
+    --$(echo -e ${NY}INSTALL${NC})--
+    [E] Core                                      11/11
+    [D] Community apps                            11/11
+    [C] Personal apps
+    --$(echo -e ${NY}REMOVE${NC})--
+    [R] Remove apps
+    [F] Full wipe (appdata too) # needs research
+    --$(echo -e ${NY}UPDATE${NC})--
+    [V] Update app
+    [T] Update app subdomain
+    --$(echo -e ${NY}THEMES${NC})--
 [5]  Vault          : Backup & Restore                               
 -------------------------------------------------------------------------
-[9] Tools           : Tools 
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
+[0] Settings        : Settings
+
+EOF
+  }
+
+  sub_menu_vault() { # Menu Interface
+  tee <<-EOF
+
+[1]  Networking     : Reverse Proxy | Domain Setup                   
+[2]  Security       : Secure your server                             
+[3]  Mount          : Mount Cloud Based Storage                      
+[4]  Apps$          : Apps ~ Core, Community & Removal
+[5]  $(echo -e ${NG}Vault${NC})          : Backup & Restore
+    --$(echo -e ${NY}BACKUP${NC})--       
+    [E] Backup a container                                     11/11
+    [D] Backup all                            
+    --$(echo -e ${NY}RESTORE${NC})--
+    [R] Restore a container
+    [F] Restore all
+    --$(echo -e ${NY}Processing Location${NC})--
+    [R] Change location 
+-------------------------------------------------------------------------
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
 [0] Settings        : Settings
 
 EOF
