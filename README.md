@@ -1,6 +1,6 @@
-![](pandaura.gif)
+![](https://github.com/Pandaura/PTS-Team/blob/master/Pandaura.gif)
 This is a fork of PTS/MHA called Pandaura. Thank you to all who contributed to the project. No features are really added to MHA anymore as it is in maintenance mode so I will be making some ammendments here. This will be tackled in waves meaning I'll hit each section head on with the odd ripple here and there.
-![](pandaura.gif)
+
 Current section being worked on - Vault
 
 Traefik V2  
