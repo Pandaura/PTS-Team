@@ -80,25 +80,9 @@ sudo ptsupdate
 
 ```
 
-### Testing Only - Not Supported - Install Pandaura fork via Windows 10 20H1 WSL2 Ubuntu 18.04
-
-Sammykins has tested installing the Pandaura form on a Windows 10 machine via the new WSL2 system built into Windows.
-Follow the above (#ii-installing-pts) in a WSL2 terminal shell, if you do not know how to enable WSL2 and install an Ubuntu 18.04 system for this method it is recommended not to install.
-
-DO NOT ASK FOR SUPPORT OR FIXES FOR THIS METHOD IT IS PROVIDED AS-IS AND WE TAKE NO RESPONSIBILITY IF ANYTHING BELOW DOES NOT FUNCTION OR BREAKS YOUR WINDOWS 10 INSTALLATION. YOU DO THE BELOW AT YOUR OWN RISK.
-
-* Follow the following page to install and setup WSL2 ([see here](https://docs.microsoft.com/en-us/windows/wsl/install-win10))
-* Only use an Ubuntu 18.04 VM from the Microsoft Store
-* Prior to install follow this to enable systemd: ([see here](https://github.com/DamionGans/ubuntu-wsl2-systemd-script))
-* The script may fail to create the plexguide network in docker, simply run `docker network create plexguide` to fix
-* Use MultiHD to set another drive as the main path for data, we recommend this if your C drive is too small as WSL2 will default run on the OS drive, e.g. if you have a D: drive, this would be `/mnt/d/pathtoanewfolderforptsfiles`
-* Follow the rest of the guides for configuring Pandaura
-
 ## Configuring Pandaura
 
-Configuring Pandaura fork is the same as configuring PG / PlexGuide.
-
-Then type the following to run the Pandaura menu: `sudo pts`
+Then type the following to run the Pandaura menu: `sudo pandaura`
 
 * Set up and deploy Traefik ([see here](https://github.com/Pandaura/PTS-Team/wiki/Traefik))   
 
