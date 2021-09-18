@@ -42,10 +42,10 @@
         mode: 0775
         owner: root
 
-    - name: PGBlitz
+    - name: Pandaura
       template:
-        src: pgblitz
-        dest: /bin/pgblitz
+        src: Pandaura
+        dest: /bin/Pandaura
         force: yes
         mode: 0775
         owner: root

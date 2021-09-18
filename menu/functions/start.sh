@@ -11,12 +11,6 @@ declare NY='\033[0;33m'
 declare NC='\033[0m'
 declare NG='\033[1;32m'
 update="🌟 Update Available!🌟"
-Memory = cmd()
-Disk='df -h | awk '$NF=="/"{printf "Disk Usage: %d/%dGB (%s)\n", $3,$2,$5}''
-CPU='top -bn1 | grep load | awk '{printf "CPU Load: %.2f\n", $(NF-2)}''
-
-cmd(){
-  free -m | awk 'NR==2{printf "%.2f%%\t\t", $3*100/$2 }'
 }
 sudocheck() {
     if [[ $EUID -ne 0 ]]; then

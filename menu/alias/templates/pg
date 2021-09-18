@@ -5,24 +5,6 @@
 # URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
-file="/var/pgblitz/pg.number"
-if [ -e "$file" ]; then
-  check="$(cat /var/pgblitz/pg.number | head -c 1)"
-  if [[ "$check" == "5" || "$check" == "6" || "$check" == "7" ]]; then
-
-    tee <<-EOF
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🛈  INSTALLER BLOCK: Notice
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-We detected PG Version $check is running! Per the instructions, PG 8
-must be installed on a FRESH BOX! Exiting!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EOF
-    exit
-  fi
-fi
 
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/start.sh
@@ -35,11 +17,11 @@ mkdir -p /opt/appdata/plexguide
 sudocheck
 missingpull
 
-if [[ ! -e "/bin/pgblitz" ]]; then
-  cp /opt/plexguide/menu/alias/templates/pgblitz /bin
+if [[ ! -e "/bin/Pandaura" ]]; then
+  cp /opt/plexguide/menu/alias/templates/Pandaura /bin
 fi
 
-chown 1000:1000 /bin/pgblitz &>/dev/null &
-chmod 0755 /bin/pgblitz &>/dev/null &
+chown 1000:1000 /bin/Pandaura &>/dev/null &
+chmod 0755 /bin/Pandaura &>/dev/null &
 # pg deploy contains pgdeploy at end
 pginstall
