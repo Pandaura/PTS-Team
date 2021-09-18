@@ -26,14 +26,6 @@
 
     ###### Install PGBlitz
 
-    - name: PlexGuide
-      template:
-        src: plexguide
-        dest: /bin/plexguide
-        force: yes
-        mode: 0775
-        owner: root
-
     - name: PTS
       template:
         src: pts
