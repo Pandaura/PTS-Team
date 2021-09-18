@@ -5,8 +5,8 @@
       command: ptsupdate
       Info : Update PTS-Edition
 
-    - name: PTS
-      command: plexguide 
+    - name: pandaura
+      command: pandaura 
       Info: Open PTS Interface
 
     - name: server reboot
