@@ -28,8 +28,8 @@
 
     - name: Pandaura
       template:
-        src: Pandaura
-        dest: /bin/Pandaura
+        src: pandaura
+        dest: /bin/pandaura
         force: yes
         mode: 0775
         owner: root
