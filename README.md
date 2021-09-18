@@ -1,6 +1,7 @@
+![](pandaura.gif)
 This is a fork of PTS/MHA called Pandaura. Thank you to all who contributed to the project. No features are really added to MHA anymore as it is in maintenance mode so I will be making some ammendments here. This will be tackled in waves meaning I'll hit each section head on with the odd ripple here and there.
 
-Current section being worked on - Vault  
+Current section being worked on - Vault
 
 Traefik V2  
 Authelia  
