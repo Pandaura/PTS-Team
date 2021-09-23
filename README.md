@@ -1,12 +1,22 @@
 ![](https://github.com/Pandaura/PTS-Team/blob/master/pandaura.gif)  
-This is a fork of PTS/MHA called Pandaura. Thank you to all who contributed to the project. No features are really added to MHA anymore as it is in maintenance mode so I will be making some ammendments here. This will be tackled in waves meaning I'll hit each section head on with the odd ripple here and there.
+This is a fork of PTS/MHA called Pandaura. Thank you to all who contributed to the previous projects. No features are really added to MHA anymore as it is in maintenance mode so I will be making some ammendments here. This will be tackled in waves meaning I'll hit each section head on with the odd ripple here and there.
 
-Current section being worked on - Vault
+My personal opinion. PTS/MHA did well and still are. Whilst PG was more of a rename and grab project. The remnants meant things were, for lack of a better word, bashed together which left untidy and unfinished menu systems with grammar and spelling that will make your eyes bleed. I'm here to tidy this up, improve on the messy (only in some places) code and just make this the tool that it should have been. Previous projects had the potential to just be burned but you have nothing to worry about here. This is a safer/faster/more reliable project but we all have different tastes....enjoy.
+
+I'll be listing a few of the annoyances below...
+
+The menu doesn't even go back when you're in a sub menu half the time...you are either left hanging or you go straight back to the beginning either way this is really lazy
+
+Most menu sub systems again wouldn't even 'clear' leaving your terminal messy
+
+Just an example of horrendous grammar and spelling
+
+Current section being worked on - 
 
 Traefik V2  
 Authelia  
 Cloud Companion  
-Python Plex Library - own version with scraping using dialogue  
+Python Plex Library - own version with scraping 
 Spelling/typos/general script tidy up  
 Refresh  
 Ouroboros -- It's no longer in development so why use it https://github.com/pyouroboros/ouroboros  
