@@ -76,6 +76,7 @@ exitcheck() {
   edition=$(cat /var/plexguide/pg.edition)
   serverid=$(cat /var/plexguide/server.id)
   pgnumber=$(cat /var/plexguide/pg.number)
+  menu="$pgnumber"
 top_menu() {
 
     # Menu Interface
