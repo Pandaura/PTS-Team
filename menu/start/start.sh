@@ -292,7 +292,7 @@ Used disk space: $used of $capacity | $percentage used capacity                 
 EOF
 main_menu_options() {
   case $typed in
-  1) clear && networking && clear && primestart;;
+  1) clear && networking;;
   2) clear && security && clear && primestart;;
   3) clear && mount && clear && primestart;;
   4) clear && apps && clear && primestart;;
