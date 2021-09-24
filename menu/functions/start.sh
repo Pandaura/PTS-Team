@@ -76,9 +76,14 @@ exitcheck() {
   edition=$(cat /var/plexguide/pg.edition)
   serverid=$(cat /var/plexguide/server.id)
   pgnumber=$(cat /var/plexguide/pg.number)
-  
+
 top_menu() {
-menu=$1
+
+    if [[ $# -eq 0 ]]; then
+    menu=$pgnumber
+    else
+    menu=$1
+    fi
     # Menu Interface
   tee <<-EOF
 
