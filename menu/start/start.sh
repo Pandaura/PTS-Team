@@ -201,7 +201,7 @@ networking() {
   sub_menu_networking
   end_menu
 read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-    if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgcloner/traefik.sh; fi
+    if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgcloner/traefik.sh; fi
     if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
     main_menu_options
 
@@ -211,9 +211,9 @@ security() {
   sub_menu_security
   end_menu
   read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-   if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && mount /opt/plexguide/menu/shield/pgshield.sh; fi
-   if [[ "${typed}" == "D" || "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/portguard/portguard.sh; fi
-   if [[ "${typed}" == "C" || "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
+   if [[ "${typed}" == "e" ]]; then clear && mount /opt/plexguide/menu/shield/pgshield.sh; fi
+   if [[ "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/portguard/portguard.sh; fi
+   if [[ "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
    main_menu_options
 }
@@ -223,9 +223,9 @@ mount() {
   sub_menu_mount
   end_menu
   read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-   if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart; fi
-   if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/portguard/portguard.sh; fi
-   if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
+   if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart; fi
+   if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/portguard/portguard.sh; fi
+   if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
    main_menu_options
 }
@@ -234,12 +234,12 @@ apps() {
   sub_menu_app
   end_menu
   read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-    if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
-    if [[ "${typed}" == "D" || "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/pgbox/community/community.sh; fi
-    if [[ "${typed}" == "C" || "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/personal/personal.sh; fi
-    if [[ "${typed}" == "R" || "${typed}" == "r" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
-    if [[ "${typed}" == "F" || "${typed}" == "f" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
-    if [[ "${typed}" == "T" || "${typed}" == "t" ]]; then clear && bash /opt/plexguide/menu/pgbox/customparts/autobackup.sh; fi
+    if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
+    if [[ "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/pgbox/community/community.sh; fi
+    if [[ "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/personal/personal.sh; fi
+    if [[ "${typed}" == "r" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
+    if [[ "${typed}" == "f" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
+    if [[ "${typed}" == "t" ]]; then clear && bash /opt/plexguide/menu/pgbox/customparts/autobackup.sh; fi
     if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
     main_menu_options
 }
@@ -248,12 +248,12 @@ vault() {
   sub_menu_app
   end_menu
   read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-    if [[ "${typed}" == "E" || "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
-    if [[ "${typed}" == "D" || "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/pgbox/community/community.sh; fi
-    if [[ "${typed}" == "C" || "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/personal/personal.sh; fi
-    if [[ "${typed}" == "R" || "${typed}" == "r" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
-    if [[ "${typed}" == "F" || "${typed}" == "f" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
-    if [[ "${typed}" == "T" || "${typed}" == "t" ]]; then clear && bash /opt/plexguide/menu/pgbox/customparts/autobackup.sh; fi
+    if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
+    if [[ "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/pgbox/community/community.sh; fi
+    if [[ "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/personal/personal.sh; fi
+    if [[ "${typed}" == "r" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
+    if [[ "${typed}" == "f" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
+    if [[ "${typed}" == "t" ]]; then clear && bash /opt/plexguide/menu/pgbox/customparts/autobackup.sh; fi
     if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
     main_menu_options
 }
