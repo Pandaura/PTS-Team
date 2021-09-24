@@ -73,6 +73,9 @@ exitcheck() {
         bash /opt/plexguide/menu/interface/ending.sh
     fi
 }
+  edition=$(cat /var/plexguide/pg.edition)
+  serverid=$(cat /var/plexguide/server.id)
+  pgnumber=$(cat /var/plexguide/pg.number)
 top_menu() {
 
     # Menu Interface
