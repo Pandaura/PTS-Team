@@ -250,10 +250,10 @@ EOF
     [E] Backup a container                                     11/11
     [D] Backup all                            
     --$(echo -e ${NY}RESTORE${NC})--
-    [R] Restore a container
-    [F] Restore all
+    [C] Restore a container
+    [R] Restore all
     --$(echo -e ${NY}Processing Location${NC})--
-    [R] Change location 
+    [F] Change location 
 -------------------------------------------------------------------------
 [8] Tools           : Tools
 [9] IRC             : Matrix chat client to Discord

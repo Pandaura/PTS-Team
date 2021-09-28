@@ -7,6 +7,7 @@
 ################################################################################
 # Create Variables (If New) & Recall
 source /opt/plexguide/menu/functions/start.sh
+source /opt/plexguide/menu/functions/pgvault.func
 typed="${typed,,}"
 
 pcloadletter() {
@@ -245,15 +246,14 @@ apps() {
 }
 vault() {
   top_menu
-  sub_menu_app
+  sub_menu_vault
   end_menu
   read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-    if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
-    if [[ "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/pgbox/community/community.sh; fi
-    if [[ "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/personal/personal.sh; fi
-    if [[ "${typed}" == "r" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
-    if [[ "${typed}" == "f" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
-    if [[ "${typed}" == "t" ]]; then clear && bash /opt/plexguide/menu/pgbox/customparts/autobackup.sh; fi
+    if [[ "${typed}" == "e" ]]; then clear && vaultbackup; fi
+    if [[ "${typed}" == "d" ]]; then clear && backup_all_start; fi
+    if [[ "${typed}" == "c" ]]; then clear && vaultrestore; fi
+    if [[ "${typed}" == "r" ]]; then clear && restore_all_start; fi
+    if [[ "${typed}" == "f" ]]; then clear && bash /opt/plexguide/menu/pgvault/location.sh; fi
     if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
     main_menu_options
 }

@@ -4,11 +4,15 @@
 # Author(s):  Admin9705
 # GNU:        General Public License v3.0
 ################################################################################
+source /opt/plexguide/menu/functions/start.sh
 declare YELLOW='\033[0;33m'
 declare NC='\033[0m'
 declare total_size_in_bytes=0
 declare total_program=0
 declare program_number=0
+declare NF='\033[1;32m'
+declare NC='\033[0m'
+typed="${typed,,}"
 
 runningcheck() {
     initial2
@@ -157,13 +161,11 @@ serverprime() {
 🔒 Vault ~ Server recall
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📂 Current [${server_id}] & prior servers detected:
+📂 Current $(echo -e ${NF}${server_id}${NC}) & prior servers detected:
 
 $servers
-__________________________________________________________________________
-                                                                 [Z] Exit
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
+end_menu_back
     read -p '💬 Type server name | Press [ENTER]: ' server </dev/tty
     clear_lines 12
     echo $server >/tmp/server.select
@@ -226,7 +228,7 @@ backup_all_start() {
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     line_above=2
     while read p; do
-        change_line_text $line_above "🔒  Vault in now backing up ${YELLOW}\"$p\"${NC}"
+        change_line_text $line_above "🔒  Vault is now backing up ${YELLOW}\"$p\"${NC}"
         let line_above+=1
         let program_number+=1
         sleep 2.5
@@ -455,10 +457,9 @@ $notrun
 💾 Apps queued for backup
 
 $buildup
-__________________________________________________________________________
-[A] Backup                                                       [Z] Exit
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[A] to backup
 EOF
+end_menu_back
     read -p '🌍 Type APP for QUEUE | Type 'all' to backup all apps | Press [ENTER]: ' typed </dev/tty
     clear_lines 17
     
@@ -501,10 +502,9 @@ $notrun
 💾 Apps queued for restore
 
 $buildup
-__________________________________________________________________________
-[A] Restore                                                       [Z] Exit
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[A] to restore
 EOF
+end_menu_back
     read -p '🌍 Type APP for QUEUE | Type 'all' to restore all apps | Press [ENTER]: ' typed </dev/tty
     clear_lines 17
     
@@ -541,10 +541,8 @@ Used disk space: $used of $capacity | $percentage Used Capacity
 [2] Restore your data
 [3] Change Server ID                    | Current Server ID : $(echo -e ${NF}$server_id${NC})
 [4] Processing location                 | Current location : $tarlocation
-__________________________________________________________________________
-                                                                  [Z] Exit
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
+end_menu_back
     read -p 'Type a number | Press [ENTER]: ' typed </dev/tty
     clear_lines 15
     
