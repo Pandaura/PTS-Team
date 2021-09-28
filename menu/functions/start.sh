@@ -86,7 +86,6 @@ top_menu() {
     fi
     # Menu Interface
   tee <<-EOF
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🛈 $transport               $menu                     ID: $serverid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -120,14 +119,18 @@ disk_space_used_space() {
 }
 
 main_menu() {
-      
+  # For PG UI - Force Variable to Set
+  ports=$(cat /var/plexguide/server.ports)
+  if [ "$ports" == "" ]; then
+    echo "🔴" >$filevg/pg.ports
+  else echo "🟢" >$filevg/pg.ports; fi
       tee <<-EOF
 
-[1]  Networking     : Reverse Proxy | Domain Setup                   [🟢 ]
-[2]  Security       : Secure your server                             [$ports]
-[3]  Mount          : Mount Cloud Based Storage                      [🔴 ]
-[4]  Apps           : Apps ~ Core, Community & Removal               [🔴 ] 
-[5]  Vault          : Backup & Restore                               [🔴 ]
+[1]  Networking     : Reverse Proxy | Domain Setup                   
+[2]  Security       : Secure your server                             
+[3]  Mount          : Mount Cloud Based Storage                      
+[4]  Apps           : Apps ~ Core, Community & Removal                
+[5]  Vault          : Backup & Restore                               
 -------------------------------------------------------------------------
 [8] Tools           : Tools
 [9] IRC             : Matrix chat client to Discord
