@@ -310,7 +310,7 @@ main_menu_options() {
   8) clear && bash /opt/plexguide/menu/plex_dupe/plex_dupe.sh && clear && primestart ;;
   9) clear && bash /opt/plexguide/menu/traktarr/traktarr.sh && clear && primestart ;;
   10) clear && bash /opt/plexguide/menu/plexpatrol/plexpatrol.sh && clear && primestart ;;
-  11) clear && bash /opt/plexguide/menu/interface/settings.sh && clear && primestart ;;
+  0) clear && bash /opt/plexguide/menu/interface/settings.sh && clear && primestart ;;
   z) clear && bash /opt/plexguide/menu/interface/ending.sh  && exit ;;
   Z) clear&& bash /opt/plexguide/menu/interface/ending.sh && exit ;;
   *) primestart ;;
