@@ -8,7 +8,7 @@
 # Create Variables (If New) & Recall
 source /opt/plexguide/menu/functions/start.sh
 source /opt/plexguide/menu/functions/pgvault.func
-source /opt/plexguide/menu/functions/pgvault.sh
+source /opt/plexguide/menu/pgvault/pgvault.sh
 typed="${typed,,}"
 
 pcloadletter() {
