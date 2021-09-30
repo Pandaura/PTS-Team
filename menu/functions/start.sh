@@ -198,9 +198,9 @@ sub_menu_mount() { # first sub menu
 [1]Networking     : Reverse Proxy | Domain Setup                   
 [2]  Security       : Secure your server                             
 [3]  $(echo -e ${NG}Mount${NC})          : Mount Cloud Based Storage
-    [E] Deploy Mount    - Single Sign-On MFA Portal                      [🟢 ]
-    [D] Deploy Uploader   - Close vulnerable container ports             [🟢 ]
-    [C] Add keys         - Setup a secure network             $displaykey
+    [E] Deploy Mount
+    [D] Deploy Uploader
+    [C] Add keys
     --$(echo -e ${NY}UPDATE MOUNT DETAILS${NC})--
     [R] Update credentials        - Setup a secure network             
     [F] Update mount options         - Setup a secure network
