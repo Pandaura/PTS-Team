@@ -8,6 +8,7 @@
 # Create Variables (If New) & Recall
 source /opt/plexguide/menu/functions/start.sh
 source /opt/plexguide/menu/functions/pgvault.func
+source /opt/plexguide/menu/functions/pgvault.sh
 typed="${typed,,}"
 
 pcloadletter() {
@@ -249,9 +250,9 @@ vault() {
   sub_menu_vault
   end_menu
   read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-    if [[ "${typed}" == "e" ]]; then clear && vaultbackup; fi
+    if [[ "${typed}" == "e" ]]; then clear && initial && apprecall && vaultbackup; fi
     if [[ "${typed}" == "d" ]]; then clear && backup_all_start; fi
-    if [[ "${typed}" == "c" ]]; then clear && vaultrestore; fi
+    if [[ "${typed}" == "c" ]]; then clear && initial && apprecall && vaultrestore; fi
     if [[ "${typed}" == "r" ]]; then clear && restore_all_start; fi
     if [[ "${typed}" == "f" ]]; then clear && bash /opt/plexguide/menu/pgvault/location.sh; fi
     if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
