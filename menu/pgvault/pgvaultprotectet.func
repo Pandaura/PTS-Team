@@ -264,7 +264,7 @@ backup_process() {
     
     tar \
     --warning=no-file-changed --ignore-failed-read --absolute-names --warning=no-file-removed \
-    --exclude-from=/opt/pgvault/exclude.list \
+    --exclude-from=/opt/plexguide/menu/pgvault/exclude.list \
     -czf - /opt/appdata/${program_var} | openssl enc -e -aes256 -out /opt/appdata/plexguide/${program_var}.tar.gz ./ \
     | cut -b1-$(tput cols) | sed -u 'i\\o033[2K' | stdbuf -o0 tr '\n' '\r'; echo
     

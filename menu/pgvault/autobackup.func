@@ -50,7 +50,7 @@ final() {
     echo
     echo "All backup complete"$'\t\t\t'"${total_size_readable}"
     read -p '' typed </dev/tty
-    bash /opt/pgvault/pgvault.sh
+    bash /opt/plexguide/menu/pgvault/pgvault.sh
     exit
 }
 
@@ -75,7 +75,7 @@ pgboxrecall() {
     ls -p /opt/coreapps/apps | grep -v / >/var/plexguide/pgvault.apprecall
     while read p; do
         sed -i "/^$p\b/Id" /var/plexguide/pgvault.apprecall
-    done </opt/pgvault/exempt.list
+    done </opt/plexguide/menu/pgvault/exempt.list
     
     while read p; do
         sed -i "/^$p\b/Id" /var/plexguide/pgvault.apprecall
@@ -103,7 +103,7 @@ apprecall() {
     tree -d -L 1 /opt/appdata | awk '{print $2}' | tail -n +2 | head -n -2 >/var/plexguide/pgvault.apprecall
     while read p; do
         sed -i "/^$p\b/Id" /var/plexguide/pgvault.apprecall
-    done </opt/pgvault/exempt.list
+    done </opt/plexguide/menu/pgvault/exempt.list
     
     ### Blank Out Temp List
     rm -rf /var/plexguide/program.temp && touch /var/plexguide/program.temp
@@ -283,7 +283,7 @@ backup_process() {
     
     tar \
     --warning=no-file-changed --ignore-failed-read --absolute-names --warning=no-file-removed \
-    --exclude-from=/opt/pgvault/exclude.list \
+    --exclude-from=/opt/plexguide/menu/pgvault/exclude.list \
     -C /opt/appdata/${program_var} -cvf ${tarlocation}/${program_var}.tar ./ \
     | cut -b1-$(tput cols) | sed -u 'i\\o033[2K' | stdbuf -o0 tr '\n' '\r'; echo
     

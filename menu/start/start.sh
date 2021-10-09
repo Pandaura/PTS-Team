@@ -245,11 +245,12 @@ apps() {
     main_menu_options
 }
 vault() {
+  source /opt/plexguide/menu/functions/pgvault.func
   top_menu
   sub_menu_vault
   end_menu
   read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-    if [[ "${typed}" == "e" ]]; then clear && initial && pgboxrecall && apprecall && vaultbackup; fi
+    if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgvault/pgvault.sh; fi
     if [[ "${typed}" == "d" ]]; then clear && backup_all_start; fi
     if [[ "${typed}" == "c" ]]; then clear && initial && pgboxrecall && apprecall && vaultrestore; fi
     if [[ "${typed}" == "r" ]]; then clear && restore_all_start; fi
