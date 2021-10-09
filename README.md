@@ -1,15 +1,16 @@
 ![](https://github.com/Pandaura/PTS-Team/blob/master/pandaura.gif)  
-This is a fork of PTS/MHA called Pandaura. Thank you to all who contributed to the previous projects. No features are really added to MHA anymore as it is in maintenance mode so I will be making some ammendments here. This will be tackled in waves meaning I'll hit each section head on with the odd ripple here and there.
 
-My personal opinion. PTS/MHA did well and still are. Whilst PG was more of a rename and grab project. The remnants meant things were, for lack of a better word, bashed together which left untidy and unfinished menu systems with grammar and spelling that will make your eyes bleed. I'm here to tidy this up, improve on the messy (only in some places) code and just make this the tool that it should have been. Previous projects had the potential to just be burned but you have nothing to worry about here. This is a safer/faster/more reliable project but we all have different tastes....enjoy.
+THIS KINDA EXPLODED SOMEWHAT SO EXPECT TO SEE SOME CHANGES SOON! BARE WITH ME!
+
+This is a fork of PTS/MHA called Pandaura. Thank you to all who contributed to the previous projects. No features are really added to MHA anymore as it is in maintenance mode so I will be making some ammendments here. Pandaura utilizes Ansible and Docker to streamline your media server while deploying multiple tools for your server operations.
+
+My personal opinion. PTS/MHA did well and still are providing excellend support. Whilst PG was more of a rename and grab project with an awesome community in which we can't deny the time and effort that was put into the project. The remnants meant things were, for lack of a better word, bashed together which left untidy and unfinished menu systems with grammar and spelling that will make your eyes bleed. I'm here to tidy this up, improve on the messy (only in some places) code and just make this the tool that it should have been. Previous projects had the potential to just be burned but you have nothing to worry about here. This is a safer/faster/more reliable project but we all have different tastes....enjoy.
 
 I'll be listing a few of the annoyances below...
 
-The menu doesn't even go back when you're in a sub menu half the time...you are either left hanging or you go straight back to the beginning either way this is really lazy
+The menu doesn't even go back when you're in a sub menu half the time...you are either left hanging or you go straight back to the beginning either way this is really frustrating
 
 Most menu sub systems again wouldn't even 'clear' leaving your terminal messy
-
-Just an example of horrendous grammar and spelling
 
 Current section being worked on - 
 
@@ -61,8 +62,8 @@ sudo wget -N https://raw.githubusercontent.com/MHA-Team/PTS-Clone/final/function
 ## (ii) Installing Pandaura
 
 **NOTE**
-The ideal method of installing the Pandaura fork is to delete your current build and install Pandaura fork on a clean system.
-Pandaura fork works best on **ubuntu 18.XX** and this tutorial will assume you are using ubuntu 18.XX.
+The ideal method of installing the Pandaura is to delete your current build and install Pandaura on a clean system.
+Pandaura works best on **ubuntu 18.XX** and this tutorial will assume you are using ubuntu 18.XX.
 If you are unsure on how to do this, please refer to the documentation provided by your server provider.  
 
 Once your server has an OS installed, login to your server using SSH.  
@@ -80,8 +81,8 @@ sudo wget -qO- https://raw.githubusercontent.com/Pandaura/Install/master/install
 
 The installation will then take you through the setup which is self-explanatory.  
 
-### Optional - updating your PTS fork to the new Pandaura fork
-IDoMnCi came up with a great script to change all the links on an existing PTS-Team fork (NOT PG 8.x) to the Pandaura fork.
+### Optional - updating your PTS to Pandaura
+IDoMnCi came up with a great script to change all the links on an existing PTS-Team (NOT PG 8.x) to the Pandaura.
 Details - https://github.com/Pandaura/Install/pull/4
 ```
 sudo wget -qO- https://raw.githubusercontent.com/Pandaura/Install/master/relocate.sh | sudo bash
@@ -100,9 +101,9 @@ Then type the following to run the Pandaura menu: `sudo pandaura`
 
 * Deploy Pandaura Shield (GOAuth - all apps supported) [see here](https://github.com/Pandaura/PTS-Team/wiki/PTS-Shield)
 
-* Set up and deploy PTS-Clone. You can restore you backup keys at this stage. [see here](https://github.com/Pandaura/PTS-Team/wiki/PTS-Clone)
+* Set up and deploy Clone. You can restore you backup keys at this stage. [see here](https://github.com/Pandaura/PTS-Team/wiki/PTS-Clone)
 
-* (Optional) Restore PTS backup (created in step 1) using PTS-Vault. [see here](https://github.com/Pandaura/PTS-Team/wiki/PTS-Vault---Data-Storage)
+* (Optional) Restore PTS backup (created in step 1) using Vault. [see here](https://github.com/Pandaura/PTS-Team/wiki/PTS-Vault---Data-Storage)
 
 * Install desired core/community applications (Do this regardless of whether it is a fresh install with restore or overwrite)  [see here](https://github.com/Pandaura/PTS-Team/wiki/core-apps)
 
@@ -110,13 +111,13 @@ Then type the following to run the Pandaura menu: `sudo pandaura`
 
 **Why do I need to change remote paths?**  
 
-PTS will create one download folder for completed downloads using any NZB client `/mnt/downloads/nzb` and one download folder for completed downloads using any torrent client `/mnt/downloads/torrent`. Both folder names are different to those used in previous versions of PTS. This remote paths need to be changed in your configuration settings (nzbget/radarr/sonarr etc) which you can do in either in terminal or webUI.  
+Pandaura will create one download folder for completed downloads using any NZB client `/mnt/downloads/nzb` and one download folder for completed downloads using any torrent client `/mnt/downloads/torrent`. Both folder names are different to those used in previous versions of PTS. This remote paths need to be changed in your configuration settings (nzbget/radarr/sonarr etc) which you can do in either in terminal or webUI.  
 
-**NOTE**  PTS fork does **not** install PGUI by default.   
+**NOTE**  PTS does **not** install PGUI by default.   
 
 # 2. Project Statement
 
-PTS  is a **fork** of PG / Plexguide, an all-in-one media solution that deploys a Media Server through the use of either your local HDD or Google Drive; serving as unlimited back-end storage. PTS utilizes Ansible and Docker to streamline your Media Server while deploying multiple tools for your server operations.
+Pandaura  is a **fork** of PTS/MHA, an all-in-one media solution that deploys a Media Server through the use of either your local HDD or Google Drive; serving as unlimited back-end storage.
 
 # 3. Functional Use
 
