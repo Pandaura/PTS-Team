@@ -19,9 +19,9 @@ emergency(){
       tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️  Emergency & warning log generator 
+⚠️  Warning 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-NOTE: This can be turned [On] or [Off] in Settings
+NOTE: This can be turned [On] or [Off] in Settings.
 
 EOF
 
