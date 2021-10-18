@@ -35,7 +35,6 @@ variable() {
 
 # What Loads the Order of Execution
 primestart() {
-  downloadpg
   pcloadletter
   varstart
   gcetest
@@ -271,6 +270,7 @@ menuprime2() { #
 
 #for i in range(10):
  #   writeFile(i)
+ downloadpg
   transport=$(cat /var/plexguide/pg.transport)
 top_menu
 disk_space_used_space
