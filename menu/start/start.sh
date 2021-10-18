@@ -1,325 +1,274 @@
 #!/bin/bash
 #
-# Title:      PGBlitz (Reference Title File)
-# Author(s):  Admin9705
-# URL:        https://pgblitz.com - http://github.pgblitz.com
+# Title:      PTS major file
+# org.Author(s):  Admin9705 - Deiteq
+# Mod from MrDoob for PTS
 # GNU:        General Public License v3.0
 ################################################################################
-# Create Variables (If New) & Recall
-source /opt/plexguide/menu/functions/start.sh
-source /opt/plexguide/menu/functions/pgvault.func
-typed="${typed,,}"
+source /opt/plexguide/menu/functions/functions.sh
+source /opt/plexguide/menu/functions/install.sh
+dev=$(cat /var/plexguide/pgcloner.projectversion)
+declare NY='\033[0;33m'
+declare NC='\033[0m'
+declare NG='\033[1;32m'
+update="🌟 Update Available!🌟"
 
-pcloadletter() {
-  filevg="/var/plexguide"
-  touch $filevg/pgclone.transport
-  temp=$(cat /var/plexguide/pgclone.transport)
-  if [ "$temp" == "mu" ]; then
-    transport="Move"
-  elif [ "$temp" == "me" ]; then
-    transport="Move: Encrypted"
-  elif [ "$temp" == "bu" ]; then
-    transport="Blitz"
-  elif [ "$temp" == "be" ]; then
-    transport="Blitz: Encrypted"
-  elif [ "$temp" == "le" ]; then
-    transport="Local"
-  else transport="NOT-SET"; fi
-  echo "$transport" >$filevg/pg.transport
+sudocheck() {
+    if [[ $EUID -ne 0 ]]; then
+    tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️  You must execute as a SUDO USER (with sudo) or as ROOT!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+        exit 0
+    fi
 }
 
-variable() {
-  file="$1"
-  if [ ! -e "$file" ]; then echo "$2" >$1; fi
+downloadpg() {
+  if [[ "$dev" == "dev" ]]; then
+      rm /opt/plexguide -rfv 1>/dev/null 2>&1
+      git clone -b dev --single-branch git://github.com/Pandaura/PTS-Team.git /opt/plexguide 1>/dev/null 2>&1
+      ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
+      rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
+      rm -rf /opt/plexguide/.git* >/dev/null 2>&1
+  else
+    rm -rf /opt/plexguide >/dev/null 2>&1
+    git clone --single-branch https://github.com/Pandaura/PTS-Team.git /opt/plexguide  1>/dev/null 2>&1
+    ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
+    rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
+    rm -rf /opt/plexguide/.git* >/dev/null 2>&1
+  fi
 }
 
-# What Loads the Order of Execution
-primestart() {
-  downloadpg
-  pcloadletter
-  varstart
-  gcetest
+missingpull() {
+    file="/opt/plexguide/menu/functions/install.sh"
+    if [ ! -e "$file" ]; then
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️  Base folder is missing!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+        sleep 2
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🛈  Re-downloading Pandaura
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+        sleep 2
+        downloadpg
+    tee <<-EOF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🛈  Repair complete. Standby!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EOF
+        sleep 2
+    fi
 }
 
-wisword=$(/usr/games/fortune -as | sed "s/^/ /")
-
-varstart() {
-  ###################### FOR VARIABLES ROLE SO DOESNT CREATE RED - START
-  filevg="/var/plexguide"
-  if [ ! -e "$filevg" ]; then
-    mkdir -p $filevg/logs 1>/dev/null 2>&1
-    chown -R 1000:1000 $file 1>/dev/null 2>&1
-    chmod -R 775 $file 1>/dev/null 2>&1
-  fi
-  fileag="/opt/appdata/plexguide"
-  if [ ! -e "$fileag" ]; then
-    mkdir -p $fileag 1>/dev/null 2>&1
-    chown -R 1000:1000 $fileag 1>/dev/null 2>&1
-    chmod -R 775 $fileag 1>/dev/null 2>&1
-  fi
-
-  ###################### FOR VARIABLES ROLE SO DOESNT CREATE RED - START
-  variable $filevg/pgfork.project "NOT-SET"
-  variable $filevg/pgfork.version "NOT-SET"
-  variable $filevg/tld.program "NOT-SET"
-  variable $fileag/plextoken "NOT-SET"
-  variable $filevg/server.ht ""
-  variable $filevg/server.ports "127.0.0.1:"
-  variable $filevg/server.email "NOT-SET"
-  variable $filevg/server.domain "NOT-SET"
-  variable $filevg/tld.type "standard"
-  variable $filevg/transcode.path "standard"
-  variable $filevg/pgclone.transport "NOT-SET"
-  variable $filevg/plex.claim ""
-  
-  #### Temp Fix - Fixes Bugged AppGuard
-  serverht=$(cat /var/plexguide/server.ht)
-  if [ "$serverht" == "NOT-SET" ]; then
-    rm $filevg/server.ht
-    touch $filevg/server.ht
-  fi
-
-  hostname -I | awk '{print $1}' >$filevg/server.ip
-  ###################### FOR VARIABLS ROLE SO DOESNT CREATE RED - END
-  value="/etc/bash.bashrc.local"
-  rm -rf $value && echo -e "export NCURSES_NO_UTF8_ACS=1" >>$value
-
-  # run pg main
-  file="/var/plexguide/update.failed"
-  if [ -e "$file" ]; then
-    rm -rf /var/plexguide/update.failed
-    exit
-  fi
-  #################################################################################
-
-  # Touch Variables Incase They Do Not Exist
-  touch $filevg/pg.edition
-  touch $filevg/server.id
-  touch $filevg/pg.number
-  touch $filevg/traefik.deployed
-  touch $filevg/server.ht
-  touch $filevg/server.ports
-  touch $filevg/pg.server.deploy
-
-  # For PG UI - Force Variable to Set
-  ports=$(cat /var/plexguide/server.ports)
-  if [ "$ports" == "" ]; then
-    echo "🔴" >$filevg/pg.ports
-  else echo "🟢" >$filevg/pg.ports; fi
-
-  ansible --version | head -n +1 | awk '{print $2'} >$filevg/pg.ansible
-  docker --version | head -n +1 | awk '{print $3'} | sed 's/,$//' >$filevg/pg.docker
-  lsb_release -si >$filevg/pg.os
-  
-  file="/var/plexguide/gce.false"
-  if [ -e "$file" ]; then echo "No" >$filevg/pg.gce; else echo "Yes" >$filevg/pg.gce; fi
-
-  # Call Variables
+exitcheck() {
+    bash /opt/plexguide/menu/version/file.sh
+    file="/var/plexguide/exited.upgrade"
+    if [ ! -e "$file" ]; then
+        bash /opt/plexguide/menu/interface/ending.sh
+    else
+        rm -rf /var/plexguide/exited.upgrade 1>/dev/null 2>&1
+        echo ""
+        bash /opt/plexguide/menu/interface/ending.sh
+    fi
+}
   edition=$(cat /var/plexguide/pg.edition)
   serverid=$(cat /var/plexguide/server.id)
   pgnumber=$(cat /var/plexguide/pg.number)
 
-  # Declare Traefik Deployed Docker State
-  if [[ $(docker ps --format {{.Names}}| grep "traefik") != "traefik" ]]; then
-    traefik="NOT DEPLOYED"
-    echo "Not Deployed" >$filevg/pg.traefik
-  else
-    traefik="DEPLOYED"
-    echo "Deployed" >$filevg/pg.traefik
-  fi
+top_menu() {
 
-  if [[ $(docker ps --format {{.Names}}| grep "oauth") != "oauth" ]]; then
-    oauth="NOT DEPLOYED"
-    echo "Not Deployed" >$filevg/pg.auth
-  else
-    oauth="DEPLOYED"
-    echo "Deployed" >$filevg/pg.oauth
-  fi
-
-  # For ZipLocations
-  file="/var/plexguide/data.location"
-  if [ ! -e "$file" ]; then echo "/opt/appdata/plexguide" >$filevg/data.location; fi
-
-  space=$(cat /var/plexguide/data.location)
-  used=$(df -h / --local | tail -n +2 | awk '{print $3}' )
-  capacity=$(df -h / --local  | tail -n +2 | awk '{print $2}')
-  percentage=$(df -h / --local | tail -n +2 | awk '{print $5}')
-
-  # For the PGBlitz UI
-  echo "$used" >$filevg/pg.used
-  echo "$capacity" >$filevg/pg.capacity
+    if [[ $# -eq 0 ]]; then
+    menu=$pgnumber
+    else
+    menu=$1
+    fi
+    # Menu Interface
+  tee <<-EOF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🛈 $transport               $menu                     ID: $serverid
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- SB-API Access: 🟢   - Internal API Access: 🟢   - $(echo -e $Memory)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                                                  $(echo -e $update) 
+Disk Used Space: $used of $capacity | $percentage Used Capacity
+EOF
 }
 
-gcetest(){
-gce=$(cat /var/plexguide/pg.server.deploy)
+disk_space_used_space() {
+      # Displays Second Drive of GCE
+  edition=$(cat /var/plexguide/pg.server.deploy)
+  if [ "$edition" == "feeder" ]; then
+    used_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $3}')
+    capacity_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $2}')
+    percentage_gce=$(df -h /mnt --local | tail -n +2 | awk '{print $5}')
+    echo " GCE disk used space: $used_gce of $capacity_gce | $percentage_gce Used Capacity"
+  fi
 
-if [[ $gce == "feeder" ]]; then
-menuprime1
-else menuprime2; fi
+  disktwo=$(cat "/var/plexguide/server.hd.path")
+  if [ "$edition" != "feeder" ]; then
+    used_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $3}')
+    capacity_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $2}')
+    percentage_gce2=$(df -h "$disktwo" --local | tail -n +2 | awk '{print $5}')
+
+    if [[ "$disktwo" != "/mnt" ]]; then
+      echo " 2nd disk used space: $used_gce2 of $capacity_gce2 | $percentage_gce2 Used Capacity"
+    fi
+  fi
 }
 
-menuprime1() { # GCE Optimised Menu
-transport=$(cat /var/plexguide/pg.transport)
-top_menu
-disk_space_used_space
-
-  # Declare Ports State
+main_menu() {
+  # For PG UI - Force Variable to Set
   ports=$(cat /var/plexguide/server.ports)
-
   if [ "$ports" == "" ]; then
-    ports="🔴"
-  else ports="🟢"; fi
+    echo "Open" >$filevg/pg.ports
+  else echo "Closed" >$filevg/pg.ports; fi
+      tee <<-EOF
+
+[1]  Networking     : Reverse Proxy | Domain Setup                   
+[2]  Security       : Secure your server                             
+[3]  Mount          : Mount Cloud Based Storage                      
+[4]  Apps           : Apps ~ Core, Community & Removal                
+[5]  Vault          : Backup & Restore                               
+-------------------------------------------------------------------------
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
+[0] Settings        : Settings
+EOF
+}
+
+end_menu() {
+    tee <<-EOF
+_________________________________________________________________________
+                                                                [Z]  Exit
+https://discord.sudobox.io                            https://sudobox.io/
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+}
+end_menu_back() {
+    tee <<-EOF
+_________________________________________________________________________
+                                                                [Z]  Back
+https://discord.sudobox.io                            https://sudobox.io/
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EOF
+}
+sub_menu_networking() { # first sub menu
 
   tee <<-EOF
-     -- GCE optimized surface --
 
-[1]  Traefik        : Reverse Proxy | Domain Setup
-[2]  Port Guard     : [$ports] Protects the Server App Ports
-[3]  Authelia       : Enable Authelia
-[4]  Mount          : Mount Cloud Based Storage
-[5]  Apps           : Apps ~ Core, Community & Removal
-[6]  Vault          : Backup & Restore
-[7]  Traktarr       : Fill arr's with Trakt lists
+[1]$(echo -e ${NG}Networking${NC})     : Reverse Proxy | Domain Setup                   
+    [E] Reverse Proxy    - Setup a domain using Traefik              [🟢 ]
+[2]  Security       : Secure your server                             
+[3]  Mount          : Mount Cloud Based Storage                      
+[4]  Apps           : Apps ~ Core, Community & Removal                
+[5]  Vault          : Backup & Restore                               
+-------------------------------------------------------------------------
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
+[0] Settings        : Settings
+
 EOF
-end_menu
-  # Standby
-  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
+  }
 
-  case $typed in
-  1) clear && bash /opt/plexguide/menu/pgcloner/traefik.sh && clear && primestart ;;
-  2) clear && bash /opt/plexguide/menu/portguard/portguard.sh && clear && primestart ;;
-  3) clear && bash /opt/plexguide/menu/shield/pgshield.sh && clear && primestart ;;
-  4) clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart ;;
-  5) clear && bash /opt/plexguide/menu/pgbox/select.sh  && clear && primestart ;;
-  6) clear && bash /opt/plexguide/menu/pgvault/pgvault.sh  && clear && primestart ;;
-  7) clear && bash /opt/plexguide/menu/traktarr/traktarr.sh  && clear && primestart ;;
-  z) clear && bash /opt/plexguide/menu/interface/ending.sh &&  exit ;;
-  Z) clear && bash /opt/plexguide/menu/interface/ending.sh && exit ;;
-  *) primestart ;;
-  esac
-}
-networking() {
-  top_menu
-  sub_menu_networking
-  end_menu
-read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-    if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgcloner/traefik.sh; fi
-    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
-    main_menu_options
+sub_menu_security() { # Menu Interface
+  tee <<-EOF
 
-}
-security() {
-  top_menu
-  sub_menu_security
-  end_menu
-  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-   if [[ "${typed}" == "e" ]]; then clear && mount /opt/plexguide/menu/shield/pgshield.sh; fi
-   if [[ "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/portguard/portguard.sh; fi
-   if [[ "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
-   if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
-   main_menu_options
-}
+[1]  Networking     : Reverse Proxy | Domain Setup                   
+[2]  $(echo -e ${NG}Security${NC})       : Secure your server                             
+    [E] Authelia    - Single Sign-On MFA Portal                      [🟢 ]
+    [D] PortGuard   - Close vulnerable container ports               [🟢 ]
+    [C] VPN         - Setup a secure network                         [🟢 ]
+[3]  Mount          : Mount Cloud Based Storage                      
+[4]  Apps           : Apps ~ Core, Community & Removal               
+[5]  Vault          : Backup & Restore                               
+-------------------------------------------------------------------------
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
+[0] Settings        : Settings
 
-mount() {
-  top_menu
-  sub_menu_mount
-  end_menu
-  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-   if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgcloner/pgclone.sh && clear && primestart; fi
-   if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/portguard/portguard.sh; fi
-   if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
-   if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
-   main_menu_options
-}
-apps() {
-  top_menu
-  sub_menu_app
-  end_menu
-  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-    if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
-    if [[ "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/pgbox/community/community.sh; fi
-    if [[ "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/personal/personal.sh; fi
-    if [[ "${typed}" == "r" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
-    if [[ "${typed}" == "f" ]]; then clear && bash /opt/plexguide/menu/pgbox/remove/removal.sh; fi
-    if [[ "${typed}" == "t" ]]; then clear && bash /opt/plexguide/menu/pgbox/customparts/autobackup.sh; fi
-    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
-    main_menu_options
-}
-vault() {
-  source /opt/plexguide/menu/functions/pgvault.func
-  top_menu
-  sub_menu_vault
-  end_menu
-  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-    if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/pgvault/pgvault.sh; fi
-    if [[ "${typed}" == "d" ]]; then clear && backup_all_start; fi
-    if [[ "${typed}" == "c" ]]; then clear && initial && pgboxrecall && apprecall && vaultrestore; fi
-    if [[ "${typed}" == "r" ]]; then clear && restore_all_start; fi
-    if [[ "${typed}" == "f" ]]; then clear && bash /opt/plexguide/menu/pgvault/location.sh; fi
-    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi
-    main_menu_options
-}
-menuprime2() { # 
-  #welcome="Welcome to Pandaura. Thanks for being a part of the community"
-  #firstRun=True
-#def writeFile(number):
- #   global firstRun
-  #  if firstRun:
-   #     print("${welcome}")
-    #    firstRun=False
-    #print(str(number))
-
-#for i in range(10):
- #   writeFile(i)
-  transport=$(cat /var/plexguide/pg.transport)
-top_menu
-disk_space_used_space
-main_menu
-  # Declare Ports State
-  ports=$(cat /var/plexguide/server.ports)
-
-  if [ "$ports" == "" ]; then
-    ports="🔴 "
-  else ports="🟢"; fi
-
-#if [[ "${typed}" == "2" ]]; then sub_menu_security; fi
-end_menu
-  # Standby
-  read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-
-
-  
-
-Used disk space: $used of $capacity | $percentage used capacity                  Deployed
 EOF
-main_menu_options() {
-  case $typed in
-  1) clear && networking;;
-  2) clear && security && clear && primestart;;
-  3) clear && mount && clear && primestart;;
-  4) clear && apps && clear && primestart;;
-  5) clear && vault && clear && primestart;;
-  esac
-}
-  case $typed in
-  1) clear && networking && clear && primestart ;;
-  2) clear && security && clear && primestart ;;
-  3) clear && mount && clear && primestart;;
-  4) clear && apps && clear && primestart;;
-  5) clear && vault && clear && primestart;;
-  #/opt/plexguide/menu/pgscan/pgscan.sh && clear && primestart ;;
-  7) clear && bash /opt/plexguide/menu/pgvault/pgvault.sh && clear && primestart ;;
-  8) clear && bash /opt/plexguide/menu/plex_dupe/plex_dupe.sh && clear && primestart ;;
-  9) clear && bash /opt/plexguide/menu/traktarr/traktarr.sh && clear && primestart ;;
-  10) clear && bash /opt/plexguide/menu/plexpatrol/plexpatrol.sh && clear && primestart ;;
-  0) clear && bash /opt/plexguide/menu/interface/settings.sh && clear && primestart ;;
-  z) clear && bash /opt/plexguide/menu/interface/ending.sh  && exit ;;
-  Z) clear&& bash /opt/plexguide/menu/interface/ending.sh && exit ;;
-  *) primestart ;;
-  #These options are hidden
-  13) clear && bash /opt/plexguide/menu/interface/cloudselect.sh && clear && primestart ;;
-  12) clear && bash /opt/plexguide/menu/pgcloner/pgpress.sh && clear && primestart ;;
-  esac
-}
-#bash /opt/plexguide/menu/pgbox/select.sh && clear && primestart ;; this is for apps
-primestart
+  }
+
+sub_menu_mount() { # first sub menu
+
+  tee <<-EOF
+
+[1]Networking     : Reverse Proxy | Domain Setup                   
+[2]  Security       : Secure your server                             
+[3]  $(echo -e ${NG}Mount${NC})          : Mount Cloud based storage
+    [E] Mount Settings
+    [D] Deploy Uploader
+    [C] Add keys
+    --$(echo -e ${NY}UPDATE MOUNT DETAILS${NC})--
+    [R] Update credentials        - Setup a secure network             
+    [F] Update mount options         - Setup a secure network
+[4]  Apps           : Apps ~ Core, Community & Removal                
+[5]  Vault          : Backup & Restore                               
+-------------------------------------------------------------------------
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
+[0] Settings        : Settings
+
+EOF
+  }
+
+sub_menu_app() { # Menu Interface
+  tee <<-EOF
+
+[1]  Networking     : Reverse Proxy | Domain Setup                   
+[2]  Security       : Secure your server                             
+[3]  Mount          : Mount Cloud Based Storage                      
+[4]  $(echo -e ${NG}Apps${NC})           : Apps ~ Core, Community & Removal
+    --$(echo -e ${NY}INSTALL${NC})--
+    [E] Core                                      11/11
+    [D] Community apps                            11/11
+    [C] Personal apps
+    --$(echo -e ${NY}REMOVE${NC})--
+    [R] Remove apps
+    [F] Full wipe (appdata too) # needs research
+    --$(echo -e ${NY}UPDATE${NC})--
+    [V] Update app
+    [T] Update app subdomain
+    --$(echo -e ${NY}THEMES${NC})--
+[5]  Vault          : Backup & Restore                               
+-------------------------------------------------------------------------
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
+[0] Settings        : Settings
+
+EOF
+  }
+
+  sub_menu_vault() { # Menu Interface
+  tee <<-EOF
+
+[1]  Networking     : Reverse Proxy | Domain Setup                   
+[2]  Security       : Secure your server                             
+[3]  Mount          : Mount Cloud Based Storage                      
+[4]  Apps$          : Apps ~ Core, Community & Removal
+[5]  $(echo -e ${NG}Vault${NC})          : Backup & Restore
+    --$(echo -e ${NY}BACKUP${NC})--       
+    [E] Backup a container                                     11/11
+    [D] Backup all                            
+    --$(echo -e ${NY}RESTORE${NC})--
+    [C] Restore a container
+    [R] Restore all
+    --$(echo -e ${NY}Processing Location${NC})--
+    [F] Change location 
+-------------------------------------------------------------------------
+[8] Tools           : Tools
+[9] IRC             : Matrix chat client to Discord
+[0] Settings        : Settings
+
+EOF
+  }
