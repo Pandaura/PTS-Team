@@ -25,18 +25,19 @@ EOF
 }
 
 downloadpg() {
-  if [ "$dev" == "dev" ]; then
-      rm /opt/plexguide -rfv && git clone -b dev --single-branch git://github.com/Pandaura/PTS-Team.git /opt/plexguide 1>/dev/null 2>&1
+  if [[ "$dev" == "dev" ]]; then
+      rm /opt/plexguide -rfv 1>/dev/null 2>&1
+      git clone -b dev --single-branch git://github.com/Pandaura/PTS-Team.git /opt/plexguide 1>/dev/null 2>&1
       ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
       rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
       rm -rf /opt/plexguide/.git* >/dev/null 2>&1
   else
-    rm -rf /opt/plexguide
+    rm -rf /opt/plexguide >/dev/null 2>&1
     git clone --single-branch https://github.com/Pandaura/PTS-Team.git /opt/plexguide  1>/dev/null 2>&1
     ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
     rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
     rm -rf /opt/plexguide/.git* >/dev/null 2>&1
-    fi
+  fi
 }
 
 missingpull() {
