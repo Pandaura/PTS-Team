@@ -35,6 +35,7 @@ variable() {
 
 # What Loads the Order of Execution
 primestart() {
+  downloadpg
   pcloadletter
   varstart
   gcetest
