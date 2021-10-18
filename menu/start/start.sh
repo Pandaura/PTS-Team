@@ -178,7 +178,7 @@ disk_space_used_space
 [4]  Mount          : Mount Cloud Based Storage
 [5]  Apps           : Apps ~ Core, Community & Removal
 [6]  Vault          : Backup & Restore
-[7]  Traktarr       : Fill arr's with Trakt lists
+[7]  Traktarr       : Fill arrs with Trakt lists
 EOF
 end_menu
   # Standby
