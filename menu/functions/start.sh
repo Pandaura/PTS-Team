@@ -7,6 +7,7 @@
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/install.sh
+dev=$(cat /var/plexguide/pgcloner.projectversion)
 declare NY='\033[0;33m'
 declare NC='\033[0m'
 declare NG='\033[1;32m'
@@ -24,12 +25,18 @@ EOF
 }
 
 downloadpg() {
+  if [ "$dev" == "dev" ]; then
+      rm /opt/plexguide -rfv && git clone -b dev --single-branch git://github.com/Pandaura/PTS-Team.git /opt/plexguide 1>/dev/null 2>&1
+      ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
+      rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
+      rm -rf /opt/plexguide/.git* >/dev/null 2>&1
+  else
     rm -rf /opt/plexguide
     git clone --single-branch https://github.com/Pandaura/PTS-Team.git /opt/plexguide  1>/dev/null 2>&1
-    ansible-playbook /opt/plexguide/menu/version/missing_pull.yml
     ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
     rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
     rm -rf /opt/plexguide/.git* >/dev/null 2>&1
+    fi
 }
 
 missingpull() {
@@ -89,7 +96,7 @@ top_menu() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🛈 $transport               $menu                     ID: $serverid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                                DEV
+- SB-API Access: 🟢   - Internal API Access: 🟢   - $(echo -e $Memory)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                                                   $(echo -e $update) 
 Disk Used Space: $used of $capacity | $percentage Used Capacity
@@ -122,8 +129,8 @@ main_menu() {
   # For PG UI - Force Variable to Set
   ports=$(cat /var/plexguide/server.ports)
   if [ "$ports" == "" ]; then
-    echo "🔴" >$filevg/pg.ports
-  else echo "🟢" >$filevg/pg.ports; fi
+    echo "Open" >$filevg/pg.ports
+  else echo "Closed" >$filevg/pg.ports; fi
       tee <<-EOF
 
 [1]  Networking     : Reverse Proxy | Domain Setup                   
