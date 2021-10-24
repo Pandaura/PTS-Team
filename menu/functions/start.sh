@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# Title:      PTS major file
+# Title: PTS major file
 # org.Author(s):  Admin9705 - Deiteq
-# Mod from MrDoob for PTS
-# GNU:        General Public License v3.0
+# Mod: Pandaura - history at bottom
+# GNU: General Public License v3.0
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/install.sh
@@ -11,7 +11,7 @@ dev=$(cat /var/plexguide/pgcloner.projectversion)
 declare NY='\033[0;33m'
 declare NC='\033[0m'
 declare NG='\033[1;32m'
-update="🌟 Update Available!🌟"
+update=$(cat /var/plexguide/panda.update)
 
 sudocheck() {
     if [[ $EUID -ne 0 ]]; then
@@ -24,20 +24,46 @@ EOF
     fi
 }
 
+gitupdate() {
+cd /opt/plexguide/
+UPSTREAM=${1:-'@{u}'}
+LOCAL=$(git rev-parse @)
+REMOTE=$(git rev-parse "$UPSTREAM")
+BASE=$(git merge-base @ "$UPSTREAM")
+
+if [ $LOCAL = $REMOTE ]; then
+    echo "Up-to-date" >> panda.update
+elif [ $LOCAL = $BASE ]; then
+    echo "🌟 Update Available!🌟" >> panda.update
+elif [ $REMOTE = $BASE ]; then
+    echo "Need to push" >> panda.update
+else
+    echo "Diverged"
+fi
+}
+
 downloadpg() {
   if [[ "$dev" == "dev" ]]; then
-      rm /opt/plexguide -rfv 1>/dev/null 2>&1
-      git clone -b dev --single-branch git://github.com/Pandaura/PTS-Team.git /opt/plexguide 1>/dev/null 2>&1
-      ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
-      rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
-      rm -rf /opt/plexguide/.git* >/dev/null 2>&1
+      echo "dev" >> panda.versionhistory
+        if [[ "$update" == "Update Available" ]]; then
+            rm -rf /opt/plexguide 1>/dev/null 2>&1
+            git branch --set-upstream-to dev origin/dev 1>/dev/null 2>&1
+            git pull 1>/dev/null 2>&1
+            ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
+        else
+        :
+        fi
   else
-    rm -rf /opt/plexguide >/dev/null 2>&1
-    git clone --single-branch https://github.com/Pandaura/PTS-Team.git /opt/plexguide  1>/dev/null 2>&1
+      #echo "final" >> panda.versionhistory
+        if [[ "$update" == "Update Available" ]]; then
+            rm -rf /opt/plexguide 1>/dev/null 2>&1
+            git branch --set-upstream-to main origin/main 1>/dev/null 2>&1
+            git pull 1>/dev/null 2>&1
     ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
-    rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
-    rm -rf /opt/plexguide/.git* >/dev/null 2>&1
+    else
+    :
   fi
+fi
 }
 
 missingpull() {
@@ -272,3 +298,5 @@ EOF
 
 EOF
   }
+
+# Previous modders - MrDoob

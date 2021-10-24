@@ -2,7 +2,7 @@
 
 ################################################################################
 
-# FUNCTIONS START ##############################################################
+# FUNCTIONS START ##############################################################                                                                                    
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/start.sh
 typed="${typed,,}"

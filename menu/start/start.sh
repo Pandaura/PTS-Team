@@ -70,6 +70,7 @@ varstart() {
   variable $filevg/transcode.path "standard"
   variable $filevg/pgclone.transport "NOT-SET"
   variable $filevg/plex.claim ""
+  variable $filevg/auto.update "NOT-SET"
   
   #### Temp Fix - Fixes Bugged AppGuard
   serverht=$(cat /var/plexguide/server.ht)
@@ -102,9 +103,9 @@ varstart() {
 
   # For PG UI - Force Variable to Set
   ports=$(cat /var/plexguide/server.ports)
-  if [ "$ports" == "" ]; then
-    echo "🔴" >$filevg/pg.ports
-  else echo "🟢" >$filevg/pg.ports; fi
+if [ "$ports" == "" ]; then
+    echo "Open" >$filevg/pg.ports
+  else echo "Closed" >$filevg/pg.ports; fi
 
   ansible --version | head -n +1 | awk '{print $2'} >$filevg/pg.ansible
   docker --version | head -n +1 | awk '{print $3'} | sed 's/,$//' >$filevg/pg.docker
@@ -165,9 +166,9 @@ disk_space_used_space
   # Declare Ports State
   ports=$(cat /var/plexguide/server.ports)
 
-  if [ "$ports" == "" ]; then
-    ports="🔴"
-  else ports="🟢"; fi
+if [ "$ports" == "" ]; then
+    echo "Open" >$filevg/pg.ports
+  else echo "Closed" >$filevg/pg.ports; fi
 
   tee <<-EOF
      -- GCE optimized surface --
