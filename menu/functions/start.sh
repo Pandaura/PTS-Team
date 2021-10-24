@@ -32,11 +32,11 @@ REMOTE=$(git rev-parse "$UPSTREAM")
 BASE=$(git merge-base @ "$UPSTREAM")
 
 if [ $LOCAL = $REMOTE ]; then
-    echo "Up-to-date" >> panda.update
+    echo "Up-to-date" >> $filevg/panda.update
 elif [ $LOCAL = $BASE ]; then
-    echo "🌟 Update Available!🌟" >> panda.update
+    echo "🌟 Update Available!🌟" >> $filevg/panda.update
 elif [ $REMOTE = $BASE ]; then
-    echo "Need to push" >> panda.update
+    echo "Need to push" >> $filevg/panda.update
 else
     echo "Diverged"
 fi
@@ -44,7 +44,7 @@ fi
 
 downloadpg() {
   if [[ "$dev" == "dev" ]]; then
-      echo "dev" >> panda.versionhistory
+      echo "dev" >> $filevg/panda.versionhistory
         if [[ "$update" == "Update Available" ]]; then
             rm -rf /opt/plexguide 1>/dev/null 2>&1
             git branch --set-upstream-to dev origin/dev 1>/dev/null 2>&1
@@ -54,7 +54,7 @@ downloadpg() {
         :
         fi
   else
-      #echo "final" >> panda.versionhistory
+      echo "final" >> $filevg/panda.versionhistory
         if [[ "$update" == "Update Available" ]]; then
             rm -rf /opt/plexguide 1>/dev/null 2>&1
             git branch --set-upstream-to main origin/main 1>/dev/null 2>&1
