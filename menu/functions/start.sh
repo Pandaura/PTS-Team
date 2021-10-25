@@ -43,26 +43,34 @@ fi
 }
 
 downloadpg() {
+gitupdate
   update=$(cat /var/plexguide/panda.update)
-  if [[ "$dev" == "dev" ]]; then
-      echo "dev" > $filevg/panda.versionhistory
+  if [[ "dev" == "$dev" ]]; then
+    if [[ "$UPSTREAM" == "master" ]]; then
+        rm -rf /opt/plexguide 1>/dev/null 2>&1
+        git branch --set-upstream-to $dev origin/$dev 1>/dev/null 2>&1
+        git pull 1>/dev/null 2>&1
+        ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1 
+    fi
         if [[ "$update" == "🌟 Update Available!🌟" ]]; then
             rm -rf /opt/plexguide 1>/dev/null 2>&1
-            git branch --set-upstream-to dev origin/dev 1>/dev/null 2>&1
+            git branch --set-upstream-to $dev origin/$dev 1>/dev/null 2>&1
             git pull 1>/dev/null 2>&1
             ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
-        else
-        :
         fi
-  else
-      echo "master" > $filevg/panda.versionhistory
+  fi
+  if [[ "master" == "$dev" ]]; then
+    if [[ "$UPSTREAM" == "dev" ]]; then
+        rm -rf /opt/plexguide 1>/dev/null 2>&1
+        git branch --set-upstream-to $dev origin/$dev 1>/dev/null 2>&1
+        git pull 1>/dev/null 2>&1
+        ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
+    fi
         if [[ "$update" == "🌟 Update Available!🌟" ]]; then
             rm -rf /opt/plexguide 1>/dev/null 2>&1
             git branch --set-upstream-to main origin/main 1>/dev/null 2>&1
             git pull 1>/dev/null 2>&1
     ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
-    else
-    :
   fi
 fi
 }

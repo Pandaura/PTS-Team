@@ -271,7 +271,6 @@ menuprime2() { #
 
 #for i in range(10):
  #   writeFile(i)
- gitupdate
  downloadpg
   transport=$(cat /var/plexguide/pg.transport)
 top_menu
