@@ -41,6 +41,7 @@ else
     echo "Diverged"
 fi
 }
+test
 
 downloadpg() {
 gitupdate
