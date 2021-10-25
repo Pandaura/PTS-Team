@@ -11,7 +11,7 @@ dev=$(cat /var/plexguide/pgcloner.projectversion)
 declare NY='\033[0;33m'
 declare NC='\033[0m'
 declare NG='\033[1;32m'
-update=$(cat /var/plexguide/panda.update)
+
 
 sudocheck() {
     if [[ $EUID -ne 0 ]]; then
@@ -32,20 +32,21 @@ REMOTE=$(git rev-parse "$UPSTREAM")
 BASE=$(git merge-base @ "$UPSTREAM")
 
 if [ $LOCAL = $REMOTE ]; then
-    echo "Up-to-date" >> $filevg/panda.update
+    echo "Up-to-date" > $filevg/panda.update
 elif [ $LOCAL = $BASE ]; then
-    echo "🌟 Update Available!🌟" >> $filevg/panda.update
+    echo "🌟 Update Available!🌟" > $filevg/panda.update
 elif [ $REMOTE = $BASE ]; then
-    echo "Need to push" >> $filevg/panda.update
+    echo "Need to push" > $filevg/panda.update
 else
     echo "Diverged"
 fi
 }
 
 downloadpg() {
+  update=$(cat /var/plexguide/panda.update)
   if [[ "$dev" == "dev" ]]; then
-      echo "dev" >> $filevg/panda.versionhistory
-        if [[ "$update" == "Update Available" ]]; then
+      echo "dev" > $filevg/panda.versionhistory
+        if [[ "$update" == "🌟 Update Available!🌟" ]]; then
             rm -rf /opt/plexguide 1>/dev/null 2>&1
             git branch --set-upstream-to dev origin/dev 1>/dev/null 2>&1
             git pull 1>/dev/null 2>&1
@@ -54,8 +55,8 @@ downloadpg() {
         :
         fi
   else
-      echo "final" >> $filevg/panda.versionhistory
-        if [[ "$update" == "Update Available" ]]; then
+      echo "master" > $filevg/panda.versionhistory
+        if [[ "$update" == "🌟 Update Available!🌟" ]]; then
             rm -rf /opt/plexguide 1>/dev/null 2>&1
             git branch --set-upstream-to main origin/main 1>/dev/null 2>&1
             git pull 1>/dev/null 2>&1
