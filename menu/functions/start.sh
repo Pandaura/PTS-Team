@@ -33,11 +33,11 @@ REMOTE=$(git rev-parse "$UPSTREAM")
 BASE=$(git merge-base @ "$UPSTREAM")
 
 if [ $LOCAL = $REMOTE ]; then
-    echo "Up-to-date"
+    echo "Up-to-date" > $filevg/panda.update
 elif [ $LOCAL = $BASE ]; then
-    echo "🌟 Update Available!🌟"
+    echo "🌟 Update Available!🌟" > $filevg/panda.update
 elif [ $REMOTE = $BASE ]; then
-    echo "Need to push"
+    echo "Need to push" > $filevg/panda.update
 else
     echo "Diverged"
 fi
