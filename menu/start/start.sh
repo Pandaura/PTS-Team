@@ -271,7 +271,7 @@ menuprime2() { #
 
 #for i in range(10):
  #   writeFile(i)
- downloadpg
+ #downloadpg
   transport=$(cat /var/plexguide/pg.transport)
 top_menu
 disk_space_used_space
