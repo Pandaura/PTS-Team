@@ -26,6 +26,7 @@ EOF
 
 gitupdate() {
 cd /opt/plexguide/
+git fetch
 UPSTREAM=${1:-'@{u}'}
 LOCAL=$(git rev-parse @)
 REMOTE=$(git rev-parse "$UPSTREAM")
@@ -41,8 +42,6 @@ else
     echo "Diverged"
 fi
 }
-test
-test2
 
 downloadpg() {
 gitupdate
