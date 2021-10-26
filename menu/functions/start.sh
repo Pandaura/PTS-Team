@@ -32,16 +32,17 @@ REMOTE=$(git rev-parse "$UPSTREAM")
 BASE=$(git merge-base @ "$UPSTREAM")
 
 if [ $LOCAL = $REMOTE ]; then
-    echo "Up-to-date" > $filevg/panda.update
+    echo "Up-to-date"
 elif [ $LOCAL = $BASE ]; then
-    echo "🌟 Update Available!🌟" > $filevg/panda.update
+    echo "🌟 Update Available!🌟"
 elif [ $REMOTE = $BASE ]; then
-    echo "Need to push" > $filevg/panda.update
+    echo "Need to push"
 else
     echo "Diverged"
 fi
 }
 test
+test2
 
 downloadpg() {
 gitupdate
