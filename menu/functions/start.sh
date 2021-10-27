@@ -7,7 +7,6 @@
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/install.sh
-dev=$(cat /var/plexguide/pgcloner.projectversion)
 declare NY='\033[0;33m'
 declare NC='\033[0m'
 declare NG='\033[1;32m'
@@ -47,6 +46,7 @@ test
 downloadpg() {
 gitupdate
   update=$(cat /var/plexguide/panda.update)
+  dev=$(cat /var/plexguide/pgcloner.projectversion)
   if [[ "dev" == "$dev" ]]; then
     if [[ "$UPSTREAM" == "master" ]]; then
         rm -rf /opt/plexguide 1>/dev/null 2>&1
