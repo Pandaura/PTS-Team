@@ -213,7 +213,7 @@ security() {
   sub_menu_security
   end_menu
   read -p '💬  Type Number | Press [ENTER]: ' typed </dev/tty
-   if [[ "${typed}" == "e" ]]; then clear && mount /opt/plexguide/menu/shield/pgshield.sh; fi
+   if [[ "${typed}" == "e" ]]; then clear && bash /opt/plexguide/menu/shield/pgshield.sh; fi
    if [[ "${typed}" == "d" ]]; then clear && bash /opt/plexguide/menu/portguard/portguard.sh; fi
    if [[ "${typed}" == "c" ]]; then clear && bash /opt/plexguide/menu/pgbox/core/core.sh; fi
    if [[ "${typed}" == "exit" || "${typed}" == "z" ]]; then exit; fi

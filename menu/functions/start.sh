@@ -295,13 +295,7 @@ EOF
 [4]  Apps$          : Apps ~ Core, Community & Removal
 [5]  $(echo -e ${NG}Vault${NC})          : Backup & Restore
     --$(echo -e ${NY}BACKUP${NC})--       
-    [E] Backup a container                                     11/11
-    [D] Backup all                            
-    --$(echo -e ${NY}RESTORE${NC})--
-    [C] Restore a container
-    [R] Restore all
-    --$(echo -e ${NY}Processing Location${NC})--
-    [F] Change location 
+    [E] Backup menu
 -------------------------------------------------------------------------
 [8] Tools           : Tools
 [9] IRC             : Matrix chat client to Discord
@@ -311,3 +305,11 @@ EOF
   }
 
 # Previous modders - MrDoob
+
+#[E] Backup a container                                     11/11
+ #   [D] Backup all                            
+  #  --$(echo -e ${NY}RESTORE${NC})--
+   # [C] Restore a container
+    #[R] Restore all
+    #--$(echo -e ${NY}Processing Location${NC})--
+    #[F] Change location 
