@@ -222,7 +222,7 @@ sub_menu_security() { # Menu Interface
 
 [1]  Networking     : Reverse Proxy | Domain Setup                   
 [2]  $(echo -e ${NG}Security${NC})       : Secure your server                             
-    [E] Authelia    - Single Sign-On MFA Portal                      [🟢 ]
+    [E] Shield    - Single Sign-On MFA Portal                      [🟢 ]
     [D] PortGuard   - Close vulnerable container ports               [🟢 ]
     [C] VPN         - Setup a secure network                         [🟢 ]
 [3]  Mount          : Mount Cloud Based Storage                      
