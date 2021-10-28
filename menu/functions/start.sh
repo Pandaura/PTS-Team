@@ -30,7 +30,8 @@ UPSTREAM=${1:-'@{u}'}
 LOCAL=$(git rev-parse @)
 REMOTE=$(git rev-parse "$UPSTREAM")
 BASE=$(git merge-base @ "$UPSTREAM")
-
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo "$BRANCH" > $filevg/panda.branch
 if [ $LOCAL = $REMOTE ]; then
     echo "Up-to-date" > $filevg/panda.update
 elif [ $LOCAL = $BASE ]; then
@@ -47,35 +48,37 @@ downloadpg() {
 gitupdate
   update=$(cat /var/plexguide/panda.update)
   dev=$(cat /var/plexguide/pgcloner.projectversion)
+BRANCH=$(cat /var/plexguide/panda.branch)
   if [[ "dev" == "$dev" ]]; then
-    if [[ "$UPSTREAM" == "master" ]]; then
-        rm -rf /opt/plexguide 1>/dev/null 2>&1
-        git branch --set-upstream-to $dev origin/$dev 1>/dev/null 2>&1
+    if [[ "$BRANCH" == "master" ]]; then
+        #rm -rf /opt/plexguide 1>/dev/null 2>&1
+        git checkout -b dev origin/$dev 1>/dev/null 2>&1
         git pull 1>/dev/null 2>&1
         ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1 
     fi
         if [[ "$update" == "🌟 Update Available!🌟" ]]; then
-            rm -rf /opt/plexguide 1>/dev/null 2>&1
-            git branch --set-upstream-to $dev origin/$dev 1>/dev/null 2>&1
+            #rm -rf /opt/plexguide 1>/dev/null 2>&1
+            git checkout -b dev origin/$dev 1>/dev/null 2>&1
             git pull 1>/dev/null 2>&1
             ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
         fi
   fi
   if [[ "master" == "$dev" ]]; then
-    if [[ "$UPSTREAM" == "dev" ]]; then
-        rm -rf /opt/plexguide 1>/dev/null 2>&1
-        git branch --set-upstream-to $dev origin/$dev 1>/dev/null 2>&1
+    if [[ "$BRANCH" == "dev" ]]; then
+        #rm -rf /opt/plexguide 1>/dev/null 2>&1
+        git checkout -b dev origin/$dev 1>/dev/null 2>&1
         git pull 1>/dev/null 2>&1
         ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
     fi
         if [[ "$update" == "🌟 Update Available!🌟" ]]; then
-            rm -rf /opt/plexguide 1>/dev/null 2>&1
-            git branch --set-upstream-to main origin/main 1>/dev/null 2>&1
+            #rm -rf /opt/plexguide 1>/dev/null 2>&1
+            git checkout -b dev origin/$dev 1>/dev/null 2>&1
             git pull 1>/dev/null 2>&1
     ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
   fi
 fi
 }
+
 
 missingpull() {
     file="/opt/plexguide/menu/functions/install.sh"
