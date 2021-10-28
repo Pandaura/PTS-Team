@@ -101,7 +101,8 @@ touch /var/plexguide/pgui.switch
 [7] RCLONE DEDUPE            
 --------------------------------------------------------------------------
 [T] TroubleShoot             : PreInstaller
-[B] Change Branch            : Change Github 
+[B] Change Branch            : Change Github
+[U] Updater                  : Update fork automatically
 __________________________________________________________________________
 [Z] Exit
 

@@ -1,17 +1,16 @@
 #!/bin/bash
 #
-# Title:      PTS major file
+# Title: PTS major file
 # org.Author(s):  Admin9705 - Deiteq
-# Mod from MrDoob for PTS
-# GNU:        General Public License v3.0
+# Mod: Pandaura - history at bottom
+# GNU: General Public License v3.0
 ################################################################################
 source /opt/plexguide/menu/functions/functions.sh
 source /opt/plexguide/menu/functions/install.sh
-dev=$(cat /var/plexguide/pgcloner.projectversion)
 declare NY='\033[0;33m'
 declare NC='\033[0m'
 declare NG='\033[1;32m'
-update="🌟 Update Available!🌟"
+
 
 sudocheck() {
     if [[ $EUID -ne 0 ]]; then
@@ -24,21 +23,62 @@ EOF
     fi
 }
 
-downloadpg() {
-  if [[ "$dev" == "dev" ]]; then
-      rm /opt/plexguide -rfv 1>/dev/null 2>&1
-      git clone -b dev --single-branch git://github.com/Pandaura/PTS-Team.git /opt/plexguide 1>/dev/null 2>&1
-      ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
-      rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
-      rm -rf /opt/plexguide/.git* >/dev/null 2>&1
-  else
-    rm -rf /opt/plexguide >/dev/null 2>&1
-    git clone --single-branch https://github.com/Pandaura/PTS-Team.git /opt/plexguide  1>/dev/null 2>&1
-    ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
-    rm -rf /opt/plexguide/place.holder >/dev/null 2>&1
-    rm -rf /opt/plexguide/.git* >/dev/null 2>&1
-  fi
+gitupdate() {
+cd /opt/plexguide/
+git fetch
+UPSTREAM=${1:-'@{u}'}
+LOCAL=$(git rev-parse @)
+REMOTE=$(git rev-parse "$UPSTREAM")
+BASE=$(git merge-base @ "$UPSTREAM")
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo "$BRANCH" > $filevg/panda.branch
+if [ $LOCAL = $REMOTE ]; then
+    echo "Up-to-date" > $filevg/panda.update
+elif [ $LOCAL = $BASE ]; then
+    echo "🌟 Update Available!🌟" > $filevg/panda.update
+elif [ $REMOTE = $BASE ]; then
+    echo "Need to push" > $filevg/panda.update
+else
+    echo "Diverged"
+fi
 }
+test
+
+downloadpg() {
+gitupdate
+  update=$(cat /var/plexguide/panda.update)
+  dev=$(cat /var/plexguide/pgcloner.projectversion)
+BRANCH=$(cat /var/plexguide/panda.branch)
+  if [[ "dev" == "$dev" ]]; then
+    if [[ "$BRANCH" == "master" ]]; then
+        #rm -rf /opt/plexguide 1>/dev/null 2>&1
+        git checkout -b dev origin/$dev 1>/dev/null 2>&1
+        git pull 1>/dev/null 2>&1
+        ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1 
+    fi
+        if [[ "$update" == "🌟 Update Available!🌟" ]]; then
+            #rm -rf /opt/plexguide 1>/dev/null 2>&1
+            git checkout -b dev origin/$dev 1>/dev/null 2>&1
+            git pull 1>/dev/null 2>&1
+            ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
+        fi
+  fi
+  if [[ "master" == "$dev" ]]; then
+    if [[ "$BRANCH" == "dev" ]]; then
+        #rm -rf /opt/plexguide 1>/dev/null 2>&1
+        git checkout -b dev origin/$dev 1>/dev/null 2>&1
+        git pull 1>/dev/null 2>&1
+        ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
+    fi
+        if [[ "$update" == "🌟 Update Available!🌟" ]]; then
+            #rm -rf /opt/plexguide 1>/dev/null 2>&1
+            git checkout -b dev origin/$dev 1>/dev/null 2>&1
+            git pull 1>/dev/null 2>&1
+    ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1
+  fi
+fi
+}
+
 
 missingpull() {
     file="/opt/plexguide/menu/functions/install.sh"
@@ -97,7 +137,7 @@ top_menu() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🛈 $transport               $menu                     ID: $serverid
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                                DEV
+- SB-API Access: 🟢   - Internal API Access: 🟢   - $(echo -e $Memory)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                                                   $(echo -e $update) 
 Disk Used Space: $used of $capacity | $percentage Used Capacity
@@ -185,7 +225,7 @@ sub_menu_security() { # Menu Interface
 
 [1]  Networking     : Reverse Proxy | Domain Setup                   
 [2]  $(echo -e ${NG}Security${NC})       : Secure your server                             
-    [E] Authelia    - Single Sign-On MFA Portal                      [🟢 ]
+    [E] Shield    - Single Sign-On MFA Portal                      [🟢 ]
     [D] PortGuard   - Close vulnerable container ports               [🟢 ]
     [C] VPN         - Setup a secure network                         [🟢 ]
 [3]  Mount          : Mount Cloud Based Storage                      
@@ -258,13 +298,7 @@ EOF
 [4]  Apps$          : Apps ~ Core, Community & Removal
 [5]  $(echo -e ${NG}Vault${NC})          : Backup & Restore
     --$(echo -e ${NY}BACKUP${NC})--       
-    [E] Backup a container                                     11/11
-    [D] Backup all                            
-    --$(echo -e ${NY}RESTORE${NC})--
-    [C] Restore a container
-    [R] Restore all
-    --$(echo -e ${NY}Processing Location${NC})--
-    [F] Change location 
+    [E] Backup menu
 -------------------------------------------------------------------------
 [8] Tools           : Tools
 [9] IRC             : Matrix chat client to Discord
@@ -272,3 +306,13 @@ EOF
 
 EOF
   }
+
+# Previous modders - MrDoob
+
+#[E] Backup a container                                     11/11
+ #   [D] Backup all                            
+  #  --$(echo -e ${NY}RESTORE${NC})--
+   # [C] Restore a container
+    #[R] Restore all
+    #--$(echo -e ${NY}Processing Location${NC})--
+    #[F] Change location 
