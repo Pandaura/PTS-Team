@@ -126,7 +126,7 @@ exitcheck() {
   pgnumber=$(cat /var/plexguide/pg.number)
 
 top_menu() {
-
+update=$(cat /var/plexguide/panda.update)
     if [[ $# -eq 0 ]]; then
     menu=$pgnumber
     else
