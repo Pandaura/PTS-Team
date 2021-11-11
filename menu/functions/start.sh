@@ -51,7 +51,6 @@ gitupdate
 BRANCH=$(cat /var/plexguide/panda.branch)
   if [[ "dev" == "$dev" ]]; then
     if [[ "$BRANCH" == "master" ]]; then
-        #rm -rf /opt/plexguide 1>/dev/null 2>&1
         git checkout -b dev origin/$dev 1>/dev/null 2>&1
         git pull 1>/dev/null 2>&1
         ansible-playbook /opt/plexguide/menu/alias/alias.yml  1>/dev/null 2>&1 
