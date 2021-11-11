@@ -40,8 +40,6 @@ primestart() {
   gcetest
 }
 
-wisword=$(/usr/games/fortune -as | sed "s/^/ /")
-
 varstart() {
   ###################### FOR VARIABLES ROLE SO DOESNT CREATE RED - START
   filevg="/var/plexguide"
